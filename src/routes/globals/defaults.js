@@ -25,7 +25,7 @@ export const editorDefaultPreferences = {
     },
     "editorData": {
         "editorScreen": "screenDesktop",
-        "editorWidth": "1120px", 
+        "editorWidth": "1320px",
         "fullWidth": false,
     }
 };

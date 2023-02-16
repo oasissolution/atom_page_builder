@@ -1,6 +1,21 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+
 All notes are for developers, since this repository will not be public.
+
+
+## [0.0.1.002] - 2022-02-16
+
+### Added
+ - Screen resolutions to global constants
+ - Copy of bootstrap to editor itself with custom edits. Responsive mode will be supported natively in editor panel.
+
+### Changed
+ - Updated manually written resolution values to use global constants.
+
+### Fixed
+
+
 
 ## [0.0.1.001] - 2022-02-16
 

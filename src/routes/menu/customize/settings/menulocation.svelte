@@ -20,7 +20,7 @@
 </script>
 
 <div class="hstack customizeRow" style='
-    --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor}; 
+    --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
     --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
@@ -54,25 +54,25 @@
         {/if}
 
     </div>
- </div>
+</div>
 
 
 <style>
 
     .iconButton{
-       width: 32;
-       height: 32;
-       background-color: var(--buttonPassiveBackgroundColor);
-       border-color: transparent;
-       color: var(--buttonPassiveForegroundColor);
-       font-size: larger;
-       margin-left: 4px;
-       margin-right: 4px;
+        width: 32;
+        height: 32;
+        background-color: var(--buttonPassiveBackgroundColor);
+        border-color: transparent;
+        color: var(--buttonPassiveForegroundColor);
+        font-size: larger;
+        margin-left: 4px;
+        margin-right: 4px;
     }
     .iconButton.selected{
-       background-color: var(--buttonActiveBackgroundColor) !important;
-       color: var(--buttonActiveForegroundColor);
-       border-radius: 6px;
+        background-color: var(--buttonActiveBackgroundColor) !important;
+        color: var(--buttonActiveForegroundColor);
+        border-radius: 6px;
     }
 
     .customizeRow{
@@ -88,5 +88,5 @@
     .rotate-270deg{
         transform: rotate(270deg) !important;
     }
-    
+
 </style>

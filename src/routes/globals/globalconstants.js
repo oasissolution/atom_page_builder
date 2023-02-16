@@ -57,7 +57,7 @@ export const ScreenSize = Object.freeze({
     */
     DESKTOP: "screenDesktop",
     /**
-     * Menu bar is located on right side of the editor.
+     * Tablet size screen.
      */
     TABLET: "screenTablet",
     /**
@@ -66,11 +66,37 @@ export const ScreenSize = Object.freeze({
     MOBILE: "screenMobile",
 });
 
+
+/**
+ * Editor screen sizes as pixels.
+ * @global
+ */
+export const ScreenSizePx = Object.freeze({
+    /**
+    * Desktop size screen.
+    */
+    DESKTOP: "1320px", //1140px
+    /**
+     * Tablet size screen.
+     */
+    TABLET: "720px",
+    /**
+     * Mobile size screen.
+     */
+    MOBILE: "360px",
+    /**
+     * Full width screen.
+     */
+    FULLWIDTH: "100%",
+});
+
+
+
 /**
  * Manually created panel definitions. Add any newly added panel to this list.
- * 
+ *
  * This list is used on "Customize Editor" to programmatically add "Set Panel Location" property.
- * 
+ *
  * @global
  */
 export const PanelDefinitions = [

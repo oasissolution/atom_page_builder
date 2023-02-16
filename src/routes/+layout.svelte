@@ -1,12 +1,12 @@
 <script>
     import { onMount, onDestroy, SvelteComponent } from "svelte";
-    import { 
-        globalComponentCollectionStore, 
-        globalEditorPreferencesStore, 
+    import {
+        globalComponentCollectionStore,
+        globalEditorPreferencesStore,
         globalRightPanelContentStore,
         globalLeftPanelContentStore,
         globalVisibilityStore
-     } from "./globals/globalstores.js";
+    } from "./globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "./globals/globalconstants.js";
     import Menu from "./menu/+page.svelte";
 	import Info from "./info.svelte";
@@ -31,14 +31,14 @@
 
 
     /// Load all variables dynamically, especially visibility options
-    loadVariables();     
+    loadVariables();
 
 
     ///Load all panels in layout
 
     /**
      * Variable which holds "Right Panel Contents".
-     * 
+     *
      * @type [{}]
      */
     let rightPanelContentStore = [{}];
@@ -47,7 +47,7 @@
 
     /**
      * Variable which holds "Left Panel Contents".
-     * 
+     *
      * @type [{}]
      */
     let leftPanelContentStore = [{}];
@@ -58,14 +58,14 @@
     /// Manually add all components to panels.
 
     /// There must be no empty entries in the list. So started adding components like this. To add new panels use .push()
-    /// name and ds (short for display style) parameters are used in background to help development and debugging
+    /// "name" and "ds" (short for display style) parameters are used in background to help development and debugging
     rightPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" }];
     leftPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  }];
 
     // left here as an example for .push()
     //rightPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" });
     //leftPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  });
-    
+
     let topMenuFrameContent = false;
     let bottomMenuFrameContent = false;
     let leftMenuFrameContent = false;
@@ -126,18 +126,18 @@
                 {/if}
             {/each}
         </div>{/if}
-        
+
         <div id="editorWrapper" class="ms-auto d-flex justify-content-center w-100">
-            <div id="editor" 
+            <div id="editor"
                 style='
-                --editorBackgroundColor:{$globalEditorPreferencesStore.editorTheme.editorBackgroundColor}; 
-                --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
-                --editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth}; 
+                --editorBackgroundColor:{$globalEditorPreferencesStore.editorTheme.editorBackgroundColor};
+                --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor};
+                --editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};
                 '>
                 <slot></slot>
             </div>
         </div>
-        
+
 
         {#if $globalRightPanelContentStore.length > 0}<div id="rightPanelFrame" class="">
             {#each $globalRightPanelContentStore as item}
@@ -148,7 +148,7 @@
         </div>{/if}
 
         {#if rightMenuFrameContent}<div id="rightMenuFrame" class=""><svelte:component this={Menu}/></div>{/if}
-        
+
     </div>
     {#if bottomMenuFrameContent}<div id="bottomMenuFrame" class="fixed-bottom"><svelte:component this={Menu}/></div>{/if}
 
@@ -165,11 +165,11 @@
 
 <style>
     #backgroundFrame{
-        background-color: var(--backgroundFrameColor); 
+        background-color: var(--backgroundFrameColor);
         width: 100vw;
         height: 100vh;
         position: relative;
-        margin: auto; 
+        margin: auto;
         overflow: hidden;
     }
     #topMenuFrame{

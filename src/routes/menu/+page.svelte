@@ -1,69 +1,70 @@
 <script>
     import { onMount, onDestroy } from "svelte";
     import { globalComponentCollectionStore, globalEditorPreferencesStore } from "../globals/globalstores.js";
-    import { PanelDisplayStyles, MenuLocations, ScreenSize } from "../globals/globalconstants.js";
+    import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx } from "../globals/globalconstants.js";
     import Customize from "./customize/+page.svelte";
 
+    /**
+     * Holds "globalEditorPreferencesStore" store as variable
+     */
     let globalEditorPreferences = $globalEditorPreferencesStore ?? {};
+    /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
-    
 
-    //Editor Theme settings
-    let editorTheme = globalEditorPreferences.editorTheme;
-    let backgroundColor = editorTheme.backgroundColor;
-    let foregroundColor = editorTheme.foregroundColor;
-    let buttonActiveBackgroundColor = editorTheme.buttonActiveBackgroundColor;
-    let buttonPassiveBackgroundColor = editorTheme.buttonPassiveBackgroundColor;
-    let buttonActiveForegroundColor = editorTheme.buttonActiveForegroundColor;
-    let buttonPassiveForegroundColor = editorTheme.buttonPassiveForegroundColor;
+
 
     let editorData = $globalEditorPreferencesStore.editorData;
     let editorWidth = editorData.editorWidth;
     let editorScreen = editorData.editorScreen;
     let fullWidth = editorData.fullWidth;
 
+    /**
+     * Sets Editor width
+     * @param {string} size Must be one of "ScreenSize" from global constants.
+     */
     function setScreenSize(size){
         editorScreen = size;
         globalEditorPreferences.editorData.editorScreen = size;
         switch(size){
             case ScreenSize.DESKTOP:
                 if(fullWidth==true){
-                    editorWidth = "100%";
-                    globalEditorPreferences.editorData.editorWidth = "100%";
+                    editorWidth = ScreenSizePx.FULLWIDTH;
+                    globalEditorPreferences.editorData.editorWidth = ScreenSizePx.FULLWIDTH;
                 }else{
-                    editorWidth = "1120px";
-                    globalEditorPreferences.editorData.editorWidth = "1120px";
+                    editorWidth = ScreenSizePx.DESKTOP;
+                    globalEditorPreferences.editorData.editorWidth = ScreenSizePx.DESKTOP;
                 }
                 break;
             case ScreenSize.TABLET:
-                editorWidth = "720px";
-                globalEditorPreferences.editorData.editorWidth = "720px";
+                editorWidth = ScreenSizePx.TABLET;
+                globalEditorPreferences.editorData.editorWidth = ScreenSizePx.TABLET;
                 break;
             case ScreenSize.MOBILE:
-                editorWidth = "390px";
-                globalEditorPreferences.editorData.editorWidth = "390px";
+                editorWidth = ScreenSizePx.MOBILE;
+                globalEditorPreferences.editorData.editorWidth = ScreenSizePx.MOBILE;
                 break;
         }
         globalEditorPreferences = globalEditorPreferences;
     }
 
+    /**
+     * Set editor screen/panel to full width available
+     */
     function setFullWidth(){
         fullWidth = !fullWidth;
         globalEditorPreferences.editorData.fullWidth = fullWidth;
         if(editorScreen == ScreenSize.DESKTOP){
             if(fullWidth==true){
-                editorWidth = "100%";
-                globalEditorPreferences.editorData.editorWidth = "100%";
+                editorWidth = ScreenSizePx.FULLWIDTH;
+                globalEditorPreferences.editorData.editorWidth = ScreenSizePx.FULLWIDTH;
             }else{
-                editorWidth = "1120px";
-                globalEditorPreferences.editorData.editorWidth = "1120px";
+                editorWidth = ScreenSizePx.DESKTOP;
+                globalEditorPreferences.editorData.editorWidth = ScreenSizePx.DESKTOP;
             }
         }
     }
 
-    function openCustomizePanel(){
 
-    }
 
 </script>
 
@@ -72,7 +73,7 @@
 
 
 <div class="horizontalMenu row" style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
+    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor};
     --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
@@ -85,41 +86,40 @@
 
     <div class="col-3 d-flex justify-content-end align-items-end">
         <div class="hstack gap-1">
-            {#if fullWidth == true} 
+            {#if fullWidth == true}
             <button class="iconButton selected" on:click={setFullWidth}><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
             {:else}
             <button class="iconButton " on:click={setFullWidth}><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
             {/if}
             <div class="vr"></div>
-            {#if editorScreen == ScreenSize.DESKTOP} 
+            {#if editorScreen == ScreenSize.DESKTOP}
             <button class="iconButton  selected" on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="fa fa-desktop"></i></button>
             {:else}
             <button class="iconButton " on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="fa fa-desktop"></i></button>
             {/if}
             <div class="vr"></div>
-            {#if editorScreen == ScreenSize.TABLET} 
+            {#if editorScreen == ScreenSize.TABLET}
             <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="fa-solid fa-tablet-screen-button"></i></button>
             {:else}
             <button class="iconButton" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="fa-solid fa-tablet-screen-button"></i></button>
             {/if}
             <div class="vr"></div>
-            {#if editorScreen == ScreenSize.MOBILE} 
+            {#if editorScreen == ScreenSize.MOBILE}
             <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="fa-solid fa-mobile-screen-button"></i></button>
             {:else}
             <button class="iconButton" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="fa-solid fa-mobile-screen-button"></i></button>
             {/if}
             <div class="spacer"></div>
-            <!-- <button class="iconButton" on:click={openCustomizePanel}><i class="fa-solid fa-gear"></i></button> -->
             <Customize onlyButton={true} />
         </div>
-        
+
     </div>
 </div>
 
 {:else}
 
 <div class="verticalMenu vstack" style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
+    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor};
     --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
@@ -132,34 +132,33 @@
 
     <div class="d-flex justify-content-end align-items-end">
         <div class="vstack gap-1">
-            {#if fullWidth == true} 
+            {#if fullWidth == true}
             <button class="iconButton selected" on:click={setFullWidth}><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
             {:else}
             <button class="iconButton " on:click={setFullWidth}><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
             {/if}
             <div class="hr"></div>
-            {#if editorScreen == ScreenSize.DESKTOP} 
+            {#if editorScreen == ScreenSize.DESKTOP}
             <button class="iconButton  selected" on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="fa fa-desktop"></i></button>
             {:else}
             <button class="iconButton " on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="fa fa-desktop"></i></button>
             {/if}
             <div class="hr"></div>
-            {#if editorScreen == ScreenSize.TABLET} 
+            {#if editorScreen == ScreenSize.TABLET}
             <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="fa-solid fa-tablet-screen-button"></i></button>
             {:else}
             <button class="iconButton" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="fa-solid fa-tablet-screen-button"></i></button>
             {/if}
             <div class="hr"></div>
-            {#if editorScreen == ScreenSize.MOBILE} 
+            {#if editorScreen == ScreenSize.MOBILE}
             <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="fa-solid fa-mobile-screen-button"></i></button>
             {:else}
             <button class="iconButton" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="fa-solid fa-mobile-screen-button"></i></button>
             {/if}
             <div class="vspacer"></div>
-            <!-- <button class="iconButton" on:click={openCustomizePanel}><i class="fa-solid fa-gear"></i></button> -->
             <Customize onlyButton={true} />
         </div>
-        
+
     </div>
 
 </div>
