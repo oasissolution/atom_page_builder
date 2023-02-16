@@ -65,3 +65,16 @@ export const ScreenSize = Object.freeze({
      */
     MOBILE: "screenMobile",
 });
+
+/**
+ * Manually created panel definitions. Add any newly added panel to this list.
+ * 
+ * This list is used on "Customize Editor" to programmatically add "Set Panel Location" property.
+ * 
+ * @global
+ */
+export const PanelDefinitions = [
+    {"name":"Customize Panel",  "style": "customizePanelDisplayStyle"   },
+    {"name":"Widgets Panel",    "style": "widgetPanelDisplayStyle"      },
+    {"name":"Options Panel",    "style": "optionPanelDisplayStyle"      },
+];

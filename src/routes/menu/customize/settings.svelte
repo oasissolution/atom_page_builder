@@ -1,16 +1,31 @@
 <script>
-   import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
-   import { PanelDisplayStyles, MenuLocations } from "../../globals/globalconstants.js";
+   import { globalEditorPreferencesStore } from "../../globals/globalstores.js";
 
    import Menulocation from "./settings/menulocation.svelte";
    import Panellocation from "./settings/panellocation.svelte";
    import Theme from "./settings/theme.svelte";
 
+   /*
+      THIS PAGE IS MAIN "CUSTOMIZE EDITOR" PAGE.
+      THIS PAGE IS IMPORTED BY ALL VIEWS.
+   */
+
+   /**
+    * Holds "globalEditorPreferencesStore" store as variable
+    */
    let globalEditorPreferences = $globalEditorPreferencesStore ?? {};
+   /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
    $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
+   /**
+    * Integer variable that holds Tab Page Index.
+    */
    let selectedTabPageIndex = 0;
 
+   /**
+    * Shows selected page.
+    * @param {number} index New page index to show.
+    */
    function showPage(index){
       selectedTabPageIndex = index;
    }
@@ -60,7 +75,6 @@
 }
 
 .tabButton{
-   /* width: 32; */
    height: 42;
    background-color: var(--fixedPanelButtonPassiveBackgroundColor);
    border-color: transparent;

@@ -1,23 +1,23 @@
 <script>
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
-    import { PanelDisplayStyles, MenuLocations } from "../../../globals/globalconstants.js";
+    import { globalEditorPreferencesStore } from "../../../globals/globalstores.js";
+    import { PanelDisplayStyles, PanelDefinitions } from "../../../globals/globalconstants.js";
 
+    /**
+     * Holds "globalEditorPreferencesStore" store as variable
+     */
     let globalEditorPreferences = $globalEditorPreferencesStore ?? {};
+    /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
-    let panels = [
-        {"name":"Customize Panel","style": "customizePanelDisplayStyle"},
-        {"name":"Widgets Panel","style": "widgetPanelDisplayStyle"},
-        {"name":"Options Panel","style": "optionPanelDisplayStyle"},
-    ];
-
-
-
-    function setMenuLocation(panelStyle, location){
-        // console.log("menuLocation:" + location);
-        // globalEditorPreferences.menuLocation = location;
+    /**
+     * Sets panel location on main frame
+     * @param {String} panelStyle Taken from "panels.style" defined in this file as "const panels = []"
+     * @param {String} location Must be one of "PanelDisplayStyles" from globalconstants.js
+     */
+    function setPanelLocation(panelStyle, location){
         globalEditorPreferences[panelStyle] = location;
     }
+
 </script>
 
 
@@ -31,26 +31,26 @@
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
 ' >
 
-    {#each panels as panel}
+    {#each PanelDefinitions as panel}
         <div class="hstack customizeRow my-2">
             <span>{panel.name}</span>
             <span class="ms-auto"></span>
             <div class="hstack">
 
                 {#if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT}
-                    <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-                    <button class="iconButton selected " on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
+                    <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
+                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+                    <button class="iconButton selected " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
 
                 {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDLEFT}
-                    <button class="iconButton selected rotate-180deg" on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
+                    <button class="iconButton selected rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
+                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
                     
                 {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDRIGHT}
-                    <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton selected" on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setMenuLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
+                    <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
+                    <button class="iconButton selected" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
                     
                 {/if}
 
@@ -82,16 +82,6 @@
 
     .customizeRow{
         height: 50px;
-    }
-
-    .rotate-90deg{
-        transform: rotate(90deg) !important;
-    }
-    .rotate-180deg{
-        transform: rotate(180deg) !important;
-    }
-    .rotate-270deg{
-        transform: rotate(270deg) !important;
     }
     
 </style>

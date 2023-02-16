@@ -1,5 +1,5 @@
 <script>
-    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalWidgetsPanelVisibilityStore } from "./globals/globalstores.js";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore } from "./globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "./globals/globalconstants.js";
 
     //Editor Theme settings

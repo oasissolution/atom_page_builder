@@ -4,6 +4,13 @@
     import jQuery from "jquery";
     import { globalVisibilityStore } from "../../globals/globalstores.js";
 
+
+    /*
+        THIS PAGE IS SUBJECT TO CHANGE. SO NO JSDOC IS ATTACHED.
+    */
+
+
+
     let globalVisibility = $globalVisibilityStore;
     $: globalVisibilityStore.set(globalVisibility);
 
@@ -14,6 +21,7 @@
 
 
     onMount(() => {
+
         function handle_mousedown(e){
             var target = e.target.parentNode;
 

@@ -5,33 +5,30 @@
     import Settings from "./settings.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
-	import { onMount } from "svelte";
 
-    let componentName = "Customize";
+    /**
+     * Added for later use
+     */
+    export const componentName = "Customize";
 
     /**
     * If true, returns button for menu bar.
     * If false, returns panel.
-    *
+    * 
     * @type Boolean
     */
     export let onlyButton = false;
 
-    // /**
-    // * Holds panels visual style, passed from user customize settings.
-    // * @default
-    // * PanelDisplayStyles.FIXEDRIGHT
-    // * @type String
-    // */
-    // export let panelStyle = $globalEditorPreferencesStore.customizePanelDisplayStyle ?? PanelDisplayStyles.FIXEDRIGHT;
-
+    /**
+     * Registers parameters needed by "Customize Editor" panel to "globalVisibilityStore"
+     */
     function customizePanelSetUp(){
-        // console.log("customizePanelSetUp started");
+
         let globalVisibility = $globalVisibilityStore;
         let edited = false;
         if(globalVisibility.hasOwnProperty("left")){
             if(globalVisibility.left.hasOwnProperty("customizePanel")){
-                //Do nothing
+                ///Do nothing
             }else{
                 globalVisibility.left.customizePanel = false;
                 edited = true;
@@ -43,7 +40,7 @@
         }
         if(globalVisibility.hasOwnProperty("right")){
             if(globalVisibility.right.hasOwnProperty("customizePanel")){
-                //Do nothing
+                ///Do nothing
             }else{
                 globalVisibility.right.customizePanel = false;
                 edited = true;
@@ -55,7 +52,7 @@
         }
         if(globalVisibility.hasOwnProperty("default")){
             if(globalVisibility.default.hasOwnProperty("customizePanel")){
-                //Do nothing
+                ///Do nothing
             }else{
                 globalVisibility.default.customizePanel = false;
                 edited = true;
@@ -69,12 +66,21 @@
         if(edited){
             globalVisibilityStore.set(globalVisibility);
         }
-        // console.log("customizePanelSetUp ended");
     }
 
+    /**
+     * Toggles visibility of "Customize Editor" panel.
+     */
     function toggleCustomizePanel(){
+        ///Register variables first.
         customizePanelSetUp();
+
+        /**
+         * Holds "globalVisibilityStore" store as variable to update
+         */
         let globalVisibility = $globalVisibilityStore;
+
+        /// $globalEditorPreferencesStore is used directly to get latest info
         switch($globalEditorPreferencesStore.customizePanelDisplayStyle){
             case PanelDisplayStyles.FIXEDLEFT:
                 var visible = globalVisibility.left.customizePanel ?? false;
@@ -100,6 +106,8 @@
                 globalVisibility.default.customizePanel = !globalVisibility.default.customizePanel ?? true;
                 break;
         }
+        
+        ///Updates "globalVisibilityStore"
         globalVisibilityStore.set(globalVisibility);
         
     }
@@ -108,19 +116,13 @@
 
    
 
-    function getOffset(el) {
-        const rect = el.getBoundingClientRect();
-        return {
-            left: rect.left + window.scrollX,
-            top: rect.top + window.scrollY
-        };
-    }
-
-    onMount(() => {
-
-        
-    });
-
+    // function getOffset(el) {
+    //     const rect = el.getBoundingClientRect();
+    //     return {
+    //         left: rect.left + window.scrollX,
+    //         top: rect.top + window.scrollY
+    //     };
+    // }
 
 
 </script>
@@ -171,7 +173,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("left")}
             {#if $globalVisibilityStore.left.hasOwnProperty("customizePanel")}
                 {#if $globalVisibilityStore.left.customizePanel == true}
-                    <Fixed from="left" ds={$globalEditorPreferencesStore.customizePanelDisplayStyle}>
+                    <Fixed>
                         <Settings />
                     </Fixed>
                 {/if}
@@ -184,7 +186,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("right")}
             {#if $globalVisibilityStore.right.hasOwnProperty("customizePanel")}
                 {#if $globalVisibilityStore.right.customizePanel == true}
-                    <Fixed from="right" ds={$globalEditorPreferencesStore.customizePanelDisplayStyle}>
+                    <Fixed>
                         <Settings />
                     </Fixed>
                 {/if}

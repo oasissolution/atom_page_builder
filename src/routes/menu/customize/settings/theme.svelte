@@ -1,28 +1,21 @@
 <script>
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
+    import { globalEditorPreferencesStore } from "../../../globals/globalstores.js";
     import ColorPicker from 'svelte-awesome-color-picker';
 
+    /**
+     * Holds "globalEditorPreferencesStore" store as variable
+     */
     let globalEditorPreferences = $globalEditorPreferencesStore ?? {};
+    /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
-/*
-"backgroundFrameColor": "#474e6818",
-        "backgroundColor": "#404258",
-        "editorBackgroundColor": "#ffffff",
-        "foregroundColor": "#aaaebe",
-        "buttonActiveBackgroundColor": "#262733",
-        "buttonPassiveBackgroundColor": "transparent",
-        "buttonActiveForegroundColor": "#aaaebe",
-        "buttonPassiveForegroundColor": "#aaaebe",
-        "fixedPanelForegroundColor": "#aaaebe",
-        "fixedPanelBackgroundColor": "#262733",
-        "fixedPanelButtonActiveBackgroundColor": "#404258",
-        "fixedPanelButtonPassiveBackgroundColor": "transparent",
-        "fixedPanelButtonActiveForegroundColor": "#aaaebe",
-        "fixedPanelButtonPassiveForegroundColor": "#aaaebe",
-*/
 
-    let themeData = [
+    /**
+     * Array of colors used in app.
+     * @param {string} title Label of Color
+     * @param {string} key Key of color defined in globalEditorPreferencesStore.editorTheme
+     */
+    const themeData = [
         {"title": "Menu Background Color", "key": "backgroundColor"},
         {"title": "Menu Foreground Color", "key": "foregroundColor"},
         {"title": "Editor Background Color", "key": "backgroundFrameColor"},
@@ -38,17 +31,18 @@
         {"title": "Fixed Panel Button Passive Foreground Color", "key": "fixedPanelButtonPassiveForegroundColor"},
     ];
 
-    let hexa;
-
-    function setColor(key, value){
-        var {hsv, rgb, hex, color} = value.detail;
-        // console.log("setColor : ("+key+","+hex+")");
+    /**
+     * Updates selected color from "globalEditorPreferencesStore.editorTheme"
+     * @param {string} key Key of color defined in globalEditorPreferencesStore.editorTheme
+     * @param {CustomEvent} event This event fires from "ColorPicker"
+     */
+    function setColor(key, event){
+        var {hsv, rgb, hex, color} = event.detail;
         globalEditorPreferences.editorTheme[key] = hex;
     }
 
 </script>
- <!-- on:input={(hex) => setColor(data.key, hex)}  -->
- <!-- hex="{$globalEditorPreferencesStore.editorTheme[data.key]}"  -->
+
 <div class="hstack">
     Preset Themes
 </div>

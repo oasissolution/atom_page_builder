@@ -2,13 +2,21 @@
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "../../../globals/globalconstants.js";
 
+    /**
+     * Holds "globalEditorPreferencesStore" store as variable
+     */
     let globalEditorPreferences = $globalEditorPreferencesStore ?? {};
+    /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
+    /**
+     * Sets Menu Location on main frame.
+     * @param {string} location Must be one of "MenuLocations" from globalconstants.js
+     */
     function setMenuLocation(location){
-        // console.log("menuLocation:" + location);
         globalEditorPreferences.menuLocation = location;
     }
+
 </script>
 
 <div class="hstack customizeRow" style='

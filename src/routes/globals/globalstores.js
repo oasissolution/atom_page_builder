@@ -3,6 +3,8 @@ import { writable } from 'svelte/store';
 
 /**
 * Global variable which holds whole page data as Writable List of Json.
+*
+* This is set from "+layout.server.js" on page load. Other actions can only update.
 * @global
 * @example
 *  [
@@ -33,6 +35,8 @@ export let globalComponentCollectionStore = writable([]);
 
 /**
 * Global variable which holds editor preferences as Writable Json.
+*
+* This is set from "+layout.server.js" on page load. Other actions can only update.
 * @global
 * @example
 * {
@@ -45,6 +49,7 @@ export let globalComponentCollectionStore = writable([]);
             "backgroundColor": "#404258",
             "editorBackgroundColor": "#ffffff",
             "foregroundColor": "#aaaebe",
+            ...
         },
         "editorData": {
             "editorScreen": "screenDesktop",
@@ -56,14 +61,6 @@ export let globalComponentCollectionStore = writable([]);
 * @type {Writable<{}>}
 */
 export let globalEditorPreferencesStore = writable({});
-
-/**
-* Global variable which holds visibility of "Widgets Panel".
-* @global
-*
-* @type {Writable<Boolean>}
-*/
-export let globalWidgetsPanelVisibilityStore = writable(false);
 
 /**
 * Global variable which holds visibilities of "Menu Panels".

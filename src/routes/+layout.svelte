@@ -3,7 +3,6 @@
     import { 
         globalComponentCollectionStore, 
         globalEditorPreferencesStore, 
-        globalWidgetsPanelVisibilityStore, 
         globalRightPanelContentStore,
         globalLeftPanelContentStore,
         globalVisibilityStore
@@ -21,64 +20,51 @@
      * @example
      *      let globalComponents = data.pageData;
      *      let editorPreferences = data.editorPreferences;
-     * @default {}
      * @type JSON
      */
     export let data;
 
-    let globalWidgetsPanelVisibility = false;
-
-    //Attach all data from database to this app.
+    /// Attach all data from database to this app.
     globalComponentCollectionStore.set(data.serverData);
     globalEditorPreferencesStore.set(data.editorPreferences);
 
-    $: globalWidgetsPanelVisibilityStore.set(globalWidgetsPanelVisibility);
 
     ///Load all panels in layout
-    let rightPanelContentStore = [];
+
+    /**
+     * Variable which holds "Right Panel Contents".
+     * 
+     * @type [{}]
+     */
+    let rightPanelContentStore = [{}];
+    /// Updates "globalRightPanelContentStore" whenever variable "rightPanelContentStore" changes.
     $: globalRightPanelContentStore.set(rightPanelContentStore);
-    let leftPanelContentStore = [];
+
+    /**
+     * Variable which holds "Left Panel Contents".
+     * 
+     * @type [{}]
+     */
+    let leftPanelContentStore = [{}];
+    /// Updates "globalLeftPanelContentStore" whenever variable "leftPanelContentStore" changes.
     $: globalLeftPanelContentStore.set(leftPanelContentStore);
 
-    //Add all panels in this list.
-    // let panelsInMenu = [Customize];
-    // panelsInMenu.forEach(element => {
-    //     rightPanelContentStore.push({"component":element, "name":element.arguments["componentName"]});
-    //     leftPanelContentStore.push({"component":element, "name":element.arguments["componentName"]});
-    // });
 
-    rightPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" });
-    leftPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  });
+    /// Manually add all components to panels.
 
+    /// There must be no empty entries in the list. So started adding components like this. To add new panels use .push()
+    /// name and ds (short for display style) parameters are used in background to help development and debugging
+    rightPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" }];
+    leftPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  }];
 
+    // left here as an example for .push()
+    //rightPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" });
+    //leftPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  });
     
     let topMenuFrameContent = false;
     let bottomMenuFrameContent = false;
     let leftMenuFrameContent = false;
     let rightMenuFrameContent = false;
-
-    let leftPanelContent = false;
-    let rightPanelContent = false;
-
-    $: switch($globalEditorPreferencesStore.widgetPanelDisplayStyle){
-        case PanelDisplayStyles.FIXEDLEFT:
-            if(globalWidgetsPanelVisibility == true) {
-                leftPanelContent = true;
-            }else{
-                leftPanelContent = false;
-            }
-            break;
-        case PanelDisplayStyles.FIXEDRIGHT:
-            if(globalWidgetsPanelVisibility == true) {
-                rightPanelContent = true;
-            }else{
-                rightPanelContent = false;
-            }
-            break;
-        default:
-            break;
-    }
-
 
     $: switch($globalEditorPreferencesStore.menuLocation){
         case MenuLocations.TOP:
@@ -108,12 +94,6 @@
         default:
             break;
     }
-
-    onMount(() => {
-
-
-    });
-
 
 </script>
 

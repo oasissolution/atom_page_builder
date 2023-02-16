@@ -19,7 +19,11 @@ const pageDemoData = [{
 ];
 
 
-
+/**
+ * 
+ * @param {*} params 
+ * @returns 
+ */
 export function load({params}){
     return {
         pageData: pageDemoData,
