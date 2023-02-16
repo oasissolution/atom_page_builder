@@ -12,6 +12,7 @@
 	import Info from "./info.svelte";
     import Customize from "./menu/customize/+page.svelte";
 
+    import { loadVariables } from "./loadvariables.svelte";
 
     /**
      * This data comes from server
@@ -27,6 +28,10 @@
     /// Attach all data from database to this app.
     globalComponentCollectionStore.set(data.serverData);
     globalEditorPreferencesStore.set(data.editorPreferences);
+
+
+    /// Load all variables dynamically, especially visibility options
+    loadVariables();     
 
 
     ///Load all panels in layout
@@ -149,9 +154,9 @@
 
 </div>
 
-<!-- <div id="infoLayer" class="d-flex justify-content-center align-items-center">
+<div id="infoLayer" class="d-flex justify-content-center align-items-center">
     <svelte:component this={Info}/>
-</div> -->
+</div>
 
 
 
@@ -198,14 +203,19 @@
         margin: auto;
         overflow: auto !important;
         background-color: var(--editorBackgroundColor);
+
+        /* vertical-align: top;
+        display: inline-flex;
+        flex-direction: column;
+        flex-wrap: wrap; */
     }
 
     #infoLayer{
         position: absolute;
-        left: 30%;
-        top: 0;
+        left: 0;
+        top: 80px;
         z-index: 99999;
-        width: 40%;
+        max-width: 60%;
         min-width: 360px;
         margin: auto;
     }

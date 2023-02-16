@@ -21,6 +21,8 @@
 
     /**
      * Registers parameters needed by "Customize Editor" panel to "globalVisibilityStore"
+     * 
+     * Moved to root level loadvariables.svelte. But left here for any need later.
      */
     function customizePanelSetUp(){
 
@@ -72,15 +74,15 @@
      * Toggles visibility of "Customize Editor" panel.
      */
     function toggleCustomizePanel(){
-        ///Register variables first.
-        customizePanelSetUp();
+        ///Register variables first. (Moved to root level loadvariables.svelte)
+        // customizePanelSetUp();
 
         /**
          * Holds "globalVisibilityStore" store as variable to update
          */
         let globalVisibility = $globalVisibilityStore;
 
-        /// $globalEditorPreferencesStore is used directly to get latest info
+        /// $globalEditorPreferencesStore is used directly to get latest condition
         switch($globalEditorPreferencesStore.customizePanelDisplayStyle){
             case PanelDisplayStyles.FIXEDLEFT:
                 var visible = globalVisibility.left.customizePanel ?? false;
@@ -88,9 +90,11 @@
                     if(key == "customizePanel"){
                         globalVisibility.left[key] = !visible;
                     }else{
-                        globalVisibility.left[key] = false;
+                        globalVisibility.left[key] = false; /// Hide any other panel in this location
                     }
                 }
+                globalVisibility.right.customizePanel = false; /// Hide in other locations
+                globalVisibility.default.customizePanel = false; /// Hide in other locations
                 break;
             case PanelDisplayStyles.FIXEDRIGHT:
                 var visible = globalVisibility.right.customizePanel ?? false;
@@ -98,15 +102,19 @@
                     if(key == "customizePanel"){
                         globalVisibility.right[key] = !visible;
                     }else{
-                        globalVisibility.right[key] = false;
+                        globalVisibility.right[key] = false; /// Hide any other panel in this location
                     }
                 }
+                globalVisibility.left.customizePanel = false; /// Hide in other locations
+                globalVisibility.default.customizePanel = false; /// Hide in other locations
                 break;
             default:
                 globalVisibility.default.customizePanel = !globalVisibility.default.customizePanel ?? true;
+                globalVisibility.right.customizePanel = false; /// Hide in other locations
+                globalVisibility.left.customizePanel = false; /// Hide in other locations
                 break;
         }
-        
+
         ///Updates "globalVisibilityStore"
         globalVisibilityStore.set(globalVisibility);
         
@@ -115,7 +123,7 @@
 
 
    
-
+    // This was added to have hover property. If we return to add this idea this may be needed.
     // function getOffset(el) {
     //     const rect = el.getBoundingClientRect();
     //     return {
@@ -129,6 +137,18 @@
 
 {#if onlyButton}
 
+    {#if $globalVisibilityStore.default.customizePanel == true || $globalVisibilityStore.right.customizePanel == true || $globalVisibilityStore.left.customizePanel == true}
+
+    <button class="iconButton selected" on:click={toggleCustomizePanel} style='
+    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
+    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
+    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
+    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
+    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
+    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
+    ' ><i class="fa-solid fa-gear"></i></button>
+
+    {:else}
     <button class="iconButton" on:click={toggleCustomizePanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
     --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
@@ -137,6 +157,9 @@
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' ><i class="fa-solid fa-gear"></i></button>
+    {/if}
+
+
 {:else}
 
 
@@ -204,11 +227,11 @@
         border-color: transparent;
         color: var(--buttonPassiveForegroundColor);
     }
-    /* .iconButton.selected{
+    .iconButton.selected{
         background-color: var(--buttonActiveBackgroundColor);
         color: var(--buttonActiveForegroundColor);
         border-radius: 6px;
-    } */
+    }
     .hoverPanel{
         position: absolute;
         z-index: 888;

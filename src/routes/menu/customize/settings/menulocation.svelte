@@ -33,24 +33,24 @@
 
         {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP}
             <button class="iconButton selected rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
             <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
+            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
         {:else if $globalEditorPreferencesStore.menuLocation == MenuLocations.LEFT}
             <button class="iconButton rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
             <button class="iconButton selected rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
+            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
         {:else if $globalEditorPreferencesStore.menuLocation == MenuLocations.RIGHT}
             <button class="iconButton rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
             <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton selected" on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
+            <button class="iconButton selected" on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
         {:else }
             <button class="iconButton rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
+            <button class="iconButton selected rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
             <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton selected rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
+            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
         {/if}
 
     </div>

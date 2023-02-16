@@ -1,5 +1,5 @@
 <script>
-    import { globalEditorPreferencesStore } from "../../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
     import { PanelDisplayStyles, PanelDefinitions } from "../../../globals/globalconstants.js";
 
     /**
@@ -15,7 +15,57 @@
      * @param {String} location Must be one of "PanelDisplayStyles" from globalconstants.js
      */
     function setPanelLocation(panelStyle, location){
+        /// Set panel location
         globalEditorPreferences[panelStyle] = location;
+        /// Panel location is set but panel is still hidden. Because it can be shown only in one place and we hold visibility in locations separately.
+        /// Since customize panel has a special condition like after editing it must be still visible, so instead of toggle we directly show it.
+        showCustomizePanel();
+    }
+
+     /**
+     * Shows "Customize Editor" panel.
+     */
+     function showCustomizePanel(){
+
+        /**
+         * Holds "globalVisibilityStore" store as variable to update
+         */
+        let globalVisibility = $globalVisibilityStore;
+
+        /// $globalEditorPreferencesStore is used directly to get latest condition
+        switch($globalEditorPreferencesStore.customizePanelDisplayStyle){
+            case PanelDisplayStyles.FIXEDLEFT:
+                for(var key in globalVisibility.left) {
+                    if(key == "customizePanel"){
+                        globalVisibility.left[key] = true; /// we set directly true instead of !visible
+                    }else{
+                        globalVisibility.left[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.right.customizePanel = false; /// Hide in other locations
+                globalVisibility.default.customizePanel = false; /// Hide in other locations
+                break;
+            case PanelDisplayStyles.FIXEDRIGHT:
+                for(var key in globalVisibility.right) {
+                    if(key == "customizePanel"){
+                        globalVisibility.right[key] = true; /// we set directly true instead of !visible
+                    }else{
+                        globalVisibility.right[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.left.customizePanel = false; /// Hide in other locations
+                globalVisibility.default.customizePanel = false; /// Hide in other locations
+                break;
+            default:
+                globalVisibility.default.customizePanel = true;
+                globalVisibility.right.customizePanel = false; /// Hide in other locations
+                globalVisibility.left.customizePanel = false; /// Hide in other locations
+                break;
+        }
+
+        ///Updates "globalVisibilityStore" only once
+        globalVisibilityStore.set(globalVisibility);
+        
     }
 
 </script>
@@ -37,21 +87,23 @@
             <span class="ms-auto"></span>
             <div class="hstack">
 
-                {#if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT}
+                {#if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDLEFT}
+                    <button class="iconButton selected rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
+                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
+                    <!-- <div class="vr"></div> -->
+                    <!-- <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button> -->
+                    
+                {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDRIGHT}
+                    <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
+                    <button class="iconButton selected" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
+                    <!-- <div class="vr"></div> -->
+                    <!-- <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button> -->
+                    
+                {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT}
                     <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
                     <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
                     <button class="iconButton selected " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
 
-                {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDLEFT}
-                    <button class="iconButton selected rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
-                    
-                {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDRIGHT}
-                    <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton selected" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
-                    
                 {/if}
 
             </div>
@@ -82,6 +134,10 @@
 
     .customizeRow{
         height: 50px;
+    }
+
+    .rotate-180deg{
+        transform: rotate(180deg) !important;
     }
     
 </style>
