@@ -2,14 +2,14 @@
     import { PanelDisplayStyles } from "../../globals/globalconstants.js";
     import Hover from "./hover.svelte";
     import Floating from "./floating.svelte";
-    import Settings from "./settings.svelte";
+    import Options from "./options.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
 
     /**
      * Added for later use
      */
-    export const componentName = "Customize";
+    export const componentName = "Options";
 
     /**
     * If true, returns button for menu bar.
@@ -20,48 +20,48 @@
     export let onlyButton = false;
 
     /**
-     * Registers parameters needed by "Customize Editor" panel to "globalVisibilityStore"
+     * Registers parameters needed by "Widget Options" panel to "globalVisibilityStore"
      * 
      * Moved to root level loadvariables.svelte. But left here for any need later as a backup for now.
      */
-    function customizePanelSetUp(){
+    function optionPanelSetUp(){
 
         let globalVisibility = $globalVisibilityStore;
         let edited = false;
         if(globalVisibility.hasOwnProperty("left")){
-            if(globalVisibility.left.hasOwnProperty("customizePanel")){
+            if(globalVisibility.left.hasOwnProperty("optionPanel")){
                 ///Do nothing
             }else{
-                globalVisibility.left.customizePanel = false;
+                globalVisibility.left.optionPanel = false;
                 edited = true;
             }
         }else{
             globalVisibility.left = {};
-            globalVisibility.left.customizePanel = false;
+            globalVisibility.left.optionPanel = false;
             edited = true;
         }
         if(globalVisibility.hasOwnProperty("right")){
-            if(globalVisibility.right.hasOwnProperty("customizePanel")){
+            if(globalVisibility.right.hasOwnProperty("optionPanel")){
                 ///Do nothing
             }else{
-                globalVisibility.right.customizePanel = false;
+                globalVisibility.right.optionPanel = false;
                 edited = true;
             }
         }else{
             globalVisibility.right = {};
-            globalVisibility.right.customizePanel = false;
+            globalVisibility.right.optionPanel = false;
             edited = true;
         }
         if(globalVisibility.hasOwnProperty("default")){
-            if(globalVisibility.default.hasOwnProperty("customizePanel")){
+            if(globalVisibility.default.hasOwnProperty("optionPanel")){
                 ///Do nothing
             }else{
-                globalVisibility.default.customizePanel = false;
+                globalVisibility.default.optionPanel = false;
                 edited = true;
             }
         }else{
             globalVisibility.default = {};
-            globalVisibility.default.customizePanel = false;
+            globalVisibility.default.optionPanel = false;
             edited = true;
         }
 
@@ -71,11 +71,11 @@
     }
 
     /**
-     * Toggles visibility of "Customize Editor" panel.
+     * Toggles visibility of "Widget Options" panel.
      */
-    function toggleCustomizePanel(){
+    function toggleOptionPanel(){
         ///Register variables first. (Moved to root level loadvariables.svelte)
-        // customizePanelSetUp();
+        // optionPanelSetUp();
 
         /**
          * Holds "globalVisibilityStore" store as variable to update
@@ -83,35 +83,35 @@
         let globalVisibility = $globalVisibilityStore;
 
         /// $globalEditorPreferencesStore is used directly to get latest condition
-        switch($globalEditorPreferencesStore.customizePanelDisplayStyle){
+        switch($globalEditorPreferencesStore.optionPanelDisplayStyle){
             case PanelDisplayStyles.FIXEDLEFT:
-                var visible = globalVisibility.left.customizePanel ?? false;
+                var visible = globalVisibility.left.optionPanel ?? false;
                 for(var key in globalVisibility.left) {
-                    if(key == "customizePanel"){
+                    if(key == "optionPanel"){
                         globalVisibility.left[key] = !visible;
                     }else{
                         globalVisibility.left[key] = false; /// Hide any other panel in this location
                     }
                 }
-                globalVisibility.right.customizePanel = false; /// Hide in other locations
-                globalVisibility.default.customizePanel = false; /// Hide in other locations
+                globalVisibility.right.optionPanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = false; /// Hide in other locations
                 break;
             case PanelDisplayStyles.FIXEDRIGHT:
-                var visible = globalVisibility.right.customizePanel ?? false;
+                var visible = globalVisibility.right.optionPanel ?? false;
                 for(var key in globalVisibility.right) {
-                    if(key == "customizePanel"){
+                    if(key == "optionPanel"){
                         globalVisibility.right[key] = !visible;
                     }else{
                         globalVisibility.right[key] = false; /// Hide any other panel in this location
                     }
                 }
-                globalVisibility.left.customizePanel = false; /// Hide in other locations
-                globalVisibility.default.customizePanel = false; /// Hide in other locations
+                globalVisibility.left.optionPanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = false; /// Hide in other locations
                 break;
             default:
-                globalVisibility.default.customizePanel = !globalVisibility.default.customizePanel ?? true;
-                globalVisibility.right.customizePanel = false; /// Hide in other locations
-                globalVisibility.left.customizePanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = !globalVisibility.default.optionPanel ?? true;
+                globalVisibility.right.optionPanel = false; /// Hide in other locations
+                globalVisibility.left.optionPanel = false; /// Hide in other locations
                 break;
         }
 
@@ -137,39 +137,39 @@
 
 {#if onlyButton}
 
-    {#if $globalVisibilityStore.default.customizePanel == true || $globalVisibilityStore.right.customizePanel == true || $globalVisibilityStore.left.customizePanel == true}
+    {#if $globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true}
 
-    <button class="iconButton selected" on:click={toggleCustomizePanel} style='
+    <button class="iconButton selected" on:click={toggleOptionPanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
     --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="fa-solid fa-gear"></i></button>
+    ' ><i class="bi bi-sliders"></i></button>
 
     {:else}
-    <button class="iconButton" on:click={toggleCustomizePanel} style='
+    <button class="iconButton" on:click={toggleOptionPanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
     --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="fa-solid fa-gear"></i></button>
+    ' ><i class="bi bi-sliders"></i></button>
     {/if}
 
 
 {:else}
 
 
-    {#if $globalEditorPreferencesStore.customizePanelDisplayStyle == PanelDisplayStyles.HOVER}
+    {#if $globalEditorPreferencesStore.optionPanelDisplayStyle == PanelDisplayStyles.HOVER}
         {#if $globalVisibilityStore.hasOwnProperty("default")}
-            {#if $globalVisibilityStore.default.hasOwnProperty("customizePanel")}
-                {#if $globalVisibilityStore.default.customizePanel == true}
+            {#if $globalVisibilityStore.default.hasOwnProperty("optionPanel")}
+                {#if $globalVisibilityStore.default.optionPanel == true}
                     <div class="hoverPanel">
                         <Hover>
-                            <Settings />
+                            <Options />
                         </Hover>
                     </div>
                 {/if}
@@ -178,13 +178,13 @@
     {/if}
 
 
-    {#if $globalEditorPreferencesStore.customizePanelDisplayStyle == PanelDisplayStyles.FLOAT}
+    {#if $globalEditorPreferencesStore.optionPanelDisplayStyle == PanelDisplayStyles.FLOAT}
         {#if $globalVisibilityStore.hasOwnProperty("default")}
-            {#if $globalVisibilityStore.default.hasOwnProperty("customizePanel")}
-                {#if $globalVisibilityStore.default.customizePanel == true}
+            {#if $globalVisibilityStore.default.hasOwnProperty("optionPanel")}
+                {#if $globalVisibilityStore.default.optionPanel == true}
                     <Floating>
-                        <span slot="title" >Customize Editor</span>
-                        <Settings />
+                        <span slot="title" >Widget Options</span>
+                        <Options />
                     </Floating>
                 {/if}
             {/if}
@@ -192,12 +192,12 @@
     {/if}
 
 
-    {#if $globalEditorPreferencesStore.customizePanelDisplayStyle == PanelDisplayStyles.FIXEDLEFT}
+    {#if $globalEditorPreferencesStore.optionPanelDisplayStyle == PanelDisplayStyles.FIXEDLEFT}
         {#if $globalVisibilityStore.hasOwnProperty("left")}
-            {#if $globalVisibilityStore.left.hasOwnProperty("customizePanel")}
-                {#if $globalVisibilityStore.left.customizePanel == true}
+            {#if $globalVisibilityStore.left.hasOwnProperty("optionPanel")}
+                {#if $globalVisibilityStore.left.optionPanel == true}
                     <Fixed>
-                        <Settings />
+                        <Options />
                     </Fixed>
                 {/if}
             {/if}
@@ -205,12 +205,12 @@
     {/if}
 
 
-    {#if $globalEditorPreferencesStore.customizePanelDisplayStyle == PanelDisplayStyles.FIXEDRIGHT }
+    {#if $globalEditorPreferencesStore.optionPanelDisplayStyle == PanelDisplayStyles.FIXEDRIGHT }
         {#if $globalVisibilityStore.hasOwnProperty("right")}
-            {#if $globalVisibilityStore.right.hasOwnProperty("customizePanel")}
-                {#if $globalVisibilityStore.right.customizePanel == true}
+            {#if $globalVisibilityStore.right.hasOwnProperty("optionPanel")}
+                {#if $globalVisibilityStore.right.optionPanel == true}
                     <Fixed>
-                        <Settings />
+                        <Options />
                     </Fixed>
                 {/if}
             {/if}

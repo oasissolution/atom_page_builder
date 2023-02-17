@@ -17,6 +17,7 @@
      */
     const themeData = [
         {"title": "Editor Background Color", "key": "backgroundFrameColor"},
+        {"title": "Editor Mouse Over Color", "key": "editorMouseOverColor"},
         {"title": "hr", "key": ""},
         {"title": "Menu Background Color", "key": "backgroundColor"},
         {"title": "Menu Foreground Color", "key": "foregroundColor"},
@@ -34,7 +35,7 @@
         {"title": "Fixed Panel Button Passive Foreground Color", "key": "fixedPanelButtonPassiveForegroundColor"},
         {"title": "Fixed Panel Button Passive Background Color", "key": "fixedPanelButtonPassiveBackgroundColor"},
     ];
-
+    
     /**
      * Updates selected color from "globalEditorPreferencesStore.editorTheme"
      * @param {string} key Key of color defined in globalEditorPreferencesStore.editorTheme

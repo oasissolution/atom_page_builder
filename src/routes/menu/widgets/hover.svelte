@@ -3,4 +3,6 @@
 </script>
 
 
-<slot></slot>
+<div>
+    <slot></slot>
+ </div>

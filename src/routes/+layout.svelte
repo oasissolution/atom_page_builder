@@ -5,12 +5,15 @@
         globalEditorPreferencesStore,
         globalRightPanelContentStore,
         globalLeftPanelContentStore,
-        globalVisibilityStore
+        globalVisibilityStore,
+        globalEditorViewStore
     } from "./globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "./globals/globalconstants.js";
     import Menu from "./menu/+page.svelte";
 	import Info from "./info.svelte";
     import Customize from "./menu/customize/+page.svelte";
+    import Widgets from "./menu/widgets/+page.svelte";
+    import Options from "./menu/options/+page.svelte";
 
     import { loadVariables } from "./loadvariables.svelte";
 
@@ -26,7 +29,7 @@
     export let data;
 
     /// Attach all data from database to this app.
-    globalComponentCollectionStore.set(data.serverData);
+    globalComponentCollectionStore.set(data.pageData);
     globalEditorPreferencesStore.set(data.editorPreferences);
 
 
@@ -57,14 +60,19 @@
 
     /// Manually add all components to panels.
 
-    /// There must be no empty entries in the list. So started adding components like this. To add new panels use .push()
+    /// There must be no empty entries in the list. So started adding components like this. To add new panels use .push() !
     /// "name" and "ds" (short for display style) parameters are used in background to help development and debugging
     rightPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" }];
     leftPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  }];
 
-    // left here as an example for .push()
-    //rightPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" });
-    //leftPanelContentStore.push({"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  });
+    rightPanelContentStore.push({"component":Widgets, "name":"Widgets", "ds": "widgetPanelDisplayStyle" });
+    leftPanelContentStore.push({"component":Widgets, "name":"Widgets", "ds": "widgetPanelDisplayStyle"  });
+    
+    rightPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle" });
+    leftPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle"  });
+
+
+
 
     let topMenuFrameContent = false;
     let bottomMenuFrameContent = false;
@@ -211,12 +219,13 @@
     }
 
     #infoLayer{
-        position: absolute;
-        left: 0;
-        top: 80px;
+        position: fixed;
+        left: 20%;
+        bottom: 50px;
         z-index: 99999;
-        max-width: 60%;
-        min-width: 360px;
+        width: 60vw;
+        max-width: 100vw;
+        /* min-width: 360px; */
         margin: auto;
     }
 

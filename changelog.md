@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 
 All notes are for developers, since this repository will not be public.
 
+## [0.0.1.003] - 2022-02-17
+
+### Added
+ - Widgets panel. (Empty, no widgets developed yet.)
+ - Widgets Options panel. (Empty, no widgets developed yet.)
+ - Editor views. These will be used in development and debugging.
+
+### Changed
+ - Editor bootstrap integrations. Still working on it.
+
+### Fixed
+
 
 ## [0.0.1.002] - 2022-02-16
 

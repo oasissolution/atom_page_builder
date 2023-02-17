@@ -1,4 +1,4 @@
-import { editorDefaultPreferences } from "./globals/defaults.js";
+import { editorDefaultPreferences, editorBlankData } from "./globals/defaults.js";
 
 const pageDemoData = [{
     "uuid": "AD48A76T5DAS1F4A6SF4A55AS4D35",
@@ -26,7 +26,7 @@ const pageDemoData = [{
  */
 export function load({params}){
     return {
-        pageData: pageDemoData,
+        pageData: editorBlankData,
         editorPreferences : editorDefaultPreferences,
     };
 }

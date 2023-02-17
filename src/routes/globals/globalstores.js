@@ -1,5 +1,6 @@
 
 import { writable } from 'svelte/store';
+import { EditorViews } from './globalconstants';
 
 /**
 * Global variable which holds whole page data as Writable List of Json.
@@ -85,3 +86,12 @@ export let globalRightPanelContentStore = writable([]);
 * @type {Writable<[]>}
 */
 export let globalLeftPanelContentStore = writable([]);
+
+
+/**
+* Global variable which holds Editor view.
+* @global
+*
+* @type {Writable<String>}
+*/
+export let globalEditorViewStore = writable(EditorViews.PAGE);

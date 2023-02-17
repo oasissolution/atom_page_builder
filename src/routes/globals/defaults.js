@@ -1,11 +1,14 @@
+import { v4 as uuidv4 } from 'uuid';
+
 
 /**
  * Editor default preferences
  */
 export const editorDefaultPreferences = {
     "menuLocation": "menuLocationTop",
-    "widgetPanelDisplayStyle" : "panelDisplayStyleHover",
+    "widgetPanelDisplayStyle" : "panelDisplayStyleFixedLeft",
     "customizePanelDisplayStyle" : "panelDisplayStyleFixedLeft",
+    "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "info":"Hover to see info!",
     "editorTheme": {
         "backgroundFrameColor": "#474e6818",
@@ -22,6 +25,7 @@ export const editorDefaultPreferences = {
         "fixedPanelButtonPassiveBackgroundColor": "transparent",
         "fixedPanelButtonActiveForegroundColor": "#aaaebe",
         "fixedPanelButtonPassiveForegroundColor": "#aaaebe",
+        "editorMouseOverColor":"#404258",
     },
     "editorData": {
         "editorScreen": "screenDesktop",
@@ -29,3 +33,16 @@ export const editorDefaultPreferences = {
         "fullWidth": false,
     }
 };
+
+
+/**
+ * Default startup data for editor.
+ */
+export let editorBlankData =  [{
+    "uuid": uuidv4().toString(),
+    "type": "body",
+    "data": { 
+        "text": "Drag & Drop to start!",
+    },
+    "child": {}
+}];

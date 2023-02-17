@@ -91,6 +91,25 @@ export const ScreenSizePx = Object.freeze({
 });
 
 
+/**
+ * Editor screen sizes as pixels.
+ * @global
+ */
+export const EditorViews = Object.freeze({
+    /**
+    * Shows web page visual editor
+    */
+    PAGE: "page", 
+    /**
+     * Shows web page code editor
+     */
+    CODE: "code",
+    /**
+     * Shows variables used in app.
+     */
+    DEBUG: "debug",
+});
+
 
 /**
  * Manually created panel definitions. Add any newly added panel to this list.

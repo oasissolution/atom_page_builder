@@ -33,6 +33,7 @@
 	"dependencies": {
 		"jquery": "^3.6.3",
 		"jsdom": "^21.1.0",
-		"svelte-awesome-color-picker": "^2.4.1"
+		"svelte-awesome-color-picker": "^2.4.1",
+		"uuid": "^9.0.0"
 	}
 }

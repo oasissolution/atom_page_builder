@@ -1,8 +1,10 @@
 <script>
     import { onMount, onDestroy } from "svelte";
-    import { globalComponentCollectionStore, globalEditorPreferencesStore } from "../globals/globalstores.js";
-    import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx } from "../globals/globalconstants.js";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore } from "../globals/globalstores.js";
+    import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
     import Customize from "./customize/+page.svelte";
+    import Widgets from "./widgets/+page.svelte";
+    import Options from "./options/+page.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -10,6 +12,22 @@
     let globalEditorPreferences = $globalEditorPreferencesStore ?? {};
     /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
+
+
+    /**
+     * Holds "globalEditorViewStore" store as variable
+     */
+    let globalEditorView = $globalEditorViewStore;
+    /// Updates "globalEditorViewStore" whenever variable "globalEditorView" changes.
+    $: globalEditorViewStore.set(globalEditorView);
+
+    /**
+     * Updates Editor View.
+     * @param {string} newView Must be one of "EditorViews" from global constants.
+     */
+    function setEditorView(newView){
+        globalEditorView = newView;
+    }
 
 
 
@@ -80,9 +98,34 @@
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' >
-    <div class="col-3 d-flex justify-content-start"></div>
+    <div class="col-3 d-flex justify-content-start">
+        <div class="hstack gap-1">
+            <Widgets onlyButton={true} />
+            <Options onlyButton={true} />
+        </div>
+    </div>
 
-    <div class="col-6 d-flex justify-content-center"></div>
+    <div class="col-6 d-flex justify-content-center">
+        <div class="hstack gap-1">
+            {#if globalEditorView == EditorViews.PAGE}
+            <button class="iconButton selected" on:click={() => setEditorView(EditorViews.PAGE)}><i class="fa-brands fa-wordpress"></i></button>
+            {:else}
+            <button class="iconButton " on:click={() => setEditorView(EditorViews.PAGE)}><i class="fa-brands fa-wordpress"></i></button>
+            {/if}
+            <div class="vr"></div>
+            {#if globalEditorView == EditorViews.CODE}
+            <button class="iconButton  selected" on:click={() => setEditorView(EditorViews.CODE)}><i class="fa fa-code"></i></button>
+            {:else}
+            <button class="iconButton " on:click={() => setEditorView(EditorViews.CODE)}><i class="fa fa-code"></i></button>
+            {/if}
+            <div class="vr"></div>
+            {#if globalEditorView == EditorViews.DEBUG}
+            <button class="iconButton selected" on:click={() => setEditorView(EditorViews.DEBUG)}><i class="fa-solid fa-bug"></i></button>
+            {:else}
+            <button class="iconButton" on:click={() => setEditorView(EditorViews.DEBUG)}><i class="fa-solid fa-bug"></i></button>
+            {/if}
+        </div>
+    </div>
 
     <div class="col-3 d-flex justify-content-end align-items-end">
         <div class="hstack gap-1">
