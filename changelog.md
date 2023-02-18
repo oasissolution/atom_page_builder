@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 
 All notes are for developers, since this repository will not be public.
 
+
+## [0.0.1.004] - 2022-02-18
+
+### Added
+ - Blank layouts for editor and modules.
+ - App folder for root layout.
+ - Set group-layouts.
+
+### Changed
+ - Updated folder hierarchy and layouts.
+ - Editor panel is in an iframe now. Still needs to work on it (planned)
+
+### Fixed
+
+
 ## [0.0.1.003] - 2022-02-17
 
 ### Added
