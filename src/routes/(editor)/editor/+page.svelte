@@ -23,22 +23,24 @@
      * @param {string | undefined} uuid Unique identity string used in "globalComponentCollectionStore"
      */
     function setSelectedElement(uuid){
-        globalEditorPreferences.info = uuid;
-
+        //globalEditorPreferences.info = uuid;
+        //const data = {"selectedUuid": uuid};
+        window.parent.postMessage(uuid, '*'); //TODO: For security reasons add domain here
     }
 
     onMount(() => {
 
-        jQuery("#editorInnerPanel > *")
-        .on("mouseover", (e) => {
-            var target = e.target;
-            jQuery(target).addClass("hovered");
-            setSelectedElement(jQuery(target).attr("class"));
+        // jQuery("#editorInnerPanel > *")
+        //     .on("mouseover", (e) => {
+        //         var target = e.target;
+        //         jQuery(target).addClass("hovered");
+        //         // setSelectedElement(jQuery(target).attr("class"));
+        //         window.parent.postMessage(jQuery(target).attr("class"), '*');
 
-        }).on("mouseout", (e) => {
-            var target = e.target;
-            jQuery(target).removeClass("hovered");
-        });
+        //     }).on("mouseout", (e) => {
+        //         var target = e.target;
+        //         jQuery(target).removeClass("hovered");
+        //     });
 
 
 
@@ -49,17 +51,6 @@
 
 
 
-
-
-<div id="editorInnerPanel" class="clearfix" style='
-    --editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};
-    --editorMouseOverColor:{$globalEditorPreferencesStore.editorTheme.editorMouseOverColor};
-
-
-'
->
-    <input type="hidden" class="hovered col" />
-
     {#if $globalEditorViewStore == EditorViews.PAGE}
     <svelte:component this={Page}/>
     {:else if $globalEditorViewStore == EditorViews.CODE }
@@ -68,8 +59,19 @@
     <svelte:component this={Variables}/>
     {/if}
 
+<!-- <div id="editorInnerPanel" class="clearfix" style='
+    --editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};
+    --editorMouseOverColor:{$globalEditorPreferencesStore.editorTheme.editorMouseOverColor};
 
-</div> <!-- editorInnerPanel -->
+
+'
+>
+    <input type="hidden" class="hovered col" />
+
+    
+
+
+</div> editorInnerPanel -->
 
 
 
@@ -77,7 +79,7 @@
 
     /* @import "editorcss.css"; */
 
-    #editorInnerPanel{
+    /* #editorInnerPanel{
         width: var(--editorWidth) !important;
         height: 100vh;
         vertical-align: top;
@@ -85,18 +87,13 @@
         flex-direction: column;
         flex-wrap: wrap;
 
-        /* background-color: aliceblue; */
-
-        /* display: flex;
-        flex-direction: column;
-        flex-wrap: wrap; */
-    }
+    } */
 
     /* calc(var(--editorPanelWidth)* 25 / 100); */
 
-    .hovered{
+    /* .hovered{
         border: 2px solid var(--editorMouseOverColor);
-    }
+    } */
 
     /* .hovered{
         border: 2px solid aqua;

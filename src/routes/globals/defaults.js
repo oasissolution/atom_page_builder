@@ -44,5 +44,7 @@ export let editorBlankData =  [{
     "data": { 
         "text": "Drag & Drop to start!",
     },
-    "child": {}
+    "children": []
 }];
+
+
