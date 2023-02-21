@@ -1,5 +1,5 @@
 <script context="module">
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "./globalstores.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore } from "./globals/globalstores.js";
 
     /*
         These functions run once on page load.

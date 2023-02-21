@@ -1,6 +1,6 @@
 <script>
     import { onMount, onDestroy, SvelteComponent } from "svelte";
-    import "../app.css";
+    import "../../app.css";
     import {
         globalComponentCollectionStore,
         globalEditorPreferencesStore,
@@ -8,17 +8,17 @@
         globalLeftPanelContentStore,
         globalVisibilityStore,
         globalEditorViewStore
-    } from "./globalstores.js";
-    import { PanelDisplayStyles, MenuLocations } from "./globalconstants.js";
-    import Menu from "./menu.svelte";
-	import Info from "./info.svelte";
-    import Customize from "./menu_customize_page.svelte";
-    import Widgets from "./menu_widgets_page.svelte";
-    import Options from "./menu_options_page.svelte";
+    } from "../globals/globalstores.js";
+    import { PanelDisplayStyles, MenuLocations } from "../globals/globalconstants.js";
+    import Menu from "../menu/menu.svelte";
+	import Info from "../info.svelte";
+    import Customize from "../menu/customize/page.svelte";
+    import Widgets from "../menu/widgets/page.svelte";
+    import Options from "../menu/options/page.svelte";
 
-    import { loadVariables } from "./loadvariables.svelte";
+    import { loadVariables } from "../loadvariables.svelte";
 
-    import { editorDefaultPreferences, editorBlankData } from "./defaults.js";
+    import { editorDefaultPreferences, editorBlankData } from "../globals/defaults.js";
 
 
 
@@ -106,11 +106,7 @@
 </script>
 
 <svelte:head>
-    <script src={"/js/jquery-3.6.3.min.js"} />
-    <script src={"/js/all.js"} />
-
-    <link rel="stylesheet" href={"/css/all.css"}>
-    <link rel="stylesheet" href={"/bootstrap-icons/bootstrap-icons.css"}>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <title>Atom Page Builder</title>
 </svelte:head>
 

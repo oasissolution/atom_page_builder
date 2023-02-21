@@ -1,9 +1,9 @@
 <script>
-   import { globalEditorPreferencesStore } from "./globalstores.js";
+   import { globalEditorPreferencesStore } from "../../globals/globalstores.js";
 
-   import Menulocation from "./menu_customize_menulocation.svelte";
-   import Panellocation from "./menu_customize_panellocation.svelte";
-   import Theme from "./menu_customize_theme.svelte";
+   import Menulocation from "./settings/menulocation.svelte";
+   import Panellocation from "./settings/panellocation.svelte";
+   import Theme from "./settings/theme.svelte";
 
    /*
       THIS PAGE IS MAIN "CUSTOMIZE EDITOR" PAGE.

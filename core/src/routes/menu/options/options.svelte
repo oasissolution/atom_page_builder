@@ -1,5 +1,5 @@
 <script>
-      import { globalEditorPreferencesStore } from "./globalstores.js";
+      import { globalEditorPreferencesStore } from "../../globals/globalstores.js";
 
 
       /*

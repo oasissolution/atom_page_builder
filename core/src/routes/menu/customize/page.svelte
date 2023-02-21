@@ -1,10 +1,10 @@
 <script>
-    import { PanelDisplayStyles } from "./globalconstants.js";
-    import Hover from "./menu_customize_hover.svelte";
-    import Floating from "./menu_customize_floating.svelte";
-    import Settings from "./menu_customize_settings.svelte";
-	import Fixed from "./menu_customize_fixed.svelte";
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "./globalstores.js";
+    import { PanelDisplayStyles } from "../../globals/globalconstants.js";
+    import Hover from "./hover.svelte";
+    import Floating from "./floating.svelte";
+    import Settings from "./settings.svelte";
+	import Fixed from "./fixed.svelte";
+    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
 
     /**
      * Added for later use
@@ -146,7 +146,7 @@
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="fa-solid fa-gear"></i></button>
+    ' ><i class="bi bi-gear"></i></button>
 
     {:else}
     <button class="iconButton" on:click={toggleCustomizePanel} style='
@@ -156,7 +156,7 @@
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="fa-solid fa-gear"></i></button>
+    ' ><i class="bi bi-gear"></i></button>
     {/if}
 
 

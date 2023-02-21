@@ -2,7 +2,7 @@
 <script>
     import { onMount } from 'svelte';
     import jQuery from "jquery";
-    import { globalVisibilityStore } from "./globalstores.js";
+    import { globalVisibilityStore } from "../../globals/globalstores.js";
 
 
     /*

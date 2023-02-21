@@ -1,11 +1,11 @@
 <script>
 
-    import { PanelDisplayStyles } from "./globalconstants.js";
-    import Hover from "./menu_widgets_hover.svelte";
-    import Floating from "./menu_widgets_floating.svelte";
-    import Widgets from "./menu_widgets_widgets.svelte";
-	import Fixed from "./menu_widgets_fixed.svelte";
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "./globalstores.js";
+    import { PanelDisplayStyles } from "../../globals/globalconstants.js";
+    import Hover from "./hover.svelte";
+    import Floating from "./floating.svelte";
+    import Widgets from "./widgets.svelte";
+	import Fixed from "./fixed.svelte";
+    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
 
 
     /**
@@ -87,7 +87,7 @@
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="fa-solid fa-puzzle-piece"></i></button>
+    ' ><i class="bi bi-puzzle"></i></button>
 
     {:else}
     <button class="iconButton" on:click={toggleWidgetPanel} style='
@@ -97,7 +97,7 @@
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="fa-solid fa-puzzle-piece"></i></button>
+    ' ><i class="bi bi-puzzle"></i></button>
     {/if}
 
 

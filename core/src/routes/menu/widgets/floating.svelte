@@ -2,7 +2,7 @@
 <script>
     import { onMount } from 'svelte';
     import jQuery from "jquery";
-    import { globalVisibilityStore } from "./globalstores.js";
+    import { globalVisibilityStore } from "../../globals/globalstores.js";
 
 
     /*
@@ -15,8 +15,8 @@
     $: globalVisibilityStore.set(globalVisibility);
 
 
-    function toggleOptionsPanel(){
-        globalVisibility.optionPanel = !globalVisibility.optionPanel;
+    function toggleWidgetPanel(){
+        globalVisibility.customizePanel = !globalVisibility.customizePanel;
     }
 
 
@@ -69,7 +69,7 @@
 
     <div class="dialogTitle">
         <div class="d-inline">
-            <button class="btn btn-sm" on:click={toggleOptionsPanel}><i class="fa fa-xmark closeIcon"></i></button>
+            <button class="btn btn-sm" on:click={toggleWidgetPanel}><i class="fa fa-xmark closeIcon"></i></button>
             <slot name="title"></slot>
         </div>
     </div>

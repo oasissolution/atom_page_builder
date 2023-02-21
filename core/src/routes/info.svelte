@@ -1,6 +1,6 @@
 <script>
-    import { globalComponentCollectionStore, globalEditorPreferencesStore } from "./globalstores.js";
-    import { PanelDisplayStyles, MenuLocations } from "./globalconstants.js";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore } from "./globals/globalstores.js";
+    import { PanelDisplayStyles, MenuLocations } from "./globals/globalconstants.js";
 
     //Editor Theme settings
     let editorTheme = $globalEditorPreferencesStore.editorTheme;

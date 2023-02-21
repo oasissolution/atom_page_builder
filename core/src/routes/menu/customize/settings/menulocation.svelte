@@ -1,6 +1,6 @@
 <script>
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "./globalstores.js";
-    import { PanelDisplayStyles, MenuLocations } from "./globalconstants.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
+    import { PanelDisplayStyles, MenuLocations } from "../../../globals/globalconstants.js";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable

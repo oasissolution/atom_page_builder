@@ -1,10 +1,10 @@
 <script>
     import { onMount, onDestroy } from "svelte";
-    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore } from "./globalstores.js";
-    import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx, EditorViews } from "./globalconstants.js";
-    import Customize from "./menu_customize_page.svelte";
-    import Widgets from "./menu_widgets_page.svelte";
-    import Options from "./menu_options_page.svelte";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore } from "../globals/globalstores.js";
+    import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
+    import Customize from "./customize/page.svelte";
+    import Widgets from "./widgets/page.svelte";
+    import Options from "./options/page.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -108,21 +108,21 @@
     <div class="flex flex-1 mx-auto">
         <div class="flex flex-row gap-1 mx-auto">
             {#if globalEditorView == EditorViews.PAGE}
-            <button class="iconButton selected" on:click={() => setEditorView(EditorViews.PAGE)}><i class="fa-brands fa-wordpress"></i></button>
+            <button class="iconButton selected" on:click={() => setEditorView(EditorViews.PAGE)}><i class="bi bi-wordpress"></i></button>
             {:else}
-            <button class="iconButton " on:click={() => setEditorView(EditorViews.PAGE)}><i class="fa-brands fa-wordpress"></i></button>
+            <button class="iconButton " on:click={() => setEditorView(EditorViews.PAGE)}><i class="bi bi-wordpress"></i></button>
             {/if}
             <div class="vr"></div>
             {#if globalEditorView == EditorViews.CODE}
-            <button class="iconButton  selected" on:click={() => setEditorView(EditorViews.CODE)}><i class="fa fa-code"></i></button>
+            <button class="iconButton  selected" on:click={() => setEditorView(EditorViews.CODE)}><i class="bi bi-code-slash"></i></button>
             {:else}
-            <button class="iconButton " on:click={() => setEditorView(EditorViews.CODE)}><i class="fa fa-code"></i></button>
+            <button class="iconButton " on:click={() => setEditorView(EditorViews.CODE)}><i class="bi bi-code-slash"></i></button>
             {/if}
             <div class="vr"></div>
             {#if globalEditorView == EditorViews.DEBUG}
-            <button class="iconButton selected" on:click={() => setEditorView(EditorViews.DEBUG)}><i class="fa-solid fa-bug"></i></button>
+            <button class="iconButton selected" on:click={() => setEditorView(EditorViews.DEBUG)}><i class="bi bi-braces-asterisk"></i></button>
             {:else}
-            <button class="iconButton" on:click={() => setEditorView(EditorViews.DEBUG)}><i class="fa-solid fa-bug"></i></button>
+            <button class="iconButton" on:click={() => setEditorView(EditorViews.DEBUG)}><i class="bi bi-braces-asterisk"></i></button>
             {/if}
         </div>
     </div>
@@ -130,27 +130,27 @@
     <div class="float-right">
         <div class="flex flex-row gap-1 pr-3">
             {#if fullWidth == true}
-            <button class="iconButton selected" on:click={setFullWidth}><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
+            <button class="iconButton selected" on:click={setFullWidth}><i class="bi bi-fullscreen"></i></button>
             {:else}
-            <button class="iconButton " on:click={setFullWidth}><i class="fa-solid fa-arrows-left-right-to-line"></i></button>
+            <button class="iconButton " on:click={setFullWidth}><i class="bi bi-fullscreen"></i></button>
             {/if}
             <div class="vr"></div>
             {#if editorScreen == ScreenSize.DESKTOP}
-            <button class="iconButton  selected" on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="fa fa-desktop"></i></button>
+            <button class="iconButton  selected" on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="bi bi-display"></i></button>
             {:else}
-            <button class="iconButton " on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="fa fa-desktop"></i></button>
+            <button class="iconButton " on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="bi bi-display"></i></button>
             {/if}
             <div class="vr"></div>
             {#if editorScreen == ScreenSize.TABLET}
-            <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="fa-solid fa-tablet-screen-button"></i></button>
+            <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="bi bi-tablet"></i></button>
             {:else}
-            <button class="iconButton" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="fa-solid fa-tablet-screen-button"></i></button>
+            <button class="iconButton" on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="bi bi-tablet"></i></button>
             {/if}
             <div class="vr"></div>
             {#if editorScreen == ScreenSize.MOBILE}
-            <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="fa-solid fa-mobile-screen-button"></i></button>
+            <button class="iconButton selected" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="bi bi-phone"></i></button>
             {:else}
-            <button class="iconButton" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="fa-solid fa-mobile-screen-button"></i></button>
+            <button class="iconButton" on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="bi bi-phone"></i></button>
             {/if}
             <div class="spacer"></div>
             <Customize onlyButton={true} />

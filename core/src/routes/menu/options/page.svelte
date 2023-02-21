@@ -1,10 +1,10 @@
 <script>
-    import { PanelDisplayStyles } from "./globalconstants.js";
-    import Hover from "./menu_options_hover.svelte";
-    import Floating from "./menu_options_floating.svelte";
-    import Options from "./menu_options_options.svelte";
-	import Fixed from "./menu_options_fixed.svelte";
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "./globalstores.js";
+    import { PanelDisplayStyles } from "../../globals/globalconstants.js";
+    import Hover from "./hover.svelte";
+    import Floating from "./floating.svelte";
+    import Options from "./options.svelte";
+	import Fixed from "./fixed.svelte";
+    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
 
     /**
      * Added for later use
