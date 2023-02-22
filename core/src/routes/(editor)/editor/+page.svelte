@@ -1,6 +1,6 @@
 <script>
-    // import "../../../app.css";
-    import Svelte, { onMount, onDestroy } from "svelte";
+    import "../../../app.css";
+    import { onMount, onDestroy } from "svelte";
     import jQuery from "jquery";
 
 
