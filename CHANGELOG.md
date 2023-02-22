@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 All notes are for developers, since this repository will not be public.
 
 
+## [0.0.1.006] - 2022-02-22
+
+### Added
+
+
+### Changed
+ - Added some versions of editor.
+ - Build version of editor still needs work.
+
+### Fixed
+ - Editor panel now updates when mainFrame updates.
+
+
 ## [0.0.1.005] - 2022-02-21
 
 ### Added

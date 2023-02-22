@@ -1,9 +1,12 @@
 <script>
-    import "../../../app.css";
-    import { onMount, onDestroy } from "svelte";
+    // import "../../../app.css";
+    import Svelte, { onMount, onDestroy } from "svelte";
     import jQuery from "jquery";
 
+
     // export let name = "Nothing";
+
+    // export const prerender = true;
 
     /**
      * @type JSON
@@ -47,27 +50,33 @@
                 jQuery(target).removeClass("hovered");
             });
 
-            
 
 
          // Listen for messages from the outer page
         window.addEventListener('message', event => {
-            console.log("origin check");
+            // console.log("origin check");
             // Check that the message is from a trusted source
-            if (event.origin !== window.location.origin) { 
+            if (event.origin !== window.location.origin) {
                 return;
             }
-
+            // console.log("after origin check");
+            // console.log(event.data);
             // Get the data from the message
             const data = event.data.message;
 
-            console.log(data);
+            if(data === undefined){
+                console.log("Incoming data do not have message!");
+            }else{
+                // console.log("after message");
+                // console.log(data);
 
-            componentCollection = data.componentCollection;
-            editorPreferences = data.editorPreferences;
+                componentCollection = data.componentCollection;
+                editorPreferences = data.editorPreferences;
+            }
+
 
             // Do something with the data
-            console.log("data received"); // Output: "Hello from the outer page!"
+            // console.log("data received"); // Output: "Hello from the outer page!"
         });
 
 

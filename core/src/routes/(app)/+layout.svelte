@@ -20,7 +20,7 @@
 
     import { editorDefaultPreferences, editorBlankData } from "../globals/defaults.js";
 
-
+    export const prerender = true;
 
     /// Attach all data from database to this app.
     //TODO: fetch data from WP with rest Api
