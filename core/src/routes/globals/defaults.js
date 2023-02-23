@@ -11,7 +11,7 @@ export const editorDefaultPreferences = {
     "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "info":"Hover to see info!",
-    "build":"dev", //release
+    "build":"dev", //release - dev
     "editorTheme": {
         "backgroundFrameColor": "#474e6818",
         "backgroundColor": "#404258",

@@ -150,7 +150,7 @@
             </Editortree> -->
         {/each}
     {:else}
-    <div class="w-full h-full place-content-center text-2x" > <span>Loading...</span> </div>
+    <div class="w-full h-full flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
     {/if}
     
 
