@@ -5,6 +5,7 @@
     import Customize from "./customize/page.svelte";
     import Widgets from "./widgets/page.svelte";
     import Options from "./options/page.svelte";
+    import Layers from "./layers/page.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -102,6 +103,7 @@
         <div class="flex flex-row gap-1 pl-3">
             <Widgets onlyButton={true} />
             <Options onlyButton={true} />
+            <Layers onlyButton={true} />
         </div>
     </div>
 

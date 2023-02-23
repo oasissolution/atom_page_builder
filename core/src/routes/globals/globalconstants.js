@@ -122,4 +122,5 @@ export const PanelDefinitions = [
     {"name":"Customize Panel",  "style": "customizePanelDisplayStyle"   },
     {"name":"Widgets Panel",    "style": "widgetPanelDisplayStyle"      },
     {"name":"Options Panel",    "style": "optionPanelDisplayStyle"      },
+    {"name":"Layers Panel",    "style": "layerPanelDisplayStyle"      },
 ];

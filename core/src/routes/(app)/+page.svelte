@@ -17,6 +17,7 @@
     let globalEditorPreferences = $globalEditorPreferencesStore;
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
+    let buildType = globalEditorPreferences.build;
 
     let loaded = false;
 
@@ -36,7 +37,15 @@
 
 
     $: $globalComponentCollectionStore, (() => {
+
         if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
+
+            if(buildType == "release"){
+                if(editorFrame.src !== "/atompagebuilder/app/editor"){
+                    editorFrame.src = "/atompagebuilder/app/editor";
+                };
+            }
+
             console.log("Send data on globalComponentCollectionStore !");
             const data = {
                 "message": {
@@ -71,10 +80,11 @@
             editorFrame.contentWindow.postMessage(data, '*');
         });
 
+        if(buildType == "release"){
+            editorFrame.src = "/atompagebuilder/app/editor";
+        }
 
-
-
-
+        
 
     });
 

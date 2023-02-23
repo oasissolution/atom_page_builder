@@ -9,7 +9,9 @@ export const editorDefaultPreferences = {
     "widgetPanelDisplayStyle" : "panelDisplayStyleFixedLeft",
     "customizePanelDisplayStyle" : "panelDisplayStyleFixedLeft",
     "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
+    "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "info":"Hover to see info!",
+    "build":"dev", //release
     "editorTheme": {
         "backgroundFrameColor": "#474e6818",
         "backgroundColor": "#404258",
@@ -44,7 +46,54 @@ export let editorBlankData =  [{
     "data": { 
         "text": "Drag & Drop to start!",
     },
-    "children": []
+    "children": [
+        {
+            "uuid": uuidv4().toString(),
+            "type": "div",
+            "data": { 
+                "class":"text-2xl h-[100px] bg-teal-800 flex place-content-center items-center",
+                "text": "Div test 1",
+            },
+            "children": [
+                {
+                    "uuid": uuidv4().toString(),
+                    "type": "div",
+                    "data": { 
+                        "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center",
+                        "text": "Div test 3",
+                    },
+                    "children": [
+                        {
+                            "uuid": uuidv4().toString(),
+                            "type": "text",
+                            "data": { 
+                                "class":"flex place-content-center text-lg",
+                                "text": "Div test 4",
+                            },
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "uuid": uuidv4().toString(),
+            "type": "div",
+            "data": { 
+                "class":"place-content-center bg-teal-600 w-[300px]",
+                "text": "Div test 2",
+            },
+            "children": []
+        }
+    ]
 }];
 
 
+// export let editorBlankData =  [{
+//     "uuid": uuidv4().toString(),
+//     "type": "body",
+//     "data": { 
+//         "text": "Drag & Drop to start!",
+//     },
+//     "children": []
+// }];

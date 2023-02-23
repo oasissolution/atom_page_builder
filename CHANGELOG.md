@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 All notes are for developers, since this repository will not be public.
 
 
+
+## [0.0.1.007] - 2022-02-23
+
+### Added
+ - Layers Panel (Treeview of elements in Json - style will be added later) 
+ - Basic modules Body, Div, Text (extra props, options will be added later)
+ - Setting to defaults for build type. (Needed for release version variable settings)
+
+### Changed
+ - Editor panel started to show elements in Json.
+ - Build version works in "http://localhost/atompagebuilder/app/" 
+ - Build files must be in server "/var/www/html/atompagebuilder/app/" folder. Does NOT run on double click in local folder.
+
+### Fixed
+ - Build version now works properly as in dev version.
+
+
+
 ## [0.0.1.006] - 2022-02-22
 
 ### Added

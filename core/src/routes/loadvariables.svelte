@@ -13,6 +13,7 @@
         customizePanelSetUp();
         widgetPanelSetUp();
         optionPanelSetUp();
+        layerPanelSetUp();
     }
 
     /**
@@ -160,5 +161,60 @@
             globalVisibilityStore.set(globalVisibility);
         }
     }
+
+
+      /**
+     * Registers parameters needed by "Layers" panel to "globalVisibilityStore"
+     */
+     function layerPanelSetUp(){
+        let globalVisibility = globalVisibilityStore;
+        let edited = false;
+        if(globalVisibility.hasOwnProperty("left")){
+            if(globalVisibility.left.hasOwnProperty("layerPanel")){
+                ///Do nothing
+            }else{
+                globalVisibility.left.layerPanel = false;
+                edited = true;
+            }
+        }else{
+            globalVisibility.left = {};
+            globalVisibility.left.layerPanel = false;
+            edited = true;
+        }
+        if(globalVisibility.hasOwnProperty("right")){
+            if(globalVisibility.right.hasOwnProperty("layerPanel")){
+                ///Do nothing
+            }else{
+                globalVisibility.right.layerPanel = false;
+                edited = true;
+            }
+        }else{
+            globalVisibility.right = {};
+            globalVisibility.right.layerPanel = false;
+            edited = true;
+        }
+        if(globalVisibility.hasOwnProperty("default")){
+            if(globalVisibility.default.hasOwnProperty("layerPanel")){
+                ///Do nothing
+            }else{
+                globalVisibility.default.layerPanel = false;
+                edited = true;
+            }
+        }else{
+            globalVisibility.default = {};
+            globalVisibility.default.layerPanel = false;
+            edited = true;
+        }
+
+        if(edited){
+            globalVisibilityStore.set(globalVisibility);
+        }
+    }
+
+
+
+
+
+
 
 </script>

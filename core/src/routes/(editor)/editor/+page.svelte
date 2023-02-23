@@ -2,53 +2,77 @@
     import "../../../app.css";
     import { onMount, onDestroy } from "svelte";
     import jQuery from "jquery";
-
+    import Editortree from "./editortree.svelte";
 
     // export let name = "Nothing";
 
     // export const prerender = true;
 
     /**
-     * @type JSON
+     * @type []
      */
     let componentCollection;
     /**
-     * @type JSON
+     * @type []
      */
     let editorPreferences;
 
     /**
-     * @type JSON
+     * @type []
      */
     let componentCollectionInside;
     $: componentCollection,  (()=>{
         componentCollectionInside = componentCollection;
+        // loadModule(componentCollection);
     })();
 
     /**
-     * @type JSON
+     * @type []
      */
     let editorPreferencesInside;
     $: editorPreferences,  (()=>{
         editorPreferencesInside = editorPreferences;
+        
     })();
 
+
+    let pageResult;
 
 
     onMount(() => {
 
+        // jQuery(()=>{
+        //     jQuery("#editorInnerPanel > *")
+        //     .on("mouseover", (e) => {
+        //         var target = e.target;
+        //         jQuery(target).addClass("hovered");
+        //         // setSelectedElement(jQuery(target).attr("class"));
+        //         window.parent.postMessage(jQuery(target).attr("class"), '*');
+
+        //     }).on("mouseout", (e) => {
+        //         var target = e.target;
+        //         jQuery(target).removeClass("hovered");
+
+        //     });
+        // });
 
         jQuery("#editorInnerPanel > *")
             .on("mouseover", (e) => {
                 var target = e.target;
-                jQuery(target).addClass("hovered");
-                // setSelectedElement(jQuery(target).attr("class"));
-                window.parent.postMessage(jQuery(target).attr("class"), '*');
-
+                if(target.id != "atomBody"){
+                    jQuery(target).addClass("hovered");
+                    // setSelectedElement(jQuery(target).attr("class"));
+                    window.parent.postMessage(jQuery(target).attr("class"), '*');
+                }
             }).on("mouseout", (e) => {
                 var target = e.target;
                 jQuery(target).removeClass("hovered");
+
             });
+            // .on("click", (e) => {
+            //     var target = e.target;
+            //     console.log(target.innerHTML);
+            // });
 
 
 
@@ -80,36 +104,61 @@
         });
 
 
-
-
-
-            // add eventlistener for @ here to listen from parent !
-
-            // globalComponentCollectionStore.subscribe(data => {
-            //     window.parent.postMessage(data, '*');
-            // });
-
-            // globalEditorPreferencesStore.subscribe(data => {
-            //     window.parent.postMessage(data, '*');
-            // });
-
-            // globalEditorViewStore.subscribe(data => {
-            //     window.parent.postMessage(data, '*');
-            // });
-
-
-  
-
     });
 
 
    
+    //TODO: import all modules dynamically
+
+    import Body from "../../(modules)/modules/body.svelte";
+    import Div from "../../(modules)/modules/div.svelte";
+    import Text from "../../(modules)/modules/text.svelte";
+
+    /**
+     * @returns {JSON}
+     */
+    const JsonOfModules = {
+        "body": Body,
+        "div": Div,
+        "text": Text,
+    };
+
 
 </script>
 
 <input type="hidden" class="hovered" />
 
 <div id="editorInnerPanel">
+
+    {#if componentCollection}
+        <!-- {#each componentCollection as component}
+            {component}
+            <pre>{JSON.stringify(component, null, 2)}</pre>
+            {loadModule(component)}
+        {/each} -->
+        <!-- {pageResult} -->
+        {#each componentCollection as component}
+            <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}>
+            <Editortree component={component} JsonOfModules={JsonOfModules}></Editortree>
+            </svelte:component>
+            
+            <!-- <Editortree component={component} JsonOfModules={JsonOfModules}>
+                <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}></svelte:component>
+            </Editortree> -->
+            <!-- <Editortree {component} let:component>
+                <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}></svelte:component>;
+            </Editortree> -->
+        {/each}
+    {:else}
+    <div class="w-full h-full place-content-center text-2x" > <span>Loading...</span> </div>
+    {/if}
+    
+
+
+
+
+
+<!-- 
     <div class="w-full text-3xl md:text-sky-300" > Editor Page says Helloo  </div>
 
     <div class="w-full flex flex-wrap">
@@ -121,7 +170,7 @@
 
             <pre>{JSON.stringify(editorPreferencesInside, null, 2)}</pre>
         </div>
-    </div>
+    </div> -->
 
 </div> <!-- editorInnerPanel -->
 

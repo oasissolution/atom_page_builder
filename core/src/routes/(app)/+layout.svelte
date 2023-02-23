@@ -15,6 +15,7 @@
     import Customize from "../menu/customize/page.svelte";
     import Widgets from "../menu/widgets/page.svelte";
     import Options from "../menu/options/page.svelte";
+	import Layers from "../menu/layers/page.svelte";
 
     import { loadVariables } from "../loadvariables.svelte";
 
@@ -66,6 +67,8 @@
     rightPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle" });
     leftPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle"  });
 
+    rightPanelContentStore.push({"component":Layers, "name":"Layers", "ds": "layerPanelDisplayStyle" });
+    leftPanelContentStore.push({"component":Layers, "name":"Layers", "ds": "layerPanelDisplayStyle"  });
 
 
 
