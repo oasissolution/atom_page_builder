@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 
-    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore } from "../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalSelectedElementStore } from "../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
 
     import Code from "../(editor)/editor/code.svelte";
@@ -16,6 +16,9 @@
 
     let globalEditorPreferences = $globalEditorPreferencesStore;
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
+
+    let globalSelectedElement = $globalSelectedElementStore;
+    $: globalSelectedElementStore.set(globalSelectedElement);
 
     let buildType = globalEditorPreferences.build;
 
@@ -63,7 +66,9 @@
             // if(event.source !== frame.content){
             //     return;
             // }
-            globalEditorPreferences.info = event.data;
+            /// infoya yüklediğimde sayfayı yeniliyor.
+            // globalEditorPreferences.info = event.data;
+            globalSelectedElement = event.data;
         });
 
         loaded = true;

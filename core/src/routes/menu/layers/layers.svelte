@@ -42,7 +42,7 @@
 
 {#each $globalComponentCollectionStore as component}
     <Layerstree {component} let:component>
-      <span class="align-middle"></span>{component.type} <span class="text-[8px] align-middle">{component.uuid}</span> 
+      <span class="align-middle">{component.type}</span> <span class="text-[8px] align-middle">{component.uuid}</span> 
         <!-- {component.type} - {component.uuid} -->
         <!-- {#if component.type == "body"}
         BODY

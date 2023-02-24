@@ -95,3 +95,12 @@ export let globalLeftPanelContentStore = writable([]);
 * @type {Writable<String>}
 */
 export let globalEditorViewStore = writable(EditorViews.PAGE);
+
+
+/**
+* Global variable which holds selected elements uuid in Editor panel.
+* @global
+*
+* @type {Writable<String>}
+*/
+export let globalSelectedElementStore = writable("");

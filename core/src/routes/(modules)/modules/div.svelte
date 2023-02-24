@@ -60,6 +60,11 @@
      */
     let bindElement;
 
+    /**
+     * @type HTMLElement
+     */
+     let bindElementActions;
+
 
     onMount(() => {
 
@@ -94,23 +99,70 @@
 
         //     });
 
+        // function selectElement(){
+        //     window.parent.postMessage(uuid, '*');
+        // }
+
+        window.addEventListener("mousedown", (ev) => {
+            if(ev.target){
+                if(ev.target !== bindElement && ev.target !== bindElementActions && ev.target.classList.contains("atomDivCtl") === false){
+                    elementSelected = false;
+                }
+            }
+            
+        });
         
     });
 
-    function blankFunction(){
 
+    let elementSelected = false;
+
+    function selectElement(){
+        window.parent.postMessage(uuid, '*');
+        elementSelected = true;
+        
+        const rect = bindElement.getBoundingClientRect();
+        var _class = "";
+        _class += "atomDivEditor"; //bindElementActions.getAttribute("class");
+        _class += " w-["+rect.width+"px]";
+        _class += " h-["+rect.height+"px]";
+        _class += " top-["+rect.top+"px]";
+        _class += " left-["+rect.left+"px]";
+
+        console.log("rect : "+ JSON.stringify(rect.toJSON));
+        console.log("class : "+ _class);
+
+        // bindElementActions.setAttribute("class", _class);
+
+        
+    }
+
+    function deSelectElement(){
+        window.parent.postMessage(uuid, '*');
+        elementSelected = false;
+    }
+
+    function editButtonPress(){
+        alert("Button clicked!");
     }
 
 </script>
 
 <input type="hidden" class="atomDiv" />
 
-<div bind:this={bindElement} data-uuid="{uuid}" on:mousedown={window.parent.postMessage(bindElement.getAttribute("class"), '*')} >
+<div bind:this={bindElement} data-uuid="{uuid}" class:atomDivSelected={elementSelected} on:mousedown|self={selectElement}>
     <slot>
     <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
     </slot>
 </div>
 
+<div bind:this={bindElementActions} class="atomDivEditor" class:invisible={!elementSelected}>
+
+    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 atomDivCtl">
+        <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black atomDivCtl" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
+    </div>
+
+</div>
 
 <style>
 
@@ -118,8 +170,18 @@
         border: none;
     }
 
-    .atomDiv:hover {
+    /* .atomDiv:hover {
         border: 2px solid aqua;
+    } */
+
+    .atomDivSelected{
+        border: 2px dotted aqua;
+    }
+
+    .atomDivEditor{
+        position: absolute;
+        z-index: 100;
+        border: 2px dotted aqua;
     }
 
 

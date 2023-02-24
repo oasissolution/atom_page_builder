@@ -77,12 +77,26 @@
         if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
         if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
 
+        window.addEventListener("mousedown", (ev) => {
+            if(ev.target !== bindElement){
+                elementSelected = false;
+            }
+        });
+
     });
 
+    let elementSelected = false;
+
+    function selectElement(){
+        window.parent.postMessage(uuid, '*');
+        elementSelected = true;
+    }
+
+    console.log("Text displayed !");
 
 </script>
 
-<span bind:this={bindElement} data-uuid="{uuid}" >
+<span bind:this={bindElement} data-uuid="{uuid}" class:atomDivSelected={elementSelected} on:mousedown|self={selectElement} >
     <slot>
         Default Text
     </slot>

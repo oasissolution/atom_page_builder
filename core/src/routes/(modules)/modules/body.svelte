@@ -81,7 +81,9 @@
     </slot>
 </div>
 
-
+<!-- <div>
+    {bindElement.innerHTML}
+</div> -->
 
 <style>
     /* #atomBody{

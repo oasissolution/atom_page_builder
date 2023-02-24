@@ -36,9 +36,6 @@
     })();
 
 
-    let pageResult;
-
-
     onMount(() => {
 
         // jQuery(()=>{
@@ -104,12 +101,11 @@
             // console.log("data received"); // Output: "Hello from the outer page!"
         });
 
-
     });
 
 
    
-    //TODO: import all modules dynamically
+    // TODO: import all modules dynamically
 
     import Body from "../../(modules)/modules/body.svelte";
     import Div from "../../(modules)/modules/div.svelte";
@@ -132,49 +128,17 @@
 <div id="editorInnerPanel">
 
     {#if componentCollection}
-        <!-- {#each componentCollection as component}
-            {component}
-            <pre>{JSON.stringify(component, null, 2)}</pre>
-            {loadModule(component)}
-        {/each} -->
-        <!-- {pageResult} -->
         {#each componentCollection as component}
             <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}>
             <Editortree component={component} JsonOfModules={JsonOfModules}></Editortree>
             </svelte:component>
-            
-            <!-- <Editortree component={component} JsonOfModules={JsonOfModules}>
-                <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}></svelte:component>
-            </Editortree> -->
-            <!-- <Editortree {component} let:component>
-                <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}></svelte:component>;
-            </Editortree> -->
         {/each}
     {:else}
     <div class="w-full h-full flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
     {/if}
-    
-
-
-
-
-
-<!-- 
-    <div class="w-full text-3xl md:text-sky-300" > Editor Page says Helloo  </div>
-
-    <div class="w-full flex flex-wrap">
-        <div class="flex-1">
-
-            <pre>{JSON.stringify(componentCollectionInside, null, 2)}</pre>
-        </div>
-        <div class="flex-1">
-
-            <pre>{JSON.stringify(editorPreferencesInside, null, 2)}</pre>
-        </div>
-    </div> -->
 
 </div> <!-- editorInnerPanel -->
-
+    
 
 <style>
 

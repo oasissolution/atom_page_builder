@@ -6,6 +6,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.010] - 2022-02-24
+
+### Added
+ - Selected item is highlighted at layers panel.
+
+### Changed
+ - Started on select statements of div.
+
+### Fixed
+
+
 ## [0.0.1.009] - 2022-02-24
 
 ### Added
@@ -15,10 +27,7 @@ All notes are for developers, since this repository will not be public.
  - Removed temporary backup folder.
  - Revised vertical menu
 
-
 ### Fixed
-
-
 
 
 ## [0.0.1.008] - 2022-02-23
