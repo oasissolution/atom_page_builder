@@ -70,7 +70,6 @@
         if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
         if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
 
-
     });
 
 

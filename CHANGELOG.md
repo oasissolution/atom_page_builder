@@ -5,6 +5,22 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.009] - 2022-02-24
+
+### Added
+
+
+### Changed
+ - Removed temporary backup folder.
+ - Revised vertical menu
+
+
+### Fixed
+
+
+
+
 ## [0.0.1.008] - 2022-02-23
 
 ### Added

@@ -55,20 +55,21 @@
 
         //     });
         // });
+        
+        // jQuery("#editorInnerPanel > *") 
+        // jQuery("#atomBody > *") 
+        //     .on("mouseover", (e) => {
+        //         var target = e.target;
+        //         if(target.id != "atomBody"){
+        //             jQuery(target).addClass("hovered");
+        //             // setSelectedElement(jQuery(target).attr("class"));
+        //             window.parent.postMessage(jQuery(target).attr("class"), '*');
+        //         }
+        //     }).on("mouseout", (e) => {
+        //         var target = e.target;
+        //         jQuery(target).removeClass("hovered");
 
-        jQuery("#editorInnerPanel > *")
-            .on("mouseover", (e) => {
-                var target = e.target;
-                if(target.id != "atomBody"){
-                    jQuery(target).addClass("hovered");
-                    // setSelectedElement(jQuery(target).attr("class"));
-                    window.parent.postMessage(jQuery(target).attr("class"), '*');
-                }
-            }).on("mouseout", (e) => {
-                var target = e.target;
-                jQuery(target).removeClass("hovered");
-
-            });
+        //     });
             // .on("click", (e) => {
             //     var target = e.target;
             //     console.log(target.innerHTML);
@@ -187,7 +188,7 @@
         flex-wrap: wrap; */
     }
 
-    .hovered{
+    :global().hovered{
         border: 2px solid aqua; /* var(--editorMouseOverColor); */
     }
 

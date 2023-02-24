@@ -70,7 +70,7 @@
         if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex);
 
 
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class);
+        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + " atomDiv");
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
         if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden);
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -80,12 +80,32 @@
 
 
 
+        // jQuery(bindElement)
+        //     .on("mouseover", (e) => {
+        //         var target = e.target;
+        //         if(target.id != "atomBody"){
+        //             jQuery(target).addClass("hovered");
+        //             // setSelectedElement(jQuery(target).attr("class"));
+        //             window.parent.postMessage(jQuery(target).attr("class"), '*');
+        //         }
+        //     }).on("mouseout", (e) => {
+        //         var target = e.target;
+        //         jQuery(target).removeClass("hovered");
+
+        //     });
+
+        
     });
 
+    function blankFunction(){
+
+    }
 
 </script>
 
-<div bind:this={bindElement} data-uuid="{uuid}" >
+<input type="hidden" class="atomDiv" />
+
+<div bind:this={bindElement} data-uuid="{uuid}" on:mousedown={window.parent.postMessage(bindElement.getAttribute("class"), '*')} >
     <slot>
     <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
     </slot>
@@ -93,5 +113,14 @@
 
 
 <style>
+
+    .atomDiv{
+        border: none;
+    }
+
+    .atomDiv:hover {
+        border: 2px solid aqua;
+    }
+
 
 </style>

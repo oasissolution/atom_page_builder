@@ -83,7 +83,17 @@ export let editorBlankData =  [{
                 "class":"place-content-center bg-teal-600 w-[300px]",
                 "text": "Div test 2",
             },
-            "children": []
+            "children": [
+                {
+                    "uuid": uuidv4().toString(),
+                    "type": "text",
+                    "data": { 
+                        "class":"flex place-content-center text-lg mt-2",
+                        "text": "Div test 5",
+                    },
+                    "children": []
+                }
+            ]
         }
     ]
 }];
