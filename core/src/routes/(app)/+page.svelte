@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 
-    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalSelectedElementStore } from "../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalSelectedElementUuidStore } from "../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
 
     import Code from "../(editor)/editor/code.svelte";
@@ -17,8 +17,8 @@
     let globalEditorPreferences = $globalEditorPreferencesStore;
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
-    let globalSelectedElement = $globalSelectedElementStore;
-    $: globalSelectedElementStore.set(globalSelectedElement);
+    let globalSelectedElement = $globalSelectedElementUuidStore;
+    $: globalSelectedElementUuidStore.set(globalSelectedElement);
 
     let buildType = globalEditorPreferences.build;
 
@@ -102,7 +102,6 @@
     {#if $globalEditorViewStore == EditorViews.PAGE}
 
     <iframe id="editorFrame" bind:this={editorFrame} src="/editor" title="Editor" class=""  style='--editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};'></iframe>
-
 
     {:else if $globalEditorViewStore == EditorViews.CODE }
     <svelte:component this={Code}/>

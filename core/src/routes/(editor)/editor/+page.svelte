@@ -3,6 +3,7 @@
     import { onMount, onDestroy } from "svelte";
     import jQuery from "jquery";
     import Editortree from "./editortree.svelte";
+    import Selector from "../../(shared)/shared/selector.svelte";
 
     // export let name = "Nothing";
 
@@ -137,8 +138,12 @@
     <div class="w-full h-full flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
     {/if}
 
+
+<svelte:component this={Selector} />
+
 </div> <!-- editorInnerPanel -->
     
+
 
 <style>
 

@@ -6,6 +6,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.011] - 2022-02-27
+
+### Added
+ - Selector shared module. (By means of "shared", these modules are used by all (modules)/modules in editor.)
+ - Test build in public folder. Please read README.md there.
+
+### Changed
+ - Selection of div elements changed in workflow. Now they trigger selector shared module.
+
+### Fixed
+
+
 
 ## [0.0.1.010] - 2022-02-24
 

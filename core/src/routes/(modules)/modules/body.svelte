@@ -1,6 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onMount } from "svelte";
+    import { globalSelectedElementStore } from "../../globals/globalstores.js";
 
     /**
      * uuid of element
@@ -70,12 +71,19 @@
         if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
         if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
 
+        bindElement.addEventListener("mousedown", (ev) => {
+            if(ev.target){
+                globalSelectedElementStore.set(null);
+            }
+            
+        });
+
     });
 
 
 </script>
 
-<div id="atomBody" bind:this={bindElement} data-uuid="{uuid}" >
+<div bind:this={bindElement} id="{uuid}" > <!-- atomBody -->
     <slot>
         <div class="w-full h-full flex align-middle justify-center content-center"><span class="">{text}</span></div>
     </slot>

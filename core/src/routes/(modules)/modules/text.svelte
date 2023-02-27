@@ -96,7 +96,7 @@
 
 </script>
 
-<span bind:this={bindElement} data-uuid="{uuid}" class:atomDivSelected={elementSelected} on:mousedown|self={selectElement} >
+<span bind:this={bindElement} id="{uuid}" class:atomDivSelected={elementSelected} on:mousedown|self={selectElement} >
     <slot>
         Default Text
     </slot>

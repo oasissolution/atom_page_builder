@@ -1,6 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onMount } from "svelte";
+    import { globalSelectedElementStore } from "../../globals/globalstores.js";
 
     /**
      * uuid of element
@@ -65,6 +66,13 @@
      */
      let bindElementActions;
 
+    /**
+     * @type HTMLElement
+     */
+    let selectedElement = $globalSelectedElementStore;
+    //Update global data whenever selectedElement changes.
+    $: globalSelectedElementStore.set(selectedElement);
+
 
     onMount(() => {
 
@@ -75,7 +83,7 @@
         if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex);
 
 
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + " atomDiv");
+        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + " atomDiv selectedBorder");
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
         if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden);
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -111,6 +119,24 @@
             }
             
         });
+
+
+        // var m_pos;
+        // function resize(e){
+        //     var parent = bindElement.parentNode;
+        //     var dx = m_pos - e.x;
+        //     m_pos = e.x;
+        //     parent.style.width = (parseInt(getComputedStyle(parent, '').width) + dx) + "px";
+        // }
+
+        
+        // bindElement.addEventListener("mousedown", function(e){
+        //     m_pos = e.x;
+        //     document.addEventListener("mousemove", resize, false);
+        // }, false);
+        // document.addEventListener("mouseup", function(){
+        //     document.removeEventListener("mousemove", resize, false);
+        // }, false);
         
     });
 
@@ -120,21 +146,64 @@
     function selectElement(){
         window.parent.postMessage(uuid, '*');
         elementSelected = true;
-        
-        const rect = bindElement.getBoundingClientRect();
-        var _class = "";
-        _class += "atomDivEditor"; //bindElementActions.getAttribute("class");
-        _class += " w-["+rect.width+"px]";
-        _class += " h-["+rect.height+"px]";
-        _class += " top-["+rect.top+"px]";
-        _class += " left-["+rect.left+"px]";
 
-        console.log("rect : "+ JSON.stringify(rect.toJSON));
-        console.log("class : "+ _class);
+        /**
+         * @type string
+        */
+        // var _class_last = bindElementActions.getAttribute("class")?.trim();
+
+        /**
+         * @type string
+        */
+        // var _class = "";
+
+        /// Remove old rectangle settings if exist
+        /// Since this is a specific HTMLElement that we use, user can NOT or developer should NOT edit class. Hence it is safe to remove these.
+        // _class_last.split(" ").forEach((cls) => {
+        //     if( cls.startsWith("w-[") || cls.startsWith("h-[") || cls.startsWith("top-[") || cls.startsWith("left-[") || cls.startsWith("z-") ){
+        //         //do nothing, so will not be added to class
+        //     }else{
+        //         _class +=" " + cls;
+        //     }
+        // });
+
+        
+        /**
+         * Position and dimension data of selected element.
+         * @type DOMRect
+         */
+        // const rect = bindElement.getBoundingClientRect();
+
+        // _class += " w-["+rect.width+"px]";
+        // _class += " h-["+rect.height+"px]";
+        // _class += " top-["+rect.top+"px]";
+        // _class += " left-["+rect.left+"px]";
+
+        // console.log(_class);
 
         // bindElementActions.setAttribute("class", _class);
 
-        
+        // console.log(bindElement.getAttribute("class"));
+
+        // const rect = bindElement.getBoundingClientRect();
+        // var _class = "";
+        // _class += "atomDivEditor"; //bindElementActions.getAttribute("class");
+        // _class += " w-["+rect.width+"px]";
+        // _class += " h-["+rect.height+"px]";
+        // _class += " top-["+rect.top+"px]";
+        // _class += " left-["+rect.left+"px]";
+
+        // console.log("rect : "+ JSON.stringify(rect.toJSON));
+        // console.log("class : "+ _class);
+
+        // bindElementActions.setAttribute("class", _class);
+
+        console.log("elementSelected = true;");
+
+        // update global variable, so selector activates
+        selectedElement = bindElement;
+
+        console.log("selectedElement = bindElement;");
     }
 
     function deSelectElement(){
@@ -146,25 +215,57 @@
         alert("Button clicked!");
     }
 
+
+
+
+
 </script>
 
-<input type="hidden" class="atomDiv" />
+<input type="hidden" class="atomDiv selectedBorder" />
 
-<div bind:this={bindElement} data-uuid="{uuid}" class:atomDivSelected={elementSelected} on:mousedown|self={selectElement}>
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}> <!-- class:atomDivSelected={elementSelected} -->
+
     <slot>
     <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
     </slot>
+
 </div>
 
-<div bind:this={bindElementActions} class="atomDivEditor" class:invisible={!elementSelected}>
+<!-- <div bind:this={bindElementActions} class="absolute selectedBorder z-50" class:invisible={!elementSelected}> 
+    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
+
+    </div>
+</div>  -->
+
+
+<!-- 
+<div class="absolute w-full h-full selectedBorder" class:invisible={!elementSelected} class:-z-10={!elementSelected}> 
+
+
+    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl" class:invisible={!elementSelected} class:-z-10={!elementSelected}>
+
+    </div>
+
+
+
+    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
+
+    </div>
+</div> -->
+
+<!-- <div bind:this={bindElementActions} class="atomDivEditor" class:invisible={!elementSelected}>
 
     <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 atomDivCtl">
         <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black atomDivCtl" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
     </div>
 
-</div>
+</div> -->
 
 <style>
+
+    .selectedBorder{
+        border: 2px dotted aqua;
+    }
 
     .atomDiv{
         border: none;
@@ -174,7 +275,7 @@
         border: 2px solid aqua;
     } */
 
-    .atomDivSelected{
+    /* .atomDivSelected{
         border: 2px dotted aqua;
     }
 
@@ -182,7 +283,7 @@
         position: absolute;
         z-index: 100;
         border: 2px dotted aqua;
-    }
+    } */
 
 
 </style>
