@@ -149,6 +149,7 @@
     function selectElement(){
         window.parent.postMessage(uuid, '*');
         elementSelected = true;
+        
 
         /**
          * @type string
@@ -232,7 +233,7 @@
     
 
 
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}> <!-- style="--divZIndex:{divZIndex};" class:atomDivSelected={elementSelected} -->
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} > <!-- style="--divZIndex:{divZIndex};" class:atomDivSelected={elementSelected} -->
 
    
     <slot> 
@@ -289,7 +290,7 @@
     }
 
     .atomDiv{
-        border: none;
+        /* border: none; */
     }
 
     /* .divSlot{

@@ -72,6 +72,7 @@
             /// infoya yüklediğimde sayfayı yeniliyor.
             // globalEditorPreferences.info = event.data;
             globalSelectedElement = event.data;
+            //TODO: add css to globalComponentCollectionStore JSON to selected uuid to show its selected OR make a routine for selected element ?? 
         });
 
         loaded = true;

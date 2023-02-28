@@ -11,6 +11,12 @@
     let atomSelector;
 
     /**
+    * Main selector div and actions binding.
+    * @type HTMLElement
+    */
+    let atomSelectorActions;
+
+    /**
      * @type HTMLCollection
      */
     let divChildren;
@@ -18,8 +24,9 @@
 
     let selectorPositionDataWidth = "100px";
     let selectorPositionDataHeight = "100px";
-    let selectorPositionDataLeft = "100px";
-    let selectorPositionDataTop = "100px";
+    let selectorPositionDataLeft = "-100px";
+    let selectorPositionDataTop = "-100px";
+    let atomSelectorActionsWidth = "68px";
 
 
     $: $globalSelectedElementStore, (updateSelector)();
@@ -35,7 +42,7 @@
 
         //     console.log("minZIndexLatter: " + minZIndexLatter + " | maxZIndexLatter:" + maxZIndexLatter);
 
-        //     /// Now we know all min and max z-indexes. So we can place atomSelector now. 
+        //     /// Now we know all min and max z-indexes. So we can place atomSelector now.
         //     if(minZIndexLatter >= 0 && maxZIndexLatter < 45){ //smaller than 45 instead of 50 because we add 5 to all elements. (Buttons are at 50)
         //         for (let i = 0; i < elements.length; i++) {
         //             if(parseInt(elements[i].style.zIndex) >= 5) elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) - 5).toString();
@@ -67,14 +74,15 @@
 
         if($globalSelectedLatterElementStore != null && $globalSelectedLatterElementStore != undefined){
             // atomSelector.replaceWith($globalSelectedLatterElementStore);
+            $globalSelectedLatterElementStore.removeClass = "outline-dashed outline-2 outline-offset-2";
         }
-        
+
         if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined){
 
             /**
              * @type string
             */
-            var _class_last = atomSelector.getAttribute("class")?.trim();
+            var _class_last = ""; // atomSelector.getAttribute("class")?.trim();
 
             /**
              * @type string
@@ -91,7 +99,7 @@
                 }
             });
 
-            
+
             /**
              * Position and dimension data of selected element.
              * @type DOMRect
@@ -109,9 +117,11 @@
             _class += " left-["+rect.left+"px]";
             // _class += " z-40"
 
+            atomSelectorActionsWidth = atomSelectorActions.offsetWidth.toString()+"px";
+
             // console.log("rect : "+ JSON.stringify(rect.toJSON));
-            console.log("Selector Class : "+ _class);
-            console.log("Selector Style : "+ JSON.stringify(atomSelector.style));
+            // console.log("Selector Class : "+ _class);
+            // console.log("Selector Style : "+ JSON.stringify(atomSelector.style));
 
             // $globalSelectedElementStore.style.addClass = "test";
             console.log("Element Class : "+ $globalSelectedElementStore.getAttribute("class"));
@@ -120,8 +130,8 @@
             // atomSelector.setAttribute("class", _class);
 
             globalSelectedLatterElementStore.set($globalSelectedElementStore);
+            $globalSelectedElementStore.addClass = "outline-dashed outline-2 outline-offset-2";
 
-            
             // var newDiv = window.document.createElement("div");
 
             // divChildren = $globalSelectedElementStore.children;
@@ -132,7 +142,7 @@
             // });
 
             // $globalSelectedElementStore.replaceWith(atomSelector);
-            
+
             // var newDiv = window.document.createElement("div");
             // $globalSelectedElementStore.replaceWith(newDiv);
 
@@ -163,8 +173,8 @@
             /// Add this selected element to latter store, so we can use to revert selection
             // globalSelectedLatterElementStore.set($globalSelectedElementStore);
 
-            /// Now we know all min and max z-indexes. So we can place atomSelector now. 
-            // TODO: Will be organized. 
+            /// Now we know all min and max z-indexes. So we can place atomSelector now.
+            // TODO: Will be organized.
             // if(minZIndex >= 0 && maxZIndex < 45){ //smaller than 45 instead of 50 because we add 5 to all elements. (Buttons are at 50)
             //     for (let i = 0; i < elements.length; i++) {
             //         const zIndex = parseInt(window.getComputedStyle(elements[i]).zIndex);
@@ -216,29 +226,54 @@
 <!-- class:invisible={$globalSelectedElementStore === null || $globalSelectedElementStore === undefined}   class:-z-40={$globalSelectedElementStore == null}-->
 <input type="hidden" class="test" />
 
-<div bind:this={atomSelector} id="atomSelector" class=""
+<!-- <div bind:this={atomSelector} id="atomSelector" class=""
  style='
-    --selectorPositionDataWidth:{selectorPositionDataWidth}; 
+    --selectorPositionDataWidth:{selectorPositionDataWidth};
     --selectorPositionDataHeight:{selectorPositionDataHeight};
     --selectorPositionDataLeft:{selectorPositionDataLeft};
     --selectorPositionDataTop:{selectorPositionDataTop};
 '>
+</div> -->
 
 
-    <div class="relative w-full h-full">
         <!-- {divChildren} -->
-        <div id="atomSelectorActions" class="bg-white rounded-md absolute top-2 right-2 w-18 h-8 p-1 m-0 flex flex-row z-50">
+        <div id="atomSelectorActions" bind:this={atomSelectorActions} class="bg-white rounded-md absolute w-18 h-8 p-1 m-0 flex flex-row z-50"
+        style='
+        --selectorPositionDataWidth:{selectorPositionDataWidth};
+        --selectorPositionDataHeight:{selectorPositionDataHeight};
+        --selectorPositionDataLeft:{selectorPositionDataLeft};
+        --selectorPositionDataTop:{selectorPositionDataTop};
+        --atomSelectorActionsWidth:{atomSelectorActionsWidth};
+        '>
             <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
             <div class="vr"></div>
             <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-three-dots-vertical w-5 h-5 text-black"></i></button>
         </div>
         <!-- {$globalSelectedElementStore != null ? $globalSelectedElementStore.getAttribute("id") : ""} -->
-    </div>
     
 
+
+
+
+<!--
+<div bind:this={atomSelector} id="atomSelector" class=""
+ style='
+    --selectorPositionDataWidth:{selectorPositionDataWidth};
+    --selectorPositionDataHeight:{selectorPositionDataHeight};
+    --selectorPositionDataLeft:{selectorPositionDataLeft};
+    --selectorPositionDataTop:{selectorPositionDataTop};
+'>
+    <div class="relative w-full h-full">
+
+        <div id="atomSelectorActions" class="bg-white rounded-md absolute top-2 right-2 w-18 h-8 p-1 m-0 flex flex-row z-50">
+            <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
+            <div class="vr"></div>
+            <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-three-dots-vertical w-5 h-5 text-black"></i></button>
+        </div>
+
+    </div>
 </div>
-
-
+-->
 
 <style>
 
@@ -255,11 +290,13 @@
     }
 
     #atomSelectorActions{
-        z-index: 100;
+        position: absolute;
+        top: calc(var(--selectorPositionDataTop) + 6px);
+        left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) - 6px) ;
     }
 
     /* #atomSelector::after{
-        border: 2px dotted black; 
+        border: 2px dotted black;
     } */
 
     .hr {
@@ -283,8 +320,8 @@
     }
 
 
- 
 
 
-    
+
+
 </style>

@@ -78,7 +78,7 @@ export let editorBlankData =  [{
                     "uuid": uuidv4().toString(),
                     "type": "div",
                     "data": { 
-                        "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center mt-3",
+                        "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center mt-3 outline-dashed outline-2 outline-offset-2 outline-sky-500",
                         "text": "Div test 7",
                     },
                     "children": [
