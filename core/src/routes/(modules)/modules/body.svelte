@@ -1,7 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onMount } from "svelte";
-    import { globalSelectedElementStore } from "../../globals/globalstores.js";
+    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
 
     /**
      * uuid of element

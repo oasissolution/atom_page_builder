@@ -1,7 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onMount } from "svelte";
-    import { globalSelectedElementStore } from "../../globals/globalstores.js";
+    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
 
     /**
      * uuid of element
@@ -83,7 +83,7 @@
         if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex);
 
 
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + " atomDiv selectedBorder");
+        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + " atomDiv"); // selectedBorder
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
         if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden);
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -112,11 +112,11 @@
         // }
 
         window.addEventListener("mousedown", (ev) => {
-            if(ev.target){
-                if(ev.target !== bindElement && ev.target !== bindElementActions && ev.target.classList.contains("atomDivCtl") === false){
-                    elementSelected = false;
-                }
-            }
+            // if(ev.target){
+            //     if(ev.target !== bindElement && ev.target !== bindElementActions && ev.target.classList.contains("atomDivCtl") === false){
+            //         elementSelected = false;
+            //     }
+            // }
             
         });
 
@@ -137,6 +137,9 @@
         // document.addEventListener("mouseup", function(){
         //     document.removeEventListener("mousemove", resize, false);
         // }, false);
+
+        // divZIndex = Number.isNaN(parseInt(bindElement.style.zIndex)) == false ? parseInt(bindElement.style.zIndex) + 5 : 5;
+        // console.log('divZIndex = (parseInt('+bindElement.style.zIndex+') + 5).toString(); ==> divZIndex='+divZIndex);
         
     });
 
@@ -198,12 +201,14 @@
 
         // bindElementActions.setAttribute("class", _class);
 
-        console.log("elementSelected = true;");
+        // console.log("elementSelected = true;");
 
         // update global variable, so selector activates
         selectedElement = bindElement;
 
-        console.log("selectedElement = bindElement;");
+        // console.log("selectedElement = bindElement;");
+
+        
     }
 
     function deSelectElement(){
@@ -216,26 +221,42 @@
     }
 
 
-
-
+    // let divZIndex = 0;
+    
 
 </script>
 
 <input type="hidden" class="atomDiv selectedBorder" />
 
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}> <!-- class:atomDivSelected={elementSelected} -->
 
-    <slot>
+    
+
+
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}> <!-- style="--divZIndex:{divZIndex};" class:atomDivSelected={elementSelected} -->
+
+   
+    <slot> 
     <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
     </slot>
 
+    <!-- <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
+        <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black atomDivCtl" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
+    </div> -->
+
+
 </div>
 
-<!-- <div bind:this={bindElementActions} class="absolute selectedBorder z-50" class:invisible={!elementSelected}> 
-    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
+<!-- <div bind:this={bindElementActions} class="atomDivEditor" class:invisible={!elementSelected}>
 
+    <slot> 
+        <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
+    </slot>
+
+    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
+        <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black atomDivCtl" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
     </div>
-</div>  -->
+
+</div> -->
 
 
 <!-- 
@@ -270,6 +291,31 @@
     .atomDiv{
         border: none;
     }
+
+    /* .divSlot{
+        z-index: max(var(--divZIndex), 0);
+    } */
+
+    /* .atomDiv {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        position: absolute;
+        left: 20px;
+    }
+
+    .atomDiv:before, .atomDiv:after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 20px;
+        top: 0px;
+        background-image: radial-gradient(circle at center, red 5px, transparent 6px), radial-gradient(circle at center, red 5px, transparent 6px);
+        background-size: 20px 20px;
+        background-position: top center, bottom center;
+        background-repeat: no-repeat;
+    } */
+
 
     /* .atomDiv:hover {
         border: 2px solid aqua;

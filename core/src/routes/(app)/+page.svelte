@@ -1,14 +1,17 @@
 <script>
 	import { onMount } from "svelte";
 
-    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalSelectedElementUuidStore } from "../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore } from "../globals/globalstores.js";
+    import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
 
     import Code from "../(editor)/editor/code.svelte";
     import Variables from "../(editor)/editor/variables.svelte";
 
 
-    // let frame;
+    // /**
+    //  * @type HTMLElement
+    //  */
     let editorFrame;
 
 

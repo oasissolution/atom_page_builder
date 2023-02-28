@@ -1,6 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onMount } from "svelte";
+    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
 
     /**
      * uuid of element
@@ -66,6 +67,13 @@
      */
     let bindElement;
 
+    /**
+     * @type HTMLElement
+     */
+     let selectedElement = $globalSelectedElementStore;
+    //Update global data whenever selectedElement changes.
+    $: globalSelectedElementStore.set(selectedElement);
+
     onMount(() => {
         text = data.text !== undefined ? data.text : "";
 
@@ -90,6 +98,9 @@
     function selectElement(){
         window.parent.postMessage(uuid, '*');
         elementSelected = true;
+
+        // update global variable, so selector activates
+        selectedElement = bindElement;
     }
 
     console.log("Text displayed !");

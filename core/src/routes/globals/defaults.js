@@ -99,7 +99,7 @@ export let editorBlankData =  [{
             "uuid": uuidv4().toString(),
             "type": "div",
             "data": { 
-                "class":"place-content-center bg-teal-600 w-[300px]",
+                "class":"place-content-center absolute top-[25px] right-[25px] bg-sky-600 w-[400px] h-[250px]",
                 "text": "Div test 2",
             },
             "children": [
@@ -107,7 +107,7 @@ export let editorBlankData =  [{
                     "uuid": uuidv4().toString(),
                     "type": "text",
                     "data": { 
-                        "class":"flex place-content-center text-lg mt-2",
+                        "class":"flex place-content-center text-lg mt-2 z-20",
                         "text": "Div test 5",
                     },
                     "children": []

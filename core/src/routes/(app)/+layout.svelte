@@ -154,9 +154,9 @@
 
 </div>
 
-<div id="infoLayer" class="flex items-center">
+<!-- <div id="infoLayer" class="flex items-center">
     <svelte:component this={Info}/>
-</div>
+</div> -->
 
 
 

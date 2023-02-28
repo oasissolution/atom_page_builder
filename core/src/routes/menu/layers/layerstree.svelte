@@ -2,7 +2,7 @@
     export let component;
     export let level = 0;
 
-    import { globalSelectedElementUuidStore } from "../../globals/globalstores.js";
+    import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
 
 </script>
 
