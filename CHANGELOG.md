@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 All notes are for developers, since this repository will not be public.
 
 
+## [0.0.1.013] - 2022-03-01
+
+### Added
+ - Update global component collection json function. (globals/globalfunctions.js)
+
+### Changed
+ - Working on selector. (JSON updates. "Actions" buttons are showing in required position. UI does not update on json update automatically, still working on it)
+
+### Fixed
+
+
 ## [0.0.1.012] - 2022-02-28
 
 ### Added

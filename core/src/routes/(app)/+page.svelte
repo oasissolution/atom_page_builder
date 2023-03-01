@@ -4,6 +4,7 @@
     import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore } from "../globals/globalstores.js";
     import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
+    import { updateGlobalComponentCollectionStore, UpdateActionTypes } from "../globals/globalfunctions.js";
 
     import Code from "../(editor)/editor/code.svelte";
     import Variables from "../(editor)/editor/variables.svelte";
@@ -52,7 +53,7 @@
                 };
             }
 
-            console.log("Send data on globalComponentCollectionStore !");
+            // console.log("Send data on globalComponentCollectionStore !");
             const data = {
                 "message": {
                     "componentCollection": $globalComponentCollectionStore,
@@ -63,9 +64,47 @@
         }
     })();
 
+    function updateEditorFunction(){
+        if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
+
+            if(buildType == "release"){
+                if(editorFrame.src !== "/atompagebuilder/app/editor"){
+                    editorFrame.src = "/atompagebuilder/app/editor";
+                };
+            }
+
+            // console.log("Send data on updateEditorFunction !");
+            const data = {
+                "message": {
+                    "componentCollection": $globalComponentCollectionStore,
+                    "editorPreferences": $globalEditorPreferencesStore
+                }
+            };
+            editorFrame.contentWindow.postMessage(data, '*');
+            // console.log("updateEditorFunction executed!");
+        }
+    }
+
+    let previousSelectedHtmlElementUuid = "";
 
     onMount(()=>{
         window.addEventListener('message', event => {
+
+            // if(previousSelectedHtmlElementUuid != "") updateGlobalComponentCollectionStore($globalComponentCollectionStore, previousSelectedHtmlElementUuid, false, null, "selected" );
+
+            if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
+                $globalComponentCollectionStore, //jsonData
+                previousSelectedHtmlElementUuid, //uuid
+                " outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
+                "class", //dataTarget
+                null, //target
+                UpdateActionTypes.REMOVE, //action
+                "" //replace value
+                ))
+            {
+                updateEditorFunction();
+            }
+
             // if(event.source !== frame.content){
             //     return;
             // }
@@ -73,13 +112,32 @@
             // globalEditorPreferences.info = event.data;
             globalSelectedElement = event.data;
             //TODO: add css to globalComponentCollectionStore JSON to selected uuid to show its selected OR make a routine for selected element ?? 
+
+            // if(updateGlobalComponentCollectionStore($globalComponentCollectionStore, event.data, true, null, "selected" )){
+            //     updateEditorFunction();
+            // }
+
+            if(updateGlobalComponentCollectionStore(
+                $globalComponentCollectionStore, //jsonData
+                event.data, //uuid
+                " outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
+                "class", //dataTarget
+                null, //target
+                UpdateActionTypes.APPEND, //action
+                "" //replace value
+                ))
+            {
+                updateEditorFunction();
+            }
+
+            previousSelectedHtmlElementUuid = event.data;
         });
 
         loaded = true;
 
         // send stores in a {} to iframe
         editorFrame.addEventListener('load', () => {
-            console.log("Send data on load !");
+            // console.log("Send data on load !");
             const data = {
                 "message": {
                     "componentCollection": $globalComponentCollectionStore,

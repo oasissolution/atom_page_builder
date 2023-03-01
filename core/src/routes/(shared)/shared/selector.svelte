@@ -124,8 +124,8 @@
             // console.log("Selector Style : "+ JSON.stringify(atomSelector.style));
 
             // $globalSelectedElementStore.style.addClass = "test";
-            console.log("Element Class : "+ $globalSelectedElementStore.getAttribute("class"));
-            console.log("Element Style : "+ JSON.stringify($globalSelectedElementStore.style));
+            // console.log("Element Class : "+ $globalSelectedElementStore.getAttribute("class"));
+            // console.log("Element Style : "+ JSON.stringify($globalSelectedElementStore.style));
 
             // atomSelector.setAttribute("class", _class);
 

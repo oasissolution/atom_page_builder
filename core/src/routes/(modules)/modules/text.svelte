@@ -10,6 +10,12 @@
     export let uuid;
 
     /**
+     * Control behaviour of element if element is selected.
+     * @type boolean
+     */
+     export let selected;
+
+    /**
      * Required data to fill attr of html elements
      * @property accesskey
      * @property class
@@ -77,7 +83,10 @@
     onMount(() => {
         text = data.text !== undefined ? data.text : "";
 
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class);
+        var _class_addons = "";
+        if(selected == true) _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
+
+        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
         if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden);
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -103,7 +112,7 @@
         selectedElement = bindElement;
     }
 
-    console.log("Text displayed !");
+    // console.log("Text displayed !");
 
 </script>
 

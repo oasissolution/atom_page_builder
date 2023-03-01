@@ -10,6 +10,12 @@
     export let uuid;
 
     /**
+     * Control behaviour of element if element is selected.
+     * @type boolean
+     */
+    export let selected;
+
+    /**
      * Required data to fill attr of html elements
      * @property accesskey
      * @property class
@@ -82,8 +88,13 @@
         if(data.spellcheck          !== undefined) bindElement.setAttribute("spellcheck",       data.spellcheck);
         if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex);
 
+        var _class_addons = " atomDiv";
+        // if(selected == true){
+        //     _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
+        //     console.log("Element selected : Div : "+uuid);
+        // } 
 
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + " atomDiv"); // selectedBorder
+        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons); // selectedBorder
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
         if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden);
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);

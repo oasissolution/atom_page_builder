@@ -1,6 +1,7 @@
 <script>
     import "../../../app.css";
     import { onMount, onDestroy } from "svelte";
+    import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
     import jQuery from "jquery";
     import Editortree from "./editortree.svelte";
     import Selector from "../../(shared)/shared/selector.svelte";
@@ -9,32 +10,47 @@
 
     // export const prerender = true;
 
-    /**
-     * @type []
-     */
-    let componentCollection;
-    /**
-     * @type []
-     */
-    let editorPreferences;
+    // /**
+    //  * @type []
+    //  */
+    // let componentCollection;
+    // /**
+    //  * @type []
+    //  */
+    // let editorPreferences;
 
-    /**
-     * @type []
-     */
-    let componentCollectionInside;
-    $: componentCollection,  (()=>{
-        componentCollectionInside = componentCollection;
-        // loadModule(componentCollection);
-    })();
+    // /**
+    //  * @type []
+    //  */
+    // let componentCollectionInside;
+    // $: componentCollection,  (()=>{
+    //     componentCollectionInside = componentCollection;
+    //     // loadModule(componentCollection);
+    // })();
 
-    /**
-     * @type []
-     */
-    let editorPreferencesInside;
-    $: editorPreferences,  (()=>{
-        editorPreferencesInside = editorPreferences;
+    // /**
+    //  * @type []
+    //  */
+    // let editorPreferencesInside;
+    // $: editorPreferences,  (()=>{
+    //     editorPreferencesInside = editorPreferences;
         
-    })();
+    // })();
+
+
+    let globalEditorPreferences = $globalEditorPreferencesStore;
+    $: globalEditorPreferencesStore.set(globalEditorPreferences);
+
+    let globalComponentCollection = $globalComponentCollectionStore;
+    $: globalComponentCollectionStore.set(globalComponentCollection);
+
+
+    // $: $globalComponentCollectionStore, (() => {
+
+    //     console.log("globalComponentCollectionStore updated!");
+
+    // })();
+
 
 
     onMount(() => {
@@ -93,8 +109,12 @@
                 // console.log("after message");
                 // console.log(data);
 
-                componentCollection = data.componentCollection;
-                editorPreferences = data.editorPreferences;
+                // componentCollection = data.componentCollection;
+                // editorPreferences = data.editorPreferences;
+
+                globalComponentCollection = data.componentCollection;
+                globalEditorPreferences = data.editorPreferences;
+
             }
 
 
@@ -121,29 +141,45 @@
         "text": Text,
     };
 
+    import Page from "./page.svelte";
 
 </script>
 
-<input type="hidden" class="hovered" />
+<input type="hidden" class="hovered items-center outline-dashed outline-2 outline-offset-2 outline-sky-500" />
 
 <div id="editorInnerPanel">
-
-    {#if componentCollection}
-        {#each componentCollection as component}
-            <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid}>
+<!-- 
+    {#if $globalComponentCollectionStore != null}
+        {#each $globalComponentCollectionStore as component}
+            <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid} selected={component.selected}>
             <Editortree component={component} JsonOfModules={JsonOfModules}></Editortree>
             </svelte:component>
         {/each}
     {:else}
     <div class="w-full h-full flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
+    {/if} -->
+
+    <!-- <svelte:component this={Page} componentCollection={$globalComponentCollectionStore} /> -->
+    <!-- <svelte:component this={Page}/> -->
+
+
+    {#if $globalComponentCollectionStore}
+    {#each $globalComponentCollectionStore as component}
+        <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid} selected={component.selected}>
+        <Editortree component={component} JsonOfModules={JsonOfModules}></Editortree>
+        </svelte:component>
+    {/each}
+    {:else}
+    <div class="w-full h-full flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
     {/if}
 
+    <!-- <Page componentCollection={$globalComponentCollectionStore} /> -->
 
-<svelte:component this={Selector} />
+    <pre class="text-[10px]">{JSON.stringify($globalComponentCollectionStore, null, 2)}</pre>
 
 </div> <!-- editorInnerPanel -->
     
-
+<svelte:component this={Selector} />
 
 <style>
 

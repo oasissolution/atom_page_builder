@@ -46,6 +46,7 @@ export let editorBlankData =  [{
     "data": { 
         "text": "Drag & Drop to start!",
     },
+    "selected": false,
     "children": [
         {
             "uuid": uuidv4().toString(),
@@ -54,6 +55,7 @@ export let editorBlankData =  [{
                 "class":"text-2xl bg-teal-800 flex flex-col content-center align-center items-center py-3",
                 "text": "Div test 1",
             },
+            "selected": false,
             "children": [
                 {
                     "uuid": uuidv4().toString(),
@@ -62,6 +64,7 @@ export let editorBlankData =  [{
                         "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center",
                         "text": "Div test 3",
                     },
+                    "selected": false,
                     "children": [
                         {
                             "uuid": uuidv4().toString(),
@@ -70,6 +73,7 @@ export let editorBlankData =  [{
                                 "class":"flex place-content-center text-lg",
                                 "text": "Div test 4",
                             },
+                            "selected": false,
                             "children": []
                         }
                     ]
@@ -78,9 +82,10 @@ export let editorBlankData =  [{
                     "uuid": uuidv4().toString(),
                     "type": "div",
                     "data": { 
-                        "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center mt-3 outline-dashed outline-2 outline-offset-2 outline-sky-500",
+                        "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center mt-3",
                         "text": "Div test 7",
                     },
+                    "selected": false,
                     "children": [
                         {
                             "uuid": uuidv4().toString(),
@@ -89,6 +94,7 @@ export let editorBlankData =  [{
                                 "class":"flex place-content-center text-lg",
                                 "text": "Div test 6",
                             },
+                            "selected": false,
                             "children": []
                         }
                     ]
@@ -102,6 +108,7 @@ export let editorBlankData =  [{
                 "class":"place-content-center absolute top-[25px] right-[25px] bg-sky-600 w-[400px] h-[250px]",
                 "text": "Div test 2",
             },
+            "selected": false,
             "children": [
                 {
                     "uuid": uuidv4().toString(),
@@ -110,6 +117,7 @@ export let editorBlankData =  [{
                         "class":"flex place-content-center text-lg mt-2 z-20",
                         "text": "Div test 5",
                     },
+                    "selected": false,
                     "children": []
                 }
             ]

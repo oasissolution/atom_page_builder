@@ -9,6 +9,11 @@
      */
     export let uuid;
 
+    /**
+     * Control behaviour of element if element is selected.
+     * @type boolean
+     */
+     export let selected;
 
     /**
      * Required data to fill attr of html elements
