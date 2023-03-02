@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 All notes are for developers, since this repository will not be public.
 
 
+
+## [0.0.1.014] - 2022-03-02
+
+### Added
+ - Tailwind CSS is working on jit (just-in-time) mode now.
+ - New files for div and text elements actions.
+
+### Changed
+ - Action buttons of elements are dynamically taken from its actions file.
+
+### Fixed
+ - UI updates on json update.
+
+### New Bug
+ - When Json updates it makes a glitch in editor area on "build" at localhost. On "dev" server, there is no glitch.
+ > "It sounds like the issue you're experiencing is related to how Svelte reloads components when their dependencies change. By default, Svelte will reload the entire application when any code or data changes, which can be inefficient and cause visual glitches like the ones you're experiencing." - ChatGPT
+ - Will try new approaches. 
+
+
+
 ## [0.0.1.013] - 2022-03-01
 
 ### Added

@@ -10,13 +10,11 @@
     import Variables from "../(editor)/editor/variables.svelte";
 
 
-    // /**
-    //  * @type HTMLElement
-    //  */
+    /**
+     * @type HTMLIFrameElement
+     */
     let editorFrame;
 
-
-    // console.log(frame);
 
     let globalEditorPreferences = $globalEditorPreferencesStore;
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
@@ -27,20 +25,6 @@
     let buildType = globalEditorPreferences.build;
 
     let loaded = false;
-
-    // $: $globalEditorPreferencesStore, (() => {
-    //     if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
-    //         console.log("Send data on globalEditorPreferencesStore !");
-    //         const data = {
-    //             "message": {
-    //                 "componentCollection": $globalComponentCollectionStore,
-    //                 "editorPreferences": $globalEditorPreferencesStore
-    //             }
-    //         };
-    //         // editorFrame.contentWindow.postMessage(data, '*');
-    //     }
-    // })();
-
 
 
     $: $globalComponentCollectionStore, (() => {
@@ -60,7 +44,7 @@
                     "editorPreferences": $globalEditorPreferencesStore
                 }
             };
-            editorFrame.contentWindow.postMessage(data, '*');
+            if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
         }
     })();
 
@@ -80,7 +64,7 @@
                     "editorPreferences": $globalEditorPreferencesStore
                 }
             };
-            editorFrame.contentWindow.postMessage(data, '*');
+            if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
             // console.log("updateEditorFunction executed!");
         }
     }
@@ -88,49 +72,69 @@
     let previousSelectedHtmlElementUuid = "";
 
     onMount(()=>{
+        
+        ///Listen editor in iframe
         window.addEventListener('message', event => {
 
-            // if(previousSelectedHtmlElementUuid != "") updateGlobalComponentCollectionStore($globalComponentCollectionStore, previousSelectedHtmlElementUuid, false, null, "selected" );
+            // if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
+            //     $globalComponentCollectionStore, //jsonData
+            //     previousSelectedHtmlElementUuid, //uuid
+            //     "outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
+            //     "class", //dataTarget
+            //     null, //target
+            //     UpdateActionTypes.REMOVE, //action
+            //     "" //replace value
+            //     ))
+            // {
+            //     updateEditorFunction();
+            // }
 
             if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
                 $globalComponentCollectionStore, //jsonData
                 previousSelectedHtmlElementUuid, //uuid
-                " outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
-                "class", //dataTarget
-                null, //target
-                UpdateActionTypes.REMOVE, //action
+                false, //newValue
+                null, //dataTarget
+                "selected", //target
+                UpdateActionTypes.SET, //action
                 "" //replace value
                 ))
             {
                 updateEditorFunction();
             }
 
-            // if(event.source !== frame.content){
-            //     return;
-            // }
-            /// infoya yüklediğimde sayfayı yeniliyor.
-            // globalEditorPreferences.info = event.data;
+            /// event.data is uuid of selected element. So set globally, that way we can use everywhere in our app 
             globalSelectedElement = event.data;
-            //TODO: add css to globalComponentCollectionStore JSON to selected uuid to show its selected OR make a routine for selected element ?? 
 
-            // if(updateGlobalComponentCollectionStore($globalComponentCollectionStore, event.data, true, null, "selected" )){
+
+            // if(updateGlobalComponentCollectionStore(
+            //     $globalComponentCollectionStore, //jsonData
+            //     event.data, //uuid
+            //     "outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
+            //     "class", //dataTarget
+            //     null, //target
+            //     UpdateActionTypes.APPEND, //action
+            //     "" //replace value
+            //     ))
+            // {
             //     updateEditorFunction();
             // }
 
             if(updateGlobalComponentCollectionStore(
                 $globalComponentCollectionStore, //jsonData
                 event.data, //uuid
-                " outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
-                "class", //dataTarget
-                null, //target
-                UpdateActionTypes.APPEND, //action
+                true, //newValue
+                null, //dataTarget
+                "selected", //target
+                UpdateActionTypes.SET, //action
                 "" //replace value
                 ))
             {
                 updateEditorFunction();
             }
 
+            /// Set selected element as previous, so it will be easy to revert selection effects.
             previousSelectedHtmlElementUuid = event.data;
+
         });
 
         loaded = true;
@@ -144,7 +148,7 @@
                     "editorPreferences": $globalEditorPreferencesStore
                 }
             };
-            editorFrame.contentWindow.postMessage(data, '*');
+            if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
         });
 
         if(buildType == "release"){
@@ -152,7 +156,6 @@
         }
 
         
-
     });
 
 </script>

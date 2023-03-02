@@ -17,25 +17,3 @@ export let globalSelectedElementUuidStore = writable("");
 export let globalSelectedElementStore = writable(null);
 
 
-/**
-* Global variable which holds latter selected element itself in Editor panel.
-* @global
-*
-* @type {Writable<HTMLElement>}
-*/
-export let globalSelectedLatterElementStore = writable(null);
-
-
-/**
-* Global variable which holds latter selected element itself in Editor panel.
-* @global
-*
-* @property maxZIndex,
-* @property minZIndex,
-*
-* @type {Writable<JSON>}
-*/
-export let globalSelectedLatterElementDataStore = writable({
-    "maxZIndex": 0,
-    "minZIndex": 0
-});

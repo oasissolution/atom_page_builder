@@ -3,6 +3,7 @@
     export let JsonOfModules;
 
     // console.log("tree : " + JSON.stringify(component));
+  
 </script>
 
 <slot/>

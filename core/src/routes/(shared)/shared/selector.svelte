@@ -1,9 +1,9 @@
 <script>
-    import { globalSelectedElementStore, globalSelectedLatterElementStore, globalSelectedLatterElementDataStore } from "../../../routes/globals/selectorstores.js";
-
-    // console.log("Selector initiated");
-
-
+    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
+    import { globalComponentCollectionStore } from "../../globals/globalstores.js";
+    import { getTypeOfComponent } from "../../globals/globalfunctions.js";
+    import { writable } from "svelte/store";
+    
     /**
     * Main selector div and actions binding.
     * @type HTMLElement
@@ -11,15 +11,21 @@
     let atomSelector;
 
     /**
-    * Main selector div and actions binding.
+    * Main selector actions binding.
     * @type HTMLElement
     */
     let atomSelectorActions;
 
     /**
-     * @type HTMLCollection
+     * Type of selected element
+     * @type Writable<string>
      */
-    let divChildren;
+    let selectedType = writable("");
+
+    /**
+     * @type SvelteComponent
+     */
+    let actionsComponent;
 
 
     let selectorPositionDataWidth = "100px";
@@ -28,77 +34,32 @@
     let selectorPositionDataTop = "-100px";
     let atomSelectorActionsWidth = "68px";
 
+    /**
+     * Position of "Actions" panel according to top-right corner on X axis. 
+     */
+    let marginX = "6px";
+    /**
+     * Position of "Actions" panel according to top-right corner on Y axis. 
+     */
+    let marginY = "6px";
+
+    $: selectedType, (() => {
+        if(actionsComponent !== undefined){
+            marginX = actionsComponent.marginX;
+            marginY = actionsComponent.marginY;
+            console.log("marginX: "+ marginX + "| marginY: " + marginY);
+        }else{
+            marginX = "-40px";
+            marginY = "0px";
+        }
+    })();
+
 
     $: $globalSelectedElementStore, (updateSelector)();
 
     function updateSelector(){
 
-        ///selection changed. update z-values of latter selected element.
-        // if($globalSelectedLatterElementStore != null && $globalSelectedLatterElementStore != undefined){
-        //     const elements = $globalSelectedLatterElementStore.children;
-
-        //     var minZIndexLatter = $globalSelectedLatterElementDataStore.minZIndex;
-        //     var maxZIndexLatter = $globalSelectedLatterElementDataStore.maxZIndex;
-
-        //     console.log("minZIndexLatter: " + minZIndexLatter + " | maxZIndexLatter:" + maxZIndexLatter);
-
-        //     /// Now we know all min and max z-indexes. So we can place atomSelector now.
-        //     if(minZIndexLatter >= 0 && maxZIndexLatter < 45){ //smaller than 45 instead of 50 because we add 5 to all elements. (Buttons are at 50)
-        //         for (let i = 0; i < elements.length; i++) {
-        //             if(parseInt(elements[i].style.zIndex) >= 5) elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) - 5).toString();
-        //         }
-        //         // atomSelector.style.zIndex = "5";
-        //     }else if(minZIndexLatter >= 0 && maxZIndexLatter >= 45){
-        //         for (let i = 0; i < elements.length; i++) {
-        //             if(parseInt(elements[i].style.zIndex) >= 5) elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) - 5).toString();
-        //         }
-        //         // atomSelector.style.zIndex = "5";
-        //         if((parseInt(document.getElementById("atomSelectorActions").style.zIndex) - maxZIndexLatter) > 0)
-        //         document.getElementById("atomSelectorActions").style.zIndex = (parseInt(document.getElementById("atomSelectorActions").style.zIndex) - maxZIndexLatter).toString();
-        //     }else if(minZIndexLatter < 0 && $globalSelectedLatterElementDataStore.maxZIndex < 45){
-        //         for (let i = 0; i < elements.length; i++) {
-        //             if((parseInt(elements[i].style.zIndex) - 5 - Math.abs(minZIndexLatter)) > 0)
-        //             elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) - 5 - Math.abs(minZIndexLatter)).toString();
-        //         }
-        //     }else{
-        //         for (let i = 0; i < elements.length; i++) {
-        //             if((parseInt(elements[i].style.zIndex) - 5 - Math.abs(minZIndexLatter)) > 0)
-        //             elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) - 5 - Math.abs(minZIndexLatter)).toString();
-        //         }
-        //         if((parseInt(document.getElementById("atomSelectorActions").style.zIndex) - maxZIndexLatter) > 0)
-        //         document.getElementById("atomSelectorActions").style.zIndex = (parseInt(document.getElementById("atomSelectorActions").style.zIndex) - maxZIndexLatter).toString();
-        //     }
-        // }
-
-        // console.log("Selector activated");
-
-        if($globalSelectedLatterElementStore != null && $globalSelectedLatterElementStore != undefined){
-            // atomSelector.replaceWith($globalSelectedLatterElementStore);
-            $globalSelectedLatterElementStore.removeClass = "outline-dashed outline-2 outline-offset-2";
-        }
-
         if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined){
-
-            /**
-             * @type string
-            */
-            var _class_last = ""; // atomSelector.getAttribute("class")?.trim();
-
-            /**
-             * @type string
-            */
-            var _class = "";
-
-            /// Remove old rectangle settings if exist
-            /// Since this is a specific HTMLElement that we use, user can NOT or developer should NOT edit class. Hence it is safe to remove these.
-            _class_last.split(" ").forEach((cls) => {
-                if( cls.startsWith("w-[") || cls.startsWith("h-[") || cls.startsWith("top-[") || cls.startsWith("left-[") || cls.startsWith("z-") ){
-                    //do nothing, so will not be added to class
-                }else{
-                    _class += " " + cls;
-                }
-            });
-
 
             /**
              * Position and dimension data of selected element.
@@ -111,14 +72,13 @@
             selectorPositionDataLeft = rect.left.toString()+"px";
             selectorPositionDataTop = rect.top.toString()+"px";
 
-            _class += " w-["+rect.width+"px]";
-            _class += " h-["+rect.height+"px]";
-            _class += " top-["+rect.top+"px]";
-            _class += " left-["+rect.left+"px]";
-            // _class += " z-40"
+            atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
 
-            atomSelectorActionsWidth = atomSelectorActions.offsetWidth.toString()+"px";
-
+            // console.log("$globalSelectedElementStore : " + $globalSelectedElementStore.id + "\n\n$globalComponentCollectionStore : " + JSON.stringify($globalComponentCollectionStore));
+            var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
+            console.log("type : " + type);
+            selectedType.set(type);
+            
             // console.log("rect : "+ JSON.stringify(rect.toJSON));
             // console.log("Selector Class : "+ _class);
             // console.log("Selector Style : "+ JSON.stringify(atomSelector.style));
@@ -127,89 +87,6 @@
             // console.log("Element Class : "+ $globalSelectedElementStore.getAttribute("class"));
             // console.log("Element Style : "+ JSON.stringify($globalSelectedElementStore.style));
 
-            // atomSelector.setAttribute("class", _class);
-
-            globalSelectedLatterElementStore.set($globalSelectedElementStore);
-            $globalSelectedElementStore.addClass = "outline-dashed outline-2 outline-offset-2";
-
-            // var newDiv = window.document.createElement("div");
-
-            // divChildren = $globalSelectedElementStore.children;
-
-            // var newDiv = document.createElement('div');
-            // Array.prototype.slice.call(divChildren).forEach((child) => {
-            //     newDiv.appendChild(child);
-            // });
-
-            // $globalSelectedElementStore.replaceWith(atomSelector);
-
-            // var newDiv = window.document.createElement("div");
-            // $globalSelectedElementStore.replaceWith(newDiv);
-
-
-            ///Place selector div one level above bottom and push inner items more to front. That way we can still select inner elements. And do not loose base.
-            // const elements = $globalSelectedElementStore.querySelectorAll('*');
-            // const elements = $globalSelectedElementStore.children;
-            // let maxZIndex = 0;
-            // let minZIndex = 0;
-            // for (let i = 0; i < elements.length; i++) {
-            //     const zIndex = parseInt(window.getComputedStyle(elements[i]).zIndex);
-            //     if (zIndex > maxZIndex) {
-            //         maxZIndex = zIndex;
-            //     }
-            //     if (zIndex < minZIndex) {
-            //         minZIndex = zIndex;
-            //     }
-            // }
-
-            // console.log("elements.length: " + elements.length.toString() + " | minZIndex: " + minZIndex.toString() + " | maxZIndex:" + maxZIndex.toString());
-
-            /// Add these values to store, so by that way we can update easily when selection changes.
-            // globalSelectedLatterElementDataStore.set({
-            //     "maxZIndex": maxZIndex,
-            //     "minZIndex": minZIndex
-            // });
-
-            /// Add this selected element to latter store, so we can use to revert selection
-            // globalSelectedLatterElementStore.set($globalSelectedElementStore);
-
-            /// Now we know all min and max z-indexes. So we can place atomSelector now.
-            // TODO: Will be organized.
-            // if(minZIndex >= 0 && maxZIndex < 45){ //smaller than 45 instead of 50 because we add 5 to all elements. (Buttons are at 50)
-            //     for (let i = 0; i < elements.length; i++) {
-            //         const zIndex = parseInt(window.getComputedStyle(elements[i]).zIndex);
-            //         if(Number.isNaN(zIndex) == true){
-            //             elements[i].style.zIndex = "5";
-            //         }else{
-            //             if(elements[i].style.zIndex <5){
-            //                 elements[i].style.zIndex = (zIndex + 5).toString();
-            //             }
-            //         }
-            //         // console.log("elements["+i+"]: " + elements[i].id + " | zIndex: " + zIndex);
-            //         // elements[i].style.zIndex = zIndex != null && zIndex != undefined ? (zIndex + 5).toString() : "5";
-            //         console.log("elements["+i+"]: " + elements[i].id + " | zIndex: " + elements[i].style.zIndex);
-            //     }
-            //     // atomSelector.style.zIndex = "5";
-            // }else if(minZIndex >= 0 && maxZIndex >= 45){
-            //     for (let i = 0; i < elements.length; i++) {
-            //         elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) + 5).toString();
-            //     }
-            //     // atomSelector.style.zIndex = "5";
-            //     document.getElementById("atomSelectorActions").style.zIndex = (parseInt(document.getElementById("atomSelectorActions").style.zIndex) + maxZIndex).toString();
-            // }else if(minZIndex < 0 && maxZIndex < 45){
-            //     for (let i = 0; i < elements.length; i++) {
-            //         elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) + 5 + Math.abs(minZIndex)).toString();
-            //     }
-            // }else{
-            //     for (let i = 0; i < elements.length; i++) {
-            //         elements[i].style.zIndex = (parseInt(elements[i].style.zIndex) + 5 + Math.abs(minZIndex)).toString();
-            //     }
-            //     document.getElementById("atomSelectorActions").style.zIndex = (parseInt(document.getElementById("atomSelectorActions").style.zIndex) + maxZIndex).toString();
-            // }
-
-            // for (let i = 0; i < elements.length; i++) {
-            //     console.log(elements[i].id + " : " + elements[i].style.zIndex);
-            // }
 
         }
 
@@ -217,42 +94,52 @@
     }
 
 
-    function editButtonPress(){
-        alert("Button clicked!");
-    }
+    // TODO: import all modules dynamically
+
+    // import Body from "../../(modules)/modules/body.svelte";
+    import Div from "../../(modules)/actions/div.svelte";
+    import Text from "../../(modules)/actions/text.svelte";
+
+
+    /**
+     * Definition and list of all modules in a JSON.
+     * @returns {JSON}
+     * 
+     */
+    const JsonOfModules = {
+        // "body": Body,
+        "div": Div,
+        "text": Text,
+    };
 
 
 </script>
-<!-- class:invisible={$globalSelectedElementStore === null || $globalSelectedElementStore === undefined}   class:-z-40={$globalSelectedElementStore == null}-->
-<input type="hidden" class="test" />
+<svelte:options immutable />
+        
 
-<!-- <div bind:this={atomSelector} id="atomSelector" class=""
- style='
-    --selectorPositionDataWidth:{selectorPositionDataWidth};
-    --selectorPositionDataHeight:{selectorPositionDataHeight};
-    --selectorPositionDataLeft:{selectorPositionDataLeft};
-    --selectorPositionDataTop:{selectorPositionDataTop};
-'>
-</div> -->
-
-
-        <!-- {divChildren} -->
-        <div id="atomSelectorActions" bind:this={atomSelectorActions} class="bg-white rounded-md absolute w-18 h-8 p-1 m-0 flex flex-row z-50"
+        <div id="atomSelectorActions" bind:this={atomSelectorActions} class="bg-white rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center"
         style='
         --selectorPositionDataWidth:{selectorPositionDataWidth};
         --selectorPositionDataHeight:{selectorPositionDataHeight};
         --selectorPositionDataLeft:{selectorPositionDataLeft};
         --selectorPositionDataTop:{selectorPositionDataTop};
         --atomSelectorActionsWidth:{atomSelectorActionsWidth};
+        --marginX:{marginX};
+        --marginY:{marginY};
         '>
-            <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
-            <div class="vr"></div>
-            <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-three-dots-vertical w-5 h-5 text-black"></i></button>
+
+        {#if $selectedType != ""}
+
+        <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent}/>
+        <!-- <svelte:component this={actionsComponent} /> -->
+
+        {/if}
+        
         </div>
         <!-- {$globalSelectedElementStore != null ? $globalSelectedElementStore.getAttribute("id") : ""} -->
     
 
-
+        
 
 
 <!--
@@ -291,15 +178,15 @@
 
     #atomSelectorActions{
         position: absolute;
-        top: calc(var(--selectorPositionDataTop) + 6px);
-        left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) - 6px) ;
+        top: calc(var(--selectorPositionDataTop) + var(--marginY));
+        left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) + var(--marginX));
     }
 
     /* #atomSelector::after{
         border: 2px dotted black;
     } */
 
-    .hr {
+    :global().hr {
         display: inline-block;
         align-self: stretch;
         height: 1px;
@@ -308,7 +195,7 @@
         opacity: 0.25;
     }
 
-    .vr {
+    :global().vr {
         display: inline-block;
         align-self: stretch;
         width: 1px;

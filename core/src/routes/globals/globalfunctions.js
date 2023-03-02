@@ -43,7 +43,7 @@ export function updateGlobalComponentCollectionStore(jsonData, uuid, newValue, d
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
-    // console.log("hellloo from long func ==> " + element.uuid + "===" + uuid);
+ 
     if(element.uuid === uuid){
       if(dataTarget != null){
 
@@ -57,13 +57,13 @@ export function updateGlobalComponentCollectionStore(jsonData, uuid, newValue, d
             element["data"][dataTarget] = newValue.trim() + " " + element["data"][dataTarget].trim();
             break;
           case UpdateActionTypes.REPLACE:
-            element["data"][dataTarget] = element["data"][dataTarget].replace(replaceValue, newValue).trim();
+            element["data"][dataTarget] = element["data"][dataTarget].replace(replaceValue, newValue);
             break;
           case UpdateActionTypes.SET:
-            element["data"][dataTarget] = newValue.trim();
+            element["data"][dataTarget] = newValue;
             break;
           case UpdateActionTypes.REMOVE:
-            element["data"][dataTarget] = element["data"][dataTarget].replace(newValue, "").trim();
+            element["data"][dataTarget] = element["data"][dataTarget].replace(newValue, "");
             break;
         }
         console.log("Data updated from updateGlobalComponentCollectionStore function");
@@ -79,18 +79,18 @@ export function updateGlobalComponentCollectionStore(jsonData, uuid, newValue, d
             element[target] = newValue.trim() + " " + element[target].trim();
             break;
           case UpdateActionTypes.REPLACE:
-            element[target] = element[target].replace(replaceValue, newValue).trim();
+            element[target] = element[target].replace(replaceValue, newValue);
             break;
           case UpdateActionTypes.SET:
-            element[target] = newValue.trim();
+            element[target] = newValue;
             break;
           case UpdateActionTypes.REMOVE:
-            element[target] = element[target].replace(newValue, "").trim();
+            element[target] = element[target].replace(newValue, "");
             break;
         }
 
 
-        console.log("Data updated from updateGlobalComponentCollectionStore function");
+        // console.log("Data updated from updateGlobalComponentCollectionStore function");
         return true;
       }
     }else if(element.children){
@@ -101,3 +101,41 @@ export function updateGlobalComponentCollectionStore(jsonData, uuid, newValue, d
   return true;
 
 }
+
+
+/**
+ * Gets the type of selected element.
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @returns {string}
+ */
+export function getTypeOfComponent(jsonData, uuid){
+
+  for (let i = 0; i < jsonData.length; i++) {
+
+    var element = jsonData[i];
+ 
+    if(element.uuid === uuid){
+      
+      return element.type.toString();
+
+    }else if(element.children){
+      var result = getTypeOfComponent(element.children, uuid);
+      if(result !== undefined && result != ""){
+        return result;
+      }
+    }
+  }
+
+  return "";
+}
+
+
+
+/*
+
+console.log("element.uuid === uuid === " + uuid);
+
+      console.log('element["type"].toString() === ' + element["type"].toString());
+
+*/
