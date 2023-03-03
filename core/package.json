@@ -36,6 +36,7 @@
 	"type": "module",
 	"dependencies": {
 		"bootstrap-icons": "^1.10.3",
+		"immer": "^9.0.19",
 		"jquery": "^3.6.3",
 		"jsdom": "^21.1.0",
 		"svelte-awesome-color-picker": "^2.4.1",

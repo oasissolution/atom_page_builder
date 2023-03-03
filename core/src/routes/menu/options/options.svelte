@@ -1,6 +1,8 @@
 <script>
-      import { globalEditorPreferencesStore } from "../../globals/globalstores.js";
-
+      import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
+      import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
+      import { getTypeOfComponent } from "../../globals/globalfunctions.js";
+      import { writable } from "svelte/store";
 
       /*
          THIS PAGE IS MAIN "WIDGET OPTIONS" PAGE.
@@ -14,18 +16,44 @@
       /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
       $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
-      /**
-       * Integer variable that holds Tab Page Index.
-       */
-      let selectedTabPageIndex = 0;
 
       /**
-       * Shows selected page.
-       * @param {number} index New page index to show.
+       * Type of selected element
+       * @type Writable<string>
        */
-      function showPage(index){
-         selectedTabPageIndex = index;
+      let selectedType = writable("");
+
+
+      $: $globalSelectedElementUuidStore, (updateOptionsPanel)();
+      
+      function updateOptionsPanel(){
+         var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore);
+         console.log("options type : " + type);
+         selectedType.set(type);
       }
+
+      
+      
+      // TODO: import all modules dynamically
+
+      // import Body from "../../(modules)/modules/body.svelte";
+      import Div from "../../(modules)/options/div.svelte";
+      import Text from "../../(modules)/options/text.svelte";
+
+
+      /**
+       * Definition and list of all modules in a JSON.
+       * @returns {JSON}
+       * 
+       */
+      const JsonOfModules = {
+         // "body": Body,
+         "div": Div,
+         "text": Text,
+      };
+
+
+
 
    </script>
 
@@ -39,24 +67,11 @@
    ' >
       <h3>Widget Options</h3>
       <br/>
-      <!-- <div class="hstack gap-2">
-         {#if selectedTabPageIndex==0}
-         <button class="tabButton selected" on:click={() => showPage(0)}>Locations</button>
-         {:else}
-         <button class="tabButton" on:click={() => showPage(0)}>Locations</button>
-         {/if}
-         {#if selectedTabPageIndex==1}
-         <button class="tabButton selected" on:click={() => showPage(1)}>Themes</button>
-         {:else}
-         <button class="tabButton" on:click={() => showPage(1)}>Themes</button>
-         {/if}
-      </div> -->
-      <br/>
-      {#if selectedTabPageIndex==0}
-      <!-- <svelte:component this={Menulocation}/>
-      <svelte:component this={Panellocation}/> -->
-      {:else if selectedTabPageIndex==1}
-      <!-- <svelte:component this={Theme}/> -->
+      {#if $selectedType != ""}
+
+      <svelte:component this={JsonOfModules[$selectedType]}/>
+
+
       {/if}
       
    </div>
@@ -71,13 +86,13 @@
       color: var(--fixedPanelForegroundColor);
    }
    
-   .tabButton{
+   :global().tabButton{
       height: 42;
       background-color: var(--fixedPanelButtonPassiveBackgroundColor);
       border-color: transparent;
       color: var(--fixedPanelButtonPassiveForegroundColor);
    }
-   .tabButton.selected{
+   :global().tabButton.selected{
       background-color: var(--fixedPanelButtonActiveBackgroundColor);
       color: var(--fixedPanelButtonActiveForegroundColor);
       border-radius: 6px;

@@ -114,7 +114,6 @@
 
 
 </script>
-<svelte:options immutable />
         
 
         <div id="atomSelectorActions" bind:this={atomSelectorActions} class="bg-white rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center"

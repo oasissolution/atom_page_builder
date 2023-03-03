@@ -6,5 +6,11 @@ export default defineConfig({
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
-	base: '/atompagebuilder/app/'
+	base: '/atompagebuilder/app/',
+	mode: "production",
+	PROD: true,
+	build: {
+		
+	}
+	
 });

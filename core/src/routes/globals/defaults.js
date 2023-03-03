@@ -52,8 +52,7 @@ export let editorBlankData =  [{
             "uuid": uuidv4().toString(),
             "type": "div",
             "data": { 
-                "class":"text-2xl bg-teal-800 flex flex-col content-center align-center items-center py-3",
-                "text": "Div test 1",
+                "class":"bg-teal-800 flex flex-col content-center align-center items-center py-3",
             },
             "selected": false,
             "children": [
@@ -62,7 +61,6 @@ export let editorBlankData =  [{
                     "type": "div",
                     "data": { 
                         "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center",
-                        "text": "Div test 3",
                     },
                     "selected": false,
                     "children": [
@@ -83,7 +81,6 @@ export let editorBlankData =  [{
                     "type": "div",
                     "data": { 
                         "class":"flex place-content-center bg-teal-600 w-[600px] h-[75px] items-center mt-3",
-                        "text": "Div test 7",
                     },
                     "selected": false,
                     "children": [
@@ -106,7 +103,6 @@ export let editorBlankData =  [{
             "type": "div",
             "data": { 
                 "class":"place-content-center absolute top-[25px] right-[25px] bg-sky-600 w-[400px] h-[250px]",
-                "text": "Div test 2",
             },
             "selected": false,
             "children": [

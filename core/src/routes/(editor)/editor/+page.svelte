@@ -7,7 +7,7 @@
 
     /// ATTENTION ! 
 
-    /// Editor panel runs in an iframe. Hence, defined stores here are different than main stores, even if their names and definitions are identical.
+    /// Editor panel runs in an iframe. Hence, defined stores here are different than main stores in runtime, even if their names and definitions are identical.
     /// You may think this as, same stores running in two different threads with different values.
 
     let globalEditorPreferences = $globalEditorPreferencesStore;
@@ -75,7 +75,10 @@
     {/if}
 
     <!-- line below will be removed later -->
-    <pre class="text-[10px]">{JSON.stringify($globalComponentCollectionStore, null, 2)}</pre>
+    <div class="flex flex-row">
+        <pre class="text-[10px]">{JSON.stringify($globalComponentCollectionStore, null, 2)}</pre>
+
+    </div>
 
 </div> <!-- editorInnerPanel -->
     

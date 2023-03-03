@@ -47,26 +47,6 @@
     export const elAttr = ["accesskey", "class", "contenteditable", "dir", "draggable", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"];
 
 
-    /*
-
-    Attribute	    Description
-
-    accesskey	    Specifies a shortcut key to activate the element
-    class	        Specifies one or more class names for the element (used to reference the element in CSS)
-    contenteditable	Specifies whether the content of the element can be edited by the user
-    data-*	        Used to store custom data private to the page or application
-    dir	            Specifies the direction of the element's text (left-to-right or right-to-left)
-    hidden	        Specifies that the element should be hidden
-    id	            Specifies a unique id for the element (used to reference the element in JavaScript)
-    lang	        Specifies the language of the element's content
-    spellcheck	    Specifies whether the element should have its spelling and grammar checked
-    style	        Specifies inline CSS for the element
-    tabindex	    Specifies the tab order of the element
-    title	        Specifies extra information about the element (displayed as a tooltip)
-
-    */
-
-
     /**
      * Text of element
      * @type string
@@ -81,7 +61,7 @@
     /**
      * @type HTMLElement
      */
-     let selectedElement = $globalSelectedElementStore;
+    let selectedElement = $globalSelectedElementStore;
     //Update global data whenever selectedElement changes.
     $: globalSelectedElementStore.set(selectedElement);
 
@@ -96,8 +76,7 @@
 
             var _class_addons = "";
             if(selected == true){
-                _class_addons += "outline-dashed outline-2 outline-offset-2 outline-sky-500";
-                // console.log("Element selected : Div : "+uuid);
+                _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
             } 
 
             if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
@@ -116,8 +95,7 @@
         if(selected !== undefined && bindElement !== undefined){
             var _class_addons = "";
             if(selected == true){
-                _class_addons += "outline-dashed outline-2 outline-offset-2 outline-sky-500";
-                // console.log("Element selected : Div : "+uuid);
+                _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
             } 
             if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         }
@@ -165,14 +143,19 @@
 
 </script>
 
-
-
-<span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
     <slot>
         Default Text
     </slot>
     {text}
-</span>
+</div>
+
+<!-- <span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
+    <slot>
+        Default Text
+    </slot>
+    {text}
+</span> -->
 
 
 <style>

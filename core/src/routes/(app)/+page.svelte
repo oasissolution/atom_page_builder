@@ -31,12 +31,6 @@
 
         if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
 
-            if(buildType == "release"){
-                if(editorFrame.src !== "/atompagebuilder/app/editor"){
-                    editorFrame.src = "/atompagebuilder/app/editor";
-                };
-            }
-
             // console.log("Send data on globalComponentCollectionStore !");
             const data = {
                 "message": {
@@ -50,12 +44,6 @@
 
     function updateEditorFunction(){
         if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
-
-            if(buildType == "release"){
-                if(editorFrame.src !== "/atompagebuilder/app/editor"){
-                    editorFrame.src = "/atompagebuilder/app/editor";
-                };
-            }
 
             // console.log("Send data on updateEditorFunction !");
             const data = {
@@ -151,9 +139,7 @@
             if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
         });
 
-        if(buildType == "release"){
-            editorFrame.src = "/atompagebuilder/app/editor";
-        }
+        
 
         
     });
@@ -166,8 +152,11 @@
 
     {#if $globalEditorViewStore == EditorViews.PAGE}
 
+    {#if buildType == "release"}
+    <iframe id="editorFrame" bind:this={editorFrame} src="editor.html" title="Editor" class=""  style='--editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};'></iframe>
+    {:else}
     <iframe id="editorFrame" bind:this={editorFrame} src="/editor" title="Editor" class=""  style='--editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};'></iframe>
-
+    {/if}
     {:else if $globalEditorViewStore == EditorViews.CODE }
     <svelte:component this={Code}/>
     {:else}

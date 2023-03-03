@@ -13,19 +13,25 @@
      * Control behaviour of element if element is selected.
      * @type boolean
      */
-     export let selected;
+    export let selected;
+
 
     /**
-     * Required data to fill attr of html elements
-     * @property class
-     * @property dir
-     * @property hidden
-     * @property id
-     * @property lang
-     * @property style
-     * @property title
-     * @type JSON
+     * Required data to fill attributes of HTML elements
+     * @typedef {Object} AttrData
+     * @property {string} [class] - Specifies one or more class names for the element (used to reference the element in CSS)
+     * @property {string} [dir] - Specifies the direction of the element's text (left-to-right or right-to-left)
+     * @property {boolean} [hidden] - Specifies that the element should be hidden
+     * @property {string} [id] - Specifies a unique id for the element (used to reference the element in JavaScript)
+     * @property {string} [lang] - Specifies the language of the element's content
+     * @property {string} [style] - Specifies inline CSS for the element
+     * @property {string} [title] - Specifies extra information about the element (displayed as a tooltip)
+     * @property {string} [text] - Value of Text Element
      */
+
+    /**
+     * @type {AttrData}
+     */ 
     export let data;
 
 
@@ -37,21 +43,7 @@
      */
     export const elAttr = ["class", "dir", "hidden", "id", "lang", "style", "title"];
 
-    /*
-
-    Attribute	Description
-
-    class	    Specifies one or more class names for the element (used to reference the element in CSS)
-    dir	        Specifies the direction of the element's text (left-to-right or right-to-left)
-    hidden	    Specifies that the element should be hidden
-    id	        Specifies a unique id for the element (used to reference the element in JavaScript)
-    lang	    Specifies the language of the element's content
-    style	    Specifies inline CSS for the element
-    title	    Specifies extra information about the element (displayed as a tooltip)
-
-    */
-
-
+ 
     /**
      * Default string in the middle.
      * @type string
@@ -63,44 +55,75 @@
      */
     let bindElement;
 
+    /// updates ui when data changes
+    $: data, (() => {
+        if(data !== undefined && bindElement !== undefined){
+
+            var _class_addons = "";
+            if(selected == true){
+                _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
+                // console.log("Element selected : Div : "+uuid);
+            } 
+
+            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
+            if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
+            if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
+            if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
+            if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
+            if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
+        }
+        
+    })();
+
+    /// updates ui when selected changes
+    $: selected, (() => {
+        if(selected !== undefined && bindElement !== undefined){
+            var _class_addons = "";
+            if(selected == true){
+                _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
+            } 
+            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+        }
+    })();
 
     onMount(() => {
         // This is optional
         text = data.text !== undefined ? data.text : "";
 
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class);
+        var _class_addons = "";
+        if(selected == true){
+            _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
+        }
+
+        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
-        if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden);
+        if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
         if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
         if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
         if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
 
-        bindElement.addEventListener("mousedown", (ev) => {
-            if(ev.target){
-                globalSelectedElementStore.set(null);
-            }
+        // bindElement.addEventListener("mousedown", (ev) => {
+        //     if(ev.target === bindElement){
+        //         globalSelectedElementStore.set(null);
+        //     }
             
-        });
+        // });
 
     });
 
 
 </script>
 
-<div bind:this={bindElement} id="{uuid}" > <!-- atomBody -->
+<div bind:this={bindElement} id="{uuid}" > 
     <slot>
         <div class="w-full h-full flex align-middle justify-center content-center"><span class="">{text}</span></div>
     </slot>
 </div>
 
-<!-- <div>
-    {bindElement.innerHTML}
-</div> -->
+
 
 <style>
-    /* #atomBody{
-        width: 100%;
-        height: 100%;
-    } */
+
 </style>

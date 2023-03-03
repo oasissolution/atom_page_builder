@@ -132,10 +132,41 @@ export function getTypeOfComponent(jsonData, uuid){
 
 
 
-/*
+/**
+ * Gets the type of selected element.
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @param {string?} dataTarget Target key in JSON "data". e.g.: class, text,... (Sub keys in data segment)
+ * @param {string?} target Target key in JSON, e.g.: type, selected,... (main keys)
+ * @returns {string | boolean | number}
+ */
+export function getDataFromComponent(jsonData, uuid, dataTarget = null, target = null){
 
-console.log("element.uuid === uuid === " + uuid);
+  for (let i = 0; i < jsonData.length; i++) {
 
-      console.log('element["type"].toString() === ' + element["type"].toString());
+    var element = jsonData[i];
+ 
+    if(element.uuid === uuid){
 
-*/
+      if(dataTarget != null){
+        if(element.data.hasOwnProperty(dataTarget)){
+          console.log('element["data"][dataTarget] : ' + element.data[dataTarget]);
+          return element.data[dataTarget];
+        }
+      }else if(target != null){
+        if(element.hasOwnProperty(target)){
+          console.log('element[target] : ' + element[target]);
+          return element[target];
+        }
+      }
+      
+    }else if(element.children){
+      var result = getTypeOfComponent(element.children, uuid);
+      if(result !== undefined && result != ""){
+        return result;
+      }
+    }
+  }
+
+  return "";
+}

@@ -5,6 +5,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.015] - 2022-03-03
+
+### Added
+ - Option panel pages of div and text. (Blank for now)
+
+### Changed
+ - 
+
+### Fixed
+ - Glitch on "build" versions.
+
+
 ## [0.0.1.014] - 2022-03-02
 
 ### Added
