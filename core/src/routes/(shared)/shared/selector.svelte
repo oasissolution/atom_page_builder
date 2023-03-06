@@ -74,19 +74,9 @@
 
             atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
 
-            // console.log("$globalSelectedElementStore : " + $globalSelectedElementStore.id + "\n\n$globalComponentCollectionStore : " + JSON.stringify($globalComponentCollectionStore));
             var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
-            console.log("type : " + type);
+            // console.log("type : " + type);
             selectedType.set(type);
-            
-            // console.log("rect : "+ JSON.stringify(rect.toJSON));
-            // console.log("Selector Class : "+ _class);
-            // console.log("Selector Style : "+ JSON.stringify(atomSelector.style));
-
-            // $globalSelectedElementStore.style.addClass = "test";
-            // console.log("Element Class : "+ $globalSelectedElementStore.getAttribute("class"));
-            // console.log("Element Style : "+ JSON.stringify($globalSelectedElementStore.style));
-
 
         }
 
@@ -114,7 +104,6 @@
 
 
 </script>
-        
 
         <div id="atomSelectorActions" bind:this={atomSelectorActions} class="bg-white rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center"
         style='
@@ -130,36 +119,12 @@
         {#if $selectedType != ""}
 
         <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent}/>
-        <!-- <svelte:component this={actionsComponent} /> -->
 
         {/if}
         
         </div>
-        <!-- {$globalSelectedElementStore != null ? $globalSelectedElementStore.getAttribute("id") : ""} -->
-    
+ 
 
-        
-
-
-<!--
-<div bind:this={atomSelector} id="atomSelector" class=""
- style='
-    --selectorPositionDataWidth:{selectorPositionDataWidth};
-    --selectorPositionDataHeight:{selectorPositionDataHeight};
-    --selectorPositionDataLeft:{selectorPositionDataLeft};
-    --selectorPositionDataTop:{selectorPositionDataTop};
-'>
-    <div class="relative w-full h-full">
-
-        <div id="atomSelectorActions" class="bg-white rounded-md absolute top-2 right-2 w-18 h-8 p-1 m-0 flex flex-row z-50">
-            <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
-            <div class="vr"></div>
-            <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-three-dots-vertical w-5 h-5 text-black"></i></button>
-        </div>
-
-    </div>
-</div>
--->
 
 <style>
 
@@ -181,9 +146,7 @@
         left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) + var(--marginX));
     }
 
-    /* #atomSelector::after{
-        border: 2px dotted black;
-    } */
+
 
     :global().hr {
         display: inline-block;

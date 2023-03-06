@@ -133,7 +133,7 @@ export function getTypeOfComponent(jsonData, uuid){
 
 
 /**
- * Gets the type of selected element.
+ * Gets data from selected element.
  * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
  * @param {string} uuid Unique id of HTMLElement
  * @param {string?} dataTarget Target key in JSON "data". e.g.: class, text,... (Sub keys in data segment)
@@ -161,7 +161,7 @@ export function getDataFromComponent(jsonData, uuid, dataTarget = null, target =
       }
       
     }else if(element.children){
-      var result = getTypeOfComponent(element.children, uuid);
+      var result = getDataFromComponent(element.children, uuid, dataTarget, target);
       if(result !== undefined && result != ""){
         return result;
       }
@@ -169,4 +169,33 @@ export function getDataFromComponent(jsonData, uuid, dataTarget = null, target =
   }
 
   return "";
+}
+
+
+
+/**
+ * Gets data from selected element.
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @returns {JSON?}
+ */
+export function getComponent(jsonData, uuid){
+
+  for (let i = 0; i < jsonData.length; i++) {
+
+    var element = jsonData[i];
+ 
+    if(element.uuid === uuid){
+
+      return element;
+
+    }else if(element.children){
+      var result = getComponent(element.children, uuid);
+      if(result !== undefined && result != null){
+        return result;
+      }
+    }
+  }
+
+  return null;
 }

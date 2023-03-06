@@ -86,6 +86,8 @@
             if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
             if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
             if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
+            
+            text = data.text !== undefined ? data.text : "";
         }
         
     })();

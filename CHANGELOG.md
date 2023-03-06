@@ -5,6 +5,20 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.016] - 2022-03-06
+
+### Added
+ - 
+
+### Changed
+ - Option panels now updates Json and sends to editor frame.
+ - Editor panel updates according to edits
+
+### Fixed
+
+
+
 ## [0.0.1.015] - 2022-03-03
 
 ### Added
@@ -15,6 +29,7 @@ All notes are for developers, since this repository will not be public.
 
 ### Fixed
  - Glitch on "build" versions.
+
 
 
 ## [0.0.1.014] - 2022-03-02

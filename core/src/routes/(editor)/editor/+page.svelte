@@ -71,7 +71,7 @@
         </svelte:component>
     {/each}
     {:else}
-    <div class="w-full h-full flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
+    <div class="w-[100vw] h-[100vh] flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
     {/if}
 
     <!-- line below will be removed later -->

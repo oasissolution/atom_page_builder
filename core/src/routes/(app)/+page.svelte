@@ -5,6 +5,7 @@
     import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes } from "../globals/globalfunctions.js";
+    import { setContext } from 'svelte';
 
     import Code from "../(editor)/editor/code.svelte";
     import Variables from "../(editor)/editor/variables.svelte";
@@ -42,6 +43,7 @@
         }
     })();
 
+
     function updateEditorFunction(){
         if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
 
@@ -59,7 +61,18 @@
 
     let previousSelectedHtmlElementUuid = "";
 
+    /**
+     * @type function
+     */
+    const updateEditor = () => {
+        console.log("editor updated from child component");
+        updateEditorFunction();
+    }
+    setContext('updateEditor', { updateEditor });
+
     onMount(()=>{
+
+
         
         ///Listen editor in iframe
         window.addEventListener('message', event => {
@@ -123,6 +136,8 @@
             /// Set selected element as previous, so it will be easy to revert selection effects.
             previousSelectedHtmlElementUuid = event.data;
 
+            // eventBus('updateEditor', updateEditorFunction);
+
         });
 
         loaded = true;
@@ -139,9 +154,7 @@
             if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
         });
 
-        
-
-        
+       
     });
 
 </script>

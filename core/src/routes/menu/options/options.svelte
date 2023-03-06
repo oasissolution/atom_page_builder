@@ -23,12 +23,11 @@
        */
       let selectedType = writable("");
 
-
       $: $globalSelectedElementUuidStore, (updateOptionsPanel)();
       
       function updateOptionsPanel(){
          var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore);
-         console.log("options type : " + type);
+         // console.log("options type : " + type);
          selectedType.set(type);
       }
 
@@ -70,8 +69,7 @@
       {#if $selectedType != ""}
 
       <svelte:component this={JsonOfModules[$selectedType]}/>
-
-
+      
       {/if}
       
    </div>

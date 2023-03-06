@@ -76,7 +76,7 @@
             if(data.spellcheck          !== undefined) bindElement.setAttribute("spellcheck",       data.spellcheck.toString());
             if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex.toString());
 
-            var _class_addons = " atomDiv";
+            var _class_addons = "";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
                 // console.log("Element selected : Div : "+uuid);
@@ -89,6 +89,8 @@
             if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
             if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
             if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
+
+            // TODO: Update action buttons location
         }
         
     })();
@@ -96,7 +98,7 @@
     /// updates ui when selected changes
     $: selected, (() => {
         if(selected !== undefined && bindElement !== undefined){
-            var _class_addons = " atomDiv";
+            var _class_addons = "";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
                 // console.log("Element selected : Div : "+uuid);
@@ -113,7 +115,7 @@
         if(data.spellcheck          !== undefined) bindElement.setAttribute("spellcheck",       data.spellcheck.toString());
         if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex.toString());
 
-        var _class_addons = " atomDiv";
+        var _class_addons = "";
 
         if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons); // selectedBorder
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
