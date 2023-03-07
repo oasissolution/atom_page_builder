@@ -6,6 +6,19 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.017] - 2022-03-07
+
+### Added
+ - Drag & Drop Text finished.
+ - Drag & Drop Div (has issues).
+
+### Changed
+ - 
+
+### Fixed
+
+
+
 ## [0.0.1.016] - 2022-03-06
 
 ### Added

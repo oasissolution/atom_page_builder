@@ -2,6 +2,8 @@
     import "../../../app.css";
 	import { onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
+    import { sendSelectedElement, sendDroppedElement } from "../../(shared)/shared/sharedfunctions.js";
+    
 
     /**
      * uuid of element
@@ -79,7 +81,8 @@
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
             } 
 
-            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
+            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
             if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
             if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
             if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -88,6 +91,11 @@
             if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
             
             text = data.text !== undefined ? data.text : "";
+
+            if(data.text === undefined && data.class === undefined){
+                text = "Lorem ipsum ...";
+                bindElement.setAttribute("class", "flex place-content-center text-lg");
+            }
         }
         
     })();
@@ -99,7 +107,8 @@
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
             } 
-            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
         }
     })();
 
@@ -113,7 +122,7 @@
         if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex.toString());
 
         var _class_addons = "";
-        if(selected == true) _class_addons += "outline-dashed outline-2 outline-offset-2 outline-sky-500";
+        if(selected == true) _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
 
         if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
@@ -134,8 +143,9 @@
     // let elementSelected = false;
 
     function selectElement(){
-        window.parent.postMessage(uuid, '*');
+        // window.parent.postMessage(uuid, '*');
         // elementSelected = true;
+        sendSelectedElement(uuid);
 
         // update global variable, so selector activates
         selectedElement = bindElement;
@@ -145,19 +155,24 @@
 
 </script>
 
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
+<!-- <div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
     <slot>
         Default Text
     </slot>
     {text}
-</div>
+    {#if text != null && text != undefined && text != ""}
+        {text}
+    {:else}
+        Lorem ipsum ...
+    {/if} 
+</div> -->
 
-<!-- <span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
+<span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
     <slot>
         Default Text
     </slot>
     {text}
-</span> -->
+</span>
 
 
 <style>

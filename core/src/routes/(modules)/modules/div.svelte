@@ -2,7 +2,7 @@
     import "../../../app.css";
 	import { onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-
+    import { sendSelectedElement, sendDroppedElement } from "../../(shared)/shared/sharedfunctions.js";
 
     /**
      * uuid of element
@@ -49,7 +49,6 @@
      */
     export const elAttr = ["accesskey", "class", "contenteditable", "dir", "draggable", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"];
 
-
     /**
      * @type HTMLElement
      */
@@ -82,7 +81,8 @@
                 // console.log("Element selected : Div : "+uuid);
             } 
 
-            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
+            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
             if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
             if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
             if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -101,9 +101,9 @@
             var _class_addons = "";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-                // console.log("Element selected : Div : "+uuid);
             } 
-            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
+            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         }
     })();
 
@@ -124,6 +124,11 @@
         if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
         if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
         if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
+
+        // if(data === undefined){
+        //     bindElement.setAttribute("class", "w-[200px] h-[150px] flex place-content-center text-lg");
+        //     bindElement.innerHTML = "This div is blank!";
+        // }
 
         // function selectElement(){
         //     window.parent.postMessage(uuid, '*');
@@ -148,13 +153,76 @@
 
         // divZIndex = Number.isNaN(parseInt(bindElement.style.zIndex)) == false ? parseInt(bindElement.style.zIndex) + 5 : 5;
         // console.log('divZIndex = (parseInt('+bindElement.style.zIndex+') + 5).toString(); ==> divZIndex='+divZIndex);
+
+        // jQuery(bindElement).droppable({
+        //     drop: function(event, ui) {
+        //         console.log("dropped");
+        //     },
+        //     over: function(event, ui) {
+        //         console.log("drop over");
+        //     },
+        //     out: function(event, ui) {
+        //         console.log("drop out");
+        //     }
+        // });
+
+        bindElement.addEventListener("drop", dropped);
+        bindElement.addEventListener("dragenter", cancelDefault);
+        bindElement.addEventListener("dragover", dragOver);
+        bindElement.addEventListener("dragleave", dragLeave);
+        bindElement.addEventListener('dragend', dragEnd);
+        
+        function dropped(e) {
+            // execute function only when target container is different from source container
+            const types = e.dataTransfer.types;
+            if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
+                cancelDefault(e);
+                bindElement.classList.remove("outline-dashed");
+                bindElement.classList.remove("outline-2");
+                bindElement.classList.remove("outline-offset-2");
+                bindElement.classList.remove("outline-teal-500");
+
+                sendDroppedElement(uuid, e.dataTransfer.getData('text/plain'));
+
+            }
+        }
+
+        function dragOver(e) {
+            cancelDefault(e);
+
+            const types = e.dataTransfer.types;
+            if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'text'
+                bindElement.classList.add("outline-dashed");
+                bindElement.classList.add("outline-2");
+                bindElement.classList.add("outline-offset-2");
+                bindElement.classList.add("outline-teal-500");
+            }
+
+        }
+
+        function dragLeave(e) {
+            bindElement.classList.remove("outline-dashed");
+            bindElement.classList.remove("outline-2");
+            bindElement.classList.remove("outline-offset-2");
+            bindElement.classList.remove("outline-teal-500");
+        }
+
+        function dragEnd(e){
+            e.dataTransfer.clearData();
+        }
+
+        function cancelDefault(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
         
     });
 
 
     function selectElement(){
         /// Send selected uuid to main frame.
-        window.parent.postMessage(uuid, '*');
+        sendSelectedElement(uuid);
 
         // update global variable, so selector activates.
         selectedElement = bindElement;
@@ -165,36 +233,19 @@
 
 
 
-
-    
-
-
 <div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
-   
+
     <slot> 
-    <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
+    <!-- <div class="w-[200px] h-[150px] flex place-content-center">This is a blank div!</div> -->
+    <em>No content was provided</em>
     </slot>
+    <!-- {#if hasChild === false}
+  
+    This is a blank div!
 
-    <!-- <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
-        <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black atomDivCtl" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
-    </div> -->
-
+    {/if} -->
 
 </div>
-
-<!-- <div bind:this={bindElementActions} class="atomDivEditor" class:invisible={!elementSelected}>
-
-    <slot> 
-        <div class="w-full h-full place-content-center text-slate-300">This is a blank div!</div>
-    </slot>
-
-    <div class="bg-white rounded-md absolute top-2 right-2 w-16 h-7 p-0 m-0 z-20 atomDivCtl">
-        <button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black atomDivCtl" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button>
-    </div>
-
-</div> -->
-
-
 
 
 <style>

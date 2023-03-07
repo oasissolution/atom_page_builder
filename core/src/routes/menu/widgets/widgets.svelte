@@ -15,6 +15,20 @@
    $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
 
+   // TODO: import all modules dynamically
+
+   import Div from "../../(modules)/widgets/div.svelte";
+   import Text from "../../(modules)/widgets/text.svelte";
+
+   /**
+    * Definition and list of all modules in a JSON.
+    * @returns {JSON}
+    * 
+    */
+   const JsonOfModules = {
+      "div": Div,
+      "text": Text,
+   };
 
 
 </script>
@@ -29,7 +43,16 @@
    --fixedPanelButtonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
 ' >
    <h2>Widgets</h2>
-   <div class="w-full h-full flex items-center justify-center"><span>Empty for now...</span></div>
+   <div class="w-full h-full flex items-start justify-center pt-3">
+
+      <div class="w-full grid grid-cols-3 justify-items-center">
+         <svelte:component this="{Div}" />
+         <svelte:component this="{Text}" />
+      </div>
+
+      
+
+   </div>
 
 </div>
 

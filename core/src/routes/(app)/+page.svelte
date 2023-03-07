@@ -4,8 +4,8 @@
     import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore } from "../globals/globalstores.js";
     import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
-    import { updateGlobalComponentCollectionStore, UpdateActionTypes } from "../globals/globalfunctions.js";
-    import { setContext } from 'svelte';
+    import { updateGlobalComponentCollectionStore, UpdateActionTypes, getComponent, addChildComponent } from "../globals/globalfunctions.js";
+    import { v4 as uuidv4 } from 'uuid';
 
     import Code from "../(editor)/editor/code.svelte";
     import Variables from "../(editor)/editor/variables.svelte";
@@ -61,82 +61,90 @@
 
     let previousSelectedHtmlElementUuid = "";
 
+
     /**
-     * @type function
+     * Sets selected element in JSON
+     * @param {string} targetUuid uuid of selected element
      */
-    const updateEditor = () => {
-        console.log("editor updated from child component");
+    function setSelectedElement(targetUuid){
+
+        // console.log("Element Selected : " + targetUuid);
+
+        /// if there is a selected element before, set as selected = false
+        if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
+            $globalComponentCollectionStore, //jsonData
+            previousSelectedHtmlElementUuid, //uuid
+            false, //newValue
+            null, //dataTarget
+            "selected", //target
+            UpdateActionTypes.SET, //action
+            "" //replace value
+            ))
+        {
+            updateEditorFunction();
+        }
+
+        /// targetUuid is uuid of selected element. So set globally, that way we can use everywhere in our app 
+        globalSelectedElement = targetUuid;
+
+        /// set element as selected in JSON
+        if(updateGlobalComponentCollectionStore(
+            $globalComponentCollectionStore, //jsonData
+            targetUuid, //uuid
+            true, //newValue
+            null, //dataTarget
+            "selected", //target
+            UpdateActionTypes.SET, //action
+            "" //replace value
+            ))
+        {
+            updateEditorFunction();
+        }
+
+        /// Set selected element as previous, so it will be easy to revert selection effects.
+        previousSelectedHtmlElementUuid = targetUuid;
+    }
+
+    /**
+     * Adds new dropped element to Json.
+     * @param {string} targetUuid uuid of selected element
+     * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
+     */
+    function setDroppedElement(targetUuid, elementType){
+
+        const defaultData = {
+            "uuid": uuidv4().toString(),
+            "type": elementType,
+            "data": {},
+            "selected": false,
+            "children": []
+        };
+
+        addChildComponent($globalComponentCollectionStore, targetUuid, defaultData);
         updateEditorFunction();
     }
-    setContext('updateEditor', { updateEditor });
 
     onMount(()=>{
 
-
+        
         
         ///Listen editor in iframe
         window.addEventListener('message', event => {
 
-            // if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
-            //     $globalComponentCollectionStore, //jsonData
-            //     previousSelectedHtmlElementUuid, //uuid
-            //     "outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
-            //     "class", //dataTarget
-            //     null, //target
-            //     UpdateActionTypes.REMOVE, //action
-            //     "" //replace value
-            //     ))
-            // {
-            //     updateEditorFunction();
-            // }
+            if(event.data){
+                // console.log("Gelen : " +JSON.stringify(event.data));
+                switch(event.data.action){
+                    case "selectElement":
+                        setSelectedElement(event.data.data.uuid);
+                        break;
+                    case "dropElement":
+                        setDroppedElement(event.data.data.uuid, event.data.data.elementType);
+                        break;
+                }
 
-            if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
-                $globalComponentCollectionStore, //jsonData
-                previousSelectedHtmlElementUuid, //uuid
-                false, //newValue
-                null, //dataTarget
-                "selected", //target
-                UpdateActionTypes.SET, //action
-                "" //replace value
-                ))
-            {
-                updateEditorFunction();
             }
 
-            /// event.data is uuid of selected element. So set globally, that way we can use everywhere in our app 
-            globalSelectedElement = event.data;
 
-
-            // if(updateGlobalComponentCollectionStore(
-            //     $globalComponentCollectionStore, //jsonData
-            //     event.data, //uuid
-            //     "outline-dashed outline-2 outline-offset-2 outline-sky-500", //newValue
-            //     "class", //dataTarget
-            //     null, //target
-            //     UpdateActionTypes.APPEND, //action
-            //     "" //replace value
-            //     ))
-            // {
-            //     updateEditorFunction();
-            // }
-
-            if(updateGlobalComponentCollectionStore(
-                $globalComponentCollectionStore, //jsonData
-                event.data, //uuid
-                true, //newValue
-                null, //dataTarget
-                "selected", //target
-                UpdateActionTypes.SET, //action
-                "" //replace value
-                ))
-            {
-                updateEditorFunction();
-            }
-
-            /// Set selected element as previous, so it will be easy to revert selection effects.
-            previousSelectedHtmlElementUuid = event.data;
-
-            // eventBus('updateEditor', updateEditorFunction);
 
         });
 

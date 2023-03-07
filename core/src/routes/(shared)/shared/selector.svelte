@@ -47,13 +47,15 @@
         if(actionsComponent !== undefined){
             marginX = actionsComponent.marginX;
             marginY = actionsComponent.marginY;
-            console.log("marginX: "+ marginX + "| marginY: " + marginY);
+            // console.log("marginX: "+ marginX + "| marginY: " + marginY);
         }else{
             marginX = "-40px";
             marginY = "0px";
         }
     })();
 
+
+    $: $globalComponentCollectionStore, (updateSelector)();
 
     $: $globalSelectedElementStore, (updateSelector)();
 
@@ -148,7 +150,7 @@
 
 
 
-    :global().hr {
+    :global(.hr) {
         display: inline-block;
         align-self: stretch;
         height: 1px;
@@ -157,7 +159,7 @@
         opacity: 0.25;
     }
 
-    :global().vr {
+    :global(.vr) {
         display: inline-block;
         align-self: stretch;
         width: 1px;

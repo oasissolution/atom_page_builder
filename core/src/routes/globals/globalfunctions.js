@@ -199,3 +199,32 @@ export function getComponent(jsonData, uuid){
 
   return null;
 }
+
+
+/**
+ * Gets data from selected element.
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @param {{}} child Child element to be added
+ */
+export function addChildComponent(jsonData, uuid, child){
+
+  for (let i = 0; i < jsonData.length; i++) {
+
+    var element = jsonData[i];
+ 
+    if(element.uuid === uuid){
+
+      element.children.push(child);
+      return
+
+    }else if(element.children){
+      var result = addChildComponent(element.children, uuid, child);
+      if(result !== undefined && result != null){
+        result.children.push(child);
+        return
+      }
+    }
+  }
+
+}
