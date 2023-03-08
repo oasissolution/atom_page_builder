@@ -113,12 +113,11 @@
 
 <svelte:head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/iconly/css/style.css">
     <title>Atom Page Builder</title>
 </svelte:head>
 
 
-<div id="backgroundFrame" class="" style='--backgroundFrameColor:{$globalEditorPreferencesStore.editorTheme.backgroundFrameColor};'>
+<div id="backgroundFrame" class="" style='--backgroundFrameColor:{$globalThemeStore.mainLayout.backgroundFrameColor};'>
     {#if topMenuFrameContent}<div id="topMenuFrame" class="fixed top-0 left-0 right-0"><svelte:component this={Menu}/></div>{/if}
     <div id="middleFrame" class="flex flex-row" >
         {#if leftMenuFrameContent}<div id="leftMenuFrame" class=""><svelte:component this={Menu}/></div>{/if}
@@ -134,8 +133,8 @@
         <div id="editorWrapper" class="w-full">
             <div id="editor"
                 style='
-                --editorBackgroundColor:{$globalEditorPreferencesStore.editorTheme.editorBackgroundColor};
-                --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor};
+                --editorBackgroundColor:{$globalThemeStore.mainLayout.editorBackgroundColor};
+                --backgroundColor:{$globalThemeStore.mainLayout.backgroundColor};
                 --editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};
                 '>
                 <slot></slot>
@@ -157,12 +156,6 @@
     {#if bottomMenuFrameContent}<div id="bottomMenuFrame" class="fixed bottom-0 left-0 right-0"><svelte:component this={Menu}/></div>{/if}
 
 </div>
-
-<!-- <div id="infoLayer" class="flex items-center">
-    <svelte:component this={Info}/>
-</div> -->
-
-
 
 
 

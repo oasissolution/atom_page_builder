@@ -1,5 +1,5 @@
 <script>
-   import { globalEditorPreferencesStore } from "../../globals/globalstores.js";
+   import { globalEditorPreferencesStore, globalThemeStore } from "../../globals/globalstores.js";
 
    import Menulocation from "./settings/menulocation.svelte";
    import Panellocation from "./settings/panellocation.svelte";
@@ -32,15 +32,17 @@
 
 </script>
 
-<div class="customizePanel " style='
-   --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor}; 
-   --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
-   --fixedPanelButtonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
-    --fixedPanelButtonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
-    --fixedPanelButtonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveForegroundColor};
-    --fixedPanelButtonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
+<div class="widgetPanel" style='
+--fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+--fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+--fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+--backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+--foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+--borderColor: {$globalThemeStore.widgetIcon.borderColor};
+--iconColor: {$globalThemeStore.widgetIcon.iconColor};
+--textColor: {$globalThemeStore.widgetIcon.textColor};
 ' >
-   <h2 class="text-xl">Customize Editor</h2>
+   <div class="widgetPanelTitle">Customize Editor</div>
    <br/>
    <div class="flex flex-row gap-2">
       {#if selectedTabPageIndex==0}
@@ -61,31 +63,11 @@
    {:else if selectedTabPageIndex==1}
    <svelte:component this={Theme}/>
    {/if}
-   
+
 </div>
 
 <style>
 
-.customizePanel{
-   padding: 15px;
-   width: 340px;
-   height: 100vh;
-   background-color: var(--fixedPanelBackgroundColor);
-   color: var(--fixedPanelForegroundColor);
-}
 
-.tabButton{
-   height: 42px;
-   padding-left: 5px;
-   padding-right: 5px;
-   background-color: var(--fixedPanelButtonPassiveBackgroundColor);
-   border-color: transparent;
-   color: var(--fixedPanelButtonPassiveForegroundColor);
-}
-.tabButton.selected{
-   background-color: var(--fixedPanelButtonActiveBackgroundColor);
-   color: var(--fixedPanelButtonActiveForegroundColor);
-   border-radius: 6px;
-}
 
 </style>

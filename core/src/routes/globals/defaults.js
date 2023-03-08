@@ -32,8 +32,8 @@ export const editorDefaultPreferences = {
     },
     "editorData": {
         "editorScreen": "screenDesktop",
-        "editorWidth": "1320px",
-        "fullWidth": false,
+        "editorWidth": "100%", //"1320px"
+        "fullWidth": true, //false
     }
 };
 

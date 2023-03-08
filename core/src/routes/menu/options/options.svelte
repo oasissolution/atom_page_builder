@@ -1,5 +1,5 @@
 <script>
-      import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
+      import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
       import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
       import { getTypeOfComponent } from "../../globals/globalfunctions.js";
       import { writable } from "svelte/store";
@@ -56,44 +56,33 @@
 
    </script>
 
-   <div class="customizePanel " style='
-      --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
-      --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
-      --fixedPanelButtonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
-      --fixedPanelButtonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
-      --fixedPanelButtonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveForegroundColor};
-      --fixedPanelButtonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
-   ' >
-      <h3>Widget Options</h3>
-      <br/>
+   <div class="widgetPanel" style='
+   --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+   --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+   --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+   --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+   --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+   --borderColor: {$globalThemeStore.widgetIcon.borderColor};
+   --iconColor: {$globalThemeStore.widgetIcon.iconColor};
+   --textColor: {$globalThemeStore.widgetIcon.textColor};
+' >
+      <div class="widgetPanelTitle">Widget Options</div>
       {#if $selectedType != ""}
 
       <svelte:component this={JsonOfModules[$selectedType]}/>
-      
+
       {/if}
-      
+
    </div>
-   
+
    <style>
-   
-   .customizePanel{
+
+   /* .customizePanel{
       padding: 15px;
-      width: 340px;
+      width: 316px;
       height: 100vh;
       background-color: var(--fixedPanelBackgroundColor);
       color: var(--fixedPanelForegroundColor);
-   }
-   
-   :global().tabButton{
-      height: 42;
-      background-color: var(--fixedPanelButtonPassiveBackgroundColor);
-      border-color: transparent;
-      color: var(--fixedPanelButtonPassiveForegroundColor);
-   }
-   :global().tabButton.selected{
-      background-color: var(--fixedPanelButtonActiveBackgroundColor);
-      color: var(--fixedPanelButtonActiveForegroundColor);
-      border-radius: 6px;
-   }
-   
+   } */
+
    </style>

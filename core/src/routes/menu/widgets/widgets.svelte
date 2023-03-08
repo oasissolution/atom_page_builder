@@ -1,6 +1,6 @@
 <script>
 
-   import { globalEditorPreferencesStore } from "../../globals/globalstores.js";
+   import { globalEditorPreferencesStore, globalThemeStore } from "../../globals/globalstores.js";
 
    /*
       THIS PAGE IS MAIN "WIDGETS" PAGE.
@@ -31,74 +31,115 @@
    };
 
 
-
-   import Button from "../../uicomponents/button.svelte";
-
-   function test2(){
-        alert("Updated");
-    }
-
-
 </script>
 
 
 <div class="widgetPanel " style='
-   --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
-   --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
-   --fixedPanelButtonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
-   --fixedPanelButtonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
-   --fixedPanelButtonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveForegroundColor};
-   --fixedPanelButtonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
+   --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+   --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+   --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+   --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+   --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+   --borderColor: {$globalThemeStore.widgetIcon.borderColor};
+   --iconColor: {$globalThemeStore.widgetIcon.iconColor};
+   --textColor: {$globalThemeStore.widgetIcon.textColor};
 ' >
-   <h2>Widgets</h2>
-   <div class="w-full h-[300px] flex items-start justify-center pt-3">
+   <div class="widgetPanelTitle">Widgets</div>
+
+   <div class="w-full h-full flex items-start justify-center pt-3">
 
       <div class="w-full grid grid-cols-3 justify-items-center">
          <svelte:component this="{Div}" />
          <svelte:component this="{Text}" />
       </div>
-      
 
    </div>
 
-   <br/><br/>
-   <br/><br/>
-
-      <div>
-         <br/><br/>
-         <Button active={false} on:click={test2}>
-             <span slot="iconLeft"><i class="bi bi-check"></i></span>
-             <span slot="text">Update</span>
-         </Button>
-     
-         <Button active={true} on:click={test2}>
-             <span slot="iconRight"><i class="bi bi-check"></i></span>
-             <span slot="text">Update</span>
-         </Button>
-      </div>
-
+   <div class="hidden">
+      <div class="widgetContainer">
+      <div class="widgetIcon"></div>
+      <div class="widgetText"></div></div>
+   </div>
 </div>
+
 
 <style>
 
-.widgetPanel{
-   padding: 15px;
-   width: 340px;
-   height: 100vh;
-   background-color: var(--fixedPanelBackgroundColor);
-   color: var(--fixedPanelForegroundColor);
-}
+   :global(.widgetPanel){
+      padding: 15px;
+      width: 316px;
+      height: 100vh;
+      background-color: var(--fixedPanelBackgroundColor);
+      color: var(--fixedPanelForegroundColor);
+   }
 
-.tabButton{
-   height: 42;
-   background-color: var(--fixedPanelButtonPassiveBackgroundColor);
-   border-color: transparent;
-   color: var(--fixedPanelButtonPassiveForegroundColor);
-}
-.tabButton.selected{
-   background-color: var(--fixedPanelButtonActiveBackgroundColor);
-   color: var(--fixedPanelButtonActiveForegroundColor);
-   border-radius: 6px;
-}
+   :global(.widgetPanelTitle){
+      display: flex;
+      width: 100%;
+      place-content: center;
+      font-size: 1.25rem/* 20px */;
+      line-height: 1.75rem/* 28px */;
+      font-weight: 600;
+      color: var(--fixedPanelTitleColor) !important;
+      margin-bottom: 8px;
+   }
+
+   :global(.widgetPanelSubTitle){
+      display: flex;
+      width: 100%;
+      place-content: center;
+      font-weight: 500;
+      color: var(--fixedPanelForegroundColor) !important;
+   }
+
+   :global(.widgetContainer){
+      width: 80px;
+      height: 80px;
+      display: block;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+      place-content: center;
+      border: 1px solid var(--borderColor) !important;
+      border-radius: 14px;
+      padding-top: 8px;
+      background-color: var(--backgroundColor) !important;
+      color: var(--foregroundColor) !important;
+   }
+
+   :global(.widgetContainer .widgetIcon){
+      width: 100%;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+      place-content: center;
+      font-size:x-large;
+      color: var(--iconColor) !important;
+   }
+
+   :global(.widgetContainer .widgetText){
+      width: 100%;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+      place-content: center;
+      font-size: small;
+      color: var(--textColor) !important;
+   }
+
+   :global([draggable="true"]) {
+      /*
+      To prevent user selecting inside the drag source
+      */
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+   }
+
 
 </style>

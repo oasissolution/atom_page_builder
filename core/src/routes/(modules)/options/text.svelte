@@ -50,6 +50,7 @@
         activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
 
         textInput = activeElement?.data?.text;
+        classInput = activeElement?.data?.class;
     }
 
 
@@ -89,6 +90,12 @@
     let textInput;
 
     /**
+     * Class Value of Text
+     * @type string
+     */
+    let classInput;
+
+    /**
      * Holds state of page load.
      * @type boolean
      */
@@ -124,20 +131,37 @@
             }
         }
 
-        
     }
 
+    function setClass(){
+        console.log("From div options: " + classInput);
 
+        if(activeElement){
+            if(activeElement.data){
+                activeElement.data.class = classInput;
+                updateEditor();
+            }
+        }
+
+    }
 
 </script>
 
-
-    Text Options
+    <div class="widgetPanelSubTitle">Text Options</div>
     <br/>
     {#if selectedTabPageIndex==0}
     <br/>
 
     <input type="text" on:change={test} bind:value={textInput}/>
+    <br/><br/>
+    <br/> Tailwind CSS
+    <br/>
+
+    <!-- <input type="text" on:change={test} bind:value={classInput}/> -->
+    <textarea bind:value={classInput} rows="10"></textarea>
+    <br/>
+    <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white"  on:click={setClass}>Update</button>
+
 
     {:else if selectedTabPageIndex==1}
     Tab Page 2

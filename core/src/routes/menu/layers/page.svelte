@@ -5,6 +5,7 @@
     import Layers from "./layers.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+	import Iconbutton from "../../uicomponents/iconbutton.svelte";
 
     /**
      * Added for later use
@@ -87,7 +88,11 @@
 
 {#if onlyButton}
 
-    {#if $globalVisibilityStore.default.layerPanel == true || $globalVisibilityStore.right.layerPanel == true || $globalVisibilityStore.left.layerPanel == true}
+    <Iconbutton active={$globalVisibilityStore.default.layerPanel == true || $globalVisibilityStore.right.layerPanel == true || $globalVisibilityStore.left.layerPanel == true} noBackground={true} on:click={toggleLayerPanel} >
+        <span slot="icon"><i class="bi bi-stack"></i></span>
+    </Iconbutton>
+
+    <!-- {#if $globalVisibilityStore.default.layerPanel == true || $globalVisibilityStore.right.layerPanel == true || $globalVisibilityStore.left.layerPanel == true}
 
     <button class="iconButton selected" on:click={toggleLayerPanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
@@ -107,7 +112,7 @@
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' ><i class="bi bi-stack"></i></button>
-    {/if}
+    {/if} -->
 
 
 {:else}

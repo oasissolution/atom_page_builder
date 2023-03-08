@@ -522,6 +522,9 @@ video {
 .bottom-0 {
   bottom: 0px;
 }
+.bottom-24 {
+  bottom: 6rem;
+}
 .left-0 {
   left: 0px;
 }
@@ -552,6 +555,10 @@ video {
 .m-0 {
   margin: 0px;
 }
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -559,6 +566,18 @@ video {
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-3 {
+  margin-left: 0.75rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
 }
 .mt-2 {
   margin-top: 0.5rem;
@@ -584,6 +603,9 @@ video {
 .h-10 {
   height: 2.5rem;
 }
+.h-28 {
+  height: 7rem;
+}
 .h-5 {
   height: 1.25rem;
 }
@@ -602,6 +624,9 @@ video {
 .h-\[250px\] {
   height: 250px;
 }
+.h-\[60px\] {
+  height: 60px;
+}
 .h-\[75px\] {
   height: 75px;
 }
@@ -617,6 +642,9 @@ video {
 .w-6 {
   width: 1.5rem;
 }
+.w-8 {
+  width: 2rem;
+}
 .w-\[100vw\] {
   width: 100vw;
 }
@@ -626,15 +654,25 @@ video {
 .w-\[400px\] {
   width: 400px;
 }
+.w-\[60\%\] {
+  width: 60%;
+}
 .w-\[600px\] {
   width: 600px;
 }
 .w-full {
   width: 100%;
 }
+.w-max {
+  width: -moz-max-content;
+  width: max-content;
+}
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content;
+}
+.max-w-screen-md {
+  max-width: 768px;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -693,6 +731,9 @@ video {
 .gap-2 {
   gap: 0.5rem;
 }
+.gap-y-3 {
+  row-gap: 0.75rem;
+}
 .divide-x > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-x-reverse: 0;
   border-right-width: calc(1px * var(--tw-divide-x-reverse));
@@ -701,14 +742,28 @@ video {
 .divide-black\/40 > :not([hidden]) ~ :not([hidden]) {
   border-color: rgb(0 0 0 / 0.4);
 }
+.rounded-lg {
+  border-radius: 0.5rem;
+}
 .rounded-md {
   border-radius: 0.375rem;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
 }
 .border {
   border-width: 1px;
 }
 .border-none {
   border-style: none;
+}
+.border-\[\#a3a3a3\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(163 163 163 / var(--tw-border-opacity));
+}
+.bg-\[\#ffffff\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 .bg-sky-400 {
   --tw-bg-opacity: 1;
@@ -759,6 +814,9 @@ video {
 .pt-3 {
   padding-top: 0.75rem;
 }
+.text-center {
+  text-align: center;
+}
 .align-middle {
   vertical-align: middle;
 }
@@ -766,8 +824,9 @@ video {
   font-size: 1.5rem;
   line-height: 2rem;
 }
-.text-\[10px\] {
-  font-size: 10px;
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 .text-\[8px\] {
   font-size: 8px;
@@ -776,16 +835,27 @@ video {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.font-bold {
+  font-weight: 700;
 }
 .font-semibold {
   font-weight: 600;
 }
+.text-\[\#a3a3a3\] {
+  --tw-text-opacity: 1;
+  color: rgb(163 163 163 / var(--tw-text-opacity));
+}
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+.text-slate-500 {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
 }
 .text-teal-600 {
   --tw-text-opacity: 1;
@@ -794,6 +864,12 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.underline {
+  text-decoration-line: underline;
+}
+.underline-offset-4 {
+  text-underline-offset: 4px;
 }
 .outline-dashed {
   outline-style: dashed;
@@ -810,10 +886,28 @@ video {
 .outline-teal-500 {
   outline-color: #14b8a6;
 }
+@media (min-width: 640px) {
+
+  .sm\:grid {
+    display: grid;
+  }
+
+  .sm\:h-16 {
+    height: 4rem;
+  }
+
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sm\:gap-y-0 {
+    row-gap: 0px;
+  }
+}
 @media (min-width: 1024px) {
 
   .lg\:columns-2 {
     -moz-columns: 2;
          columns: 2;
   }
-}
+}.floatingDialog.svelte-w2iiji{position:fixed;z-index:999;width:350px;height:60vh;background-color:#262733;border-radius:16px;border:2px solid #d8d8d8;box-shadow:0px 0px 8px 0px #404258;margin:auto}.dialogTitle.svelte-w2iiji{position:relative;background-color:#474E68;border-top-left-radius:16px;border-top-right-radius:16px;padding-top:5px;padding-left:5px;padding-bottom:5px;color:#d8d8d8;box-shadow:0px 1px 1px 0px #313131}.dialogBody.svelte-w2iiji{position:relative;color:#6B728E;padding:14px}.emptyBody.svelte-w2iiji{color:#6B728E;width:100%;height:100%}.closeIcon.svelte-w2iiji{color:#6B728E;font-size:large}.widgetPanel{padding:15px;width:316px;height:100vh;background-color:var(--fixedPanelBackgroundColor);color:var(--fixedPanelForegroundColor)}.widgetPanelTitle{display:flex;width:100%;place-content:center;font-size:1.25rem/* 20px */;line-height:1.75rem/* 28px */;font-weight:600;color:var(--fixedPanelTitleColor) !important;margin-bottom:8px}.widgetPanelSubTitle{display:flex;width:100%;place-content:center;font-weight:500;color:var(--fixedPanelForegroundColor) !important}.widgetContainer{width:80px;height:80px;display:block;align-items:center;justify-items:center;place-items:center;place-content:center;border:1px solid var(--borderColor) !important;border-radius:14px;padding-top:8px;background-color:var(--backgroundColor) !important;color:var(--foregroundColor) !important}.widgetContainer .widgetIcon{width:100%;height:32px;display:flex;align-items:center;justify-items:center;place-items:center;place-content:center;font-size:x-large;color:var(--iconColor) !important}.widgetContainer .widgetText{width:100%;height:32px;display:flex;align-items:center;justify-items:center;place-items:center;place-content:center;font-size:small;color:var(--textColor) !important}[draggable="true"]{user-select:none;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none}.atomButton.svelte-6k8zlb.svelte-6k8zlb{background-color:var(--buttonPassiveBackgroundColor)}.atomButton.atomButtonActive.svelte-6k8zlb.svelte-6k8zlb{background-color:var(--buttonActiveBackgroundColor)}.atomButtonIcon.svelte-6k8zlb.svelte-6k8zlb{color:var(--buttonPassiveIconColor)}.atomButtonText.svelte-6k8zlb.svelte-6k8zlb{color:var(--buttonPassiveTextColor)}.atomButtonActive.svelte-6k8zlb>.atomButtonIcon.svelte-6k8zlb{color:var(--buttonActiveIconColor)}.atomButtonActive.svelte-6k8zlb>.atomButtonText.svelte-6k8zlb{color:var(--buttonActiveTextColor)}.hoverPanel.svelte-y5b5n1{position:absolute;z-index:888}

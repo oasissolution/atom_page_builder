@@ -196,10 +196,22 @@
     </slot>
     {#if childs.length == 0}
   
-    <div class="w-full h-[100vh] flex flex-col items-center justify-center content-center bg-[#474e6818]">
-        <span class="text-sm font-bold text-[#a3a3a3] mb-2">Here is your blank page.</span>
-        <span class="text-4xl font-bold text-black">Let's make something cool.</span>
-        <span class="h-[50px]"></span>
+    <div class="w-full h-[100vh] flex flex-col items-center justify-center content-center bg-[#ffffff]"> <!-- #474e6818 -->
+        <span class="text-sm font-bold text-[#a3a3a3] mb-2">Here is a new start.</span>
+        <span class="text-4xl font-bold text-black text-center">Let's make something cool.</span>
+        <span class="h-[60px]"></span>
+        <div class="border rounded-xl border-[#a3a3a3] sm:grid sm:grid-cols-3 flex flex-col align-middle place-content-center items-center w-[60%] max-w-screen-md h-28 sm:h-16 gap-y-3 sm:gap-y-0">
+            <div class="flex place-content-center items-center">
+                <button class="flex flex-row gap-2"><i class="bi bi-puzzle"></i><span>Widgets</span></button>
+            </div>
+            <div class="flex place-content-center items-center">
+                <button class="flex flex-row gap-2"><i class="bi bi-columns-gap"></i><span>Sections</span></button>
+            </div>
+            <div class="flex place-content-center items-center">
+                <button class="flex flex-row gap-2"><i class="bi bi-file-earmark-break"></i><span>Pages</span></button>
+            </div>
+        </div>
+        <span class="h-[60px]"></span>
         <div class="absolute bottom-24 flex flex-col items-center justify-center content-center">
             <span class="text-sm text-black">Need Help?</span>
             <span class="text-sm text-black">See <a href="#" target="_blank" class="text-[#a3a3a3] underline underline-offset-4" >Quick Start Guide</a></span>

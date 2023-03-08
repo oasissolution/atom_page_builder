@@ -1,7 +1,6 @@
 <script>
     import { onMount } from "svelte";
 
-
     /**
      * @type HTMLElement
      */
@@ -18,7 +17,7 @@
 
 </script>
 
-<div class="widgetContainer" draggable="true" bind:this={bindElement} >
+<div class="widgetContainer" draggable="true" bind:this={bindElement}>
     <div class="widgetIcon">
         <i class="bi bi-fonts"></i>
     </div>

@@ -5,6 +5,7 @@
     import Options from "./options.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+	import Iconbutton from "../../uicomponents/iconbutton.svelte";
 
     /**
      * Added for later use
@@ -137,7 +138,11 @@
 
 {#if onlyButton}
 
-    {#if $globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true}
+    <Iconbutton active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} on:click={toggleOptionPanel} noBackground={true}>
+        <span slot="icon"><i class="bi bi-sliders"></i></span>
+    </Iconbutton>
+
+    <!-- {#if $globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true}
 
     <button class="iconButton selected" on:click={toggleOptionPanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
@@ -157,7 +162,7 @@
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' ><i class="bi bi-sliders"></i></button>
-    {/if}
+    {/if} -->
 
 
 {:else}

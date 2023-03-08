@@ -128,9 +128,9 @@
 
 
 </script>
+    <div class="widgetPanelSubTitle">Container Options</div>
 
-
-    Div Options
+    
     <br/>
     {#if selectedTabPageIndex==0}
     <!-- Tab Page 1 -->

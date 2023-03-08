@@ -128,8 +128,7 @@
 
 </script>
 
-
-    Body Options
+    <div class="widgetPanelSubTitle">Body Options</div>
     <br/>
     {#if selectedTabPageIndex==0}
     <!-- Tab Page 1 -->

@@ -5,6 +5,7 @@
     import Settings from "./settings.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+	import Iconbutton from "../../uicomponents/iconbutton.svelte";
 
     /**
      * Added for later use
@@ -137,7 +138,11 @@
 
 {#if onlyButton}
 
-    {#if $globalVisibilityStore.default.customizePanel == true || $globalVisibilityStore.right.customizePanel == true || $globalVisibilityStore.left.customizePanel == true}
+    <Iconbutton active={$globalVisibilityStore.default.customizePanel == true || $globalVisibilityStore.right.customizePanel == true || $globalVisibilityStore.left.customizePanel == true} noBackground={true} on:click={toggleCustomizePanel}>
+        <span slot="icon"><i class="bi bi-gear"></i></span>
+    </Iconbutton>
+
+    <!-- {#if $globalVisibilityStore.default.customizePanel == true || $globalVisibilityStore.right.customizePanel == true || $globalVisibilityStore.left.customizePanel == true}
 
     <button class="iconButton selected" on:click={toggleCustomizePanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
@@ -157,7 +162,7 @@
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' ><i class="bi bi-gear"></i></button>
-    {/if}
+    {/if} -->
 
 
 {:else}

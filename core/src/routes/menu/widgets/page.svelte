@@ -6,6 +6,7 @@
     import Widgets from "./widgets.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+	import Button from "../../uicomponents/button.svelte";
 
 
     /**
@@ -78,7 +79,17 @@
 
 {#if onlyButton}
 
+    <Button active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} on:click={toggleWidgetPanel} >
+
+        <span slot="iconLeft"><i class="bi bi-puzzle"></i></span>
+        <span slot="text">Add Widget</span>
+
+    </Button>
+
+<!-- 
     {#if $globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true}
+
+    
 
     <button class="iconButton selected" on:click={toggleWidgetPanel} style='
     --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
@@ -98,7 +109,7 @@
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' ><i class="bi bi-puzzle"></i></button>
-    {/if}
+    {/if} -->
 
 
 {:else}

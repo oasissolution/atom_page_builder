@@ -7,17 +7,17 @@
 
 /**
  * Set colors of Theme
- * 
+ *
  * You can rename variables however you want. Or even do not use them. Write your colors directly in json.
- * 
- * But do NOT change "keys" inside "themeColors" json 
+ *
+ * But do NOT change "keys" inside "themeColors" json
  */
 
 
 const background = "#242425";
 const foreground = "#9F9F9F";
 
-const activeBackground = "#0092ED26";
+const activeBackground = "#0092ED26"; //0092ED26
 const activeForeground = "#0092ED";
 
 const buttonBackground = "#FFFFFF0A";
@@ -27,9 +27,27 @@ const inputForeground = "#BDBDBD";
 
 
 export const themeColors = {
+    "mainLayout": {
+        "backgroundFrameColor": foreground,
+        "editorBackgroundColor": "#ffffff",
+        "backgroundColor": background,
+        "foregroundColor": foreground,
+    },
     "menu": {
         "backgroundColor": background,
         "foregroundColor": foreground,
+    },
+    "panel": {
+        "backgroundColor": background,
+        "foregroundColor": foreground,
+        "titleColor": "#ffffff",
+    },
+    "widgetIcon": {
+        "backgroundColor": "transparent",
+        "foregroundColor": foreground,
+        "borderColor": "transparent",
+        "iconColor": foreground,
+        "textColor": foreground,
     },
     "button": {
         "active": {

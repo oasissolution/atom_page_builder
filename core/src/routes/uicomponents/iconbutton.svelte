@@ -14,6 +14,12 @@
      */
     export let addClass = "";
 
+    /**
+     * Variable that hold active state of element
+     * @type boolean
+     */
+    export let noBackground = false;
+
 
     import { createEventDispatcher } from 'svelte';
 
@@ -28,18 +34,18 @@
 </script>
 <input type="hidden" class="atomButton atomButtonActive" />
 
-<button class="atomButton rounded-lg h-8 w-max {addClass}" class:atomButtonActive={active} on:click={clickButton}
+<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} on:click={clickButton}
 style="
     --buttonActiveIconColor:{$globalThemeStore.button.active.iconColor};
     --buttonActiveTextColor:{$globalThemeStore.button.active.textColor};
     --buttonActiveBackgroundColor:{$globalThemeStore.button.active.backgroundColor};
     --buttonPassiveIconColor:{$globalThemeStore.button.passive.iconColor};
     --buttonPassiveTextColor:{$globalThemeStore.button.passive.textColor};
-    --buttonPassiveBackgroundColor:{$globalThemeStore.button.passive.backgroundColor};
+    --buttonPassiveBackgroundColor:{noBackground == false ? $globalThemeStore.button.passive.backgroundColor : "transparent"};
 "  >
-    <span class="atomButtonIcon ml-2"><slot name="iconLeft"></slot></span>
-    <span class="atomButtonText mx-1 p-0"><slot name="text"></slot></span>
-    <span class="atomButtonIcon mr-2"><slot name="iconRight"></slot></span>
+
+    <span class="atomButtonIcon"><slot name="icon"></slot></span>
+
 </button>
 
 

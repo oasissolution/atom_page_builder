@@ -6,6 +6,8 @@
     import Widgets from "./widgets/page.svelte";
     import Options from "./options/page.svelte";
     import Layers from "./layers/page.svelte";
+	import Button from "../uicomponents/button.svelte";
+	import Iconbutton from "../uicomponents/iconbutton.svelte";
 
 
     /**
@@ -96,7 +98,7 @@
 
 
 
-<div class="horizontalMenu flex flex-row" style='
+<div class="horizontalMenu flex flex-row align-middle items-center" style='
     --backgroundColor:{$globalThemeStore.menu.backgroundColor};
     --foregroundColor:{$globalThemeStore.menu.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
@@ -105,16 +107,15 @@
     --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' >
     <div class="float-left">
-        <div class="flex flex-row gap-1 pl-3">
+        <div class="flex flex-row gap-1 pl-3 align-middle items-center">
             <Widgets onlyButton={true} />
-            <Options onlyButton={true} />
-            <Layers onlyButton={true} />
+            
         </div>
     </div>
 
     <div class="flex flex-1 mx-auto">
         {#if buildType != "release"}
-        <div class="flex flex-row gap-1 mx-auto">
+        <div class="flex flex-row gap-1 mx-auto align-middle items-center">
             <button class="iconButton" class:selected={globalEditorView == EditorViews.PAGE} on:click={() => setEditorView(EditorViews.PAGE)}><i class="bi bi-wordpress"></i></button>
             <div class="vr"></div>
             <button class="iconButton" class:selected={globalEditorView == EditorViews.CODE} on:click={() => setEditorView(EditorViews.CODE)}><i class="bi bi-code-slash"></i></button>
@@ -125,17 +126,33 @@
     </div>
 
     <div class="float-right">
-        <div class="flex flex-row gap-1 pr-3">
-            <button class="iconButton" class:selected={fullWidth} on:click={setFullWidth}><i class="bi bi-fullscreen"></i></button>
+        <div class="flex flex-row gap-1 pr-3 h-full align-middle items-center">
             <div class="vr"></div>
-            <button class="iconButton" class:selected={editorScreen == ScreenSize.DESKTOP} on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="bi bi-display"></i></button>
+            <Iconbutton active={fullWidth} on:click={setFullWidth} noBackground={true}><span slot="icon"><i class="bi bi-fullscreen"></i></span></Iconbutton>
+            <Iconbutton active={editorScreen == ScreenSize.DESKTOP} on:click={() => setScreenSize(ScreenSize.DESKTOP)} noBackground={true}>
+                <span slot="icon"><i class="bi bi-display"></i></span></Iconbutton>
+            <Iconbutton active={editorScreen == ScreenSize.TABLET} on:click={() => setScreenSize(ScreenSize.TABLET)} noBackground={true}>
+                <span slot="icon"><i class="bi bi-tablet"></i></span></Iconbutton>
+            <Iconbutton active={editorScreen == ScreenSize.MOBILE} on:click={() => setScreenSize(ScreenSize.MOBILE)} noBackground={true}>
+                <span slot="icon"><i class="bi bi-phone"></i></span></Iconbutton>
+
             <div class="vr"></div>
-            <button class="iconButton" class:selected={editorScreen == ScreenSize.TABLET} on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="bi bi-tablet"></i></button>
-            <div class="vr"></div>
-            <button class="iconButton" class:selected={editorScreen == ScreenSize.MOBILE} on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="bi bi-phone"></i></button>
-            <div class="spacer"></div>
+
+            <Options onlyButton={true} />
+            <Layers onlyButton={true} />
             <Customize onlyButton={true} />
+
+            <div class="vr"></div>
+
+            <Button active={true} addClass={"ml-3"}>
+                <span slot="text">Publish</span>
+                <span slot="iconRight"><i class="bi bi-globe"></i></span>
+            </Button>
+
         </div>
+
+
+
     </div>
 </div>
 
@@ -186,9 +203,9 @@
 <style>
     .horizontalMenu{
         width: 100%;
-        height: auto;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        height: 50px;
+        /* padding-top: 9px;
+        padding-bottom: 9px; */
         margin: 0;
         background-color: var(--backgroundColor);
         color: var(--foregroundColor);
@@ -238,7 +255,8 @@
         display: inline-block;
         align-self: stretch;
         width: 1px;
-        min-height: 1em;
+        height: 50px;
+        min-height: 1em; /* 1em */
         background-color: var(--foregroundColor);
         opacity: 0.25;
     }

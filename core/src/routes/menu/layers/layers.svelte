@@ -1,6 +1,6 @@
 <script>
     import Layerstree from "./layerstree.svelte";
-    import { globalComponentCollectionStore, globalEditorPreferencesStore } from "../../globals/globalstores.js";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalThemeStore } from "../../globals/globalstores.js";
 
       /*
          THIS PAGE IS MAIN "LAYERS" PAGE.
@@ -29,51 +29,37 @@
 
 </script>
 
-<div class="layerPanel " style='
---fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
---fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
---fixedPanelButtonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
---fixedPanelButtonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
---fixedPanelButtonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveForegroundColor};
---fixedPanelButtonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
+<div class="widgetPanel" style='
+--fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+--fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+--fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+--backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+--foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+--borderColor: {$globalThemeStore.widgetIcon.borderColor};
+--iconColor: {$globalThemeStore.widgetIcon.iconColor};
+--textColor: {$globalThemeStore.widgetIcon.textColor};
 ' >
-<h3>Layers</h3>
+<div class="widgetPanelTitle">Layers</div>
+
 <br/>
 
 {#each $globalComponentCollectionStore as component}
-    <Layerstree {component} let:component>
-      <span class="align-middle">{component.type}</span> <span class="text-[8px] align-middle">{component.uuid}</span> 
-        <!-- {component.type} - {component.uuid} -->
-        <!-- {#if component.type == "body"}
-        BODY
-        {:else if component.type == "body"}
-        {/if} -->
-    </Layerstree>
+   <Layerstree {component} let:component>
+      <span class="align-middle">{component.type}</span> <span class="text-[8px] align-middle">{component.uuid}</span>
+   </Layerstree>
 {/each}
 
 </div>
 
 
 <style>
-   
-    .layerPanel{
-       padding: 15px;
-       width: 340px;
-       height: 100vh;
-       background-color: var(--fixedPanelBackgroundColor);
-       color: var(--fixedPanelForegroundColor);
-    }
-    
-    .tabButton{
-       height: 42;
-       background-color: var(--fixedPanelButtonPassiveBackgroundColor);
-       border-color: transparent;
-       color: var(--fixedPanelButtonPassiveForegroundColor);
-    }
-    .tabButton.selected{
-       background-color: var(--fixedPanelButtonActiveBackgroundColor);
-       color: var(--fixedPanelButtonActiveForegroundColor);
-       border-radius: 6px;
-    }
-    
-    </style>
+
+   /* .layerPanel{
+      padding: 15px;
+      width: 316px;
+      height: 100vh;
+      background-color: var(--fixedPanelBackgroundColor);
+      color: var(--fixedPanelForegroundColor);
+   } */
+
+</style>
