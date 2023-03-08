@@ -12,6 +12,7 @@ export const editorDefaultPreferences = {
     "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "info":"Hover to see info!",
     "build":"dev", //release - dev
+    "theme": "dark",
     "editorTheme": {
         "backgroundFrameColor": "#474e6818",
         "backgroundColor": "#404258",
@@ -41,6 +42,20 @@ export const editorDefaultPreferences = {
  * Default startup data for editor.
  */
 export let editorBlankData =  [{
+    "uuid": uuidv4().toString(),
+    "type": "body",
+    "data": { 
+        "text": "Drag & Drop to start!",
+    },
+    "selected": false,
+    "children": []
+}];
+
+
+/**
+ * Default startup data for editor.
+ */
+export let editorBlankData2 =  [{
     "uuid": uuidv4().toString(),
     "type": "body",
     "data": { 

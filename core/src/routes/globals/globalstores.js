@@ -7,27 +7,6 @@ import { EditorViews } from './globalconstants';
 *
 * This is set from "+layout.server.js" on page load. Other actions can only update.
 * @global
-* @example
-*  [
-*      {
-*          "uuid": "AD48A76T5DAS1F4A6SF4A55AS4D35",
-*          "type": "text",  // Must be module type
-*          "data": { // Module specific data as Json
-*              "text": "This is first example text!",
-*              ...
-*          },
-*          "child": {}
-*      },
-*      {
-*          "uuid": "TFH1F86H4GF5H486GY4JHVYJ4G68",
-*          "type": "text",  // Must be module type
-*          "data": { // Module specific data as Json
-*              "text": "This is second example text!",
-*              ...
-*          },
-*          "child": {}
-*      },
-*  ]
 *
 * @type {Writable<[{}]>}
 */
@@ -96,3 +75,11 @@ export let globalLeftPanelContentStore = writable([]);
 */
 export let globalEditorViewStore = writable(EditorViews.PAGE);
 
+
+/**
+* Global variable which holds theme of Atom.
+* @global
+*
+* @type {Writable<JSON>}
+*/
+export let globalThemeStore = writable();

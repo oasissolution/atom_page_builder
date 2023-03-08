@@ -3,7 +3,7 @@
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
-
+ 
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -112,7 +112,7 @@
 
 
     function test(){
-        console.log("From div options: " + classInput);
+        console.log("From body: " + classInput);
 
         if(activeElement){
             if(activeElement.data){
@@ -124,13 +124,12 @@
         
     }
 
-  
 
 
 </script>
 
 
-    Div Options
+    Body Options
     <br/>
     {#if selectedTabPageIndex==0}
     <!-- Tab Page 1 -->
@@ -141,7 +140,6 @@
     <textarea bind:value={classInput} rows="10"></textarea>
     <br/>
     <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white"  on:click={test}>Update</button>
-    
 
     {:else if selectedTabPageIndex==1}
     Tab Page 2

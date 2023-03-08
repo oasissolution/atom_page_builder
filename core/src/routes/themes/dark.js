@@ -1,0 +1,96 @@
+/**
+ * Theme: Dark Theme
+ * Version: 1.0.0
+ * Creation Date: 2023-03-08
+ * Created By: Fatih KUROĞLU
+ */
+
+/**
+ * Set colors of Theme
+ * 
+ * You can rename variables however you want. Or even do not use them. Write your colors directly in json.
+ * 
+ * But do NOT change "keys" inside "themeColors" json 
+ */
+
+
+const background = "#242425";
+const foreground = "#9F9F9F";
+
+const activeBackground = "#0092ED26";
+const activeForeground = "#0092ED";
+
+const buttonBackground = "#FFFFFF0A";
+
+const inputBackground = "#373737";
+const inputForeground = "#BDBDBD";
+
+
+export const themeColors = {
+    "menu": {
+        "backgroundColor": background,
+        "foregroundColor": foreground,
+    },
+    "button": {
+        "active": {
+            "iconColor": activeForeground,
+            "textColor": activeForeground,
+            "backgroundColor": activeBackground,
+        },
+        "passive": {
+            "iconColor": foreground,
+            "textColor": foreground,
+            "backgroundColor": buttonBackground,
+        },
+    },
+    "options": {
+        "button": {
+            "active": {
+                "iconColor": activeForeground,
+                "textColor": activeForeground,
+                "backgroundColor": activeBackground,
+            },
+            "passive": {
+                "iconColor": foreground,
+                "textColor": foreground,
+                "backgroundColor": background,
+            },
+        },
+        "card": {},
+        "select": {},
+    },
+    "switch": {
+        "active": {
+            "iconColor": activeForeground,
+            "textColor": activeForeground,
+            "backgroundColor": activeBackground,
+        },
+        "passive": {
+            "iconColor": foreground,
+            "textColor": foreground,
+            "backgroundColor": background,
+        },
+    },
+    "input": {
+        
+    },
+
+}
+
+/*
+"backgroundFrameColor": "#474e6818",
+        "backgroundColor": "#404258",
+        "editorBackgroundColor": "#ffffff",
+        "foregroundColor": "#aaaebe",
+        "buttonActiveBackgroundColor": "#262733",
+        "buttonPassiveBackgroundColor": "transparent",
+        "buttonActiveForegroundColor": "#aaaebe",
+        "buttonPassiveForegroundColor": "#aaaebe",
+        "fixedPanelForegroundColor": "#aaaebe",
+        "fixedPanelBackgroundColor": "#262733",
+        "fixedPanelButtonActiveBackgroundColor": "#404258",
+        "fixedPanelButtonPassiveBackgroundColor": "transparent",
+        "fixedPanelButtonActiveForegroundColor": "#aaaebe",
+        "fixedPanelButtonPassiveForegroundColor": "#aaaebe",
+        "editorMouseOverColor":"#404258",
+*/

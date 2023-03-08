@@ -15,7 +15,15 @@
      * Control behaviour of element if element is selected.
      * @type boolean
      */
-     export let selected;
+    export let selected;
+
+     /**
+     * Used to control behaviour of element if element has childs.
+     * 
+     * This variable has no usage in this element. BUT it is added to have identical definition of elements.
+     * @type Array<JSON>
+     */
+    export let childs;
 
      /**
      * Required data to fill attributes of HTML elements

@@ -66,7 +66,7 @@
 
     {#if $globalComponentCollectionStore}
     {#each $globalComponentCollectionStore as component}
-        <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid} selected={component.selected}>
+        <svelte:component this={JsonOfModules[component.type]} data={component.data} uuid={component.uuid} selected={component.selected} childs={component.children}>
         <Editortree component={component} JsonOfModules={JsonOfModules}></Editortree>
         </svelte:component>
     {/each}
@@ -74,11 +74,7 @@
     <div class="w-[100vw] h-[100vh] flex justify-center align-middle content-center text-2x" > <span>Loading...</span> </div>
     {/if}
 
-    <!-- line below will be removed later -->
-    <div class="flex flex-row">
-        <pre class="text-[10px]">{JSON.stringify($globalComponentCollectionStore, null, 2)}</pre>
 
-    </div>
 
 </div> <!-- editorInnerPanel -->
     

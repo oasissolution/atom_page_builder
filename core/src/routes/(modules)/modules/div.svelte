@@ -17,6 +17,12 @@
      */
     export let selected;
 
+    /**
+     * Used to control behaviour of element if element has childs.
+     * @type Array<JSON>
+     */
+    export let childs;
+
 
     /**
      * Required data to fill attributes of HTML elements
@@ -172,6 +178,7 @@
         bindElement.addEventListener("dragleave", dragLeave);
         bindElement.addEventListener('dragend', dragEnd);
         
+
         function dropped(e) {
             // execute function only when target container is different from source container
             const types = e.dataTransfer.types;
@@ -183,7 +190,6 @@
                 bindElement.classList.remove("outline-teal-500");
 
                 sendDroppedElement(uuid, e.dataTransfer.getData('text/plain'));
-
             }
         }
 
@@ -233,21 +239,31 @@
 
 
 
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} class:blockUserSelect={childs.length == 0}>
 
     <slot> 
     <!-- <div class="w-[200px] h-[150px] flex place-content-center">This is a blank div!</div> -->
     <em>No content was provided</em>
     </slot>
-    <!-- {#if hasChild === false}
+    {#if childs.length == 0}
   
-    This is a blank div!
+    <em class="text-slate-500">No content was provided</em>
 
-    {/if} -->
+    {/if}
 
 </div>
 
 
 <style>
+
+    .blockUserSelect{
+        /*
+        To prevent user selecting inside the drag source
+        */
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
 
 </style>

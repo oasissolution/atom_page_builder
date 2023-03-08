@@ -31,6 +31,14 @@
    };
 
 
+
+   import Button from "../../uicomponents/button.svelte";
+
+   function test2(){
+        alert("Updated");
+    }
+
+
 </script>
 
 
@@ -43,16 +51,31 @@
    --fixedPanelButtonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
 ' >
    <h2>Widgets</h2>
-   <div class="w-full h-full flex items-start justify-center pt-3">
+   <div class="w-full h-[300px] flex items-start justify-center pt-3">
 
       <div class="w-full grid grid-cols-3 justify-items-center">
          <svelte:component this="{Div}" />
          <svelte:component this="{Text}" />
       </div>
-
       
 
    </div>
+
+   <br/><br/>
+   <br/><br/>
+
+      <div>
+         <br/><br/>
+         <Button active={false} on:click={test2}>
+             <span slot="iconLeft"><i class="bi bi-check"></i></span>
+             <span slot="text">Update</span>
+         </Button>
+     
+         <Button active={true} on:click={test2}>
+             <span slot="iconRight"><i class="bi bi-check"></i></span>
+             <span slot="text">Update</span>
+         </Button>
+      </div>
 
 </div>
 

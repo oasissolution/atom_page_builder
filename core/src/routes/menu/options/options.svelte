@@ -35,7 +35,7 @@
       
       // TODO: import all modules dynamically
 
-      // import Body from "../../(modules)/modules/body.svelte";
+      import Body from "../../(modules)/options/body.svelte";
       import Div from "../../(modules)/options/div.svelte";
       import Text from "../../(modules)/options/text.svelte";
 
@@ -46,7 +46,7 @@
        * 
        */
       const JsonOfModules = {
-         // "body": Body,
+         "body": Body,
          "div": Div,
          "text": Text,
       };

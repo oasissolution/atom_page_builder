@@ -2,6 +2,8 @@
     import "../../../app.css";
 	import { onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
+    import { sendSelectedElement, sendDroppedElement } from "../../(shared)/shared/sharedfunctions.js";
+    import Widgets from "../../menu/widgets/page.svelte";
 
     /**
      * uuid of element
@@ -14,6 +16,12 @@
      * @type boolean
      */
     export let selected;
+
+    /**
+     * Used to control behaviour of element if element has childs.
+     * @type Array<JSON>
+     */
+    export let childs;
 
 
     /**
@@ -55,17 +63,24 @@
      */
     let bindElement;
 
+    /**
+     * @type HTMLElement
+     */
+     let selectedElement = $globalSelectedElementStore;
+    //Update global data whenever selectedElement changes.
+    $: globalSelectedElementStore.set(selectedElement);
+
     /// updates ui when data changes
     $: data, (() => {
         if(data !== undefined && bindElement !== undefined){
 
-            var _class_addons = "";
+            var _class_addons = " w-full h-full";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
                 // console.log("Element selected : Div : "+uuid);
             } 
-
-            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
+            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
             if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
             if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
             if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -79,11 +94,12 @@
     /// updates ui when selected changes
     $: selected, (() => {
         if(selected !== undefined && bindElement !== undefined){
-            var _class_addons = "";
+            var _class_addons = " w-full h-full";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
             } 
-            if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
+            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         }
     })();
 
@@ -91,12 +107,12 @@
         // This is optional
         text = data.text !== undefined ? data.text : "";
 
-        var _class_addons = "";
+        var _class_addons = " w-full h-full";
         if(selected == true){
             _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
         }
-
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+        bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
+        // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
         if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
         if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
@@ -111,19 +127,92 @@
             
         // });
 
+        bindElement.addEventListener("drop", dropped);
+        bindElement.addEventListener("dragenter", cancelDefault);
+        bindElement.addEventListener("dragover", dragOver);
+        bindElement.addEventListener("dragleave", dragLeave);
+        bindElement.addEventListener('dragend', dragEnd);
+        
+        function dropped(e) {
+            // execute function only when target container is different from source container
+            const types = e.dataTransfer.types;
+            if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
+                cancelDefault(e);
+                bindElement.classList.remove("outline-dashed");
+                bindElement.classList.remove("outline-2");
+                bindElement.classList.remove("outline-offset-2");
+                bindElement.classList.remove("outline-teal-500");
+
+                sendDroppedElement(uuid, e.dataTransfer.getData('text/plain'));
+
+            }
+        }
+
+        function dragOver(e) {
+            cancelDefault(e);
+
+            const types = e.dataTransfer.types;
+            if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'text'
+                bindElement.classList.add("outline-dashed");
+                bindElement.classList.add("outline-2");
+                bindElement.classList.add("outline-offset-2");
+                bindElement.classList.add("outline-teal-500");
+            }
+
+        }
+
+        function dragLeave(e) {
+            bindElement.classList.remove("outline-dashed");
+            bindElement.classList.remove("outline-2");
+            bindElement.classList.remove("outline-offset-2");
+            bindElement.classList.remove("outline-teal-500");
+        }
+
+        function dragEnd(e){
+            e.dataTransfer.clearData();
+        }
+
+        function cancelDefault(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+
     });
 
+    function selectElement(){
+        /// Send selected uuid to main frame.
+        sendSelectedElement(uuid);
+
+        // update global variable, so selector activates.
+        selectedElement = bindElement;
+    }
 
 </script>
 
-<div bind:this={bindElement} id="{uuid}" > 
+<div bind:this={bindElement} id="{uuid}"  on:mousedown|self={selectElement}> 
     <slot>
-        <div class="w-full h-full flex align-middle justify-center content-center"><span class="">{text}</span></div>
+        <div class="w-full h-[100vh] flex align-middle justify-center content-center"><span class="">{text}</span></div>
     </slot>
+    {#if childs.length == 0}
+  
+    <div class="w-full h-[100vh] flex flex-col items-center justify-center content-center bg-[#474e6818]">
+        <span class="text-sm font-bold text-[#a3a3a3] mb-2">Here is your blank page.</span>
+        <span class="text-4xl font-bold text-black">Let's make something cool.</span>
+        <span class="h-[50px]"></span>
+        <div class="absolute bottom-24 flex flex-col items-center justify-center content-center">
+            <span class="text-sm text-black">Need Help?</span>
+            <span class="text-sm text-black">See <a href="#" target="_blank" class="text-[#a3a3a3] underline underline-offset-4" >Quick Start Guide</a></span>
+        </div>
+    </div>
+
+    {/if}
 </div>
 
 
 
 <style>
+
+    
 
 </style>

@@ -1,13 +1,14 @@
 <script>
-    import { onMount, onDestroy, SvelteComponent } from "svelte";
     import "../../app.css";
+    import { onMount, onDestroy, SvelteComponent } from "svelte";
     import {
         globalComponentCollectionStore,
         globalEditorPreferencesStore,
         globalRightPanelContentStore,
         globalLeftPanelContentStore,
         globalVisibilityStore,
-        globalEditorViewStore
+        globalEditorViewStore,
+        globalThemeStore
     } from "../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "../globals/globalconstants.js";
     import Menu from "../menu/menu.svelte";
@@ -28,6 +29,8 @@
     globalComponentCollectionStore.set(editorBlankData);
     globalEditorPreferencesStore.set(editorDefaultPreferences);
 
+    import { themeColors as DarkTheme } from "../themes/dark.js";
+    globalThemeStore.set(DarkTheme);
 
     /// Load all variables dynamically, especially visibility options
     loadVariables();

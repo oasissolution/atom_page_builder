@@ -5,6 +5,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.018] - 2022-03-08
+
+### Added
+ - UI Components for Atom (Button)
+ - Themes (Dark)
+
+### Changed
+ - Started to apply designed UI and theme.
+
+### Fixed
+ - Div drag & drop is working now.
+
 
 ## [0.0.1.017] - 2022-03-07
 

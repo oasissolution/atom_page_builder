@@ -1,11 +1,12 @@
 <script>
     import { onMount, onDestroy } from "svelte";
-    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore } from "../globals/globalstores.js";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore, globalThemeStore } from "../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
     import Customize from "./customize/page.svelte";
     import Widgets from "./widgets/page.svelte";
     import Options from "./options/page.svelte";
     import Layers from "./layers/page.svelte";
+
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -96,8 +97,8 @@
 
 
 <div class="horizontalMenu flex flex-row" style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor};
-    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
+    --backgroundColor:{$globalThemeStore.menu.backgroundColor};
+    --foregroundColor:{$globalThemeStore.menu.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
@@ -141,8 +142,8 @@
 {:else}
 
 <div class="verticalMenu flex flex-col space-y-auto" style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor};
-    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
+    --backgroundColor:{$globalThemeStore.menu.backgroundColor};
+    --foregroundColor:{$globalThemeStore.menu.foregroundColor};
     --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
     --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
     --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
@@ -178,7 +179,9 @@
 {/if}
 
 
+<div class="hidden">
 
+</div>
 
 <style>
     .horizontalMenu{
