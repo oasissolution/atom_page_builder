@@ -5,6 +5,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.020] - 2022-03-09
+
+### Added
+ - Double click opens Options panel of element.
+ - Now user can delete selected item.
+
+### Changed
+ - Working on element replace/reorder with drag&drop.
+
+### Fixed
+
+
 
 ## [0.0.1.019] - 2022-03-08
 

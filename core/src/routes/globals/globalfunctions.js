@@ -1,3 +1,4 @@
+import { json } from "@sveltejs/kit";
 
 /**
  * Update types of "Global component collection JSON".
@@ -202,7 +203,7 @@ export function getComponent(jsonData, uuid){
 
 
 /**
- * Gets data from selected element.
+ * Adds child element to selected element.
  * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
  * @param {string} uuid Unique id of HTMLElement
  * @param {{}} child Child element to be added
@@ -222,6 +223,33 @@ export function addChildComponent(jsonData, uuid, child){
       var result = addChildComponent(element.children, uuid, child);
       if(result !== undefined && result != null){
         result.children.push(child);
+        return
+      }
+    }
+  }
+
+}
+
+
+/**
+ * Deletes selected element.
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ */
+export function deleteComponent(jsonData, uuid){
+
+  for (let i = 0; i < jsonData.length; i++) {
+
+    var element = jsonData[i];
+ 
+    if(element.uuid === uuid){
+
+      jsonData.splice(i,1);
+      return
+
+    }else if(element.children){
+      var result = deleteComponent(element.children, uuid);
+      if(result !== undefined && result != null){
         return
       }
     }

@@ -1,11 +1,12 @@
 <script>
 	import { onMount } from "svelte";
 
-    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore } from "../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalThemeStore, globalVisibilityStore } from "../globals/globalstores.js";
     import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
-    import { updateGlobalComponentCollectionStore, UpdateActionTypes, getComponent, addChildComponent } from "../globals/globalfunctions.js";
+    import { updateGlobalComponentCollectionStore, UpdateActionTypes, getComponent, addChildComponent, deleteComponent } from "../globals/globalfunctions.js";
     import { v4 as uuidv4 } from 'uuid';
+    import swal from 'sweetalert';
 
     import Code from "../(editor)/editor/code.svelte";
     import Variables from "../(editor)/editor/variables.svelte";
@@ -28,20 +29,21 @@
     let loaded = false;
 
 
-    $: $globalComponentCollectionStore, (() => {
+    // $: $globalComponentCollectionStore, (() => {
 
-        if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
+    //     if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
 
-            // console.log("Send data on globalComponentCollectionStore !");
-            const data = {
-                "message": {
-                    "componentCollection": $globalComponentCollectionStore,
-                    "editorPreferences": $globalEditorPreferencesStore
-                }
-            };
-            if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
-        }
-    })();
+    //         // console.log("Send data on globalComponentCollectionStore !");
+    //         const data = {
+    //             "message": {
+    //                 "componentCollection": $globalComponentCollectionStore,
+    //                 "editorPreferences": $globalEditorPreferencesStore,
+    //                 "globalTheme": $globalThemeStore,
+    //             }
+    //         };
+    //         if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
+    //     }
+    // })();
 
 
     function updateEditorFunction(){
@@ -51,13 +53,22 @@
             const data = {
                 "message": {
                     "componentCollection": $globalComponentCollectionStore,
-                    "editorPreferences": $globalEditorPreferencesStore
+                    "editorPreferences": $globalEditorPreferencesStore,
+                    "globalTheme": $globalThemeStore,
                 }
             };
             if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
             // console.log("updateEditorFunction executed!");
         }
     }
+
+    $: $globalComponentCollectionStore, (()=>{
+        updateEditorFunction();
+    })();
+
+    $: $globalThemeStore, (()=>{
+        updateEditorFunction();
+    })();
 
     let previousSelectedHtmlElementUuid = "";
 
@@ -124,6 +135,94 @@
         updateEditorFunction();
     }
 
+    /**
+     * Toggles visibility of "Widgets Panel" panel.
+     */
+    function toggleWidgetPanel(){
+
+        /**
+         * Holds "globalVisibilityStore" store as variable to update
+         */
+        let globalVisibility = $globalVisibilityStore;
+
+        /// $globalEditorPreferencesStore is used directly to get latest condition
+        switch($globalEditorPreferencesStore.widgetPanelDisplayStyle){
+            case PanelDisplayStyles.FIXEDLEFT:
+                var visible = globalVisibility.left.widgetPanel ?? false;
+                for(var key in globalVisibility.left) {
+                    if(key == "widgetPanel"){
+                        globalVisibility.left[key] = !visible;
+                    }else{
+                        globalVisibility.left[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.right.widgetPanel = false; /// Hide in other locations
+                globalVisibility.default.widgetPanel = false; /// Hide in other locations
+                break;
+            case PanelDisplayStyles.FIXEDRIGHT:
+                var visible = globalVisibility.right.widgetPanel ?? false;
+                for(var key in globalVisibility.right) {
+                    if(key == "widgetPanel"){
+                        globalVisibility.right[key] = !visible;
+                    }else{
+                        globalVisibility.right[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.left.widgetPanel = false; /// Hide in other locations
+                globalVisibility.default.widgetPanel = false; /// Hide in other locations
+                break;
+            default:
+                globalVisibility.default.widgetPanel = !globalVisibility.default.widgetPanel ?? true;
+                globalVisibility.right.widgetPanel = false; /// Hide in other locations
+                globalVisibility.left.widgetPanel = false; /// Hide in other locations
+                break;
+        }
+
+        ///Updates "globalVisibilityStore"
+        globalVisibilityStore.set(globalVisibility);
+
+    }
+
+    function openOptionsPanel(){
+        let globalVisibility = $globalVisibilityStore;
+
+        /// $globalEditorPreferencesStore is used directly to get latest condition
+        switch($globalEditorPreferencesStore.optionPanelDisplayStyle){
+            case PanelDisplayStyles.FIXEDLEFT:
+                var visible = globalVisibility.left.optionPanel ?? false;
+                for(var key in globalVisibility.left) {
+                    if(key == "optionPanel"){
+                        globalVisibility.left[key] = true; // Always open - X !visible
+                    }else{
+                        globalVisibility.left[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.right.optionPanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = false; /// Hide in other locations
+                break;
+            case PanelDisplayStyles.FIXEDRIGHT:
+                var visible = globalVisibility.right.optionPanel ?? false;
+                for(var key in globalVisibility.right) {
+                    if(key == "optionPanel"){
+                        globalVisibility.right[key] = true;
+                    }else{
+                        globalVisibility.right[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.left.optionPanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = false; /// Hide in other locations
+                break;
+            default:
+                globalVisibility.default.optionPanel = true;
+                globalVisibility.right.optionPanel = false; /// Hide in other locations
+                globalVisibility.left.optionPanel = false; /// Hide in other locations
+                break;
+        }
+
+        ///Updates "globalVisibilityStore"
+        globalVisibilityStore.set(globalVisibility);
+    }
+
     onMount(()=>{
 
         
@@ -140,11 +239,20 @@
                     case "dropElement":
                         setDroppedElement(event.data.data.uuid, event.data.data.elementType);
                         break;
+                    case "deleteElement":
+                        deleteComponent($globalComponentCollectionStore, event.data.data.uuid);
+                        updateEditorFunction();
+                        break;
+                    case "toggleWidgetsPanel":
+                        toggleWidgetPanel();
+                        break;
+                    case "openOptionsPanel":
+                        openOptionsPanel();
+                        break;
                 }
 
             }
-
-
+            
 
         });
 
@@ -156,12 +264,22 @@
             const data = {
                 "message": {
                     "componentCollection": $globalComponentCollectionStore,
-                    "editorPreferences": $globalEditorPreferencesStore
+                    "editorPreferences": $globalEditorPreferencesStore,
+                    "globalTheme": $globalThemeStore,
                 }
             };
             if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
         });
 
+        editorFrame.addEventListener("error", (e) => {
+
+            swal({
+                title: "Error on Main Panel",
+                text: e.error.toString(),
+                icon: "error",
+            });
+            
+        });
        
     });
 
@@ -176,7 +294,7 @@
     {#if buildType == "release"}
     <iframe id="editorFrame" bind:this={editorFrame} src="editor.html" title="Editor" class=""  style='--editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};'></iframe>
     {:else}
-    <iframe id="editorFrame" bind:this={editorFrame} src="/editor" title="Editor" class=""  style='--editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};'></iframe>
+    <iframe id="editorFrame" bind:this={editorFrame} src="/editor" title="Editor" class=""  style='--editorWidth:{$globalEditorPreferencesStore.editorData.editorWidth};' ></iframe>
     {/if}
     {:else if $globalEditorViewStore == EditorViews.CODE }
     <svelte:component this={Code}/>

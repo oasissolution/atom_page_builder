@@ -1,6 +1,7 @@
 <script>
 
    import { globalEditorPreferencesStore, globalThemeStore } from "../../globals/globalstores.js";
+   import jQuery from "jquery";
 
    /*
       THIS PAGE IS MAIN "WIDGETS" PAGE.
@@ -43,6 +44,11 @@
    --borderColor: {$globalThemeStore.widgetIcon.borderColor};
    --iconColor: {$globalThemeStore.widgetIcon.iconColor};
    --textColor: {$globalThemeStore.widgetIcon.textColor};
+   --swalOverlayBackgroundColor:{$globalThemeStore.swal.overlay.backgroundColor};
+   --swalModalBackgroundColor:{$globalThemeStore.swal.modal.backgroundColor};
+   --swalModalBorder:{$globalThemeStore.swal.modal.border};
+   --swalModalCustomCss:{$globalThemeStore.swal.modal.customCss};
+   
 ' >
    <div class="widgetPanelTitle">Widgets</div>
 
@@ -55,11 +61,7 @@
 
    </div>
 
-   <div class="hidden">
-      <div class="widgetContainer">
-      <div class="widgetIcon"></div>
-      <div class="widgetText"></div></div>
-   </div>
+
 </div>
 
 
@@ -141,5 +143,24 @@
       -ms-user-select: none;
    }
 
+   /* :global(.swal-overlay) {
+      background-color: var(--swalOverlayBackgroundColor) !important; 
+   }
+   
+   :global(.swal-modal) {
+      background-color: var(--swalModalBackgroundColor) !important;
+      border: var(--swalModalBorder) !important;
+   } */
+
 
 </style>
+
+<!-- {#if $globalThemeStore.swal.modal.customCss != ""}
+  <style>
+    :global(.swal-modal) {
+      {@html '/* Custom styles from the customCss variable */
+        ${".swal-modal { " + $globalThemeStore.swal.modal.customCss + " }"}
+      '}
+    }
+  </style>
+{/if} -->

@@ -12,8 +12,6 @@ export function sendSelectedElement(targetUuid){
             "uuid": targetUuid
         }
     }
-    // console.log("");
-    // console.log("Giden: "+JSON.stringify(data));
 
     window.parent.postMessage(data, '*');
 }
@@ -38,6 +36,52 @@ export function sendDroppedElement(targetUuid, elementType){
             "uuid": targetUuid,
             "elementType": elementType
         }
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+
+/**
+ * Send deleted elements uuid to main frame.
+ * @param {string} targetUuid uuid of selected element.
+ */
+export function sendDeletedElement(targetUuid){
+
+    let data = {
+        "action": "deleteElement",
+        "data": {
+            "uuid": targetUuid
+        }
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+/**
+ * Toggle widgets panel.
+ */
+export function toggleWidgetsPanel(){
+
+    let data = {
+        "action": "toggleWidgetsPanel",
+        "data": {}
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+/**
+ * Opens options panel.
+ */
+export function openOptionsPanel(){
+
+    let data = {
+        "action": "openOptionsPanel",
+        "data": {}
     }
 
     window.parent.postMessage(data, '*');

@@ -61,7 +61,7 @@
 
     function updateSelector(){
 
-        if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined){
+        if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined && actionsComponent !== undefined){
 
             /**
              * Position and dimension data of selected element.

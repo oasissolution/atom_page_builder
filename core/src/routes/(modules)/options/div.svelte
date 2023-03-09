@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
-    import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
 
 
@@ -87,6 +87,12 @@
     let classInput;
 
     /**
+     * TextArea to edit class
+     * @type HTMLTextAreaElement
+     */
+    let classTextArea;
+
+    /**
      * Holds state of page load.
      * @type boolean
      */
@@ -106,12 +112,19 @@
 
         loaded = true;
 
+        classTextArea.addEventListener("keypress", (e) => {
+            if(e.key === 'Enter' && !e.shiftKey){
+                e.preventDefault();
+                setClass();
+            }
+        });
+
     });
 
 
 
 
-    function test(){
+    function setClass(){
         console.log("From div options: " + classInput);
 
         if(activeElement){
@@ -124,11 +137,41 @@
         
     }
 
-  
+    import swal from 'sweetalert';
+    function testModal(){
+        swal({
+            title: "Delete ?",
+            text: "This is test",
+            icon: "warning",
+            buttons: ["No, keep it", "Yes, DELETE"],
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Element deleted", {
+                icon: "success",
+                });
+            } else {
+                swal("Kept element!");
+            }
+        });
+    }
 
 
 </script>
     <div class="widgetPanelSubTitle">Container Options</div>
+
+    <div class="text-sm" style='
+    --swalOverlayBackgroundColor:{$globalThemeStore.swal.overlay.backgroundColor};
+    --swalModalBackgroundColor:{$globalThemeStore.swal.modal.backgroundColor};
+    --swalModalBorder:{$globalThemeStore.swal.modal.border};
+    --swalModalCustomCss:{$globalThemeStore.swal.modal.customCss != "" ? $globalThemeStore.swal.modal.customCss : "\"\""};
+    '>
+    <!-- --swalOverlayBackgroundColor:{$globalThemeStore.swal.overlay.backgroundColor};
+    --swalModalBackgroundColor:{$globalThemeStore.swal.modal.backgroundColor};
+    --swalModalBorder:{$globalThemeStore.swal.modal.border};
+    --swalModalCustomCss:{$globalThemeStore.swal.modal.customCss != "" ? $globalThemeStore.swal.modal.customCss : "\"\""}; -->
+    </div>
 
     
     <br/>
@@ -138,9 +181,9 @@
     <br/>
 
     <!-- <input type="text" on:change={test} bind:value={classInput}/> -->
-    <textarea bind:value={classInput} rows="10"></textarea>
+    <textarea bind:value={classInput} rows="6" bind:this={classTextArea}></textarea>
     <br/>
-    <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white"  on:click={test}>Update</button>
+    <!-- <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white" on:click={testModal}>Update</button> -->
     
 
     {:else if selectedTabPageIndex==1}

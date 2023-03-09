@@ -1,9 +1,10 @@
 <script>
     import "../../../app.css";
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-    import { sendSelectedElement, sendDroppedElement } from "../../(shared)/shared/sharedfunctions.js";
-
+    import { sendSelectedElement, sendDroppedElement, openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
+    import swal from 'sweetalert';
+    
     /**
      * uuid of element
      * @type string
@@ -113,6 +114,62 @@
         }
     })();
 
+    function dropped(e) {
+        const types = e.dataTransfer.types;
+        // execute function only when target container is different from source container
+        if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
+            cancelDefault(e);
+            bindElement.classList.remove("outline-dashed");
+            bindElement.classList.remove("outline-2");
+            bindElement.classList.remove("outline-offset-2");
+            bindElement.classList.remove("outline-teal-500");
+
+            var typeOfTransfer = e.dataTransfer.getData('text/plain');
+            if(typeOfTransfer.toString().includes("editor-")){
+                //TODO: Comes from inside editor
+                console.log("drop from inside of editor :" + typeOfTransfer.toString());
+                if(bindElement.parentElement.id === e.target.id){
+                    console.log("reorder");
+                }else{
+                    console.log("replace");
+                }
+            }else{
+                ///Comes from widgets panel
+                sendDroppedElement(uuid, typeOfTransfer);
+            }
+        }
+    }
+
+    function dragOver(e) {
+        cancelDefault(e);
+
+        const types = e.dataTransfer.types;
+        if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'text'
+            bindElement.classList.add("outline-dashed");
+            bindElement.classList.add("outline-2");
+            bindElement.classList.add("outline-offset-2");
+            bindElement.classList.add("outline-teal-500");
+        }
+
+    }
+
+    function dragLeave(e) {
+        bindElement.classList.remove("outline-dashed");
+        bindElement.classList.remove("outline-2");
+        bindElement.classList.remove("outline-offset-2");
+        bindElement.classList.remove("outline-teal-500");
+    }
+
+    function dragEnd(e){
+        e.dataTransfer.clearData();
+    }
+
+    function cancelDefault(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
     onMount(() => {
 
         if(data.accesskey           !== undefined) bindElement.setAttribute("accesskey",        data.accesskey);
@@ -177,54 +234,20 @@
         bindElement.addEventListener("dragover", dragOver);
         bindElement.addEventListener("dragleave", dragLeave);
         bindElement.addEventListener('dragend', dragEnd);
-        
 
-        function dropped(e) {
-            // execute function only when target container is different from source container
-            const types = e.dataTransfer.types;
-            if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
-                cancelDefault(e);
-                bindElement.classList.remove("outline-dashed");
-                bindElement.classList.remove("outline-2");
-                bindElement.classList.remove("outline-offset-2");
-                bindElement.classList.remove("outline-teal-500");
-
-                sendDroppedElement(uuid, e.dataTransfer.getData('text/plain'));
-            }
-        }
-
-        function dragOver(e) {
-            cancelDefault(e);
-
-            const types = e.dataTransfer.types;
-            if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'text'
-                bindElement.classList.add("outline-dashed");
-                bindElement.classList.add("outline-2");
-                bindElement.classList.add("outline-offset-2");
-                bindElement.classList.add("outline-teal-500");
-            }
-
-        }
-
-        function dragLeave(e) {
-            bindElement.classList.remove("outline-dashed");
-            bindElement.classList.remove("outline-2");
-            bindElement.classList.remove("outline-offset-2");
-            bindElement.classList.remove("outline-teal-500");
-        }
-
-        function dragEnd(e){
-            e.dataTransfer.clearData();
-        }
-
-        function cancelDefault(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }
+        bindElement.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', 'editor-div');
+        });
         
     });
 
+    onDestroy(() => {
+        bindElement.removeEventListener("drop", dropped);
+        bindElement.removeEventListener("dragenter", cancelDefault);
+        bindElement.removeEventListener("dragover", dragOver);
+        bindElement.removeEventListener("dragleave", dragLeave);
+        bindElement.removeEventListener('dragend', dragEnd);
+    });
 
     function selectElement(){
         /// Send selected uuid to main frame.
@@ -239,7 +262,7 @@
 
 
 
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} class:blockUserSelect={childs.length == 0}>
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel} class:blockUserSelect={childs.length == 0} draggable="true">
 
     <slot> 
     <!-- <div class="w-[200px] h-[150px] flex place-content-center">This is a blank div!</div> -->
@@ -247,7 +270,7 @@
     </slot>
     {#if childs.length == 0}
   
-    <em class="text-slate-500">No content was provided</em>
+    <em class="text-slate-500 m-2">No content was provided</em>
 
     {/if}
 

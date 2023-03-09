@@ -92,7 +92,21 @@ export const themeColors = {
     "input": {
         
     },
+    "swal": {
+        "overlay": {
+            "backgroundColor": background,
+        },
+        "modal": {
+            "backgroundColor": background,
+            "border": "1px solid " + buttonBackground,
+            "customCss": "",
+        },
+        "title": {
+            "backgroundColor": background,
+            "customCss": "",
+        },
 
+    },
 }
 
 /*

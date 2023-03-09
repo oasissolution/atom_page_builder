@@ -2,7 +2,7 @@
     import "../../../app.css";
 	import { onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-    import { sendSelectedElement, sendDroppedElement } from "../../(shared)/shared/sharedfunctions.js";
+    import { sendSelectedElement, sendDroppedElement, openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
     
 
     /**
@@ -146,6 +146,9 @@
         //     }
         // });
 
+        bindElement.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', 'editor-text');
+        });
     });
 
     // let elementSelected = false;
@@ -175,7 +178,7 @@
     {/if} 
 </div> -->
 
-<span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
+<span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
     <slot>
         Default Text
     </slot>

@@ -96,6 +96,12 @@
     let classInput;
 
     /**
+     * TextArea to edit class
+     * @type HTMLTextAreaElement
+     */
+    let classTextArea;
+
+    /**
      * Holds state of page load.
      * @type boolean
      */
@@ -114,6 +120,13 @@
     onMount(() => {
 
         loaded = true;
+
+        classTextArea.addEventListener("keypress", (e) => {
+            if(e.key === 'Enter' && !e.shiftKey){
+                e.preventDefault();
+                setClass();
+            }
+        });
 
     });
 
@@ -158,7 +171,7 @@
     <br/>
 
     <!-- <input type="text" on:change={test} bind:value={classInput}/> -->
-    <textarea bind:value={classInput} rows="10"></textarea>
+    <textarea bind:value={classInput} rows="6" bind:this={classTextArea}></textarea>
     <br/>
     <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white"  on:click={setClass}>Update</button>
 

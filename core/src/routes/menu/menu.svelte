@@ -97,7 +97,6 @@
 {#if globalEditorPreferences.menuLocation == MenuLocations.TOP || globalEditorPreferences.menuLocation == MenuLocations.BOTTOM}
 
 
-
 <div class="horizontalMenu flex flex-row align-middle items-center" style='
     --backgroundColor:{$globalThemeStore.menu.backgroundColor};
     --foregroundColor:{$globalThemeStore.menu.foregroundColor};
