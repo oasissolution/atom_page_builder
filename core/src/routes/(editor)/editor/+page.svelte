@@ -9,6 +9,8 @@
     import Selector from "../../(shared)/shared/selector.svelte";
     import swal from 'sweetalert';
 
+    import { atomAlert } from "../../uicomponents/atomalert.svelte";
+
     /// ATTENTION ! 
 
     /// Editor panel runs in an iframe. Hence, defined stores here are different than main stores in runtime, even if their names and definitions are identical.
@@ -77,30 +79,44 @@
             if(e.key === 'Delete' && $globalSelectedElementStore !== null){
 
                 const comp = getComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
-                // var question = "Delete \"" + JsonOfTypes[comp.type].title + "\" ?\n\n";
-                // question += JsonOfTypes[comp.type].data != "" ? comp.data[JsonOfTypes[comp.type].data] : "";
 
-                // if(confirm(question)) {
-
-                // }
                 if(comp.type != "body"){
-                    swal({
+
+                    atomAlert($globalThemeStore, {
                         title: "Delete \"" + JsonOfTypes[comp.type].title + "\" ?",
                         text: JsonOfTypes[comp.type].data != "" ? (comp.data[JsonOfTypes[comp.type].data] ?? "") : "",
                         icon: "warning",
                         buttons: ["No, keep it", "Yes, DELETE"],
                         dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            sendDeletedElement(comp.uuid);
-                            swal("Element deleted", {
-                                icon: "success",
-                            });
-                        } else {
-                            swal("Element kept!");
+                        action: (value) => {
+                            if (value) {
+                                sendDeletedElement(comp.uuid);
+                                swal("Element deleted", {
+                                    icon: "success",
+                                });
+                            } else {
+                                swal("Element kept!",{icon: "info"});
+                            }
                         }
                     });
+
+                    // swal({
+                    //     title: "Delete \"" + JsonOfTypes[comp.type].title + "\" ?",
+                    //     text: JsonOfTypes[comp.type].data != "" ? (comp.data[JsonOfTypes[comp.type].data] ?? "") : "",
+                    //     icon: "warning",
+                    //     buttons: ["No, keep it", "Yes, DELETE"],
+                    //     dangerMode: true,
+                    // })
+                    // .then((willDelete) => {
+                    //     if (willDelete) {
+                    //         sendDeletedElement(comp.uuid);
+                    //         swal("Element deleted", {
+                    //             icon: "success",
+                    //         });
+                    //     } else {
+                    //         swal("Element kept!",{icon: "info"});
+                    //     }
+                    // });
                 }
 
             }
@@ -108,7 +124,13 @@
 
         window.addEventListener("error", (e) => {
 
-            swal({
+            // swal({
+            //     title: "Error on Editor Panel",
+            //     text: e.error.toString(),
+            //     icon: "error",
+            // });
+
+            atomAlert($globalThemeStore, {
                 title: "Error on Editor Panel",
                 text: e.error.toString(),
                 icon: "error",
@@ -143,6 +165,8 @@
 
 </script>
 
+
+
 <!-- style='
     --swalOverlayBackgroundColor:{$overlayBackground};
    --swalModalBackgroundColor:{$modalBackground};
@@ -165,7 +189,7 @@
     {/if}
 
 
-fatih
+
 </div> <!-- editorInnerPanel -->
 
 <!-- <div class="hidden swal-overlay swal-modal"></div> -->

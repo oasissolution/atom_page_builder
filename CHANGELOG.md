@@ -5,6 +5,21 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+
+## [0.0.1.021] - 2022-03-10
+
+### Added
+ - Alert added (Customization/Themeing will be done later).
+
+### Changed
+ - Working on element replace/reorder with drag&drop.
+
+### Fixed
+
+
+
+
 ## [0.0.1.020] - 2022-03-09
 
 ### Added

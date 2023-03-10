@@ -103,7 +103,25 @@ export const themeColors = {
         },
         "title": {
             "backgroundColor": background,
+            "color": foreground,
             "customCss": "",
+        },
+        "text": {
+            "backgroundColor": background,
+            "color": foreground,
+            "customCss": "",
+        },
+        "buttonConfirm": {
+            "backgroundColor": background,
+            "color": foreground,
+        },
+        "buttonCancel": {
+            "backgroundColor": inputBackground,
+            "color": inputForeground,
+        },
+        "buttonDanger": {
+            "backgroundColor": background,
+            "color": foreground,
         },
 
     },
