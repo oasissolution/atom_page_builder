@@ -9,7 +9,7 @@
     onMount(() => {
 
         bindElement.addEventListener('dragstart', (event) => {
-            event.dataTransfer.setData('text/plain', 'div');
+            event.dataTransfer.setData('text/plain', 'element-div');
         });
 
     });

@@ -4,7 +4,9 @@
     import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalThemeStore, globalVisibilityStore } from "../globals/globalstores.js";
     import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
-    import { updateGlobalComponentCollectionStore, UpdateActionTypes, getComponent, addChildComponent, deleteComponent } from "../globals/globalfunctions.js";
+    import { updateGlobalComponentCollectionStore, UpdateActionTypes, getComponent, addChildComponent, deleteComponent,
+        replaceDroppedElementInside, replaceDroppedElementBefore, replaceDroppedElementAfter, createDroppedElementBefore, createDroppedElementAfter
+    } from "../globals/globalfunctions.js";
     import { v4 as uuidv4 } from 'uuid';
     import swal from 'sweetalert';
 
@@ -121,11 +123,11 @@
      * @param {string} targetUuid uuid of selected element
      * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
      */
-    function setDroppedElement(targetUuid, elementType){
+    function createDroppedElementInside(targetUuid, elementType){
 
         const defaultData = {
             "uuid": uuidv4().toString(),
-            "type": elementType,
+            "type": elementType.replace("element-",""),
             "data": {},
             "selected": false,
             "children": []
@@ -134,6 +136,45 @@
         addChildComponent($globalComponentCollectionStore, targetUuid, defaultData);
         updateEditorFunction();
     }
+
+    /**
+     * Adds new dropped element to Json.
+     * @param {string} targetUuid uuid of selected element
+     * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
+     */
+    function createDroppedElementBeforeSub(targetUuid, elementType){
+
+        const defaultData = {
+            "uuid": uuidv4().toString(),
+            "type": elementType.replace("element-",""),
+            "data": {},
+            "selected": false,
+            "children": []
+        };
+        createDroppedElementBefore($globalComponentCollectionStore, defaultData, targetUuid);
+        updateEditorFunction();
+    }
+
+    /**
+     * Adds new dropped element to Json.
+     * @param {string} targetUuid uuid of selected element
+     * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
+     */
+    function createDroppedElementAfterSub(targetUuid, elementType){
+
+        const defaultData = {
+            "uuid": uuidv4().toString(),
+            "type": elementType.replace("element-",""),
+            "data": {},
+            "selected": false,
+            "children": []
+        };
+        createDroppedElementAfter($globalComponentCollectionStore, defaultData, targetUuid);
+        updateEditorFunction();
+    }
+
+
+
 
     /**
      * Toggles visibility of "Widgets Panel" panel.
@@ -225,8 +266,6 @@
 
     onMount(()=>{
 
-        
-        
         ///Listen editor in iframe
         window.addEventListener('message', event => {
 
@@ -236,8 +275,8 @@
                     case "selectElement":
                         setSelectedElement(event.data.data.uuid);
                         break;
-                    case "dropElement":
-                        setDroppedElement(event.data.data.uuid, event.data.data.elementType);
+                    case "createDroppedElementInside":
+                        createDroppedElementInside(event.data.data.uuid, event.data.data.elementType);
                         break;
                     case "deleteElement":
                         deleteComponent($globalComponentCollectionStore, event.data.data.uuid);
@@ -249,10 +288,27 @@
                     case "openOptionsPanel":
                         openOptionsPanel();
                         break;
+                    case "replaceDroppedElementInside":
+                        replaceDroppedElementInside($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.insideUuid);
+                        updateEditorFunction();
+                        break;
+                    case "replaceDroppedElementBefore":
+                        replaceDroppedElementBefore($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.beforeUuid);
+                        updateEditorFunction();
+                        break;
+                    case "replaceDroppedElementAfter":
+                        replaceDroppedElementAfter($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.afterUuid);
+                        updateEditorFunction();
+                        break;
+                    case "createDroppedElementBefore":
+                        createDroppedElementBeforeSub(event.data.data.beforeUuid, event.data.data.elementType);
+                        break;
+                    case "createDroppedElementAfter":
+                        createDroppedElementAfterSub(event.data.data.afterUuid, event.data.data.elementType);
+                        break;
                 }
 
             }
-            
 
         });
 

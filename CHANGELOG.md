@@ -5,6 +5,17 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.022] - 2022-03-11
+
+### Added
+ - Create elements before/inside/after elements by drag&drop from widgets panel.
+
+### Changed
+ - Replace/Reorder elements before/inside/after elements by drag&drop from editor panel.
+
+### Fixed
+
+
 
 
 ## [0.0.1.021] - 2022-03-10

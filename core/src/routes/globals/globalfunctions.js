@@ -37,14 +37,14 @@ export const UpdateActionTypes = Object.freeze({
  * @param {string?} target Target key in JSON, e.g.: type, selected,... (main keys)
  * @param {string} action Action to take when executing function. Must be one of "UpdateActionTypes"
  * @param {string} replaceValue Required if you want to replace a value. "action" must be "UpdateActionTypes.REPLACE" to use this feature.
- * 
+ *
  */
 export function updateGlobalComponentCollectionStore(jsonData, uuid, newValue, dataTarget = null, target = null, action = UpdateActionTypes.SET, replaceValue=""){
 
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
- 
+
     if(element.uuid === uuid){
       if(dataTarget != null){
 
@@ -115,9 +115,9 @@ export function getTypeOfComponent(jsonData, uuid){
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
- 
+
     if(element.uuid === uuid){
-      
+
       return element.type.toString();
 
     }else if(element.children){
@@ -146,7 +146,7 @@ export function getDataFromComponent(jsonData, uuid, dataTarget = null, target =
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
- 
+
     if(element.uuid === uuid){
 
       if(dataTarget != null){
@@ -160,7 +160,7 @@ export function getDataFromComponent(jsonData, uuid, dataTarget = null, target =
           return element[target];
         }
       }
-      
+
     }else if(element.children){
       var result = getDataFromComponent(element.children, uuid, dataTarget, target);
       if(result !== undefined && result != ""){
@@ -185,7 +185,7 @@ export function getComponent(jsonData, uuid){
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
- 
+
     if(element.uuid === uuid){
 
       return element;
@@ -213,7 +213,7 @@ export function addChildComponent(jsonData, uuid, child){
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
- 
+
     if(element.uuid === uuid){
 
       element.children.push(child);
@@ -241,7 +241,7 @@ export function deleteComponent(jsonData, uuid){
   for (let i = 0; i < jsonData.length; i++) {
 
     var element = jsonData[i];
- 
+
     if(element.uuid === uuid){
 
       jsonData.splice(i,1);
@@ -253,6 +253,185 @@ export function deleteComponent(jsonData, uuid){
         return
       }
     }
+  }
+
+}
+
+
+
+/**
+ * Moves selected element from its position to children of target element
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+export function replaceDroppedElementInside(jsonData, uuid, targetUuid){
+
+  var selectedElement = getComponent(jsonData, uuid);
+
+  deleteComponent(jsonData, uuid);
+
+  if(selectedElement != null) addChildComponent(jsonData, targetUuid, selectedElement);
+
+}
+
+
+
+
+/**
+ * Moves selected element before target element
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+export function replaceDroppedElementBefore(jsonData, uuid, targetUuid){
+
+  var selectedElement = getComponent(jsonData, uuid);
+
+  if(selectedElement != null) {
+    deleteComponent(jsonData, uuid);
+    replaceDroppedElementBeforeSub(jsonData, selectedElement, targetUuid);
+  }
+
+
+}
+
+/**
+ * This is a sub function of "replaceDroppedElementBefore".
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {JSON} selectedElement Selected element to inject
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+function replaceDroppedElementBeforeSub(jsonData, selectedElement, targetUuid){
+
+    for (let i = 0; i < jsonData.length; i++) {
+
+      var element = jsonData[i];
+
+      if(element.uuid === targetUuid){
+        jsonData.splice(i, 0, selectedElement);
+        return;
+
+      }else if(element.children){
+        var result = replaceDroppedElementBeforeSub(element.children, selectedElement, targetUuid);
+        if(result !== undefined && result != null){
+          return;
+        }
+      }
+
+    }
+
+}
+
+
+
+/**
+ * Moves selected element after target element
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {string} uuid Unique id of HTMLElement
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+export function replaceDroppedElementAfter(jsonData, uuid, targetUuid){
+
+  var selectedElement = getComponent(jsonData, uuid);
+
+  if(selectedElement != null) {
+    deleteComponent(jsonData, uuid);
+    replaceDroppedElementAfterSub(jsonData, selectedElement, targetUuid);
+  }
+
+
+}
+
+/**
+ * This is a sub function of "replaceDroppedElementAfter".
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {JSON} selectedElement Selected element to inject
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+function replaceDroppedElementAfterSub(jsonData, selectedElement, targetUuid){
+
+    for (let i = 0; i < jsonData.length; i++) {
+
+      var element = jsonData[i];
+
+      if(element.uuid === targetUuid){
+        if((i+1) == jsonData.length){
+          jsonData.push(selectedElement);
+        }else{
+          jsonData.splice(i+1, 0, selectedElement);
+        }
+        return;
+
+      }else if(element.children){
+        var result = replaceDroppedElementAfterSub(element.children, selectedElement, targetUuid);
+        if(result !== undefined && result != null){
+          return;
+        }
+      }
+
+    }
+
+}
+
+
+
+
+/**
+ * Adds dropped element before target element
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {JSON} droppedElement Selected element to inject
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+export function createDroppedElementBefore(jsonData, droppedElement, targetUuid){
+
+  for (let i = 0; i < jsonData.length; i++) {
+
+    var element = jsonData[i];
+
+    if(element.uuid === targetUuid){
+      jsonData.splice(i, 0, droppedElement);
+      return;
+
+    }else if(element.children){
+      var result = createDroppedElementBefore(element.children, droppedElement, targetUuid);
+      if(result !== undefined && result != null){
+        return;
+      }
+    }
+
+  }
+
+}
+
+
+/**
+ * Adds dropped element after target element
+ * @param {Array<JSON>} jsonData Global component collection JSON from globalstores.js
+ * @param {JSON} droppedElement Selected element to inject
+ * @param {string} targetUuid Unique id of target HTMLElement
+ */
+export function createDroppedElementAfter(jsonData, droppedElement, targetUuid){
+
+  for (let i = 0; i < jsonData.length; i++) {
+
+    var element = jsonData[i];
+
+    if(element.uuid === targetUuid){
+      if((i+1) == jsonData.length){
+        jsonData.push(droppedElement);
+      }else{
+        jsonData.splice(i+1, 0, droppedElement);
+      }
+      return;
+
+    }else if(element.children){
+      var result = replaceDroppedElementAfterSub(element.children, droppedElement, targetUuid);
+      if(result !== undefined && result != null){
+        return;
+      }
+    }
+
   }
 
 }

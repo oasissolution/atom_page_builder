@@ -1,9 +1,14 @@
 <script>
     import "../../../app.css";
-	import { onMount } from "svelte";
+	import { onMount, onDestroy } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-    import { sendSelectedElement, sendDroppedElement, openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
-    
+    import {
+        sendSelectedElement,  openOptionsPanel,
+        createDroppedElementInside, replaceDroppedElementInside,
+        createDroppedElementBefore, replaceDroppedElementBefore,
+        createDroppedElementAfter, replaceDroppedElementAfter,
+    } from "../../(shared)/shared/sharedfunctions.js";
+    import { writable } from "svelte/store";
 
     /**
      * uuid of element
@@ -17,15 +22,15 @@
      */
     export let selected;
 
-     /**
+    /**
      * Used to control behaviour of element if element has childs.
-     * 
+     *
      * This variable has no usage in this element. BUT it is added to have identical definition of elements.
      * @type Array<JSON>
      */
     export let childs;
 
-     /**
+    /**
      * Required data to fill attributes of HTML elements
      * @typedef {Object} AttrData
      * @property {string} [accesskey] - Specifies a shortcut key to activate the element
@@ -45,7 +50,7 @@
 
     /**
      * @type {AttrData}
-     */ 
+     */
     export let data;
 
     /**
@@ -87,7 +92,7 @@
             var _class_addons = "";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-            } 
+            }
 
             bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
             // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
@@ -97,15 +102,15 @@
             if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
             if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
             if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
-            
+
             text = data.text !== undefined ? data.text : "";
 
             if(data.text === undefined && data.class === undefined){
                 text = "Lorem ipsum ...";
-                bindElement.setAttribute("class", "flex place-content-center text-lg");
+                bindElement.setAttribute("class", "text-lg italic text-slate-500");
             }
         }
-        
+
     })();
 
     /// updates ui when selected changes
@@ -114,11 +119,105 @@
             var _class_addons = "";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-            } 
+            }
             // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
             bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
         }
     })();
+
+    /**
+     * if mouse is in left side of element from center then drop before else drop after
+     *
+     * This variable holds what to do!
+     * @type Writable<boolean>
+     */
+    let droppedBefore = writable(true);
+
+    function dropped(e) {
+        const types = e.dataTransfer.types;
+        // execute function only when target container is different from source container
+        if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
+            cancelDefault(e);
+            bindElement.classList.remove("border-l-4");
+            bindElement.classList.remove("border-r-4");
+            bindElement.classList.remove("border-violet-500");
+
+            /// Here we are going to put incoming element BEFORE/AFTER this element.
+
+            var typeOfTransfer = e.dataTransfer.getData('text/plain');
+            if(!typeOfTransfer.toString().includes("element-")){
+                /// Comes from inside editor
+                /// if it is not itself
+                if(typeOfTransfer.toString() != bindElement.id){
+                    // console.log("replace " + typeOfTransfer.toString() + " before " + bindElement.id);
+                    if($droppedBefore === true){
+                        /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+                        replaceDroppedElementBefore(typeOfTransfer.toString(),bindElement.id);
+                    }else{
+                        /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+                        replaceDroppedElementAfter(typeOfTransfer.toString(),bindElement.id);
+                    }
+
+                }
+
+            }else{
+                /// Comes from widgets panel
+                /// Directly create new element BEFORE/AFTER this element.
+                if($droppedBefore === true){
+                    /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+                    createDroppedElementBefore(uuid, typeOfTransfer);
+                }else{
+                    /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+                    createDroppedElementAfter(uuid, typeOfTransfer);
+                }
+            }
+        }
+    }
+
+    function dragOver(e) {
+        cancelDefault(e);
+
+        const types = e.dataTransfer.types;
+        if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'text'
+
+            const rect = bindElement.getBoundingClientRect();
+
+            const dropAreaLimit = Number.parseInt((rect.width / 2).toString(), 0);
+
+            if((rect.left <= e.pageX && e.pageX <= (rect.left + dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
+                droppedBefore.set(true);
+            }else if((rect.right >= e.pageX && e.pageX >= (rect.right - dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
+                droppedBefore.set(false);
+            }
+
+            if($droppedBefore == true){
+                bindElement.classList.add("border-l-4");
+                bindElement.classList.remove("border-r-4");
+            }else{
+                bindElement.classList.add("border-r-4");
+                bindElement.classList.remove("border-l-4");
+            }
+            bindElement.classList.add("border-violet-500");
+        }
+
+    }
+
+    function dragLeave(e) {
+        bindElement.classList.remove("border-l-4");
+        bindElement.classList.remove("border-r-4");
+        bindElement.classList.remove("border-violet-500");
+    }
+
+    function dragEnd(e){
+        e.dataTransfer.clearData();
+    }
+
+    function cancelDefault(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
 
     onMount(() => {
         text = data.text !== undefined ? data.text : "";
@@ -140,18 +239,27 @@
         if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
         if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
 
-        // window.addEventListener("mousedown", (ev) => {
-        //     if(ev.target !== bindElement){
-        //         elementSelected = false;
-        //     }
-        // });
+
+        bindElement.addEventListener("drop", dropped);
+        bindElement.addEventListener("dragenter", cancelDefault);
+        bindElement.addEventListener("dragover", dragOver);
+        bindElement.addEventListener("dragleave", dragLeave);
 
         bindElement.addEventListener('dragstart', (event) => {
-            event.dataTransfer.setData('text/plain', 'editor-text');
+            if($globalSelectedElementStore.id == bindElement.id){
+                event.dataTransfer.clearData();
+                event.dataTransfer.setData('text/plain', bindElement.id);
+            }
         });
     });
 
-    // let elementSelected = false;
+    onDestroy(() => {
+        bindElement.removeEventListener("drop", dropped);
+        bindElement.removeEventListener("dragenter", cancelDefault);
+        bindElement.removeEventListener("dragover", dragOver);
+        bindElement.removeEventListener("dragleave", dragLeave);
+        // bindElement.removeEventListener('dragend', dragEnd);
+    });
 
     function selectElement(){
         // window.parent.postMessage(uuid, '*');
@@ -162,25 +270,13 @@
         selectedElement = bindElement;
     }
 
-    // console.log("Text displayed !");
 
 </script>
 
-<!-- <div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} >
-    <slot>
-        Default Text
-    </slot>
-    {text}
-    {#if text != null && text != undefined && text != ""}
-        {text}
-    {:else}
-        Lorem ipsum ...
-    {/if} 
-</div> -->
 
 <span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
     <slot>
-        Default Text
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
     </slot>
     {text}
 </span>

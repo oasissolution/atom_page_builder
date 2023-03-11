@@ -3,7 +3,7 @@
     import { globalComponentCollectionStore } from "../../globals/globalstores.js";
     import { getTypeOfComponent } from "../../globals/globalfunctions.js";
     import { writable } from "svelte/store";
-    
+
     /**
     * Main selector div and actions binding.
     * @type HTMLElement
@@ -35,11 +35,11 @@
     let atomSelectorActionsWidth = "68px";
 
     /**
-     * Position of "Actions" panel according to top-right corner on X axis. 
+     * Position of "Actions" panel according to top-right corner on X axis.
      */
     let marginX = "6px";
     /**
-     * Position of "Actions" panel according to top-right corner on Y axis. 
+     * Position of "Actions" panel according to top-right corner on Y axis.
      */
     let marginY = "6px";
 
@@ -96,7 +96,7 @@
     /**
      * Definition and list of all modules in a JSON.
      * @returns {JSON}
-     * 
+     *
      */
     const JsonOfModules = {
         // "body": Body,
@@ -123,9 +123,9 @@
         <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent}/>
 
         {/if}
-        
+
         </div>
- 
+
 
 
 <style>

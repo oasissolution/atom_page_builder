@@ -2,7 +2,7 @@
     import "../../../app.css";
 	import { onDestroy, onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-    import { sendSelectedElement, sendDroppedElement, toggleWidgetsPanel } from "../../(shared)/shared/sharedfunctions.js";
+    import { sendSelectedElement, createDroppedElementInside, replaceDroppedElementInside, toggleWidgetsPanel, openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
     import { globalThemeStore } from "../../globals/globalstores.js";
     import Widgets from "../../menu/widgets/page.svelte";
     import swal from 'sweetalert';
@@ -42,7 +42,7 @@
 
     /**
      * @type {AttrData}
-     */ 
+     */
     export let data;
 
 
@@ -54,7 +54,7 @@
      */
     export const elAttr = ["class", "dir", "hidden", "id", "lang", "style", "title"];
 
- 
+
     /**
      * Default string in the middle.
      * @type string
@@ -69,7 +69,7 @@
     /**
      * @type HTMLElement
      */
-     let selectedElement = $globalSelectedElementStore;
+    let selectedElement = $globalSelectedElementStore;
     //Update global data whenever selectedElement changes.
     $: globalSelectedElementStore.set(selectedElement);
 
@@ -81,7 +81,7 @@
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
                 // console.log("Element selected : Div : "+uuid);
-            } 
+            }
             bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
             // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
             if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
@@ -91,7 +91,7 @@
             if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
             if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
         }
-        
+
     })();
 
     /// updates ui when selected changes
@@ -100,7 +100,7 @@
             var _class_addons = " w-full h-full";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-            } 
+            }
             bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
             // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         }
@@ -116,7 +116,16 @@
             bindElement.classList.remove("outline-offset-2");
             bindElement.classList.remove("outline-teal-500");
 
-            sendDroppedElement(uuid, e.dataTransfer.getData('text/plain'));
+            var typeOfTransfer = e.dataTransfer.getData('text/plain');
+            if(!typeOfTransfer.toString().includes("element-")){
+                /// Comes from inside of editor
+                /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+                replaceDroppedElementInside(typeOfTransfer.toString(), bindElement.id);
+            }else{
+                ///Comes from widgets panel
+                /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+                createDroppedElementInside(uuid, typeOfTransfer);
+            }
 
         }
     }
@@ -181,7 +190,7 @@
         bindElement.addEventListener("dragenter", cancelDefault);
         bindElement.addEventListener("dragover", dragOver);
         bindElement.addEventListener("dragleave", dragLeave);
-        bindElement.addEventListener('dragend', dragEnd);
+        // bindElement.addEventListener('dragend', dragEnd);
 
         loaded = true;
     });
@@ -225,7 +234,7 @@
 //
 </script>
 
-<div bind:this={bindElement} id="{uuid}"  on:mousedown|self={selectElement}> 
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel}>
     <slot>
         <div class="w-full h-[100vh] flex align-middle justify-center content-center"><span class="">{text}</span></div>
     </slot>

@@ -28,10 +28,10 @@ export function sendSelectedElement(targetUuid){
  * @param {string} targetUuid uuid of selected element.
  * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
  */
-export function sendDroppedElement(targetUuid, elementType){
+export function createDroppedElementInside(targetUuid, elementType){
 
     let data = {
-        "action": "dropElement",
+        "action": "createDroppedElementInside",
         "data": {
             "uuid": targetUuid,
             "elementType": elementType
@@ -82,6 +82,122 @@ export function openOptionsPanel(){
     let data = {
         "action": "openOptionsPanel",
         "data": {}
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+/**
+ * Send dropped element data to main frame.
+ *
+ * Main frame updates JSON according to this data.
+ *
+ * Adds default values of element.
+ * @param {string} thisUuid uuid of selected element.
+ * @param {string} insideUuid uuid of container element
+ */
+export function replaceDroppedElementInside(thisUuid, insideUuid){
+
+    let data = {
+        "action": "replaceDroppedElementInside",
+        "data": {
+            "thisUuid": thisUuid,
+            "insideUuid": insideUuid
+        }
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+/**
+ * Send dropped element data to main frame.
+ *
+ * Main frame updates JSON according to this data.
+ *
+ * Adds default values of element.
+ * @param {string} thisUuid uuid of selected element.
+ * @param {string} beforeUuid uuid of container element
+ */
+export function replaceDroppedElementBefore(thisUuid, beforeUuid){
+
+    let data = {
+        "action": "replaceDroppedElementBefore",
+        "data": {
+            "thisUuid": thisUuid,
+            "beforeUuid": beforeUuid
+        }
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+/**
+ * Send dropped element data to main frame.
+ *
+ * Main frame updates JSON according to this data.
+ *
+ * Adds default values of element.
+ * @param {string} thisUuid uuid of selected element.
+ * @param {string} afterUuid uuid of container element
+ */
+export function replaceDroppedElementAfter(thisUuid, afterUuid){
+
+    let data = {
+        "action": "replaceDroppedElementAfter",
+        "data": {
+            "thisUuid": thisUuid,
+            "afterUuid": afterUuid
+        }
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+/**
+ * Send dropped element data to main frame.
+ *
+ * Main frame updates JSON according to this data.
+ *
+ * Adds default values of element.
+ * @param {string} beforeUuid uuid of container element
+ * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
+ */
+export function createDroppedElementBefore(beforeUuid, elementType){
+
+    let data = {
+        "action": "createDroppedElementBefore",
+        "data": {
+            "beforeUuid": beforeUuid,
+            "elementType": elementType,
+        }
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+
+
+/**
+ * Send dropped element data to main frame.
+ *
+ * Main frame updates JSON according to this data.
+ *
+ * Adds default values of element.
+ * @param {string} afterUuid uuid of container element
+ * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
+ */
+export function createDroppedElementAfter(afterUuid, elementType){
+
+    let data = {
+        "action": "createDroppedElementAfter",
+        "data": {
+            "afterUuid": afterUuid,
+            "elementType": elementType,
+        }
     }
 
     window.parent.postMessage(data, '*');

@@ -2,9 +2,15 @@
     import "../../../app.css";
 	import { onDestroy, onMount } from "svelte";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-    import { sendSelectedElement, sendDroppedElement, openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
-    import swal from 'sweetalert';
-    
+    import {
+        sendSelectedElement,  openOptionsPanel,
+        createDroppedElementInside, replaceDroppedElementInside,
+        createDroppedElementBefore, replaceDroppedElementBefore,
+        createDroppedElementAfter, replaceDroppedElementAfter,
+
+    } from "../../(shared)/shared/sharedfunctions.js";
+    import { writable } from "svelte/store";
+
     /**
      * uuid of element
      * @type string
@@ -44,7 +50,7 @@
 
     /**
      * @type {AttrData}
-     */ 
+     */
     export let data;
 
 
@@ -64,7 +70,7 @@
     /**
      * @type HTMLElement
      */
-     let bindElementActions;
+    let bindElementActions;
 
     /**
      * @type HTMLElement
@@ -86,7 +92,7 @@
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
                 // console.log("Element selected : Div : "+uuid);
-            } 
+            }
 
             bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
             // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
@@ -99,7 +105,7 @@
 
             // TODO: Update action buttons location
         }
-        
+
     })();
 
     /// updates ui when selected changes
@@ -108,34 +114,86 @@
             var _class_addons = "";
             if(selected == true){
                 _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-            } 
+            }
             bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
             // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
         }
     })();
+
+    /**
+     * if mouse is in center then drop element inside.
+     *
+     * This variable holds what to do!
+     * @type Writable<boolean>
+     */
+    let droppedInside = writable(true);
+
+    /**
+     * if mouse is in a area of "dropAreaLimit" px from left then drop before else drop after
+     *
+     * This variable holds what to do!
+     * @type Writable<boolean>
+     */
+    let droppedBefore = writable(true);
+
+    /**
+     * This width is from left side of element. If mouse is in this limit then this means new dropped item will be before this element.
+     * Otherwise element will be dropped inside.
+     */
+    const dropAreaLimit = 30;
 
     function dropped(e) {
         const types = e.dataTransfer.types;
         // execute function only when target container is different from source container
         if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
             cancelDefault(e);
+
             bindElement.classList.remove("outline-dashed");
             bindElement.classList.remove("outline-2");
             bindElement.classList.remove("outline-offset-2");
             bindElement.classList.remove("outline-teal-500");
+            bindElement.classList.remove("border-l-4");
+            bindElement.classList.remove("border-r-4");
+            bindElement.classList.remove("border-teal-500");
 
             var typeOfTransfer = e.dataTransfer.getData('text/plain');
-            if(typeOfTransfer.toString().includes("editor-")){
-                //TODO: Comes from inside editor
-                console.log("drop from inside of editor :" + typeOfTransfer.toString());
-                if(bindElement.parentElement.id === e.target.id){
-                    console.log("reorder");
-                }else{
-                    console.log("replace");
+            if(!typeOfTransfer.toString().includes("element-")){
+                /// Comes from inside of editor
+
+                /// if mouse is in center then drop element inside.
+                /// if mouse is in a area of 30 px from left then drop before.
+                /// if mouse is in a area of 30 px from right then drop after.
+                if(typeOfTransfer.toString() !== bindElement.id){
+                    if($droppedInside == true){
+                        // console.log("put " + typeOfTransfer.toString() + " inside " + bindElement.id);
+                        /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+                        replaceDroppedElementInside(typeOfTransfer.toString(), bindElement.id);
+                    }else{
+                        // console.log("replace " + typeOfTransfer.toString() + " before/after " + bindElement.id);
+                        if($droppedBefore === true){
+                            /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+                            replaceDroppedElementBefore(typeOfTransfer.toString(), bindElement.id);
+                        }else{
+                            /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+                            replaceDroppedElementAfter(typeOfTransfer.toString(), bindElement.id);
+                        }
+                    }
                 }
+
             }else{
                 ///Comes from widgets panel
-                sendDroppedElement(uuid, typeOfTransfer);
+                if($droppedInside == true){
+                    /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+                    createDroppedElementInside(uuid, typeOfTransfer);
+                }else{
+                    if($droppedBefore === true){
+                        /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+                        createDroppedElementBefore(uuid, typeOfTransfer);
+                    }else{
+                        /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+                        createDroppedElementAfter(uuid, typeOfTransfer);
+                    }
+                }
             }
         }
     }
@@ -144,20 +202,68 @@
         cancelDefault(e);
 
         const types = e.dataTransfer.types;
-        if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'text'
-            bindElement.classList.add("outline-dashed");
-            bindElement.classList.add("outline-2");
-            bindElement.classList.add("outline-offset-2");
-            bindElement.classList.add("outline-teal-500");
+        if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'div'
+
+            const rect = bindElement.getBoundingClientRect();
+
+            // if(rect.width <= (2*dropAreaLimit)){
+            //     /// if div has no childs, instead of calculating left/right, drop element inside directly.
+            //     droppedInside.set(true);
+            // }else{}
+                if(((rect.left + dropAreaLimit ) < e.pageX && e.pageX < (rect.left + rect.width - dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
+                    /// if mouse is in center then drop element inside.
+                    droppedInside.set(true);
+                }else if((rect.left <= e.pageX && e.pageX <= (rect.left + dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
+                    droppedInside.set(false);
+                    droppedBefore.set(true);
+                }else if((rect.right >= e.pageX && e.pageX >= (rect.right - dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
+                    droppedInside.set(false);
+                    droppedBefore.set(false);
+                }
+            
+
+            /// if mouse is in center then drop element inside.
+            /// if mouse is in a area of 30 px from left then drop before.
+            /// if mouse is in a area of 30 px from right then drop after.
+
+            if($droppedInside == true){
+                bindElement.classList.add("outline-dashed");
+                bindElement.classList.add("outline-2");
+                bindElement.classList.add("outline-offset-2");
+                bindElement.classList.add("outline-violet-500");
+                bindElement.classList.remove("border-l-4");
+                bindElement.classList.remove("border-r-4");
+                bindElement.classList.remove("border-violet-500");
+            }else{
+                if($droppedBefore == true){
+                    bindElement.classList.add("border-l-4");
+                    bindElement.classList.remove("border-r-4");
+                }else{
+                    bindElement.classList.add("border-r-4");
+                    bindElement.classList.remove("border-l-4");
+                }
+                bindElement.classList.add("border-violet-500");
+                bindElement.classList.remove("outline-dashed");
+                bindElement.classList.remove("outline-2");
+                bindElement.classList.remove("outline-offset-2");
+                bindElement.classList.remove("outline-violet-500");
+            }
+
         }
 
     }
 
     function dragLeave(e) {
+
         bindElement.classList.remove("outline-dashed");
         bindElement.classList.remove("outline-2");
         bindElement.classList.remove("outline-offset-2");
-        bindElement.classList.remove("outline-teal-500");
+        bindElement.classList.remove("outline-violet-500");
+
+        bindElement.classList.remove("border-l-4");
+        bindElement.classList.remove("border-r-4");
+        bindElement.classList.remove("border-violet-500");
+
     }
 
     function dragEnd(e){
@@ -169,6 +275,8 @@
         e.stopPropagation();
         return false;
     }
+
+
 
     onMount(() => {
 
@@ -205,7 +313,7 @@
         //     parent.style.width = (parseInt(getComputedStyle(parent, '').width) + dx) + "px";
         // }
 
-        
+
         // bindElement.addEventListener("mousedown", function(e){
         //     m_pos = e.x;
         //     document.addEventListener("mousemove", resize, false);
@@ -233,12 +341,16 @@
         bindElement.addEventListener("dragenter", cancelDefault);
         bindElement.addEventListener("dragover", dragOver);
         bindElement.addEventListener("dragleave", dragLeave);
-        bindElement.addEventListener('dragend', dragEnd);
+        // bindElement.addEventListener('dragend', dragEnd);
 
         bindElement.addEventListener('dragstart', (event) => {
-            event.dataTransfer.setData('text/plain', 'editor-div');
+            /// if div itself is dragging
+            if($globalSelectedElementStore.id == bindElement.id){
+                event.dataTransfer.clearData();
+                event.dataTransfer.setData('text/plain', bindElement.id);
+            }
         });
-        
+
     });
 
     onDestroy(() => {
@@ -246,7 +358,7 @@
         bindElement.removeEventListener("dragenter", cancelDefault);
         bindElement.removeEventListener("dragover", dragOver);
         bindElement.removeEventListener("dragleave", dragLeave);
-        bindElement.removeEventListener('dragend', dragEnd);
+        // bindElement.removeEventListener('dragend', dragEnd);
     });
 
     function selectElement(){
@@ -264,12 +376,11 @@
 
 <div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel} class:blockUserSelect={childs.length == 0} draggable="true">
 
-    <slot> 
-    <!-- <div class="w-[200px] h-[150px] flex place-content-center">This is a blank div!</div> -->
-    <em>No content was provided</em>
+    <slot>
+        <em class="text-slate-500 m-2">No content was provided</em>
     </slot>
     {#if childs.length == 0}
-  
+
     <em class="text-slate-500 m-2">No content was provided</em>
 
     {/if}
