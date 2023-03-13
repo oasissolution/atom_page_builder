@@ -117,7 +117,10 @@
 </svelte:head>
 
 
-<div id="backgroundFrame" class="" style='--backgroundFrameColor:{$globalThemeStore.mainLayout.backgroundFrameColor};'>
+<div id="backgroundFrame" class="" style='
+--backgroundFrameColor:{$globalThemeStore.mainLayout.backgroundFrameColor};
+--theme: {$globalEditorPreferencesStore.theme}
+'>
     {#if topMenuFrameContent}<div id="topMenuFrame" class="fixed top-0 left-0 right-0"><svelte:component this={Menu}/></div>{/if}
     <div id="middleFrame" class="flex flex-row" >
         {#if leftMenuFrameContent}<div id="leftMenuFrame" class=""><svelte:component this={Menu}/></div>{/if}
@@ -200,23 +203,6 @@
         margin: auto;
         overflow: auto !important;
         background-color: var(--editorBackgroundColor);
-
-        /* vertical-align: top;
-        display: inline-flex;
-        flex-direction: column;
-        flex-wrap: wrap; */
     }
-
-    #infoLayer{
-        position: fixed;
-        left: 20vw;
-        bottom: 50px;
-        z-index: 99999;
-        width: 60vw;
-        max-width: 100vw;
-        /* min-width: 360px; */
-        margin: auto;
-    }
-
 
 </style>

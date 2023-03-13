@@ -3,6 +3,9 @@
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
+	import Optionsbutton from "../../uicomponents/optionsbutton.svelte";
+	import Textarea from "../../uicomponents/textarea.svelte";
+	import Textinput from "../../uicomponents/textinput.svelte";
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -49,8 +52,8 @@
     function loadElementData(){
         activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
 
-        textInput = activeElement?.data?.text;
-        classInput = activeElement?.data?.class;
+        textInput = activeElement?.data?.text != undefined ? activeElement?.data?.text : "";
+        classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
     }
 
 
@@ -121,63 +124,59 @@
 
         loaded = true;
 
-        classTextArea.addEventListener("keypress", (e) => {
-            if(e.key === 'Enter' && !e.shiftKey){
-                e.preventDefault();
-                setClass();
-            }
-        });
-
     });
 
 
-
-
-
-    function test(){
-        console.log("From test: " + textInput);
-
+    function updateText(){
         if(activeElement){
             if(activeElement.data){
                 activeElement.data.text = textInput;
                 updateEditor();
             }
         }
-
     }
 
-    function setClass(){
-        console.log("From div options: " + classInput);
-
+    function updateClass(){
         if(activeElement){
             if(activeElement.data){
                 activeElement.data.class = classInput;
                 updateEditor();
             }
         }
-
     }
 
 </script>
 
     <div class="widgetPanelSubTitle">Text Options</div>
     <br/>
+
+    <Optionsbutton items={["Content", "Design", "Animation"]} active={false} bind:value={selectedTabPageIndex}></Optionsbutton>
+
+    <div class="widgetPanelTabsDivider"></div>
+
     {#if selectedTabPageIndex==0}
-    <br/>
 
-    <input type="text" on:change={test} bind:value={textInput}/>
-    <br/><br/>
-    <br/> Tailwind CSS
-    <br/>
+    <span class="mb-1">Text</span> 
+    <Textarea bind:text={textInput} on:onSubmit={updateText} ></Textarea>
 
-    <!-- <input type="text" on:change={test} bind:value={classInput}/> -->
-    <textarea bind:value={classInput} rows="6" bind:this={classTextArea}></textarea>
-    <br/>
-    <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white"  on:click={setClass}>Update</button>
+    <div class="widgetPanelDivider"></div>
+
+    
+    <!-- <Textinput  bind:text={textInput} on:onSubmit={updateText} ></Textinput> -->
+
+
+    
+ 
+
+    
 
 
     {:else if selectedTabPageIndex==1}
-    Tab Page 2
+
+    <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
+    <Textarea bind:text={classInput} on:onSubmit={updateClass} ></Textarea>
+
+   
     {/if}
 
 

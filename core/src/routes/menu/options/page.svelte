@@ -6,6 +6,8 @@
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
 	import Iconbutton from "../../uicomponents/iconbutton.svelte";
+    import { MenuLocations } from "../../globals/globalconstants.js";
+	import Button from "../../uicomponents/button.svelte";
 
     /**
      * Added for later use
@@ -138,32 +140,22 @@
 
 {#if onlyButton}
 
+    {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
+
     <Iconbutton active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} on:click={toggleOptionPanel} noBackground={true}>
         <span slot="icon"><i class="bi bi-sliders"></i></span>
     </Iconbutton>
 
-    <!-- {#if $globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true}
-
-    <button class="iconButton selected" on:click={toggleOptionPanel} style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
-    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="bi bi-sliders"></i></button>
-
     {:else}
-    <button class="iconButton" on:click={toggleOptionPanel} style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
-    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="bi bi-sliders"></i></button>
-    {/if} -->
 
+    <Button active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} on:click={toggleOptionPanel} horizontal={false} >
+
+        <span slot="iconTop"><i class="bi bi-sliders"></i></span>
+        <span slot="text">Options</span>
+
+    </Button>
+
+    {/if}
 
 {:else}
 
@@ -225,18 +217,6 @@
 {/if}
 
 <style>
-    .iconButton{
-        width: 32px;
-        height: 32px;
-        background-color: var(--buttonPassiveBackgroundColor);
-        border-color: transparent;
-        color: var(--buttonPassiveForegroundColor);
-    }
-    .iconButton.selected{
-        background-color: var(--buttonActiveBackgroundColor);
-        color: var(--buttonActiveForegroundColor);
-        border-radius: 6px;
-    }
     .hoverPanel{
         position: absolute;
         z-index: 888;

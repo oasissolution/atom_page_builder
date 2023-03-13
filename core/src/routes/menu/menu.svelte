@@ -100,15 +100,10 @@
 <div class="horizontalMenu flex flex-row align-middle items-center" style='
     --backgroundColor:{$globalThemeStore.menu.backgroundColor};
     --foregroundColor:{$globalThemeStore.menu.foregroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
     ' >
     <div class="float-left">
         <div class="flex flex-row gap-1 pl-3 align-middle items-center">
             <Widgets onlyButton={true} />
-            
         </div>
     </div>
 
@@ -160,32 +155,43 @@
 <div class="verticalMenu flex flex-col space-y-auto" style='
     --backgroundColor:{$globalThemeStore.menu.backgroundColor};
     --foregroundColor:{$globalThemeStore.menu.foregroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' >
+' >
 
     <div class="flex items-start">
         <div class="flex flex-col gap-1 pt-3">
             <Widgets onlyButton={true} />
-            <Options onlyButton={true} />
-            <Layers onlyButton={true} />
+            
         </div>
     </div>
     <div class="flex flex-grow"></div>
 
     <div class="flex content-end items-end">
-        <div class="flex flex-col gap-1 pb-2">
-            <button class="iconButton" class:selected={fullWidth} on:click={setFullWidth}><i class="bi bi-fullscreen"></i></button>
+        <div class="flex flex-col place-content-center justify-items-center place-items-center gap-1 pb-2">
+
             <div class="hr"></div>
-            <button class="iconButton" class:selected={editorScreen == ScreenSize.DESKTOP} on:click={() => setScreenSize(ScreenSize.DESKTOP)}><i class="bi bi-display"></i></button>
+            <Iconbutton active={fullWidth} on:click={setFullWidth} noBackground={true}><span slot="icon"><i class="bi bi-fullscreen"></i></span></Iconbutton>
+            <Iconbutton active={editorScreen == ScreenSize.DESKTOP} on:click={() => setScreenSize(ScreenSize.DESKTOP)} noBackground={true}>
+                <span slot="icon"><i class="bi bi-display"></i></span></Iconbutton>
+            <Iconbutton active={editorScreen == ScreenSize.TABLET} on:click={() => setScreenSize(ScreenSize.TABLET)} noBackground={true}>
+                <span slot="icon"><i class="bi bi-tablet"></i></span></Iconbutton>
+            <Iconbutton active={editorScreen == ScreenSize.MOBILE} on:click={() => setScreenSize(ScreenSize.MOBILE)} noBackground={true}>
+                <span slot="icon"><i class="bi bi-phone"></i></span></Iconbutton>
+
             <div class="hr"></div>
-            <button class="iconButton" class:selected={editorScreen == ScreenSize.TABLET} on:click={() => setScreenSize(ScreenSize.TABLET)}><i class="bi bi-tablet"></i></button>
-            <div class="hr"></div>
-            <button class="iconButton" class:selected={editorScreen == ScreenSize.MOBILE} on:click={() => setScreenSize(ScreenSize.MOBILE)}><i class="bi bi-phone"></i></button>
-            <div class="vspacer"></div>
+            
+            <Options onlyButton={true} />
+            <div class="vSpace"></div>
+            <Layers onlyButton={true} />
+            <div class="vSpace"></div>
             <Customize onlyButton={true} />
+            <div class="vSpace"></div>
+            <div class="hr"></div>
+
+            <Button active={true} addClass={"mb-3"} horizontal={false}>
+                <span slot="text">Publish</span>
+                <span slot="iconTop"><i class="bi bi-globe"></i></span>
+            </Button>
+            
         </div>
 
     </div>
@@ -220,28 +226,7 @@
         color: var(--foregroundColor);
     }
 
-
-    .iconButton{
-        width: 32px;
-        height: 32px;
-        background-color: var(--buttonPassiveBackgroundColor);
-        border-color: transparent;
-        color: var(--buttonPassiveForegroundColor);
-    }
-    .iconButton.selected{
-        background-color: var(--buttonActiveBackgroundColor);
-        color: var(--buttonActiveForegroundColor);
-        border-radius: 6px;
-    }
-
-    .spacer{
-        width: 40px;
-    }
-    .vspacer{
-        height: 40px;
-    }
-
-    .hr {
+    :global(.hr) {
         display: inline-block;
         align-self: stretch;
         height: 1px;
@@ -250,7 +235,7 @@
         opacity: 0.25;
     }
 
-    .vr {
+    :global(.vr) {
         display: inline-block;
         align-self: stretch;
         width: 1px;
@@ -258,6 +243,10 @@
         min-height: 1em; /* 1em */
         background-color: var(--foregroundColor);
         opacity: 0.25;
+    }
+
+    .vSpace{
+        height: 8px;
     }
 
 </style>

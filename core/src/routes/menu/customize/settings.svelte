@@ -36,6 +36,7 @@
 --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
 --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
 --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+--fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
 --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
 --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
 --borderColor: {$globalThemeStore.widgetIcon.borderColor};

@@ -37,10 +37,8 @@
 <button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} on:click={clickButton}
 style="
     --buttonActiveIconColor:{$globalThemeStore.button.active.iconColor};
-    --buttonActiveTextColor:{$globalThemeStore.button.active.textColor};
     --buttonActiveBackgroundColor:{$globalThemeStore.button.active.backgroundColor};
     --buttonPassiveIconColor:{$globalThemeStore.button.passive.iconColor};
-    --buttonPassiveTextColor:{$globalThemeStore.button.passive.textColor};
     --buttonPassiveBackgroundColor:{noBackground == false ? $globalThemeStore.button.passive.backgroundColor : "transparent"};
 "  >
 
@@ -64,18 +62,9 @@ style="
         color: var(--buttonPassiveIconColor);
     }
 
-    .atomButtonText{
-        color: var(--buttonPassiveTextColor);
-    }
-
     .atomButtonActive > .atomButtonIcon {
         color: var(--buttonActiveIconColor);
     }
-
-    .atomButtonActive > .atomButtonText {
-        color: var(--buttonActiveTextColor);
-    }
-
 
 
 </style>

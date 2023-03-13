@@ -161,18 +161,6 @@
 </script>
     <div class="widgetPanelSubTitle">Container Options</div>
 
-    <div class="text-sm" style='
-    --swalOverlayBackgroundColor:{$globalThemeStore.swal.overlay.backgroundColor};
-    --swalModalBackgroundColor:{$globalThemeStore.swal.modal.backgroundColor};
-    --swalModalBorder:{$globalThemeStore.swal.modal.border};
-    --swalModalCustomCss:{$globalThemeStore.swal.modal.customCss != "" ? $globalThemeStore.swal.modal.customCss : "\"\""};
-    '>
-    <!-- --swalOverlayBackgroundColor:{$globalThemeStore.swal.overlay.backgroundColor};
-    --swalModalBackgroundColor:{$globalThemeStore.swal.modal.backgroundColor};
-    --swalModalBorder:{$globalThemeStore.swal.modal.border};
-    --swalModalCustomCss:{$globalThemeStore.swal.modal.customCss != "" ? $globalThemeStore.swal.modal.customCss : "\"\""}; -->
-    </div>
-
     
     <br/>
     {#if selectedTabPageIndex==0}

@@ -9,8 +9,6 @@
     import Selector from "../../(shared)/shared/selector.svelte";
     import swal from 'sweetalert';
 
-    import { atomAlert } from "../../uicomponents/atomalert.svelte";
-
     /// ATTENTION ! 
 
     /// Editor panel runs in an iframe. Hence, defined stores here are different than main stores in runtime, even if their names and definitions are identical.
@@ -24,6 +22,26 @@
 
     let globalTheme = $globalThemeStore;
     $: globalThemeStore.set(globalTheme);
+
+    let loaded = false;
+    $: $globalEditorPreferencesStore.theme, (()=>{
+        if(loaded == true){
+            const link = window.document.querySelector('#theme-link');
+            var themeFile = $globalEditorPreferencesStore.theme !== undefined ? $globalEditorPreferencesStore.theme : "dark";
+            if (link) {
+                link.href = "/themes/"+themeFile+".css";
+            } else {
+                const newLink = document.createElement('link');
+                newLink.id = 'theme-link';
+                newLink.rel = 'stylesheet';
+                newLink.href = "/themes/"+themeFile+".css";
+                window.document.head.appendChild(newLink);
+            }
+        }
+        
+
+    })();
+
 
       
     // TODO: import all modules dynamically
@@ -82,41 +100,23 @@
 
                 if(comp.type != "body"){
 
-                    atomAlert($globalThemeStore, {
+                    swal({
                         title: "Delete \"" + JsonOfTypes[comp.type].title + "\" ?",
                         text: JsonOfTypes[comp.type].data != "" ? (comp.data[JsonOfTypes[comp.type].data] ?? "") : "",
                         icon: "warning",
                         buttons: ["No, keep it", "Yes, DELETE"],
                         dangerMode: true,
-                        action: (value) => {
-                            if (value) {
-                                sendDeletedElement(comp.uuid);
-                                swal("Element deleted", {
-                                    icon: "success",
-                                });
-                            } else {
-                                swal("Element kept!",{icon: "info"});
-                            }
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            sendDeletedElement(comp.uuid);
+                            swal("Element deleted", {
+                                icon: "success",
+                            });
+                        } else {
+                            swal("Element kept!",{icon: "info"});
                         }
                     });
-
-                    // swal({
-                    //     title: "Delete \"" + JsonOfTypes[comp.type].title + "\" ?",
-                    //     text: JsonOfTypes[comp.type].data != "" ? (comp.data[JsonOfTypes[comp.type].data] ?? "") : "",
-                    //     icon: "warning",
-                    //     buttons: ["No, keep it", "Yes, DELETE"],
-                    //     dangerMode: true,
-                    // })
-                    // .then((willDelete) => {
-                    //     if (willDelete) {
-                    //         sendDeletedElement(comp.uuid);
-                    //         swal("Element deleted", {
-                    //             icon: "success",
-                    //         });
-                    //     } else {
-                    //         swal("Element kept!",{icon: "info"});
-                    //     }
-                    // });
                 }
 
             }
@@ -124,13 +124,7 @@
 
         window.addEventListener("error", (e) => {
 
-            // swal({
-            //     title: "Error on Editor Panel",
-            //     text: e.error.toString(),
-            //     icon: "error",
-            // });
-
-            atomAlert($globalThemeStore, {
+            swal({
                 title: "Error on Editor Panel",
                 text: e.error.toString(),
                 icon: "error",
@@ -138,45 +132,17 @@
 
         });
 
+        loaded = true;
+
     });
 
-    // import { writable } from "svelte/store";
-    // let overlayBackground = writable("#242425");
-    // let modalBackground = writable("#242425");
-    // let modalBorder = writable("1px solid #242425");
-    // let modalCustomCss = writable("");
 
-    // $: $globalThemeStore, (() => {
-    //     console.log("$globalThemeStore updated!");
-    //     if($globalThemeStore !== undefined){
-    //         console.log("$globalThemeStore !== undefined");
-    //         overlayBackground.set($globalThemeStore.swal.overlay.backgroundColor != undefined ? $globalThemeStore.swal.overlay.backgroundColor : "#242425");
-    //         modalBackground.set($globalThemeStore.swal.modal.backgroundColor != undefined ? $globalThemeStore.swal.modal.backgroundColor : "#242425");
-    //         modalBorder.set($globalThemeStore.swal.modal.border != undefined ? $globalThemeStore.swal.modal.border : "1px solid #242425");
-    //         modalCustomCss.set($globalThemeStore.swal.modal.customCss != undefined ? $globalThemeStore.swal.modal.customCss : "");
-
-    //     }
-    //     console.log('--swalOverlayBackgroundColor:'+$overlayBackground+';');
-    //     console.log('--swalModalBackgroundColor:'+$modalBackground+';');
-    //     console.log('--swalModalBorder:'+$modalBorder+';');
-    //     console.log('--swalModalCustomCss:'+$modalCustomCss+';');
-    // })();
 
 
 </script>
 
 
-
-<!-- style='
-    --swalOverlayBackgroundColor:{$overlayBackground};
-   --swalModalBackgroundColor:{$modalBackground};
-   --swalModalBorder:{$modalBorder};
-   --swalModalCustomCss:{$modalCustomCss};
-' -->
-
-<div id="editorInnerPanel" 
-
->
+<div id="editorInnerPanel">
 
     {#if $globalComponentCollectionStore}
     {#each $globalComponentCollectionStore as component}
@@ -192,7 +158,6 @@
 
 </div> <!-- editorInnerPanel -->
 
-<!-- <div class="hidden swal-overlay swal-modal"></div> -->
     
 <svelte:component this={Selector} />
 
@@ -202,16 +167,5 @@
         width: 100%; 
         height: 100vh; /* subject to change in following versions */
     }
-
-        
-    /* :global(.swal-overlay) {
-        background-color: var(--swalOverlayBackgroundColor) !important; 
-    }
-    
-    :global(.swal-modal) {
-        background-color: var(--swalModalBackgroundColor) !important;
-        border: var(--swalModalBorder) !important;
-    } */
-
 
 </style>

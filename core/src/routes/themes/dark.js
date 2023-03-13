@@ -2,7 +2,6 @@
  * Theme: Dark Theme
  * Version: 1.0.0
  * Creation Date: 2023-03-08
- * Created By: Fatih KUROĞLU
  */
 
 /**
@@ -10,7 +9,9 @@
  *
  * You can rename variables however you want. Or even do not use them. Write your colors directly in json.
  *
- * But do NOT change "keys" inside "themeColors" json
+ * But do NOT change "keys" inside "themeColors" json.
+ * 
+ * Also add a themeName.css file to /static/themes folder, even if its blank.
  */
 
 
@@ -41,6 +42,7 @@ export const themeColors = {
         "backgroundColor": background,
         "foregroundColor": foreground,
         "titleColor": "#ffffff",
+        "tabsDivider": "#323232",
     },
     "widgetIcon": {
         "backgroundColor": "transparent",
@@ -64,13 +66,11 @@ export const themeColors = {
     "options": {
         "button": {
             "active": {
-                "iconColor": activeForeground,
-                "textColor": activeForeground,
+                "color": activeForeground,
                 "backgroundColor": activeBackground,
             },
             "passive": {
-                "iconColor": foreground,
-                "textColor": foreground,
+                "color": foreground,
                 "backgroundColor": background,
             },
         },
@@ -79,52 +79,35 @@ export const themeColors = {
     },
     "switch": {
         "active": {
-            "iconColor": activeForeground,
-            "textColor": activeForeground,
+            "color": activeForeground,
             "backgroundColor": activeBackground,
         },
         "passive": {
-            "iconColor": foreground,
-            "textColor": foreground,
-            "backgroundColor": background,
+            "color": inputForeground,
+            "backgroundColor": inputBackground,
         },
     },
     "input": {
-        
-    },
-    "swal": {
-        "overlay": {
-            "backgroundColor": background,
+        "textarea": {
+            "color": inputForeground,
+            "backgroundColor": inputBackground,
         },
-        "modal": {
-            "backgroundColor": background,
-            "border": "1px solid " + buttonBackground,
-            "customCss": "",
-        },
-        "title": {
-            "backgroundColor": background,
-            "color": foreground,
-            "customCss": "",
+        "checkbox": {
+            "checked": {
+                "color": activeForeground,
+                "backgroundColor": activeBackground,
+            },
+            "unchecked": {
+                "color": inputForeground,
+                "backgroundColor": inputBackground,
+            },
         },
         "text": {
-            "backgroundColor": background,
-            "color": foreground,
-            "customCss": "",
-        },
-        "buttonConfirm": {
-            "backgroundColor": background,
-            "color": foreground,
-        },
-        "buttonCancel": {
-            "backgroundColor": inputBackground,
             "color": inputForeground,
+            "backgroundColor": inputBackground,
         },
-        "buttonDanger": {
-            "backgroundColor": background,
-            "color": foreground,
-        },
-
     },
+    
 }
 
 /*

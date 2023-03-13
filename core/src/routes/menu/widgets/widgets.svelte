@@ -1,7 +1,6 @@
 <script>
 
    import { globalEditorPreferencesStore, globalThemeStore } from "../../globals/globalstores.js";
-   import jQuery from "jquery";
 
    /*
       THIS PAGE IS MAIN "WIDGETS" PAGE.
@@ -34,21 +33,16 @@
 
 </script>
 
-
 <div class="widgetPanel " style='
    --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
    --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
    --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+   --fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
    --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
    --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
    --borderColor: {$globalThemeStore.widgetIcon.borderColor};
    --iconColor: {$globalThemeStore.widgetIcon.iconColor};
    --textColor: {$globalThemeStore.widgetIcon.textColor};
-   --swalOverlayBackgroundColor:{$globalThemeStore.swal.overlay.backgroundColor};
-   --swalModalBackgroundColor:{$globalThemeStore.swal.modal.backgroundColor};
-   --swalModalBorder:{$globalThemeStore.swal.modal.border};
-   --swalModalCustomCss:{$globalThemeStore.swal.modal.customCss};
-   
 ' >
    <div class="widgetPanelTitle">Widgets</div>
 
@@ -92,6 +86,26 @@
       place-content: center;
       font-weight: 500;
       color: var(--fixedPanelForegroundColor) !important;
+   }
+
+   :global(.widgetPanelTabsDivider){
+      display: flex;
+      width: 100%;
+      height: 3px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+      background-color: var(--fixedPanelTabsDivider) !important;
+      /* background-color: #fixedPanelTabsDivider !important; */
+   }
+
+   :global(.widgetPanelDivider){
+      display: flex;
+      width: 100%;
+      height: 1px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+      background-color: var(--fixedPanelTabsDivider) !important;
+      /* background-color: #323232 !important; */
    }
 
    :global(.widgetContainer){
@@ -143,24 +157,4 @@
       -ms-user-select: none;
    }
 
-   /* :global(.swal-overlay) {
-      background-color: var(--swalOverlayBackgroundColor) !important; 
-   }
-   
-   :global(.swal-modal) {
-      background-color: var(--swalModalBackgroundColor) !important;
-      border: var(--swalModalBorder) !important;
-   } */
-
-
 </style>
-
-<!-- {#if $globalThemeStore.swal.modal.customCss != ""}
-  <style>
-    :global(.swal-modal) {
-      {@html '/* Custom styles from the customCss variable */
-        ${".swal-modal { " + $globalThemeStore.swal.modal.customCss + " }"}
-      '}
-    }
-  </style>
-{/if} -->

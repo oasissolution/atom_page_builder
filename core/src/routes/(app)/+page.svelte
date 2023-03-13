@@ -30,22 +30,23 @@
 
     let loaded = false;
 
+    $: $globalEditorPreferencesStore.theme, (()=>{
+        if(loaded == true){
+            const link = window.document.querySelector('#theme-link');
+            var themeFile = $globalEditorPreferencesStore.theme !== undefined ? $globalEditorPreferencesStore.theme : "dark";
+            if (link) {
+                link.href = "/themes/"+themeFile+".css";
+            } else {
+                const newLink = document.createElement('link');
+                newLink.id = 'theme-link';
+                newLink.rel = 'stylesheet';
+                newLink.href = "/themes/"+themeFile+".css";
+                window.document.head.appendChild(newLink);
+            }
+        }
+        
 
-    // $: $globalComponentCollectionStore, (() => {
-
-    //     if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
-
-    //         // console.log("Send data on globalComponentCollectionStore !");
-    //         const data = {
-    //             "message": {
-    //                 "componentCollection": $globalComponentCollectionStore,
-    //                 "editorPreferences": $globalEditorPreferencesStore,
-    //                 "globalTheme": $globalThemeStore,
-    //             }
-    //         };
-    //         if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
-    //     }
-    // })();
+    })();
 
 
     function updateEditorFunction(){

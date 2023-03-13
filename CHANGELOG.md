@@ -5,6 +5,23 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.023] - 2022-03-12
+
+### Added
+ - Css of Themes ( /static/themes )
+ - Atom ui components: switch, textarea, optionsbutton, textinput (Used in UI not editor)
+ 
+
+### Changed
+ - Updated vertical menu.
+ - Alert theme finished for dark theme.
+
+### Fixed
+
+
+
+
 ## [0.0.1.022] - 2022-03-11
 
 ### Added

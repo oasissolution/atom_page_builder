@@ -6,6 +6,7 @@
     import Widgets from "./widgets.svelte";
 	import Fixed from "./fixed.svelte";
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+    import { MenuLocations } from "../../globals/globalconstants.js";
 	import Button from "../../uicomponents/button.svelte";
 
 
@@ -70,14 +71,14 @@
         
     }
 
-  
-
     let widgets = Widgets;
 
 </script>
 
 
 {#if onlyButton}
+
+    {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
 
     <Button active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} on:click={toggleWidgetPanel} >
 
@@ -86,31 +87,16 @@
 
     </Button>
 
-<!-- 
-    {#if $globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true}
-
-    
-
-    <button class="iconButton selected" on:click={toggleWidgetPanel} style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
-    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="bi bi-puzzle"></i></button>
-
     {:else}
-    <button class="iconButton" on:click={toggleWidgetPanel} style='
-    --backgroundColor:{$globalEditorPreferencesStore.editorTheme.backgroundColor}; 
-    --foregroundColor:{$globalEditorPreferencesStore.editorTheme.foregroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.buttonPassiveForegroundColor};
-    ' ><i class="bi bi-puzzle"></i></button>
-    {/if} -->
 
+    <Button active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} on:click={toggleWidgetPanel} horizontal={false} >
+
+        <span slot="iconTop"><i class="bi bi-puzzle"></i></span>
+        <span slot="text">Widgets</span>
+
+    </Button>
+
+    {/if}
 
 {:else}
 
@@ -172,21 +158,8 @@
 {/if}
 
 <style>
-    .iconButton{
-        width: 32px;
-        height: 32px;
-        background-color: var(--buttonPassiveBackgroundColor);
-        border-color: transparent;
-        color: var(--buttonPassiveForegroundColor);
-    }
-    .iconButton.selected{
-        background-color: var(--buttonActiveBackgroundColor);
-        color: var(--buttonActiveForegroundColor);
-        border-radius: 6px;
-    }
     .hoverPanel{
         position: absolute;
         z-index: 888;
-
     }
 </style>
