@@ -6,7 +6,23 @@ All notes are for developers, since this repository will not be public.
 
 
 
-## [0.0.1.023] - 2022-03-12
+
+## [0.0.1.024] - 2022-03-14
+
+### Added
+ - Atom ui components: select,  (Used in UI not editor)
+ - Text Options panel; Font Size, Alignment, Vertical Alignment, Html Tag properties
+ 
+
+### Changed
+ - Text Options content panel finished.
+
+### Fixed
+
+
+
+
+## [0.0.1.023] - 2022-03-13
 
 ### Added
  - Css of Themes ( /static/themes )

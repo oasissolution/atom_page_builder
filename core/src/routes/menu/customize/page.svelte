@@ -194,7 +194,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("left")}
             {#if $globalVisibilityStore.left.hasOwnProperty("customizePanel")}
                 {#if $globalVisibilityStore.left.customizePanel == true}
-                    <Fixed>
+                    <Fixed side="L">
                         <Settings />
                     </Fixed>
                 {/if}
@@ -207,7 +207,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("right")}
             {#if $globalVisibilityStore.right.hasOwnProperty("customizePanel")}
                 {#if $globalVisibilityStore.right.customizePanel == true}
-                    <Fixed>
+                    <Fixed side="R">
                         <Settings />
                     </Fixed>
                 {/if}

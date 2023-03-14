@@ -143,7 +143,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("left")}
             {#if $globalVisibilityStore.left.hasOwnProperty("layerPanel")}
                 {#if $globalVisibilityStore.left.layerPanel == true}
-                    <Fixed>
+                    <Fixed side="L">
                         <Layers />
                     </Fixed>
                 {/if}
@@ -156,7 +156,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("right")}
             {#if $globalVisibilityStore.right.hasOwnProperty("layerPanel")}
                 {#if $globalVisibilityStore.right.layerPanel == true}
-                    <Fixed>
+                    <Fixed side="R">
                         <Layers />
                     </Fixed>
                 {/if}

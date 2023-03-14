@@ -66,7 +66,15 @@ style="
     <div class="w-full flex flex-col gap-1">
         <textarea class="textarea rounded-lg p-2 mb-1 {addClass}" rows="{rows}" cols="{cols}" on:keypress={keyPress} bind:value={text}></textarea>
         <div class="flex flex-row gap-2">
-            <Switch bind:checked={submitOnEnter}></Switch><span class="text-[10px] align-auto" >Submit on Enter</span>
+            <Switch bind:checked={submitOnEnter}></Switch>
+            {#if submitOnEnter}
+            <span class="text-[10px] align-auto" >Submit on Enter (Use Shift + Enter for a new line)</span>
+            {:else}
+            <div class="w-full flex flex-row items-start place-content-between">
+                <span class="text-[10px] align-auto" >Submit on Enter</span>
+                <button type="button" class="applyButton rounded-lg px-2" on:click={onSubmit}>Apply</button>
+            </div>
+            {/if}
         </div>
     </div>
 </div>
@@ -80,6 +88,13 @@ style="
 
     .textarea:focus{
         border: 1 px solid var(--color);
+    }
+
+    .applyButton{
+        height: 22px;
+        font-size: small;
+        background-color: var(--backgroundColor);
+        color: var(--color);
     }
 
 

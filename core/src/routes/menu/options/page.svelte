@@ -193,7 +193,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("left")}
             {#if $globalVisibilityStore.left.hasOwnProperty("optionPanel")}
                 {#if $globalVisibilityStore.left.optionPanel == true}
-                    <Fixed>
+                    <Fixed side="L">
                         <Options />
                     </Fixed>
                 {/if}
@@ -206,7 +206,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("right")}
             {#if $globalVisibilityStore.right.hasOwnProperty("optionPanel")}
                 {#if $globalVisibilityStore.right.optionPanel == true}
-                    <Fixed>
+                    <Fixed side="R">
                         <Options />
                     </Fixed>
                 {/if}

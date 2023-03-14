@@ -1,6 +1,7 @@
 <script>
     import "../../app.css";
     import { onMount, onDestroy, SvelteComponent } from "svelte";
+    import { fade, fly } from 'svelte/transition';
     import {
         globalComponentCollectionStore,
         globalEditorPreferencesStore,
@@ -11,8 +12,8 @@
         globalThemeStore
     } from "../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "../globals/globalconstants.js";
+    import { editorDefaultPreferences, editorBlankData } from "../globals/defaults.js";
     import Menu from "../menu/menu.svelte";
-	import Info from "../info.svelte";
     import Customize from "../menu/customize/page.svelte";
     import Widgets from "../menu/widgets/page.svelte";
     import Options from "../menu/options/page.svelte";
@@ -20,7 +21,6 @@
 
     import { loadVariables } from "../loadvariables.svelte";
 
-    import { editorDefaultPreferences, editorBlankData } from "../globals/defaults.js";
 
     export const prerender = true;
 
@@ -125,7 +125,7 @@
     <div id="middleFrame" class="flex flex-row" >
         {#if leftMenuFrameContent}<div id="leftMenuFrame" class=""><svelte:component this={Menu}/></div>{/if}
 
-        {#if $globalLeftPanelContentStore.length > 0}<div id="leftPanelFrame" class="">
+        {#if $globalLeftPanelContentStore.length > 0}<div id="leftPanelFrame" class=""  transition:fly="{{ x: -320, duration: 700 }}">
             {#each $globalLeftPanelContentStore as item}
                 {#if $globalEditorPreferencesStore[item.ds] == PanelDisplayStyles.FIXEDLEFT}
                     <svelte:component this={item.component}/>
@@ -145,7 +145,7 @@
         </div>
 
 
-        {#if $globalRightPanelContentStore.length > 0}<div id="rightPanelFrame" class="">
+        {#if $globalRightPanelContentStore.length > 0}<div id="rightPanelFrame" class="" transition:fly="{{ x: 320, duration: 700 }}">
             {#each $globalRightPanelContentStore as item}
                 {#if $globalEditorPreferencesStore[item.ds] == PanelDisplayStyles.FIXEDRIGHT}
                     <svelte:component this={item.component}/>

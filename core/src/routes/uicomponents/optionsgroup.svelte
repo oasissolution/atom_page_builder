@@ -3,6 +3,12 @@
     import { globalThemeStore } from "../globals/globalstores.js";
 
     /**
+     * Variable that holds active state of element
+     * @type boolean
+     */
+    export let active;
+
+    /**
      * Variable that adds class to element
      * @type string
      */
@@ -21,14 +27,6 @@
      * @type boolean
      */
     export let horizontal = true;
-
-    /**
-     * Variable that holds if items of elements are icons
-     * 
-     * if false, it is vertical
-     * @type boolean
-     */
-    export let icons = false;
 
     /**
      * Value of element
@@ -55,13 +53,7 @@ style="
 "  
 >
     {#each items as item}
-        <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=items.indexOf(item)} class:optionButtonActive={value == items.indexOf(item)}>
-            {#if icons==true}
-            <i class="{item}"></i>
-            {:else}
-            {item}
-            {/if}
-        </button>
+        <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=items.indexOf(item)} class:optionButtonActive={value == items.indexOf(item) || active == true}>{item}</button>
     {/each}
 </div>
 

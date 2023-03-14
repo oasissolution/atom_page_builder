@@ -134,7 +134,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("left")}
             {#if $globalVisibilityStore.left.hasOwnProperty("widgetPanel")}
                 {#if $globalVisibilityStore.left.widgetPanel == true}
-                    <Fixed>
+                    <Fixed side="L">
                         <Widgets />
                     </Fixed>
                 {/if}
@@ -147,7 +147,7 @@
         {#if $globalVisibilityStore.hasOwnProperty("right")}
             {#if $globalVisibilityStore.right.hasOwnProperty("widgetPanel")}
                 {#if $globalVisibilityStore.right.widgetPanel == true}
-                    <Fixed>
+                    <Fixed side="R">
                         <Widgets />
                     </Fixed>
                 {/if}

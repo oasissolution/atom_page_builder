@@ -75,7 +75,13 @@ export const themeColors = {
             },
         },
         "card": {},
-        "select": {},
+        "select": {
+            "color": inputForeground,
+            "backgroundColor": background,
+            "buttonBackgroundColor": inputBackground,
+            "hoverColor": activeForeground,
+            "hoverBackgroundColor": activeBackground,
+        },
     },
     "switch": {
         "active": {

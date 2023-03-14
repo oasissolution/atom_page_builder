@@ -61,6 +61,17 @@
      */
     export const elAttr = ["accesskey", "class", "contenteditable", "dir", "draggable", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"];
 
+    /**
+     * Standard HTML tags that are applied to text element.
+     * @type ["h1", "h2", "h3", "h4", "h5", "h6", "div", "span", "p"]
+     */
+    export const htmlTags = ["h1", "h2", "h3", "h4", "h5", "h6", "div", "span", "p"];
+
+    /**
+     * Text of element
+     * @type string
+     */
+     export let htmlTag = "span";
 
     /**
      * Text of element
@@ -273,13 +284,80 @@
 
 </script>
 
-
+{#if htmlTag == "span"}
 <span bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
     <slot>
         This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
     </slot>
     {text}
 </span>
+
+{:else if htmlTag == "div"}
+
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</div>
+
+{:else if htmlTag == "h1"}
+
+<h1 bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</h1>
+
+{:else if htmlTag == "h2"}
+
+<h2 bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</h2>
+
+{:else if htmlTag == "h3"}
+
+<h3 bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</h3>
+
+{:else if htmlTag == "h4"}
+
+<h4 bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</h4>
+
+{:else if htmlTag == "h5"}
+
+<h5 bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</h5>
+
+{:else if htmlTag == "h6"}
+
+<h6 bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement}  on:dblclick={openOptionsPanel} draggable="true">
+    <slot>
+        This module can not reach here. But we keep it, hence all modules be in the same structure and tree works.
+    </slot>
+    {text}
+</h6>
+
+
+
+{/if}
 
 
 <style>
