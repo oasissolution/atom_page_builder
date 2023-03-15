@@ -1,6 +1,7 @@
 <script>
     import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations } from "../../../globals/globalconstants.js";
+    import Optionsbutton from "../../../uicomponents/optionsbutton.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -17,7 +18,51 @@
         globalEditorPreferences.menuLocation = location;
     }
 
+    /**
+     * Holds selected location in number
+     * @type number
+     */
+    let selectedLocation = 0;
+
+    /**
+     * @typedef {Object} nestedItemsType
+     * @property {string} outerClass
+     * @property {string} innerClass
+     */
+
+    /**
+     * @type Array<nestedItemsType>
+     */
+    let locationList = [
+        {outerClass: "-rotate-90", innerClass: "bi bi-layout-sidebar-inset-reverse"},
+        {outerClass: "rotate-90", innerClass: "bi bi-layout-sidebar-inset-reverse"},
+        {outerClass: "rotate-180", innerClass: "bi bi-layout-sidebar-inset-reverse"},
+        {outerClass: "", innerClass: "bi bi-layout-sidebar-inset-reverse"},
+    ];
+
+    let locationPositions = [
+        MenuLocations.TOP,
+        MenuLocations.BOTTOM,
+        MenuLocations.LEFT,
+        MenuLocations.RIGHT
+    ];
+
+    $: selectedLocation, (()=>{
+        console.log("selectedLocation : " + selectedLocation + " |=> : "+locationPositions[selectedLocation]);
+        setMenuLocation(locationPositions[selectedLocation]);
+    })();
+
 </script>
+
+<!-- <div class="flex flex-row place-content-between h-8 items-center">
+    <span>Menu</span>
+    <div class="w-[150px]">
+        <Optionsbutton nestedItems={locationList} nested={true} bind:value={selectedLocation}></Optionsbutton>
+    </div>
+    
+</div> -->
+
+
 
 <div class="flex flex-row customizeRow" style='
     --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
@@ -54,7 +99,7 @@
         {/if}
 
     </div>
-</div>
+</div> 
 
 
 <style>
@@ -79,32 +124,16 @@
         height: 50px;
     }
 
-    .rotate-90deg{
+    :global(.rotate-90deg){
         transform: rotate(90deg) !important;
     }
-    .rotate-180deg{
+    :global(.rotate-180deg){
         transform: rotate(180deg) !important;
     }
-    .rotate-270deg{
+    :global(.rotate-270deg){
         transform: rotate(270deg) !important;
     }
 
-    .hr {
-        display: inline-block;
-        align-self: stretch;
-        height: 1px;
-        min-width: 1em;
-        background-color: var(--foregroundColor);
-        opacity: 0.25;
-    }
 
-    .vr {
-        display: inline-block;
-        align-self: stretch;
-        width: 1px;
-        min-height: 1em;
-        background-color: var(--foregroundColor);
-        opacity: 0.25;
-    }
 
 </style>

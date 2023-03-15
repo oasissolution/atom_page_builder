@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import { fade, fly, slide } from 'svelte/transition';
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
@@ -422,6 +423,11 @@
         collapseDesignClass = !collapseDesignClass;
     }
 
+    let collapseDesignTypography = false;
+    function toggleDesignTypography(){
+        collapseDesignTypography = !collapseDesignTypography;
+    }
+
 </script>
 
     <div class="widgetPanelSubTitle">Text Options</div>
@@ -483,9 +489,28 @@
         {/if}
     </button>
 
-    <div class="w-full" class:hidden={!collapseDesignLayout}>
-collapse panel
+    {#if collapseDesignLayout}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+        collapse panel
     </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignTypography}>
+        <span class="collapseHeader">TYPOGRAPHY</span>
+        {#if collapseDesignTypography}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignTypography}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+        collapse panel
+    </div>
+    {/if}
 
     <div class="widgetPanelDivider"></div>
     
@@ -499,7 +524,8 @@ collapse panel
         {/if}
     </button>
 
-    <div class="w-full " class:hidden={!collapseDesignClass}>
+    {#if collapseDesignClass}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
 
         <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
         <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
@@ -507,6 +533,7 @@ collapse panel
         <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
 
     </div>
+    {/if}
 
     <div class="widgetPanelDivider"></div>
 

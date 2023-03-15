@@ -5,6 +5,8 @@
    import Panellocation from "./settings/panellocation.svelte";
    import Theme from "./settings/theme.svelte";
 
+   import Optionsbutton from "../../uicomponents/optionsbutton.svelte";
+
    /*
       THIS PAGE IS MAIN "CUSTOMIZE EDITOR" PAGE.
       THIS PAGE IS IMPORTED BY ALL VIEWS.
@@ -44,22 +46,15 @@
 --textColor: {$globalThemeStore.widgetIcon.textColor};
 ' >
    <div class="widgetPanelTitle">Customize Editor</div>
-   <br/>
-   <div class="flex flex-row gap-2">
-      {#if selectedTabPageIndex==0}
-      <button class="tabButton selected" on:click={() => showPage(0)}>Locations</button>
-      {:else}
-      <button class="tabButton" on:click={() => showPage(0)}>Locations</button>
-      {/if}
-      {#if selectedTabPageIndex==1}
-      <button class="tabButton selected" on:click={() => showPage(1)}>Themes</button>
-      {:else}
-      <button class="tabButton" on:click={() => showPage(1)}>Themes</button>
-      {/if}
-   </div>
-   <br/>
+   <div class="h-4"></div>
+
+   <Optionsbutton items={["Locations", "Themes"]} bind:value={selectedTabPageIndex} spaceBetween={false} gap={"gap-3"}></Optionsbutton>
+
+   <div class="widgetPanelTabsDivider"></div>
+
    {#if selectedTabPageIndex==0}
    <svelte:component this={Menulocation}/>
+   <div class="widgetPanelDivider"></div>
    <svelte:component this={Panellocation}/>
    {:else if selectedTabPageIndex==1}
    <svelte:component this={Theme}/>

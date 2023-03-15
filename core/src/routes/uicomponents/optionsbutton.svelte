@@ -40,13 +40,59 @@
      * Variable that adds class to element
      * @type Array<string>
      */
-    export let items;
+    export let items = [];
+
+    /**
+     * Variable that holds distance class between elements
+     * @type string
+     */
+    export let gap = "";
+
+    /**
+     * Variable that holds if items of elements are icons
+     * 
+     * @type boolean
+     */
+    export let spaceBetween = true;
+
+    /**
+     * @typedef {Object} nestedItemsType
+     * @property {string} outerClass
+     * @property {string} innerClass
+     */
+
+    /**
+     * Used for nested elements in button.
+     * @example
+     * Lets say we have 
+     * 
+     * <span class="">
+     *      <i class=""></i>
+     * </span>
+     * 
+     * So we set like:
+     * 
+     * [
+     *      {outerClass: "", innerClass: ""},
+     *      {outerClass: "", innerClass: ""},
+     * ]
+     * @type Array<nestedItemsType>
+     */
+    export let nestedItems = [];
+
+    /**
+     * Variable that holds if items of elements are nested elements
+     * 
+     * @type boolean
+     */
+     export let nested = false;
 
 
 </script>
 <input type="hidden" class="optionButton optionButtonActive"/>
 
-<div class="w-full flex items-center place-content-between {addClassToContainer}" class:flex-row={horizontal} class:flex-col={!horizontal}
+<div class="w-full flex items-center place-content-between {gap} {addClassToContainer}" class:flex-row={horizontal} class:flex-col={!horizontal}
+class:place-content-between={spaceBetween}
 style="
     --buttonActiveColor:{$globalThemeStore.options.button.active.color};
     --buttonActiveBackgroundColor:{$globalThemeStore.options.button.active.backgroundColor};
@@ -54,15 +100,27 @@ style="
     --buttonPassiveBackgroundColor:{$globalThemeStore.options.button.passive.backgroundColor};
 "  
 >
-    {#each items as item}
-        <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=items.indexOf(item)} class:optionButtonActive={value == items.indexOf(item)}>
-            {#if icons==true}
-            <i class="{item}"></i>
-            {:else}
-            {item}
-            {/if}
-        </button>
-    {/each}
+    {#if nested == false}
+        {#each items as item, index}
+            <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=index} class:optionButtonActive={value == index}>
+                {#if icons==true}
+                <i class="{item}"></i>
+                {:else}
+                {item}
+                {/if}
+            </button>
+        {/each}
+    {:else}
+        {#each nestedItems as item, index}
+            <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=index} class:optionButtonActive={value == index}>
+                <span class="{item.outerClass}">
+                    <i class="{item.innerClass}"></i>
+                </span>
+            </button>
+        {/each}
+    {/if}
+
+
 </div>
 
 <style>
