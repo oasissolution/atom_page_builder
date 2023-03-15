@@ -38,6 +38,7 @@
    --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
    --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
    --fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
+   --collapseHeaderColor:{$globalThemeStore.panel.collapseHeaderColor};
    --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
    --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
    --borderColor: {$globalThemeStore.widgetIcon.borderColor};
@@ -145,6 +146,23 @@
       place-content: center;
       font-size: small;
       color: var(--textColor) !important;
+   }
+
+   :global(.collapseButton){
+      background-color: transparent;
+      border: none;
+      display: flex;
+      place-content: space-between;
+      align-items: center;
+      height: 2rem/* 32px */;
+      width: 100%;
+      color: var(--collapseHeaderColor);
+   }
+
+   :global(.collapseHeader){
+      
+      font-size: 0.875rem/* 14px */;
+      line-height: 1.25rem/* 20px */;
    }
 
    :global([draggable="true"]) {

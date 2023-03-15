@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
-    import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
 	import Optionsbutton from "../../uicomponents/optionsbutton.svelte";
 	import Textarea from "../../uicomponents/textarea.svelte";
@@ -71,22 +71,24 @@
     function loadElementData(){
         activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
 
-        textInput = activeElement?.data?.text != undefined ? activeElement?.data?.text : "";
+        textInput = activeElement?.data?.text != undefined ? activeElement?.data?.text : "Lorem ipsum...";
         classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
         htmlTag = activeElement?.data?.htmltag != undefined ? activeElement?.data?.htmltag : "span";
 
         classInput.split(" ").forEach( cls => {
 
+            var currentClass = cls.trim();
+
             fontSizeList.forEach( fs => {
-                if(fs === cls.trim()) fontSize = fs;
+                if(fs === currentClass) fontSize = fs;
             });
 
             textAlignmentList.forEach ( ta => {
-                if(ta === cls.trim()) textAlignment = textAlignmentList.indexOf(ta) ?? 0;
+                if(ta === currentClass) textAlignment = textAlignmentList.indexOf(ta) ?? 0;
             });
 
             verticalAlignmentList.forEach( va => {
-                if(va === cls.trim()) verticalAlignment = va;
+                if(va === currentClass) verticalAlignment = va;
             });
             
 
@@ -94,6 +96,20 @@
 
 
 
+    }
+
+    /**
+     * Call this function when selection changes. This is to fix; when switching between two text elements if one has not set a variable then recent
+     * variable active is set to that element. If we clear variables and set to default, it will be upto loadElementData function.
+     * 
+     * These are all default values of variables.
+     */
+    function clearOptionPanelVariables(){
+        fontSize = "";
+        textAlignment = 0;
+        verticalAlignment = "";
+        textInput = "Lorem ipsum...";
+        classInput = "";
     }
 
 
@@ -154,6 +170,7 @@
      * Update ui whenever uuid changes (new element selected)
     */
     $: $globalSelectedElementUuidStore, (() => {
+        clearOptionPanelVariables();
         if(loaded == true){
             loadElementData();
         }
@@ -170,7 +187,12 @@
     function updateText(){
         if(activeElement){
             if(activeElement.data){
-                activeElement.data.text = textInput;
+                if(textInput != ""){
+                    activeElement.data.text = textInput;
+                }else{
+                    textInput = "Lorem ipsum...";
+                    activeElement.data.text = textInput;
+                }
                 updateEditor();
             }
         }
@@ -250,7 +272,7 @@
                     // case " ":
                         break;
                     default:
-                        newClass += cls.trim();
+                        newClass += " " + cls.trim();
                         break;
                 }
             });
@@ -276,6 +298,7 @@
         {name: "div",              value: "div",         info: "div"},
         {name: "span",             value: "span",        info: "span"},
         {name: "p (Paragraph)",    value: "p",           info: "Paragraph"},
+        {name: "strong (Bold)",    value: "strong",      info: "Bold"},
     ];
 
     /**
@@ -322,7 +345,7 @@
                     case "text-justify":
                         break;
                     default:
-                        newClass += cls.trim();
+                        newClass += " " + cls.trim();
                         break;
                 }
             });
@@ -378,7 +401,7 @@
                     case "align-super":
                         break;
                     default:
-                        newClass += cls.trim();
+                        newClass += " " + cls.trim();
                         break;
                 }
             });
@@ -388,11 +411,21 @@
         }
     })();
 
+    
+    let collapseDesignLayout = false;
+    function toggleDesignLayout(){
+        collapseDesignLayout = !collapseDesignLayout;
+    }
+
+    let collapseDesignClass = false;
+    function toggleDesignClass(){
+        collapseDesignClass = !collapseDesignClass;
+    }
 
 </script>
 
     <div class="widgetPanelSubTitle">Text Options</div>
-    <br/>
+    <div class="h-4"></div>
 
     <Optionsbutton items={["Content", "Design", "Animation"]} bind:value={selectedTabPageIndex}></Optionsbutton>
 
@@ -441,10 +474,47 @@
 
     {:else if selectedTabPageIndex==1}
 
-    <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
-    <Textarea bind:text={classInput} on:onSubmit={updateClass} ></Textarea>
+    <button class="collapseButton" on:click={toggleDesignLayout}>
+        <span class="collapseHeader">LAYOUT</span>
+        {#if collapseDesignLayout}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    <div class="w-full" class:hidden={!collapseDesignLayout}>
+collapse panel
+    </div>
+
+    <div class="widgetPanelDivider"></div>
     
-    <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
+
+    <button class="collapseButton" on:click={toggleDesignClass}>
+        <span class="collapseHeader">CLASS</span>
+        {#if collapseDesignClass}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    <div class="w-full " class:hidden={!collapseDesignClass}>
+
+        <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
+        <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
+        
+        <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
+
+    </div>
+
+    <div class="widgetPanelDivider"></div>
+
+    
+
+
+
+
 
     {:else if selectedTabPageIndex==2}
 
@@ -453,3 +523,9 @@
     {/if}
 
 
+<style>
+
+
+
+
+</style>

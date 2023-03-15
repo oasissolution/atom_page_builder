@@ -43,6 +43,7 @@ export const themeColors = {
         "foregroundColor": foreground,
         "titleColor": "#ffffff",
         "tabsDivider": "#323232",
+        "collapseHeaderColor": "#ffffff",
     },
     "widgetIcon": {
         "backgroundColor": "transparent",

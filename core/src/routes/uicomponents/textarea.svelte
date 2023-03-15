@@ -31,6 +31,11 @@
      */
     let submitOnEnter = true;
 
+    /**
+     * @type boolean
+     */
+    export let readonly = false;
+
 
     import { createEventDispatcher } from 'svelte';
 
@@ -64,8 +69,8 @@ style="
 "  
 >
     <div class="w-full flex flex-col gap-1">
-        <textarea class="textarea rounded-lg p-2 mb-1 {addClass}" rows="{rows}" cols="{cols}" on:keypress={keyPress} bind:value={text}></textarea>
-        <div class="flex flex-row gap-2">
+        <textarea class="textarea rounded-lg p-2 mb-1 {addClass}" rows="{rows}" cols="{cols}" on:keypress={keyPress} bind:value={text} readonly={readonly}></textarea>
+        <div class="flex flex-row gap-2" class:collapse={readonly}>
             <Switch bind:checked={submitOnEnter}></Switch>
             {#if submitOnEnter}
             <span class="text-[10px] align-auto" >Submit on Enter (Use Shift + Enter for a new line)</span>

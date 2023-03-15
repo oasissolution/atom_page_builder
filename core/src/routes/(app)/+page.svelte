@@ -119,6 +119,38 @@
         previousSelectedHtmlElementUuid = targetUuid;
     }
 
+
+    /**
+     * Returns default value of element
+     * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
+     */
+    function getDefaultValue(elementType){
+
+        let defaultData = {
+            "uuid": uuidv4().toString(),
+            "type": elementType.replace("element-",""),
+            "data": {},
+            "selected": false,
+            "children": []
+        };
+
+        switch(elementType.replace("element-","")){
+            case "text":
+                defaultData["data"] = {
+                    "text":"Lorem ipsum...",
+                    "class": "text-left ",
+                    "htmltag": "span"
+                };
+                break;
+            case "div":
+                break;
+            default:
+                break;
+        }
+
+        return defaultData;
+    }
+
     /**
      * Adds new dropped element to Json.
      * @param {string} targetUuid uuid of selected element
@@ -126,13 +158,7 @@
      */
     function createDroppedElementInside(targetUuid, elementType){
 
-        const defaultData = {
-            "uuid": uuidv4().toString(),
-            "type": elementType.replace("element-",""),
-            "data": {},
-            "selected": false,
-            "children": []
-        };
+        let defaultData = getDefaultValue(elementType);
 
         addChildComponent($globalComponentCollectionStore, targetUuid, defaultData);
         updateEditorFunction();
@@ -145,13 +171,8 @@
      */
     function createDroppedElementBeforeSub(targetUuid, elementType){
 
-        const defaultData = {
-            "uuid": uuidv4().toString(),
-            "type": elementType.replace("element-",""),
-            "data": {},
-            "selected": false,
-            "children": []
-        };
+        let defaultData = getDefaultValue(elementType);
+
         createDroppedElementBefore($globalComponentCollectionStore, defaultData, targetUuid);
         updateEditorFunction();
     }
@@ -163,13 +184,8 @@
      */
     function createDroppedElementAfterSub(targetUuid, elementType){
 
-        const defaultData = {
-            "uuid": uuidv4().toString(),
-            "type": elementType.replace("element-",""),
-            "data": {},
-            "selected": false,
-            "children": []
-        };
+        let defaultData = getDefaultValue(elementType);
+
         createDroppedElementAfter($globalComponentCollectionStore, defaultData, targetUuid);
         updateEditorFunction();
     }

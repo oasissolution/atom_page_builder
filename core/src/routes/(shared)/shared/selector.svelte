@@ -77,7 +77,7 @@
             atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
 
             var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
-            // console.log("type : " + type);
+            console.log("type : " + type);
             selectedType.set(type);
 
         }

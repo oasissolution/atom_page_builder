@@ -6,6 +6,19 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.025] - 2022-03-15
+
+### Added
+ 
+
+### Changed
+ - Module specific default values.
+ - Started text options design tab.
+
+### Fixed
+
+
+
 
 ## [0.0.1.024] - 2022-03-14
 
