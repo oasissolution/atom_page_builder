@@ -8,8 +8,12 @@
 	import Textarea from "../../uicomponents/textarea.svelte";
 	import Textinput from "../../uicomponents/textinput.svelte";
 	import Select from "../../uicomponents/select.svelte";
+	import LayoutDisplay from "./common/layout-display.svelte";
+	import ContentFontSize from "./text/content-font-size.svelte";
+	import ContentTextAlignment from "./text/content-text-alignment.svelte";
+	import ContentVerticalAlignment from "./common/content-vertical-alignment.svelte";
+	import LayoutPosition from "./common/layout-position.svelte";
 
-    
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -50,21 +54,12 @@
      */
     let activeElement;
 
-    // /**
-    //  * Global class collection in this file.
-    //  * @type string
-    //  */
-    // let classGlobal;
 
-    // $: classGlobal, (()=>{
-    //     if(activeElement && loaded){
-    //         if(activeElement.data){
-    //             activeElement.data.class = classGlobal;
-    //             if(classInput != classGlobal) classInput = classGlobal;
-    //             updateEditor();
-    //         }
-    //     }
-    // })();
+    /**
+     * Used for sub elements to update themselves to current values.
+     * @type string
+    */
+    let elementDataLoaded="";
 
     /**
      * Loads element data from JSON 
@@ -76,33 +71,14 @@
         classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
         htmlTag = activeElement?.data?.htmltag != undefined ? activeElement?.data?.htmltag : "span";
 
-        classInput.split(" ").forEach( cls => {
-
-            var currentClass = cls.trim();
-
-            fontSizeList.forEach( fs => {
-                if(fs === currentClass) fontSize = fs;
-            });
-
-            textAlignmentList.forEach ( ta => {
-                if(ta === currentClass) textAlignment = textAlignmentList.indexOf(ta) ?? 0;
-            });
-
-            verticalAlignmentList.forEach( va => {
-                if(va === currentClass) verticalAlignment = va;
-            });
-            
-
-        });
-
-
+        elementDataLoaded = classInput;
 
     }
 
     /**
      * Call this function when selection changes. This is to fix; when switching between two text elements if one has not set a variable then recent
      * variable active is set to that element. If we clear variables and set to default, it will be upto loadElementData function.
-     * 
+     *
      * These are all default values of variables.
      */
     function clearOptionPanelVariables(){
@@ -111,6 +87,8 @@
         verticalAlignment = "";
         textInput = "Lorem ipsum...";
         classInput = "";
+        layoutDisplay = "";
+        layoutPosition = "";
     }
 
 
@@ -136,14 +114,6 @@
     let selectedTabPageIndex = 0;
 
     /**
-     * Shows selected page.
-     * @param {number} index New page index to show.
-     */
-    function showPage(index){
-        selectedTabPageIndex = index;
-    }
-
-    /**
      * Text Input Value
      * @type string
      */
@@ -154,12 +124,6 @@
      * @type string
      */
     let classInput;
-
-    /**
-     * TextArea to edit class
-     * @type HTMLTextAreaElement
-     */
-    let classTextArea;
 
     /**
      * Holds state of page load.
@@ -177,6 +141,15 @@
         }
     })();
 
+    /**
+     * Update ui whenever tap page changes
+    */
+    $: selectedTabPageIndex, (() => {
+        clearOptionPanelVariables();
+        if(loaded == true){
+            loadElementData();
+        }
+    })();
 
     onMount(() => {
 
@@ -211,32 +184,10 @@
 
 
     /**
-     * @typedef {Object} SelectOptions
-     * @property {string} value
-     * @property {string} name
-     * @property {string} info
-    */
-
-    /**
-     * Value of element
-     * @type Array<SelectOptions>
+     * Actual display class
+     * @type string
      */
-    let fontSizeOptions = [
-        {name: "Default",   value: "",          info: "Page Default"},
-        {name: "X-Small",   value: "text-xs",   info: "font-size: 0.75rem; /* 12px */"},
-        {name: "Small",     value: "text-sm",   info: "font-size: 0.875rem; /* 14px */"},
-        {name: "Base",      value: "text-base", info: "font-size: 1rem; /* 16px */"},
-        {name: "Large",     value: "text-lg",   info: "font-size: 1.125rem; /* 18px */"},
-        {name: "X-Large",   value: "text-xl",   info: "font-size: 1.25rem; /* 20px */"},
-        {name: "2X-Large",  value: "text-2xl",  info: "font-size: 1.5rem; /* 24px */"},
-        {name: "3X-Large",  value: "text-3xl",  info: "font-size: 1.875rem; /* 30px */"},
-        {name: "4X-Large",  value: "text-4xl",  info: "font-size: 2.25rem; /* 36px */"},
-        {name: "5X-Large",  value: "text-5xl",  info: "font-size: 3rem; /* 48px */"},
-        {name: "6X-Large",  value: "text-6xl",  info: "font-size: 3.75rem; /* 60px */"},
-        {name: "7X-Large",  value: "text-7xl",  info: "font-size: 4.5rem; /* 72px */"},
-        {name: "8X-Large",  value: "text-8xl",  info: "font-size: 6rem; /* 96px */"},
-        {name: "9X-Large",  value: "text-9xl",  info: "font-size: 8rem; /* 128px */"},
-    ];
+    let layoutDisplay;
 
     /**
      * Actual font size class
@@ -245,43 +196,34 @@
     let fontSize;
 
     /**
-     * List of all font size classes
-     * @type Array<string>
+     * @type number
      */
-    const fontSizeList = ["text-xs", "text-sm", "text-base", "text-lg", "text-xl", "text-2xl", "text-3xl", "text-4xl", "text-5xl", "text-6xl", "text-7xl", "text-8xl", "text-9xl",];
+    let textAlignment;
 
-    $: fontSize, (()=>{
-        if(loaded == true) {
+    /**
+     * Vertical Alignment of element
+     * @type string
+     */
+    let verticalAlignment;
 
-            var newClass = "";
+    /**
+     * Actual position class
+     * @type string
+     */
+    export let layoutPosition;
 
-            classInput.split(" ").forEach( cls => {
-                switch(cls.trim()){
-                    case "text-xs":
-                    case "text-sm":
-                    case "text-base":
-                    case "text-lg":
-                    case "text-xl":
-                    case "text-2xl":
-                    case "text-3xl":
-                    case "text-4xl":
-                    case "text-5xl":
-                    case "text-6xl":
-                    case "text-7xl":
-                    case "text-8xl":
-                    case "text-9xl":
-                    // case " ":
-                        break;
-                    default:
-                        newClass += " " + cls.trim();
-                        break;
-                }
-            });
 
-            classInput = newClass.trim() + " " + fontSize;
-            updateClass();
-        }
-    })();
+    /**
+     * @typedef {Object} SelectOptions
+     * @property {string} value
+     * @property {string} name
+     * @property {string} info
+    */
+
+
+
+
+
 
 
 
@@ -322,97 +264,7 @@
     })();
 
 
-    /**
-     * @type number
-     */
-    let textAlignment = 0;
 
-
-    /**
-     * List of all font size classes
-     * @type Array<string>
-     */
-    const textAlignmentList = ["text-left", "text-center", "text-right", "text-justify"];
-
-    $: textAlignment, (()=>{
-        if(loaded == true) {
-
-            var newClass = "";
-            classInput.split(" ").forEach( cls => {
-                switch(cls.trim()){
-                    case "text-left":
-                    case "text-center":
-                    case "text-right":
-                    case "text-justify":
-                        break;
-                    default:
-                        newClass += " " + cls.trim();
-                        break;
-                }
-            });
-
-            classInput = newClass.trim() + " " + textAlignmentList[textAlignment];
-            updateClass();
-        }
-    })();
-
-
-    /**
-     * Vertical Alignment of element
-     * @type string
-     */
-    let verticalAlignment;
-
-    /**
-     * Vertical alignment options
-     * @type Array<SelectOptions>
-     */
-    const verticalAlignmentOptions = [
-        {name: "Default",       value: "",                  info: "Page Default"},
-        {name: "Baseline",      value: "align-baseline",    info: ""},
-        {name: "Top",           value: "align-top",         info: ""},
-        {name: "Middle",        value: "align-middle",      info: ""},
-        {name: "Bottom",        value: "align-bottom",      info: ""},
-        {name: "Text top",      value: "align-text-top",    info: ""},
-        {name: "Text bottom",   value: "align-text-bottom", info: ""},
-        {name: "Sub",           value: "align-sub",         info: ""},
-        {name: "Super",         value: "align-super",       info: ""},
-    ];
-
-    /**
-     * List of all font size classes
-     * @type Array<string>
-     */
-    const verticalAlignmentList = ["align-baseline", "align-top", "align-middle", "align-bottom", "align-text-top", "align-text-bottom", "align-sub", "align-super",];
-
-
-    $: verticalAlignment, (()=>{
-        if(loaded == true) {
-
-            var newClass = "";
-            classInput.split(" ").forEach( cls => {
-                switch(cls.trim()){
-                    case "align-baseline":
-                    case "align-top":
-                    case "align-middle":
-                    case "align-bottom":
-                    case "align-text-top":
-                    case "align-text-bottom":
-                    case "align-sub":
-                    case "align-super":
-                        break;
-                    default:
-                        newClass += " " + cls.trim();
-                        break;
-                }
-            });
-
-            classInput = newClass.trim() + " " + verticalAlignment;
-            updateClass();
-        }
-    })();
-
-    
     let collapseDesignLayout = false;
     function toggleDesignLayout(){
         collapseDesignLayout = !collapseDesignLayout;
@@ -439,31 +291,20 @@
 
     {#if selectedTabPageIndex==0}
 
-    <span class="mb-1">Text</span> 
+    <span class="mb-1">Text</span>
     <Textarea bind:text={textInput} on:onSubmit={updateText} ></Textarea>
 
     <div class="widgetPanelDivider"></div>
 
-    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-        <span title="Utilities for controlling the font size of an element.">Font Size</span>
-        <Select options={fontSizeOptions} bind:value={fontSize}/>
-    </div>
+    <ContentFontSize bind:fontSize bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     <div class="widgetPanelDivider"></div>
 
-    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-        <span title="Utilities for controlling the alignment of text.">Alignment</span>
-        <div class="w-[130px]">
-            <Optionsbutton items={['bi bi-text-left', 'bi bi-text-center', 'bi bi-text-right', 'bi bi-justify']} icons={true} bind:value={textAlignment}></Optionsbutton>
-        </div>
-    </div>
+    <ContentTextAlignment bind:textAlignment bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}  />
 
     <div class="widgetPanelDivider"></div>
 
-    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-        <span title="Utilities for controlling the vertical alignment of an inline element.">V. Alignment</span>
-        <Select options={verticalAlignmentOptions} bind:value={verticalAlignment}/>
-    </div>
+    <ContentVerticalAlignment  bind:verticalAlignment bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     <div class="widgetPanelDivider"></div>
 
@@ -491,8 +332,17 @@
 
     {#if collapseDesignLayout}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
-        collapse panel
-    </div>
+
+        <LayoutDisplay bind:layoutDisplay bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutPosition bind:layoutPosition bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+
+    </div> <!-- collapseDesignLayout -->
     {/if}
 
     <div class="widgetPanelDivider"></div>

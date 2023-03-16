@@ -6,6 +6,19 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.026] - 2022-03-16
+
+### Added
+ - Text Options - Design - Layout : Display, Position
+
+### Changed
+ - Separated each row of text options in an individual file.
+ - Those which can be used in multiple element options collected in a common folder.
+
+### Fixed
+
+
+
 ## [0.0.1.025] - 2022-03-15
 
 ### Added
