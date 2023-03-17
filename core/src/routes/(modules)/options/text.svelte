@@ -13,6 +13,7 @@
 	import ContentTextAlignment from "./text/content-text-alignment.svelte";
 	import ContentVerticalAlignment from "./common/content-vertical-alignment.svelte";
 	import LayoutPosition from "./common/layout-position.svelte";
+	import LayoutFloat from "./common/layout-float.svelte";
 
 
 
@@ -89,6 +90,7 @@
         classInput = "";
         layoutDisplay = "";
         layoutPosition = "";
+        layoutFloat = 0;
     }
 
 
@@ -211,6 +213,11 @@
      * @type string
      */
     export let layoutPosition;
+
+    /**
+     * @type number
+     */
+    export let layoutFloat;
 
 
     /**
@@ -338,6 +345,10 @@
         <div class="widgetPanelDivider"></div>
 
         <LayoutPosition bind:layoutPosition bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutFloat bind:layoutFloat bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
         <div class="widgetPanelDivider"></div>
 

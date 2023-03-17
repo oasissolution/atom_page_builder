@@ -2,6 +2,7 @@
 
     import "../../../../app.css";
     import Select from "../../../uicomponents/select.svelte";
+    import { fade, fly, slide } from 'svelte/transition';
 
     /**
      * @type boolean
@@ -112,3 +113,23 @@
     <span title="Utilities for controlling how an element is positioned in the DOM.">Position</span>
     <Select options={layoutPositionOptions} bind:value={layoutPosition}/>
 </div>
+
+{#if layoutPosition == "absolute" || layoutPosition == "fixed"}
+
+<div class="w-full flex flex-col flex-grow justify-between h-16 align-middle items-center" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
+
+    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
+        <span title="Utilities for controlling how an element is positioned in the DOM.">Placement</span>
+        <span>unit</span>
+    </div>
+
+    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
+        <span>w</span>
+        <span>w</span>
+        <span>w</span>
+        <span>w</span>
+    </div>
+
+</div>
+
+{/if}
