@@ -7,6 +7,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.028] - 2022-03-18
+
+### Added
+ - Text Options - Design - Layout : Position -> Placement (Top/Right/Bottom/Left)
+ - New Atom Ui Element: SelectDistance
+
+### Changed
+
+
+### Fixed
+
+
 ## [0.0.1.027] - 2022-03-17
 
 ### Added

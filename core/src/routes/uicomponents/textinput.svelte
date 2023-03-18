@@ -14,6 +14,18 @@
      */
     export let text = "";
 
+    /**
+     * Letter at the end of input
+     * @type string
+     */
+    export let trailingLetter = "";
+
+    /**
+     * Letter at the start of input
+     * @type string
+     */
+    export let leadingLetter = "";
+
 
     import { createEventDispatcher } from 'svelte';
 
@@ -35,13 +47,25 @@
 
 </script>
 
+{#if trailingLetter != "" || leadingLetter != ""}
 
- <input type="text" class="inputtext rounded-lg p-2 mb-1 {addClass}" on:keypress={keyPress} bind:value={text} 
- style="
+<input type="text" class="inputtext rounded-lg p-2 mb-1 {addClass}" on:keypress={keyPress} bind:value={text}
+style="
     --color:{$globalThemeStore.input.text.color};
     --backgroundColor:{$globalThemeStore.input.text.backgroundColor};
-"  
- />
+"
+/>
+
+{:else}
+
+<input type="text" class="inputtext rounded-lg p-2 mb-1 {addClass}" on:keypress={keyPress} bind:value={text}
+style="
+    --color:{$globalThemeStore.input.text.color};
+    --backgroundColor:{$globalThemeStore.input.text.backgroundColor};
+"
+/>
+{/if}
+
 
 
 <style>

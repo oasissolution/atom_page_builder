@@ -1,7 +1,7 @@
 <script>
     import "../../app.css";
     import { globalThemeStore } from "../globals/globalstores.js";
-    
+
     /**
      * Variable that adds class to element
      * @type string
@@ -13,6 +13,12 @@
      * @type string
      */
     export let value = "";
+
+    /**
+     * Fills background of select
+     * @type boolean
+     */
+    export let filled = false;
 
     /**
      * @typedef {Object} SelectOptions
@@ -35,28 +41,28 @@
     function onChange() {
         dispatch('onChange');
     }
-   
+
 
 </script>
 
 
- <div class="box"
+<div class="box" class:rounded-lg={filled}
     style="
         --color:{$globalThemeStore.options.select.color};
-        --backgroundColor:{$globalThemeStore.options.select.backgroundColor};
+        --backgroundColor:{filled == false ? $globalThemeStore.options.select.backgroundColor : $globalThemeStore.options.select.buttonBackgroundColor};
         --buttonBackgroundColor:{$globalThemeStore.options.select.buttonBackgroundColor};
         --hoverColor:{$globalThemeStore.options.select.hoverColor};
         --hoverBackgroundColor:{$globalThemeStore.options.select.hoverBackgroundColor};
-    " 
- >
-    <select bind:value={value} class="{addClass}" on:change={onChange}>
+    "
+>
+    <select bind:value={value} class="{addClass}" on:change={onChange} class:rounded-lg={filled} class:min-w-[150px]={!filled} class:px-2={filled}>
 
     {#each options as option}
         <option value="{option.value}" title="{option.info}">{option.name}</option>
     {/each}
 
     </select>
-  </div>
+</div>
 
 
 <style>
@@ -74,7 +80,7 @@
         outline: none;
         border: none;
         box-shadow: none;
-        min-width: 150px;
+        /* min-width: 150px; */
         height: 32px;
         padding-right: 32px;
         font-size: 16px;
@@ -85,7 +91,7 @@
     }
 
     .box::before {
-        content: '\F229'; 
+        content: '\F229';
         font-family: "bootstrap-icons";
         padding-top: 5px;
         position: absolute;
@@ -106,7 +112,6 @@
     .box:hover::before {
         color: var(--hoverColor);
         background-color: var(--hoverBackgroundColor);
-      
     }
 
     .box select option {

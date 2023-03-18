@@ -3,6 +3,8 @@
     import "../../../../app.css";
     import Select from "../../../uicomponents/select.svelte";
     import { fade, fly, slide } from 'svelte/transition';
+    import SelectDistance from "../../../uicomponents/select-distance.svelte";
+    import { cssUnitOptions, topClassOptions, rightClassOptions, bottomClassOptions, leftClassOptions } from "./common-constants.svelte";
 
     /**
      * @type boolean
@@ -20,6 +22,12 @@
      * @type string
      */
     export let layoutPosition;
+
+    /**
+     * Actual position class
+     * @type string
+     */
+    let selectedUnit = "class";
 
 
     /**
@@ -75,8 +83,8 @@
                     if(elm === currentClass) layoutPosition = elm;
                 });
 
-
             });
+
         }
     })();
 
@@ -106,6 +114,57 @@
         }
     })();
 
+
+    /**
+     *
+     * @param {string} startString
+     * @param {string} value
+     */
+    function updateClassWith(startString, value){
+        if(loaded == true) {
+            var newClass = "";
+            classInput.split(" ").forEach( cls => {
+                if(!cls.trim().startsWith(startString) && !cls.trim().startsWith("-"+startString))  newClass += " " + cls.trim();
+            });
+            if(value !== undefined) classInput = newClass.trim() + " " + value;
+            updateClass();
+        }
+    }
+
+
+    /**
+     * @type string
+     */
+    let topValue;
+    $: topValue, (()=>{
+        updateClassWith("top-", topValue);
+    })();
+
+    /**
+     * @type string
+     */
+    let rightValue;
+    $: rightValue, (()=>{
+        updateClassWith("right-", rightValue);
+    })();
+
+    /**
+     * @type string
+     */
+    let bottomValue;
+    $: bottomValue, (()=>{
+        updateClassWith("bottom-", bottomValue);
+    })();
+
+    /**
+     * @type string
+     */
+    let leftValue;
+    $: leftValue, (()=>{
+        updateClassWith("left-", leftValue);
+    })();
+
+
 </script>
 
 
@@ -114,20 +173,22 @@
     <Select options={layoutPositionOptions} bind:value={layoutPosition}/>
 </div>
 
-{#if layoutPosition == "absolute" || layoutPosition == "fixed"}
+{#if layoutPosition != "static" && layoutPosition != ""}
 
-<div class="w-full flex flex-col flex-grow justify-between h-16 align-middle items-center" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
+<div class="w-full flex flex-col pt-2 gap-3" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
 
     <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
         <span title="Utilities for controlling how an element is positioned in the DOM.">Placement</span>
-        <span>unit</span>
     </div>
 
-    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-        <span>w</span>
-        <span>w</span>
-        <span>w</span>
-        <span>w</span>
+    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center gap-3">
+        <SelectDistance header={"top"} options={topClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"T"} bind:value={topValue} bind:loaded bind:elementDataLoaded />
+        <SelectDistance header={"bottom"} options={bottomClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"B"} bind:value={bottomValue} bind:loaded bind:elementDataLoaded />
+    </div>
+
+    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center gap-3">
+        <SelectDistance header={"left"} options={leftClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"L"} bind:value={leftValue} bind:loaded bind:elementDataLoaded />
+        <SelectDistance header={"right"} options={rightClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"R"} bind:value={rightValue} bind:loaded bind:elementDataLoaded />
     </div>
 
 </div>

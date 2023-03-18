@@ -16,7 +16,6 @@
 	import LayoutFloat from "./common/layout-float.svelte";
 
 
-
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
 
