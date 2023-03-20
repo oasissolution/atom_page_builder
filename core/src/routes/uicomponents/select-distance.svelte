@@ -79,6 +79,8 @@
     */
     export let elementDataLoaded;
 
+    let valueLoaded = false;
+
     // $: loaded, (()=>{
     //     if(loaded == true) {
 
@@ -95,14 +97,15 @@
     //             var ctl = "";
 
     //             if(currentClass.startsWith(header+"-")){
-
+    //                 valueLoaded = true;
     //                 ctl=currentClass.replace(header+"-", "");
     //                 if(ctl.startsWith("[")){
     //                     ctl = "";
 
     //                 }else{
     //                     unitValue = "class";
-    //                     selectedValue = ctl.trim(); //if unitValue is class then rest must be class, eg. top-4 => removed "top-" => 4 is selected value
+    //                     // setTimeout(()=>{}, 100);
+    //                     selectedValue = ctl; //if unitValue is class then rest must be class, eg. top-4 => removed "top-" => 4 is selected value
     //                     console.log("ctl: "+ctl+" || unitValue: "+unitValue+" || selectedValue: \""+selectedValue+"\"");
     //                 }
 
@@ -114,7 +117,7 @@
     // })();
 
 
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher, onMount } from 'svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -123,12 +126,14 @@
     }
 
     function onSubChange(){
-        if(unitValue == "class"){
-            value = selectedValue;
-        }else{
-            value = header + "-[" + enteredValue + unitValue + "]";
+        if(loaded == true){
+            if(unitValue == "class"){
+                value = selectedValue;
+            }else{
+                value = header + "-[" + enteredValue + unitValue + "]";
+            }
+            onChange();
         }
-        onChange();
     }
 
     function keyPress(e){
@@ -152,6 +157,42 @@
 
         return "";
     }
+
+    onMount(()=>{
+        if(loaded == true) {
+
+            elementDataLoaded.split(" ").forEach( cls => {
+
+                /**
+                 * Current class in elementDataLoaded array without leading and trailing spaces.
+                 */
+                var currentClass = cls.trim();
+
+                /**
+                 * Variable to determine selected unit from class definition.
+                */
+                var ctl = "";
+
+                if(currentClass.startsWith(header+"-")){
+                    valueLoaded = true;
+                    ctl=currentClass.replace(header+"-", "");
+                    if(ctl.startsWith("[")){
+                        ctl = "";
+
+                    }else{
+                        unitValue = "class";
+                        setTimeout(()=>{
+                            selectedValue = ctl; //if unitValue is class then rest must be class, eg. top-4 => removed "top-" => 4 is selected value
+                            console.log("ctl: "+ctl+" || unitValue: "+unitValue+" || selectedValue: \""+selectedValue+"\"");
+                        }, 300);
+                    }
+
+                }
+
+            });
+
+        }
+    });
 
 </script>
 
