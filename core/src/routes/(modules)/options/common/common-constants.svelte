@@ -781,5 +781,297 @@
     ];
 
 
+
+    /**
+    * Tailwind Width classes
+    * @type Array<SelectOptions>
+    */
+    export let widthClassOptions = [
+
+        {name: "fit",     value: "w-fit",     info: "width: fit-content;"},
+        {name: "max",     value: "w-max",     info: "width: max-content;"},
+        {name: "min",     value: "w-min",     info: "width: min-content;"},
+        {name: "screen",  value: "w-screen",  info: "width: 100vw;"},
+        {name: "full",    value: "w-full",    info: "width: 100%;"},
+        {name: "11/12",   value: "w-11/12",   info: "width: 91.666667%;"},
+        {name: "10/12",   value: "w-10/12",   info: "width: 83.333333%;"},
+        {name: "9/12",    value: "w-9/12",    info: "width: 75%;"},
+        {name: "8/12",    value: "w-8/12",    info: "width: 66.666667%;"},
+        {name: "7/12",    value: "w-7/12",    info: "width: 58.333333%;"},
+        {name: "6/12",    value: "w-6/12",    info: "width: 50%;"},
+        {name: "5/12",    value: "w-5/12",    info: "width: 41.666667%;"},
+        {name: "4/12",    value: "w-4/12",    info: "width: 33.333333%;"},
+        {name: "3/12",    value: "w-3/12",    info: "width: 25%;"},
+        {name: "2/12",    value: "w-2/12",    info: "width: 16.666667%;"},
+        {name: "1/12",    value: "w-1/12",    info: "width: 8.333333%;"},
+        {name: "5/6",     value: "w-5/6",     info: "width: 83.333333%;"},
+        {name: "4/6",     value: "w-4/6",     info: "width: 66.666667%;"},
+        {name: "3/6",     value: "w-3/6",     info: "width: 50%;"},
+        {name: "2/6",     value: "w-2/6",     info: "width: 33.333333%;"},
+        {name: "1/6",     value: "w-1/6",     info: "width: 16.666667%;"},
+        {name: "4/5",     value: "w-4/5",     info: "width: 80%;"},
+        {name: "3/5",     value: "w-3/5",     info: "width: 60%;"},
+        {name: "2/5",     value: "w-2/5",     info: "width: 40%;"},
+        {name: "1/5",     value: "w-1/5",     info: "width: 20%;"},
+        {name: "3/4",     value: "w-3/4",     info: "width: 75%;"},
+        {name: "2/4",     value: "w-2/4",     info: "width: 50%;"},
+        {name: "1/4",     value: "w-1/4",     info: "width: 25%;"},
+        {name: "2/3",     value: "w-2/3",     info: "width: 66.666667%;"},
+        {name: "1/3",     value: "w-1/3",     info: "width: 33.333333%;"},
+        {name: "1/2",     value: "w-1/2",     info: "width: 50%;"},
+        {name: "auto",    value: "w-auto",    info: "width: auto;"},
+
+        {name: "96",    value: "w-96",    info: "width: 24rem; /* 384px */"},
+        {name: "80",    value: "w-80",    info: "width: 20rem; /* 320px */"},
+        {name: "72",    value: "w-72",    info: "width: 18rem; /* 288px */"},
+        {name: "64",    value: "w-64",    info: "width: 16rem; /* 256px */"},
+        {name: "60",    value: "w-60",    info: "width: 15rem; /* 240px */"},
+        {name: "56",    value: "w-56",    info: "width: 14rem; /* 224px */"},
+        {name: "52",    value: "w-52",    info: "width: 13rem; /* 208px */"},
+        {name: "48",    value: "w-48",    info: "width: 12rem; /* 192px */"},
+        {name: "44",    value: "w-44",    info: "width: 11rem; /* 176px */"},
+        {name: "40",    value: "w-40",    info: "width: 10rem; /* 160px */"},
+        {name: "36",    value: "w-36",    info: "width: 9rem; /* 144px */"},
+        {name: "32",    value: "w-32",    info: "width: 8rem; /* 128px */"},
+        {name: "28",    value: "w-28",    info: "width: 7rem; /* 112px */"},
+        {name: "24",    value: "w-24",    info: "width: 6rem; /* 96px */"},
+        {name: "20",    value: "w-20",    info: "width: 5rem; /* 80px */"},
+        {name: "16",    value: "w-16",    info: "width: 4rem; /* 64px */"},
+        {name: "14",    value: "w-14",    info: "width: 3.5rem; /* 56px */"},
+        {name: "12",    value: "w-12",    info: "width: 3rem; /* 48px */"},
+        {name: "11",    value: "w-11",    info: "width: 2.75rem; /* 44px */"},
+        {name: "10",    value: "w-10",    info: "width: 2.5rem; /* 40px */"},
+        {name: "9",     value: "w-9",     info: "width: 2.25rem; /* 36px */"},
+        {name: "8",     value: "w-8",     info: "width: 2rem; /* 32px */"},
+        {name: "7",     value: "w-7",     info: "width: 1.75rem; /* 28px */"},
+        {name: "6",     value: "w-6",     info: "width: 1.5rem; /* 24px */"},
+        {name: "5",     value: "w-5",     info: "width: 1.25rem; /* 20px */"},
+        {name: "4",     value: "w-4",     info: "width: 1rem; /* 16px */"},
+        {name: "3.5",   value: "w-3.5",   info: "width: 0.875rem; /* 14px */"},
+        {name: "3",     value: "w-3",     info: "width: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "w-2.5",   info: "width: 0.625rem; /* 10px */"},
+        {name: "2",     value: "w-2",     info: "width: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "w-1.5",   info: "width: 0.375rem; /* 6px */"},
+        {name: "1",     value: "w-1",     info: "width: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "w-0.5",   info: "width: 0.125rem; /* 2px */"},
+        {name: "px",    value: "w-px",    info: "width: 1px;"},
+        {name: "0",     value: "w-0",     info: "width: 0px;"},
+        {name: "-",     value: "",        info: "Default - No value"},
+
+    ];
+
+
+    /**
+    * Tailwind Height classes
+    * @type Array<SelectOptions>
+    */
+    export let heightClassOptions = [
+
+        {name: "fit",     value: "h-fit",     info: "height: fit-content;"},
+        {name: "max",     value: "h-max",     info: "height: max-content;"},
+        {name: "min",     value: "h-min",     info: "height: min-content;"},
+        {name: "screen",  value: "h-screen",  info: "height: 100vw;"},
+        {name: "full",    value: "h-full",    info: "height: 100%;"},
+        {name: "11/12",   value: "h-11/12",   info: "height: 91.666667%;"},
+        {name: "10/12",   value: "h-10/12",   info: "height: 83.333333%;"},
+        {name: "9/12",    value: "h-9/12",    info: "height: 75%;"},
+        {name: "8/12",    value: "h-8/12",    info: "height: 66.666667%;"},
+        {name: "7/12",    value: "h-7/12",    info: "height: 58.333333%;"},
+        {name: "6/12",    value: "h-6/12",    info: "height: 50%;"},
+        {name: "5/12",    value: "h-5/12",    info: "height: 41.666667%;"},
+        {name: "4/12",    value: "h-4/12",    info: "height: 33.333333%;"},
+        {name: "3/12",    value: "h-3/12",    info: "height: 25%;"},
+        {name: "2/12",    value: "h-2/12",    info: "height: 16.666667%;"},
+        {name: "1/12",    value: "h-1/12",    info: "height: 8.333333%;"},
+        {name: "5/6",     value: "h-5/6",     info: "height: 83.333333%;"},
+        {name: "4/6",     value: "h-4/6",     info: "height: 66.666667%;"},
+        {name: "3/6",     value: "h-3/6",     info: "height: 50%;"},
+        {name: "2/6",     value: "h-2/6",     info: "height: 33.333333%;"},
+        {name: "1/6",     value: "h-1/6",     info: "height: 16.666667%;"},
+        {name: "4/5",     value: "h-4/5",     info: "height: 80%;"},
+        {name: "3/5",     value: "h-3/5",     info: "height: 60%;"},
+        {name: "2/5",     value: "h-2/5",     info: "height: 40%;"},
+        {name: "1/5",     value: "h-1/5",     info: "height: 20%;"},
+        {name: "3/4",     value: "h-3/4",     info: "height: 75%;"},
+        {name: "2/4",     value: "h-2/4",     info: "height: 50%;"},
+        {name: "1/4",     value: "h-1/4",     info: "height: 25%;"},
+        {name: "2/3",     value: "h-2/3",     info: "height: 66.666667%;"},
+        {name: "1/3",     value: "h-1/3",     info: "height: 33.333333%;"},
+        {name: "1/2",     value: "h-1/2",     info: "height: 50%;"},
+        {name: "auto",    value: "h-auto",    info: "height: auto;"},
+
+        {name: "96",    value: "h-96",    info: "height: 24rem; /* 384px */"},
+        {name: "80",    value: "h-80",    info: "height: 20rem; /* 320px */"},
+        {name: "72",    value: "h-72",    info: "height: 18rem; /* 288px */"},
+        {name: "64",    value: "h-64",    info: "height: 16rem; /* 256px */"},
+        {name: "60",    value: "h-60",    info: "height: 15rem; /* 240px */"},
+        {name: "56",    value: "h-56",    info: "height: 14rem; /* 224px */"},
+        {name: "52",    value: "h-52",    info: "height: 13rem; /* 208px */"},
+        {name: "48",    value: "h-48",    info: "height: 12rem; /* 192px */"},
+        {name: "44",    value: "h-44",    info: "height: 11rem; /* 176px */"},
+        {name: "40",    value: "h-40",    info: "height: 10rem; /* 160px */"},
+        {name: "36",    value: "h-36",    info: "height: 9rem; /* 144px */"},
+        {name: "32",    value: "h-32",    info: "height: 8rem; /* 128px */"},
+        {name: "28",    value: "h-28",    info: "height: 7rem; /* 112px */"},
+        {name: "24",    value: "h-24",    info: "height: 6rem; /* 96px */"},
+        {name: "20",    value: "h-20",    info: "height: 5rem; /* 80px */"},
+        {name: "16",    value: "h-16",    info: "height: 4rem; /* 64px */"},
+        {name: "14",    value: "h-14",    info: "height: 3.5rem; /* 56px */"},
+        {name: "12",    value: "h-12",    info: "height: 3rem; /* 48px */"},
+        {name: "11",    value: "h-11",    info: "height: 2.75rem; /* 44px */"},
+        {name: "10",    value: "h-10",    info: "height: 2.5rem; /* 40px */"},
+        {name: "9",     value: "h-9",     info: "height: 2.25rem; /* 36px */"},
+        {name: "8",     value: "h-8",     info: "height: 2rem; /* 32px */"},
+        {name: "7",     value: "h-7",     info: "height: 1.75rem; /* 28px */"},
+        {name: "6",     value: "h-6",     info: "height: 1.5rem; /* 24px */"},
+        {name: "5",     value: "h-5",     info: "height: 1.25rem; /* 20px */"},
+        {name: "4",     value: "h-4",     info: "height: 1rem; /* 16px */"},
+        {name: "3.5",   value: "h-3.5",   info: "height: 0.875rem; /* 14px */"},
+        {name: "3",     value: "h-3",     info: "height: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "h-2.5",   info: "height: 0.625rem; /* 10px */"},
+        {name: "2",     value: "h-2",     info: "height: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "h-1.5",   info: "height: 0.375rem; /* 6px */"},
+        {name: "1",     value: "h-1",     info: "height: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "h-0.5",   info: "height: 0.125rem; /* 2px */"},
+        {name: "px",    value: "h-px",    info: "height: 1px;"},
+        {name: "0",     value: "h-0",     info: "height: 0px;"},
+        {name: "-",     value: "",        info: "Default - No value"},
+
+    ];
+
+
+    /**
+    * Tailwind Minimum Height classes
+    * @type Array<SelectOptions>
+    */
+    export let minHeightClassOptions = [
+        {name: "-",       value: "",              info: "Default - No value"},
+        {name: "0",       value: "min-h-0",       info: "min-height: 0px;"},
+        {name: "full",    value: "min-h-full",    info: "min-height: 100%;"},
+        {name: "screen",  value: "min-h-screen",  info: "min-height: 100vh;"},
+        {name: "min",     value: "min-h-min",     info: "min-height: min-content;"},
+        {name: "max",     value: "min-h-max",     info: "min-height: max-content;"},
+        {name: "fit",     value: "min-h-fit",     info: "min-height: fit-content;"},
+    ];
+
+
+    /**
+    * Tailwind Maximum Height classes
+    * @type Array<SelectOptions>
+    */
+    export let maxHeightClassOptions = [
+
+        {name: "none",    value: "max-h-none",    info: "max-height: none;"},
+        {name: "full",    value: "max-h-full",    info: "max-height: 100%;"},
+        {name: "screen",  value: "max-h-screen",  info: "max-height: 100vh;"},
+        {name: "min",     value: "max-h-min",     info: "max-height: min-content;"},
+        {name: "max",     value: "max-h-max",     info: "max-height: max-content;"},
+        {name: "fit",     value: "max-h-fit",     info: "max-height: fit-content;"},
+
+        {name: "96",    value: "max-h-96",    info: "max-height: 24rem; /* 384px */"},
+        {name: "80",    value: "max-h-80",    info: "max-height: 20rem; /* 320px */"},
+        {name: "72",    value: "max-h-72",    info: "max-height: 18rem; /* 288px */"},
+        {name: "64",    value: "max-h-64",    info: "max-height: 16rem; /* 256px */"},
+        {name: "60",    value: "max-h-60",    info: "max-height: 15rem; /* 240px */"},
+        {name: "56",    value: "max-h-56",    info: "max-height: 14rem; /* 224px */"},
+        {name: "52",    value: "max-h-52",    info: "max-height: 13rem; /* 208px */"},
+        {name: "48",    value: "max-h-48",    info: "max-height: 12rem; /* 192px */"},
+        {name: "44",    value: "max-h-44",    info: "max-height: 11rem; /* 176px */"},
+        {name: "40",    value: "max-h-40",    info: "max-height: 10rem; /* 160px */"},
+        {name: "36",    value: "max-h-36",    info: "max-height: 9rem; /* 144px */"},
+        {name: "32",    value: "max-h-32",    info: "max-height: 8rem; /* 128px */"},
+        {name: "28",    value: "max-h-28",    info: "max-height: 7rem; /* 112px */"},
+        {name: "24",    value: "max-h-24",    info: "max-height: 6rem; /* 96px */"},
+        {name: "20",    value: "max-h-20",    info: "max-height: 5rem; /* 80px */"},
+        {name: "16",    value: "max-h-16",    info: "max-height: 4rem; /* 64px */"},
+        {name: "14",    value: "max-h-14",    info: "max-height: 3.5rem; /* 56px */"},
+        {name: "12",    value: "max-h-12",    info: "max-height: 3rem; /* 48px */"},
+        {name: "11",    value: "max-h-11",    info: "max-height: 2.75rem; /* 44px */"},
+        {name: "10",    value: "max-h-10",    info: "max-height: 2.5rem; /* 40px */"},
+        {name: "9",     value: "max-h-9",     info: "max-height: 2.25rem; /* 36px */"},
+        {name: "8",     value: "max-h-8",     info: "max-height: 2rem; /* 32px */"},
+        {name: "7",     value: "max-h-7",     info: "max-height: 1.75rem; /* 28px */"},
+        {name: "6",     value: "max-h-6",     info: "max-height: 1.5rem; /* 24px */"},
+        {name: "5",     value: "max-h-5",     info: "max-height: 1.25rem; /* 20px */"},
+        {name: "4",     value: "max-h-4",     info: "max-height: 1rem; /* 16px */"},
+        {name: "3.5",   value: "max-h-3.5",   info: "max-height: 0.875rem; /* 14px */"},
+        {name: "3",     value: "max-h-3",     info: "max-height: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "max-h-2.5",   info: "max-height: 0.625rem; /* 10px */"},
+        {name: "2",     value: "max-h-2",     info: "max-height: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "max-h-1.5",   info: "max-height: 0.375rem; /* 6px */"},
+        {name: "1",     value: "max-h-1",     info: "max-height: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "max-h-0.5",   info: "max-height: 0.125rem; /* 2px */"},
+        {name: "px",    value: "max-h-px",    info: "max-height: 1px;"},
+        {name: "0",     value: "max-h-0",     info: "max-height: 0px;"},
+        {name: "-",     value: "",        info: "Default - No value"},
+    ];
+
+    /**
+    * Tailwind Minimum Width classes
+    * @type Array<SelectOptions>
+    */
+    export let minWidthClassOptions = [
+        {name: "-",       value: "",              info: "Default - No value"},
+        {name: "0	",    value: "min-w-0",       info: "min-width: 0px;"},
+        {name: "full",    value: "min-w-full",    info: "min-width: 100%;"},
+        {name: "min",     value: "min-w-min",     info: "min-width: min-content;"},
+        {name: "max",     value: "min-w-max",     info: "min-width: max-content;"},
+        {name: "fit",     value: "min-w-fit",     info: "min-width: fit-content;"},
+    ];
+
+    /**
+    * Tailwind Maximum Width classes
+    * @type Array<SelectOptions>
+    */
+    export let maxWidthClassOptions = [
+        {name: "-",                 value: "",                  info: "Default - No value"},
+        {name: "0",           value: "max-w-0",           info: "max-width: 0rem; /* 0px */"},
+        {name: "none",        value: "max-w-none",        info: "max-width: none;"},
+        {name: "xs",          value: "max-w-xs",          info: "max-width: 20rem; /* 320px */"},
+        {name: "sm",          value: "max-w-sm",          info: "max-width: 24rem; /* 384px */"},
+        {name: "md",          value: "max-w-md",          info: "max-width: 28rem; /* 448px */"},
+        {name: "lg",          value: "max-w-lg",          info: "max-width: 32rem; /* 512px */"},
+        {name: "xl",          value: "max-w-xl",          info: "max-width: 36rem; /* 576px */"},
+        {name: "2xl",         value: "max-w-2xl",         info: "max-width: 42rem; /* 672px */"},
+        {name: "3xl",         value: "max-w-3xl",         info: "max-width: 48rem; /* 768px */"},
+        {name: "4xl",         value: "max-w-4xl",         info: "max-width: 56rem; /* 896px */"},
+        {name: "5xl",         value: "max-w-5xl",         info: "max-width: 64rem; /* 1024px */"},
+        {name: "6xl",         value: "max-w-6xl",         info: "max-width: 72rem; /* 1152px */"},
+        {name: "7xl",         value: "max-w-7xl",         info: "max-width: 80rem; /* 1280px */"},
+        {name: "full",        value: "max-w-full",        info: "max-width: 100%;"},
+        {name: "min",         value: "max-w-min",         info: "max-width: min-content;"},
+        {name: "max",         value: "max-w-max",         info: "max-width: max-content;"},
+        {name: "fit",         value: "max-w-fit",         info: "max-width: fit-content;"},
+        {name: "prose",       value: "max-w-prose",       info: "max-width: 65ch;"},
+        {name: "screen-sm",   value: "max-w-screen-sm",   info: "max-width: 640px;"},
+        {name: "screen-md",   value: "max-w-screen-md",   info: "max-width: 768px;"},
+        {name: "screen-lg",   value: "max-w-screen-lg",   info: "max-width: 1024px;"},
+        {name: "screen-xl",   value: "max-w-screen-xl",   info: "max-width: 1280px;"},
+        {name: "screen-2xl",  value: "max-w-screen-2xl",  info: "max-width: 1536px;"},
+    ];
+
+
+
+
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+    // {name: "",      value: "",      info: ""},
+
+
+
+
+
+
+
+
 </script>
 

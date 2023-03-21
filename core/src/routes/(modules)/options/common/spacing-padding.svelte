@@ -18,26 +18,11 @@
     export let classInput;
 
     /**
-     * Actual position class
-     * @type string
-     */
-    export let spacingPadding;
-
-    /**
-     * Actual position class
-     * @type string
-     */
-    let selectedUnit = "class";
-
-
-    /**
      * @typedef {Object} SelectOptions
      * @property {string} value
      * @property {string} name
      * @property {string} info
     */
-
-
 
     import { createEventDispatcher } from 'svelte';
 

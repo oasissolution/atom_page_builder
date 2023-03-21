@@ -4,7 +4,7 @@
     import Select from "../../../uicomponents/select.svelte";
     import { fade, fly, slide } from 'svelte/transition';
     import SelectDistance from "../../../uicomponents/select-distance.svelte";
-    import { cssUnitOptions, marginTopClassOptions, marginRightClassOptions, marginBottomClassOptions, marginLeftClassOptions } from "./common-constants.svelte";
+    import { cssUnitOptions, heightClassOptions, widthClassOptions } from "./common-constants.svelte";
 
     /**
      * @type boolean
@@ -17,14 +17,12 @@
      */
     export let classInput;
 
-
     /**
      * @typedef {Object} SelectOptions
      * @property {string} value
      * @property {string} name
      * @property {string} info
     */
-
 
     import { createEventDispatcher } from 'svelte';
 
@@ -61,33 +59,17 @@
     /**
      * @type string
      */
-    let topValue;
-    $: topValue, (()=>{
-        updateClassWith("mt-", topValue);
+    let widthValue;
+    $: widthValue, (()=>{
+        updateClassWith("w-", widthValue);
     })();
 
     /**
      * @type string
      */
-    let rightValue;
-    $: rightValue, (()=>{
-        updateClassWith("mr-", rightValue);
-    })();
-
-    /**
-     * @type string
-     */
-    let bottomValue;
-    $: bottomValue, (()=>{
-        updateClassWith("mb-", bottomValue);
-    })();
-
-    /**
-     * @type string
-     */
-    let leftValue;
-    $: leftValue, (()=>{
-        updateClassWith("ml-", leftValue);
+    let heightValue;
+    $: heightValue, (()=>{
+        updateClassWith("h-", heightValue);
     })();
 
 
@@ -96,17 +78,12 @@
 <div class="w-full flex flex-col gap-3">
 
     <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-        <span title="Utilities for controlling an element's margin.">Margin</span>
+        <span title="Utilities for setting the width & height of an element.">Dimensions</span>
     </div>
 
     <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center gap-3">
-        <SelectDistance header={"mt"} options={marginTopClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"T"} bind:value={topValue} bind:loaded bind:elementDataLoaded />
-        <SelectDistance header={"mb"} options={marginBottomClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"B"} bind:value={bottomValue} bind:loaded bind:elementDataLoaded />
-    </div>
-
-    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center gap-3">
-        <SelectDistance header={"ml"} options={marginLeftClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"L"} bind:value={leftValue} bind:loaded bind:elementDataLoaded />
-        <SelectDistance header={"mr"} options={marginRightClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"R"} bind:value={rightValue} bind:loaded bind:elementDataLoaded />
+        <SelectDistance header={"w"} options={widthClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"W"} bind:value={widthValue} bind:loaded bind:elementDataLoaded />
+        <SelectDistance header={"h"} options={heightClassOptions} unitClassOptions={cssUnitOptions} leadingLetter={"H"} bind:value={heightValue} bind:loaded bind:elementDataLoaded />
     </div>
 
 

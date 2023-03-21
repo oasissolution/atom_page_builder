@@ -7,6 +7,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.030] - 2022-03-21
+
+### Added
+ - Text Options - Design - Sizing : Dimensions (Width, Height), Max Dimensions, Min Dimensions
+
+### Changed
+
+
+### Fixed
+
+
+
 ## [0.0.1.029] - 2022-03-21
 
 ### Added

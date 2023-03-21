@@ -19,6 +19,9 @@
 	import LayoutZIndex from "./common/layout-z-index.svelte";
 	import SpacingPadding from "./common/spacing-padding.svelte";
 	import SpacingMargin from "./common/spacing-margin.svelte";
+	import SizingWidthHeight from "./common/sizing-width-height.svelte";
+	import SizingWidthHeightMax from "./common/sizing-width-height-max.svelte";
+	import SizingWidthHeightMin from "./common/sizing-width-height-min.svelte";
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -417,13 +420,13 @@
     {#if collapseDesignSpacing}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
 
-        <SpacingPadding bind:spacingPadding bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        <SpacingPadding bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
         <div class="widgetPanelDivider"></div>
 
-        <SpacingMargin bind:spacingMargin bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        <SpacingMargin bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
-        <div class="widgetPanelDivider"></div>
+        <!-- <div class="widgetPanelDivider"></div> -->
     </div>
     {/if}
 
@@ -441,8 +444,15 @@
     {#if collapseDesignSizing}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
 
+        <SizingWidthHeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
-        collapse panel
+        <div class="widgetPanelDivider"></div>
+
+        <SizingWidthHeightMax bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <SizingWidthHeightMin bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
     </div>
     {/if}
 
@@ -466,7 +476,7 @@
     {/if}
 
     <div class="widgetPanelDivider"></div>
-    
+
 
     <button class="collapseButton" on:click={toggleDesignClass}>
         <span class="collapseHeader">CLASS</span>
@@ -482,7 +492,7 @@
 
         <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
         <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
-        
+
         <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
 
     </div>
@@ -490,7 +500,7 @@
 
     <div class="widgetPanelDivider"></div>
 
-    
+
 
 
 
@@ -499,7 +509,7 @@
     {:else if selectedTabPageIndex==2}
 
     <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
-   
+
     {/if}
 
 
