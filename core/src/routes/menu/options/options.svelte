@@ -56,7 +56,7 @@
 
    </script>
 
-   <div class="widgetPanel" style='
+   <div class="widgetPanel overflow-y-auto" style='
    --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
    --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
    --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};

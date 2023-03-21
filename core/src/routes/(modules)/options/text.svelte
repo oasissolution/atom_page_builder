@@ -14,6 +14,11 @@
 	import ContentVerticalAlignment from "./common/content-vertical-alignment.svelte";
 	import LayoutPosition from "./common/layout-position.svelte";
 	import LayoutFloat from "./common/layout-float.svelte";
+	import LayoutOverflow from "./common/layout-overflow.svelte";
+	import LayoutVisibility from "./common/layout-visibility.svelte";
+	import LayoutZIndex from "./common/layout-z-index.svelte";
+	import SpacingPadding from "./common/spacing-padding.svelte";
+	import SpacingMargin from "./common/spacing-margin.svelte";
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -90,6 +95,11 @@
         layoutDisplay = "";
         layoutPosition = "";
         layoutFloat = 0;
+        layoutOverflow = "";
+        layoutVisibility = "";
+        layoutZIndex = "";
+        spacingPadding = "";
+        spacingMargin = "";
     }
 
 
@@ -218,19 +228,38 @@
      */
     export let layoutFloat;
 
+    /**
+     * @type string
+     */
+    export let layoutOverflow;
 
+    /**
+     * @type string
+     */
+    export let layoutVisibility;
+
+    /**
+     * @type string
+     */
+    export let layoutZIndex;
+
+    /**
+     * @type string
+     */
+    export let spacingPadding;
+
+    /**
+     * @type string
+     */
+    export let spacingMargin;
+
+    
     /**
      * @typedef {Object} SelectOptions
      * @property {string} value
      * @property {string} name
      * @property {string} info
     */
-
-
-
-
-
-
 
 
     /**
@@ -284,6 +313,16 @@
     let collapseDesignTypography = false;
     function toggleDesignTypography(){
         collapseDesignTypography = !collapseDesignTypography;
+    }
+
+    let collapseDesignSpacing = false;
+    function toggleDesignSpacing(){
+        collapseDesignSpacing = !collapseDesignSpacing;
+    }
+
+    let collapseDesignSizing = false;
+    function toggleDesignSizing(){
+        collapseDesignSizing = !collapseDesignSizing;
     }
 
 </script>
@@ -351,8 +390,60 @@
 
         <div class="widgetPanelDivider"></div>
 
+        <LayoutOverflow bind:layoutOverflow bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutVisibility bind:layoutVisibility bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutZIndex bind:layoutZIndex bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     </div> <!-- collapseDesignLayout -->
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignSpacing}>
+        <span class="collapseHeader">SPACING</span>
+        {#if collapseDesignSpacing}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignSpacing}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <SpacingPadding bind:spacingPadding bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <SpacingMargin bind:spacingMargin bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignSizing}>
+        <span class="collapseHeader">SIZING</span>
+        {#if collapseDesignSizing}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignSizing}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+
+        collapse panel
+    </div>
     {/if}
 
     <div class="widgetPanelDivider"></div>
@@ -368,6 +459,8 @@
 
     {#if collapseDesignTypography}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+
         collapse panel
     </div>
     {/if}

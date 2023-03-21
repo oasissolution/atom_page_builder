@@ -7,6 +7,20 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.029] - 2022-03-21
+
+### Added
+ - Text Options - Design - Layout : Overflow, Visibility
+ - Text Options - Design - Spacing : Padding, Margin
+
+### Changed
+
+
+### Fixed
+ - SelectDistance (Atom Ui Element) on load error.
+
+
+
 ## [0.0.1.028] - 2022-03-18
 
 ### Added

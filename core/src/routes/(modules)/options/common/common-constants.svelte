@@ -416,6 +416,370 @@
     ];
 
 
+    /**
+     * Tailwind Padding Left classes
+     * @type Array<SelectOptions>
+     */
+    export let paddingLeftClassOptions = [
+
+        {name: "96",    value: "pl-96",    info: "padding-left: 24rem; /* 384px */"},
+        {name: "80",    value: "pl-80",    info: "padding-left: 20rem; /* 320px */"},
+        {name: "72",    value: "pl-72",    info: "padding-left: 18rem; /* 288px */"},
+        {name: "64",    value: "pl-64",    info: "padding-left: 16rem; /* 256px */"},
+        {name: "60",    value: "pl-60",    info: "padding-left: 15rem; /* 240px */"},
+        {name: "56",    value: "pl-56",    info: "padding-left: 14rem; /* 224px */"},
+        {name: "52",    value: "pl-52",    info: "padding-left: 13rem; /* 208px */"},
+        {name: "48",    value: "pl-48",    info: "padding-left: 12rem; /* 192px */"},
+        {name: "44",    value: "pl-44",    info: "padding-left: 11rem; /* 176px */"},
+        {name: "40",    value: "pl-40",    info: "padding-left: 10rem; /* 160px */"},
+        {name: "36",    value: "pl-36",    info: "padding-left: 9rem; /* 144px */"},
+        {name: "32",    value: "pl-32",    info: "padding-left: 8rem; /* 128px */"},
+        {name: "28",    value: "pl-28",    info: "padding-left: 7rem; /* 112px */"},
+        {name: "24",    value: "pl-24",    info: "padding-left: 6rem; /* 96px */"},
+        {name: "20",    value: "pl-20",    info: "padding-left: 5rem; /* 80px */"},
+        {name: "16",    value: "pl-16",    info: "padding-left: 4rem; /* 64px */"},
+        {name: "14",    value: "pl-14",    info: "padding-left: 3.5rem; /* 56px */"},
+        {name: "12",    value: "pl-12",    info: "padding-left: 3rem; /* 48px */"},
+        {name: "11",    value: "pl-11",    info: "padding-left: 2.75rem; /* 44px */"},
+        {name: "10",    value: "pl-10",    info: "padding-left: 2.5rem; /* 40px */"},
+        {name: "9",     value: "pl-9",     info: "padding-left: 2.25rem; /* 36px */"},
+        {name: "8",     value: "pl-8",     info: "padding-left: 2rem; /* 32px */"},
+        {name: "7",     value: "pl-7",     info: "padding-left: 1.75rem; /* 28px */"},
+        {name: "6",     value: "pl-6",     info: "padding-left: 1.5rem; /* 24px */"},
+        {name: "5",     value: "pl-5",     info: "padding-left: 1.25rem; /* 20px */"},
+        {name: "4",     value: "pl-4",     info: "padding-left: 1rem; /* 16px */"},
+        {name: "3.5",   value: "pl-3.5",   info: "padding-left: 0.875rem; /* 14px */"},
+        {name: "3",     value: "pl-3",     info: "padding-left: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "pl-2.5",   info: "padding-left: 0.625rem; /* 10px */"},
+        {name: "2",     value: "pl-2",     info: "padding-left: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "pl-1.5",   info: "padding-left: 0.375rem; /* 6px */"},
+        {name: "1",     value: "pl-1",     info: "padding-left: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "pl-0.5",   info: "padding-left: 0.125rem; /* 2px */"},
+        {name: "px",    value: "pl-px",    info: "padding-left: 1px;"},
+
+        {name: "-",     value: "",         info: "Default - No value"},
+        {name: "0",     value: "pl-0",     info: "padding-left: 0px;"},
+    ];
+
+    /**
+     * Tailwind Padding Left classes
+     * @type Array<SelectOptions>
+     */
+    export let paddingRightClassOptions = [
+        {name: "96",    value: "pr-96",    info: "padding-right: 24rem; /* 384px */"},
+        {name: "80",    value: "pr-80",    info: "padding-right: 20rem; /* 320px */"},
+        {name: "72",    value: "pr-72",    info: "padding-right: 18rem; /* 288px */"},
+        {name: "64",    value: "pr-64",    info: "padding-right: 16rem; /* 256px */"},
+        {name: "60",    value: "pr-60",    info: "padding-right: 15rem; /* 240px */"},
+        {name: "56",    value: "pr-56",    info: "padding-right: 14rem; /* 224px */"},
+        {name: "52",    value: "pr-52",    info: "padding-right: 13rem; /* 208px */"},
+        {name: "48",    value: "pr-48",    info: "padding-right: 12rem; /* 192px */"},
+        {name: "44",    value: "pr-44",    info: "padding-right: 11rem; /* 176px */"},
+        {name: "40",    value: "pr-40",    info: "padding-right: 10rem; /* 160px */"},
+        {name: "36",    value: "pr-36",    info: "padding-right: 9rem; /* 144px */"},
+        {name: "32",    value: "pr-32",    info: "padding-right: 8rem; /* 128px */"},
+        {name: "28",    value: "pr-28",    info: "padding-right: 7rem; /* 112px */"},
+        {name: "24",    value: "pr-24",    info: "padding-right: 6rem; /* 96px */"},
+        {name: "20",    value: "pr-20",    info: "padding-right: 5rem; /* 80px */"},
+        {name: "16",    value: "pr-16",    info: "padding-right: 4rem; /* 64px */"},
+        {name: "14",    value: "pr-14",    info: "padding-right: 3.5rem; /* 56px */"},
+        {name: "12",    value: "pr-12",    info: "padding-right: 3rem; /* 48px */"},
+        {name: "11",    value: "pr-11",    info: "padding-right: 2.75rem; /* 44px */"},
+        {name: "10",    value: "pr-10",    info: "padding-right: 2.5rem; /* 40px */"},
+        {name: "9",     value: "pr-9",     info: "padding-right: 2.25rem; /* 36px */"},
+        {name: "8",     value: "pr-8",     info: "padding-right: 2rem; /* 32px */"},
+        {name: "7",     value: "pr-7",     info: "padding-right: 1.75rem; /* 28px */"},
+        {name: "6",     value: "pr-6",     info: "padding-right: 1.5rem; /* 24px */"},
+        {name: "5",     value: "pr-5",     info: "padding-right: 1.25rem; /* 20px */"},
+        {name: "4",     value: "pr-4",     info: "padding-right: 1rem; /* 16px */"},
+        {name: "3.5",   value: "pr-3.5",   info: "padding-right: 0.875rem; /* 14px */"},
+        {name: "3",     value: "pr-3",     info: "padding-right: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "pr-2.5",   info: "padding-right: 0.625rem; /* 10px */"},
+        {name: "2",     value: "pr-2",     info: "padding-right: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "pr-1.5",   info: "padding-right: 0.375rem; /* 6px */"},
+        {name: "1",     value: "pr-1",     info: "padding-right: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "pr-0.5",   info: "padding-right: 0.125rem; /* 2px */"},
+        {name: "px",    value: "pr-px",    info: "padding-right: 1px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+        {name: "0",     value: "pr-0",     info: "padding-right: 0px;"},
+
+    ];
+
+    /**
+     * Tailwind Padding Left classes
+     * @type Array<SelectOptions>
+     */
+    export let paddingTopClassOptions = [
+        {name: "96",    value: "pt-96",    info: "padding-top: 24rem; /* 384px */"},
+        {name: "80",    value: "pt-80",    info: "padding-top: 20rem; /* 320px */"},
+        {name: "72",    value: "pt-72",    info: "padding-top: 18rem; /* 288px */"},
+        {name: "64",    value: "pt-64",    info: "padding-top: 16rem; /* 256px */"},
+        {name: "60",    value: "pt-60",    info: "padding-top: 15rem; /* 240px */"},
+        {name: "56",    value: "pt-56",    info: "padding-top: 14rem; /* 224px */"},
+        {name: "52",    value: "pt-52",    info: "padding-top: 13rem; /* 208px */"},
+        {name: "48",    value: "pt-48",    info: "padding-top: 12rem; /* 192px */"},
+        {name: "44",    value: "pt-44",    info: "padding-top: 11rem; /* 176px */"},
+        {name: "40",    value: "pt-40",    info: "padding-top: 10rem; /* 160px */"},
+        {name: "36",    value: "pt-36",    info: "padding-top: 9rem; /* 144px */"},
+        {name: "32",    value: "pt-32",    info: "padding-top: 8rem; /* 128px */"},
+        {name: "28",    value: "pt-28",    info: "padding-top: 7rem; /* 112px */"},
+        {name: "24",    value: "pt-24",    info: "padding-top: 6rem; /* 96px */"},
+        {name: "20",    value: "pt-20",    info: "padding-top: 5rem; /* 80px */"},
+        {name: "16",    value: "pt-16",    info: "padding-top: 4rem; /* 64px */"},
+        {name: "14",    value: "pt-14",    info: "padding-top: 3.5rem; /* 56px */"},
+        {name: "12",    value: "pt-12",    info: "padding-top: 3rem; /* 48px */"},
+        {name: "11",    value: "pt-11",    info: "padding-top: 2.75rem; /* 44px */"},
+        {name: "10",    value: "pt-10",    info: "padding-top: 2.5rem; /* 40px */"},
+        {name: "9",     value: "pt-9",     info: "padding-top: 2.25rem; /* 36px */"},
+        {name: "8",     value: "pt-8",     info: "padding-top: 2rem; /* 32px */"},
+        {name: "7",     value: "pt-7",     info: "padding-top: 1.75rem; /* 28px */"},
+        {name: "6",     value: "pt-6",     info: "padding-top: 1.5rem; /* 24px */"},
+        {name: "5",     value: "pt-5",     info: "padding-top: 1.25rem; /* 20px */"},
+        {name: "4",     value: "pt-4",     info: "padding-top: 1rem; /* 16px */"},
+        {name: "3.5",   value: "pt-3.5",   info: "padding-top: 0.875rem; /* 14px */"},
+        {name: "3",     value: "pt-3",     info: "padding-top: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "pt-2.5",   info: "padding-top: 0.625rem; /* 10px */"},
+        {name: "2",     value: "pt-2",     info: "padding-top: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "pt-1.5",   info: "padding-top: 0.375rem; /* 6px */"},
+        {name: "1",     value: "pt-1",     info: "padding-top: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "pt-0.5",   info: "padding-top: 0.125rem; /* 2px */"},
+        {name: "px",    value: "pt-px",    info: "padding-top: 1px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+        {name: "0",     value: "pt-0",     info: "padding-top: 0px;"},
+
+    ];
+
+    /**
+     * Tailwind Padding Left classes
+     * @type Array<SelectOptions>
+     */
+    export let paddingBottomClassOptions = [
+        {name: "96",    value: "pb-96",    info: "padding-bottom: 24rem; /* 384px */"},
+        {name: "80",    value: "pb-80",    info: "padding-bottom: 20rem; /* 320px */"},
+        {name: "72",    value: "pb-72",    info: "padding-bottom: 18rem; /* 288px */"},
+        {name: "64",    value: "pb-64",    info: "padding-bottom: 16rem; /* 256px */"},
+        {name: "60",    value: "pb-60",    info: "padding-bottom: 15rem; /* 240px */"},
+        {name: "56",    value: "pb-56",    info: "padding-bottom: 14rem; /* 224px */"},
+        {name: "52",    value: "pb-52",    info: "padding-bottom: 13rem; /* 208px */"},
+        {name: "48",    value: "pb-48",    info: "padding-bottom: 12rem; /* 192px */"},
+        {name: "44",    value: "pb-44",    info: "padding-bottom: 11rem; /* 176px */"},
+        {name: "40",    value: "pb-40",    info: "padding-bottom: 10rem; /* 160px */"},
+        {name: "36",    value: "pb-36",    info: "padding-bottom: 9rem; /* 144px */"},
+        {name: "32",    value: "pb-32",    info: "padding-bottom: 8rem; /* 128px */"},
+        {name: "28",    value: "pb-28",    info: "padding-bottom: 7rem; /* 112px */"},
+        {name: "24",    value: "pb-24",    info: "padding-bottom: 6rem; /* 96px */"},
+        {name: "20",    value: "pb-20",    info: "padding-bottom: 5rem; /* 80px */"},
+        {name: "16",    value: "pb-16",    info: "padding-bottom: 4rem; /* 64px */"},
+        {name: "14",    value: "pb-14",    info: "padding-bottom: 3.5rem; /* 56px */"},
+        {name: "12",    value: "pb-12",    info: "padding-bottom: 3rem; /* 48px */"},
+        {name: "11",    value: "pb-11",    info: "padding-bottom: 2.75rem; /* 44px */"},
+        {name: "10",    value: "pb-10",    info: "padding-bottom: 2.5rem; /* 40px */"},
+        {name: "9",     value: "pb-9",     info: "padding-bottom: 2.25rem; /* 36px */"},
+        {name: "8",     value: "pb-8",     info: "padding-bottom: 2rem; /* 32px */"},
+        {name: "7",     value: "pb-7",     info: "padding-bottom: 1.75rem; /* 28px */"},
+        {name: "6",     value: "pb-6",     info: "padding-bottom: 1.5rem; /* 24px */"},
+        {name: "5",     value: "pb-5",     info: "padding-bottom: 1.25rem; /* 20px */"},
+        {name: "4",     value: "pb-4",     info: "padding-bottom: 1rem; /* 16px */"},
+        {name: "3.5",   value: "pb-3.5",   info: "padding-bottom: 0.875rem; /* 14px */"},
+        {name: "3",     value: "pb-3",     info: "padding-bottom: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "pb-2.5",   info: "padding-bottom: 0.625rem; /* 10px */"},
+        {name: "2",     value: "pb-2",     info: "padding-bottom: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "pb-1.5",   info: "padding-bottom: 0.375rem; /* 6px */"},
+        {name: "1",     value: "pb-1",     info: "padding-bottom: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "pb-0.5",   info: "padding-bottom: 0.125rem; /* 2px */"},
+        {name: "px",    value: "pb-px",    info: "padding-bottom: 1px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+        {name: "0",     value: "pb-0",     info: "padding-bottom: 0px;"},
+
+    ];
+
+
+
+
+    /**
+     * Tailwind margin Left classes
+     * @type Array<SelectOptions>
+     */
+    export let marginLeftClassOptions = [
+
+        {name: "96",    value: "ml-96",    info: "margin-left: 24rem; /* 384px */"},
+        {name: "80",    value: "ml-80",    info: "margin-left: 20rem; /* 320px */"},
+        {name: "72",    value: "ml-72",    info: "margin-left: 18rem; /* 288px */"},
+        {name: "64",    value: "ml-64",    info: "margin-left: 16rem; /* 256px */"},
+        {name: "60",    value: "ml-60",    info: "margin-left: 15rem; /* 240px */"},
+        {name: "56",    value: "ml-56",    info: "margin-left: 14rem; /* 224px */"},
+        {name: "52",    value: "ml-52",    info: "margin-left: 13rem; /* 208px */"},
+        {name: "48",    value: "ml-48",    info: "margin-left: 12rem; /* 192px */"},
+        {name: "44",    value: "ml-44",    info: "margin-left: 11rem; /* 176px */"},
+        {name: "40",    value: "ml-40",    info: "margin-left: 10rem; /* 160px */"},
+        {name: "36",    value: "ml-36",    info: "margin-left: 9rem; /* 144px */"},
+        {name: "32",    value: "ml-32",    info: "margin-left: 8rem; /* 128px */"},
+        {name: "28",    value: "ml-28",    info: "margin-left: 7rem; /* 112px */"},
+        {name: "24",    value: "ml-24",    info: "margin-left: 6rem; /* 96px */"},
+        {name: "20",    value: "ml-20",    info: "margin-left: 5rem; /* 80px */"},
+        {name: "16",    value: "ml-16",    info: "margin-left: 4rem; /* 64px */"},
+        {name: "14",    value: "ml-14",    info: "margin-left: 3.5rem; /* 56px */"},
+        {name: "12",    value: "ml-12",    info: "margin-left: 3rem; /* 48px */"},
+        {name: "11",    value: "ml-11",    info: "margin-left: 2.75rem; /* 44px */"},
+        {name: "10",    value: "ml-10",    info: "margin-left: 2.5rem; /* 40px */"},
+        {name: "9",     value: "ml-9",     info: "margin-left: 2.25rem; /* 36px */"},
+        {name: "8",     value: "ml-8",     info: "margin-left: 2rem; /* 32px */"},
+        {name: "7",     value: "ml-7",     info: "margin-left: 1.75rem; /* 28px */"},
+        {name: "6",     value: "ml-6",     info: "margin-left: 1.5rem; /* 24px */"},
+        {name: "5",     value: "ml-5",     info: "margin-left: 1.25rem; /* 20px */"},
+        {name: "4",     value: "ml-4",     info: "margin-left: 1rem; /* 16px */"},
+        {name: "3.5",   value: "ml-3.5",   info: "margin-left: 0.875rem; /* 14px */"},
+        {name: "3",     value: "ml-3",     info: "margin-left: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "ml-2.5",   info: "margin-left: 0.625rem; /* 10px */"},
+        {name: "2",     value: "ml-2",     info: "margin-left: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "ml-1.5",   info: "margin-left: 0.375rem; /* 6px */"},
+        {name: "1",     value: "ml-1",     info: "margin-left: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "ml-0.5",   info: "margin-left: 0.125rem; /* 2px */"},
+        {name: "px",    value: "ml-px",    info: "margin-left: 1px;"},
+
+        {name: "-",     value: "",         info: "Default - No value"},
+        {name: "0",     value: "ml-0",     info: "margin-left: 0px;"},
+    ];
+
+
+    /**
+    * Tailwind margin Left classes
+    * @type Array<SelectOptions>
+    */
+    export let marginRightClassOptions = [
+        {name: "96",    value: "mr-96",    info: "margin-right: 24rem; /* 384px */"},
+        {name: "80",    value: "mr-80",    info: "margin-right: 20rem; /* 320px */"},
+        {name: "72",    value: "mr-72",    info: "margin-right: 18rem; /* 288px */"},
+        {name: "64",    value: "mr-64",    info: "margin-right: 16rem; /* 256px */"},
+        {name: "60",    value: "mr-60",    info: "margin-right: 15rem; /* 240px */"},
+        {name: "56",    value: "mr-56",    info: "margin-right: 14rem; /* 224px */"},
+        {name: "52",    value: "mr-52",    info: "margin-right: 13rem; /* 208px */"},
+        {name: "48",    value: "mr-48",    info: "margin-right: 12rem; /* 192px */"},
+        {name: "44",    value: "mr-44",    info: "margin-right: 11rem; /* 176px */"},
+        {name: "40",    value: "mr-40",    info: "margin-right: 10rem; /* 160px */"},
+        {name: "36",    value: "mr-36",    info: "margin-right: 9rem; /* 144px */"},
+        {name: "32",    value: "mr-32",    info: "margin-right: 8rem; /* 128px */"},
+        {name: "28",    value: "mr-28",    info: "margin-right: 7rem; /* 112px */"},
+        {name: "24",    value: "mr-24",    info: "margin-right: 6rem; /* 96px */"},
+        {name: "20",    value: "mr-20",    info: "margin-right: 5rem; /* 80px */"},
+        {name: "16",    value: "mr-16",    info: "margin-right: 4rem; /* 64px */"},
+        {name: "14",    value: "mr-14",    info: "margin-right: 3.5rem; /* 56px */"},
+        {name: "12",    value: "mr-12",    info: "margin-right: 3rem; /* 48px */"},
+        {name: "11",    value: "mr-11",    info: "margin-right: 2.75rem; /* 44px */"},
+        {name: "10",    value: "mr-10",    info: "margin-right: 2.5rem; /* 40px */"},
+        {name: "9",     value: "mr-9",     info: "margin-right: 2.25rem; /* 36px */"},
+        {name: "8",     value: "mr-8",     info: "margin-right: 2rem; /* 32px */"},
+        {name: "7",     value: "mr-7",     info: "margin-right: 1.75rem; /* 28px */"},
+        {name: "6",     value: "mr-6",     info: "margin-right: 1.5rem; /* 24px */"},
+        {name: "5",     value: "mr-5",     info: "margin-right: 1.25rem; /* 20px */"},
+        {name: "4",     value: "mr-4",     info: "margin-right: 1rem; /* 16px */"},
+        {name: "3.5",   value: "mr-3.5",   info: "margin-right: 0.875rem; /* 14px */"},
+        {name: "3",     value: "mr-3",     info: "margin-right: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "mr-2.5",   info: "margin-right: 0.625rem; /* 10px */"},
+        {name: "2",     value: "mr-2",     info: "margin-right: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "mr-1.5",   info: "margin-right: 0.375rem; /* 6px */"},
+        {name: "1",     value: "mr-1",     info: "margin-right: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "mr-0.5",   info: "margin-right: 0.125rem; /* 2px */"},
+        {name: "px",    value: "mr-px",    info: "margin-right: 1px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+        {name: "0",     value: "mr-0",     info: "margin-right: 0px;"},
+
+    ];
+
+    /**
+    * Tailwind margin Left classes
+    * @type Array<SelectOptions>
+    */
+    export let marginTopClassOptions = [
+        {name: "96",    value: "mt-96",    info: "margin-top: 24rem; /* 384px */"},
+        {name: "80",    value: "mt-80",    info: "margin-top: 20rem; /* 320px */"},
+        {name: "72",    value: "mt-72",    info: "margin-top: 18rem; /* 288px */"},
+        {name: "64",    value: "mt-64",    info: "margin-top: 16rem; /* 256px */"},
+        {name: "60",    value: "mt-60",    info: "margin-top: 15rem; /* 240px */"},
+        {name: "56",    value: "mt-56",    info: "margin-top: 14rem; /* 224px */"},
+        {name: "52",    value: "mt-52",    info: "margin-top: 13rem; /* 208px */"},
+        {name: "48",    value: "mt-48",    info: "margin-top: 12rem; /* 192px */"},
+        {name: "44",    value: "mt-44",    info: "margin-top: 11rem; /* 176px */"},
+        {name: "40",    value: "mt-40",    info: "margin-top: 10rem; /* 160px */"},
+        {name: "36",    value: "mt-36",    info: "margin-top: 9rem; /* 144px */"},
+        {name: "32",    value: "mt-32",    info: "margin-top: 8rem; /* 128px */"},
+        {name: "28",    value: "mt-28",    info: "margin-top: 7rem; /* 112px */"},
+        {name: "24",    value: "mt-24",    info: "margin-top: 6rem; /* 96px */"},
+        {name: "20",    value: "mt-20",    info: "margin-top: 5rem; /* 80px */"},
+        {name: "16",    value: "mt-16",    info: "margin-top: 4rem; /* 64px */"},
+        {name: "14",    value: "mt-14",    info: "margin-top: 3.5rem; /* 56px */"},
+        {name: "12",    value: "mt-12",    info: "margin-top: 3rem; /* 48px */"},
+        {name: "11",    value: "mt-11",    info: "margin-top: 2.75rem; /* 44px */"},
+        {name: "10",    value: "mt-10",    info: "margin-top: 2.5rem; /* 40px */"},
+        {name: "9",     value: "mt-9",     info: "margin-top: 2.25rem; /* 36px */"},
+        {name: "8",     value: "mt-8",     info: "margin-top: 2rem; /* 32px */"},
+        {name: "7",     value: "mt-7",     info: "margin-top: 1.75rem; /* 28px */"},
+        {name: "6",     value: "mt-6",     info: "margin-top: 1.5rem; /* 24px */"},
+        {name: "5",     value: "mt-5",     info: "margin-top: 1.25rem; /* 20px */"},
+        {name: "4",     value: "mt-4",     info: "margin-top: 1rem; /* 16px */"},
+        {name: "3.5",   value: "mt-3.5",   info: "margin-top: 0.875rem; /* 14px */"},
+        {name: "3",     value: "mt-3",     info: "margin-top: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "mt-2.5",   info: "margin-top: 0.625rem; /* 10px */"},
+        {name: "2",     value: "mt-2",     info: "margin-top: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "mt-1.5",   info: "margin-top: 0.375rem; /* 6px */"},
+        {name: "1",     value: "mt-1",     info: "margin-top: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "mt-0.5",   info: "margin-top: 0.125rem; /* 2px */"},
+        {name: "px",    value: "mt-px",    info: "margin-top: 1px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+        {name: "0",     value: "mt-0",     info: "margin-top: 0px;"},
+
+    ];
+
+    /**
+    * Tailwind margin Left classes
+    * @type Array<SelectOptions>
+    */
+    export let marginBottomClassOptions = [
+        {name: "96",    value: "mb-96",    info: "margin-bottom: 24rem; /* 384px */"},
+        {name: "80",    value: "mb-80",    info: "margin-bottom: 20rem; /* 320px */"},
+        {name: "72",    value: "mb-72",    info: "margin-bottom: 18rem; /* 288px */"},
+        {name: "64",    value: "mb-64",    info: "margin-bottom: 16rem; /* 256px */"},
+        {name: "60",    value: "mb-60",    info: "margin-bottom: 15rem; /* 240px */"},
+        {name: "56",    value: "mb-56",    info: "margin-bottom: 14rem; /* 224px */"},
+        {name: "52",    value: "mb-52",    info: "margin-bottom: 13rem; /* 208px */"},
+        {name: "48",    value: "mb-48",    info: "margin-bottom: 12rem; /* 192px */"},
+        {name: "44",    value: "mb-44",    info: "margin-bottom: 11rem; /* 176px */"},
+        {name: "40",    value: "mb-40",    info: "margin-bottom: 10rem; /* 160px */"},
+        {name: "36",    value: "mb-36",    info: "margin-bottom: 9rem; /* 144px */"},
+        {name: "32",    value: "mb-32",    info: "margin-bottom: 8rem; /* 128px */"},
+        {name: "28",    value: "mb-28",    info: "margin-bottom: 7rem; /* 112px */"},
+        {name: "24",    value: "mb-24",    info: "margin-bottom: 6rem; /* 96px */"},
+        {name: "20",    value: "mb-20",    info: "margin-bottom: 5rem; /* 80px */"},
+        {name: "16",    value: "mb-16",    info: "margin-bottom: 4rem; /* 64px */"},
+        {name: "14",    value: "mb-14",    info: "margin-bottom: 3.5rem; /* 56px */"},
+        {name: "12",    value: "mb-12",    info: "margin-bottom: 3rem; /* 48px */"},
+        {name: "11",    value: "mb-11",    info: "margin-bottom: 2.75rem; /* 44px */"},
+        {name: "10",    value: "mb-10",    info: "margin-bottom: 2.5rem; /* 40px */"},
+        {name: "9",     value: "mb-9",     info: "margin-bottom: 2.25rem; /* 36px */"},
+        {name: "8",     value: "mb-8",     info: "margin-bottom: 2rem; /* 32px */"},
+        {name: "7",     value: "mb-7",     info: "margin-bottom: 1.75rem; /* 28px */"},
+        {name: "6",     value: "mb-6",     info: "margin-bottom: 1.5rem; /* 24px */"},
+        {name: "5",     value: "mb-5",     info: "margin-bottom: 1.25rem; /* 20px */"},
+        {name: "4",     value: "mb-4",     info: "margin-bottom: 1rem; /* 16px */"},
+        {name: "3.5",   value: "mb-3.5",   info: "margin-bottom: 0.875rem; /* 14px */"},
+        {name: "3",     value: "mb-3",     info: "margin-bottom: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "mb-2.5",   info: "margin-bottom: 0.625rem; /* 10px */"},
+        {name: "2",     value: "mb-2",     info: "margin-bottom: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "mb-1.5",   info: "margin-bottom: 0.375rem; /* 6px */"},
+        {name: "1",     value: "mb-1",     info: "margin-bottom: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "mb-0.5",   info: "margin-bottom: 0.125rem; /* 2px */"},
+        {name: "px",    value: "mb-px",    info: "margin-bottom: 1px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+        {name: "0",     value: "mb-0",     info: "margin-bottom: 0px;"},
+
+    ];
+
 
 </script>
 

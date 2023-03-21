@@ -27,7 +27,7 @@
      * Value of unit selection
      * @type string
      */
-    let unitValue = "";
+    let unitValue = "class";
 
     /**
      * Manually entered value where unitValue != "class"
@@ -79,42 +79,53 @@
     */
     export let elementDataLoaded;
 
-    let valueLoaded = false;
+    /**
+     * Checks if a string char is a number
+     * @param {string} char
+     * @returns {boolean}
+     */
+    function isNumber(char) {
+        return /^\d$/.test(char);
+    }
 
-    // $: loaded, (()=>{
-    //     if(loaded == true) {
+    $: loaded, (()=>{
+        if(loaded == true) {
 
-    //         elementDataLoaded.split(" ").forEach( cls => {
+            elementDataLoaded.split(" ").forEach( cls => {
 
-    //             /**
-    //              * Current class in elementDataLoaded array without leading and trailing spaces.
-    //              */
-    //             var currentClass = cls.trim();
+                /**
+                 * Current class in elementDataLoaded array without leading and trailing spaces.
+                 */
+                var currentClass = cls.trim();
 
-    //             /**
-    //              * Variable to determine selected unit from class definition.
-    //             */
-    //             var ctl = "";
+                /**
+                 * Variable to determine selected unit from class definition.
+                */
+                var ctl = "";
 
-    //             if(currentClass.startsWith(header+"-")){
-    //                 valueLoaded = true;
-    //                 ctl=currentClass.replace(header+"-", "");
-    //                 if(ctl.startsWith("[")){
-    //                     ctl = "";
+                if(currentClass.startsWith(header+"-")){
+                    ctl=currentClass.replace(header+"-", "");
+                    if(ctl.startsWith("[")){
+                        ctl = ctl.replace("[","").replace("]","");
+                        var i=0;
+                        for(i=0; i<ctl.length-1; i++){
+                            if(isNumber(ctl.charAt(i)) == false){
+                                enteredValue = ctl.substring(0,i);
+                                unitValue = ctl.substring(i);
+                                break;
+                            }
+                        }
+                    }else{
+                        unitValue = "class";
+                        selectedValue = currentClass; //if unitValue is class then rest must be class, eg. top-4 => removed "top-" => 4 is selected value
+                    }
+                    onSubChange();
+                }
 
-    //                 }else{
-    //                     unitValue = "class";
-    //                     // setTimeout(()=>{}, 100);
-    //                     selectedValue = ctl; //if unitValue is class then rest must be class, eg. top-4 => removed "top-" => 4 is selected value
-    //                     console.log("ctl: "+ctl+" || unitValue: "+unitValue+" || selectedValue: \""+selectedValue+"\"");
-    //                 }
+            });
 
-    //             }
-
-    //         });
-
-    //     }
-    // })();
+        }
+    })();
 
 
     import { createEventDispatcher, onMount } from 'svelte';
@@ -126,14 +137,12 @@
     }
 
     function onSubChange(){
-        if(loaded == true){
-            if(unitValue == "class"){
-                value = selectedValue;
-            }else{
-                value = header + "-[" + enteredValue + unitValue + "]";
-            }
-            onChange();
+        if(unitValue == "class"){
+            value = selectedValue;
+        }else{
+            value = header + "-[" + enteredValue + unitValue + "]";
         }
+        onChange();
     }
 
     function keyPress(e){
@@ -159,39 +168,7 @@
     }
 
     onMount(()=>{
-        if(loaded == true) {
 
-            elementDataLoaded.split(" ").forEach( cls => {
-
-                /**
-                 * Current class in elementDataLoaded array without leading and trailing spaces.
-                 */
-                var currentClass = cls.trim();
-
-                /**
-                 * Variable to determine selected unit from class definition.
-                */
-                var ctl = "";
-
-                if(currentClass.startsWith(header+"-")){
-                    valueLoaded = true;
-                    ctl=currentClass.replace(header+"-", "");
-                    if(ctl.startsWith("[")){
-                        ctl = "";
-
-                    }else{
-                        unitValue = "class";
-                        setTimeout(()=>{
-                            selectedValue = ctl; //if unitValue is class then rest must be class, eg. top-4 => removed "top-" => 4 is selected value
-                            console.log("ctl: "+ctl+" || unitValue: "+unitValue+" || selectedValue: \""+selectedValue+"\"");
-                        }, 300);
-                    }
-
-                }
-
-            });
-
-        }
     });
 
 </script>
@@ -211,6 +188,7 @@
 
     <div class="flex flex-row min-w-[130px] h-8 pr-2">
         <div class="w-8 h-8 flex place-content-center items-center font-bold">{leadingLetter}</div>
+
         {#if unitValue=="class"}
             <select bind:value={selectedValue} on:change={onSubChange} class="flex flex-grow" title="{findInfo(options, selectedValue)}">
 
@@ -222,6 +200,7 @@
         {:else}
             <input type="text" class="inputtext flex flex-grow text-right p-2" on:keypress={keyPress} bind:value={enteredValue} />
         {/if}
+
         <div>
             <select bind:value={unitValue} on:change={onSubChange} class="w-10" title="{findInfo(unitClassOptions, unitValue)}">
 
