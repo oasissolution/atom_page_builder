@@ -113,6 +113,10 @@ export const themeColors = {
             "color": inputForeground,
             "backgroundColor": inputBackground,
         },
+        "selectColor": {
+            "color": inputForeground,
+            "backgroundColor": inputBackground,
+        },
     },
     
 }

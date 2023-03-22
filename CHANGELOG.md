@@ -6,6 +6,23 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.031] - 2022-03-22
+
+### Added
+ - Text Options - Design - Typography : Size, Style, Smoothing, Weight, Variant Numeric,
+ Letter Spacing, Line Height, Text Color, Text Decoration, Decoration Color, Decoration Style, Decoration thickness,
+ Underline Offset, Text Transform, Text Overflow
+
+ - Atom Ui Element: Select Color (Needs optimization for popup location)
+
+### Changed
+
+
+### Fixed
+
+
+
+
 
 ## [0.0.1.030] - 2022-03-21
 

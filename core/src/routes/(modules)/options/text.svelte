@@ -22,6 +22,21 @@
 	import SizingWidthHeight from "./common/sizing-width-height.svelte";
 	import SizingWidthHeightMax from "./common/sizing-width-height-max.svelte";
 	import SizingWidthHeightMin from "./common/sizing-width-height-min.svelte";
+	import TypographyFontSmoothing from "./text/typography-font-smoothing.svelte";
+	import TypographyFontStyle from "./text/typography-font-style.svelte";
+	import TypographyFontWeight from "./text/typography-font-weight.svelte";
+	import TypographyFontVariantNumeric from "./text/typography-font-variant-numeric.svelte";
+	import TypographyLetterSpacing from "./text/typography-letter-spacing.svelte";
+	import TypographyLineHeight from "./text/typography-line-height.svelte";
+	import SelectColor from "../../uicomponents/select-color.svelte";
+	import TypographyTextColor from "./text/typography-text-color.svelte";
+	import TypographyTextDecoration from "./text/typography-text-decoration.svelte";
+	import TypographyDecorationColor from "./text/typography-decoration-color.svelte";
+	import TypographyDecorationStyle from "./text/typography-decoration-style.svelte";
+	import TypographyDecorationThickness from "./text/typography-decoration-thickness.svelte";
+	import TypographyUnderlineOffset from "./text/typography-underline-offset.svelte";
+	import TypographyTextTransform from "./text/typography-text-transform.svelte";
+	import TypographyTextOverflow from "./text/typography-text-overflow.svelte";
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -103,6 +118,20 @@
         layoutZIndex = "";
         spacingPadding = "";
         spacingMargin = "";
+        fontSmoothing = "";
+        fontStyle = "";
+        fontWeight = "";
+        fontVariantNumeric = "";
+        letterSpacing = "";
+        lineHeight = "";
+        textColor = "";
+        textDecoration = "";
+        decorationColor = "";
+        decorationStyle = "";
+        decorationThickness = "";
+        underlineOffset = "";
+        textTransform = "";
+        textOverflow = "";
     }
 
 
@@ -224,38 +253,110 @@
      * Actual position class
      * @type string
      */
-    export let layoutPosition;
+    let layoutPosition;
 
     /**
      * @type number
      */
-    export let layoutFloat;
+    let layoutFloat;
 
     /**
      * @type string
      */
-    export let layoutOverflow;
+    let layoutOverflow;
 
     /**
      * @type string
      */
-    export let layoutVisibility;
+    let layoutVisibility;
 
     /**
      * @type string
      */
-    export let layoutZIndex;
+    let layoutZIndex;
 
     /**
      * @type string
      */
-    export let spacingPadding;
+    let spacingPadding;
 
     /**
      * @type string
      */
-    export let spacingMargin;
+    let spacingMargin;
 
+    /**
+     * @type string
+     */
+    let fontSmoothing;
+
+    /**
+     * @type string
+     */
+    let fontStyle;
+
+    /**
+     * @type string
+     */
+    let fontWeight;
+
+    /**
+     * @type string
+     */
+    let fontVariantNumeric;
+
+    /**
+     * @type string
+     */
+    let letterSpacing;
+
+    /**
+     * @type string
+     */
+    let lineHeight;
+
+    /**
+     * @type string
+     */
+    let textColor;
+    
+    /**
+     * @type string
+     */
+    let textDecoration;
+    
+    /**
+     * @type string
+     */
+    let decorationColor;
+
+    /**
+     * @type string
+     */
+    let decorationStyle;
+
+    /**
+     * @type string
+     */
+    let decorationThickness;
+
+    /**
+     * @type string
+     */
+    let underlineOffset;
+
+    /**
+     * @type string
+     */
+    let textTransform;
+
+    /**
+     * @type string
+     */
+    let textOverflow;
+
+
+    
     
     /**
      * @typedef {Object} SelectOptions
@@ -470,8 +571,67 @@
     {#if collapseDesignTypography}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
 
+        <ContentFontSize bind:fontSize bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
-        collapse panel
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyFontSmoothing bind:fontSmoothing bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyFontStyle bind:fontStyle bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyFontWeight bind:fontWeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyFontVariantNumeric bind:fontVariantNumeric bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyLetterSpacing bind:letterSpacing bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyLineHeight bind:lineHeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyTextColor bind:textColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyTextDecoration bind:textDecoration bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyDecorationColor bind:decorationColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyDecorationStyle bind:decorationStyle bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyDecorationThickness bind:decorationThickness bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyUnderlineOffset bind:underlineOffset bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyTextTransform bind:textTransform bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyTextOverflow bind:textOverflow bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        
     </div>
     {/if}
 
@@ -501,7 +661,7 @@
     <div class="widgetPanelDivider"></div>
 
 
-
+    <div class="h-20"></div>
 
 
 
