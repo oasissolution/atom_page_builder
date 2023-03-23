@@ -6,6 +6,18 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.032] - 2022-03-23
+
+### Added
+ - Text Options - Design - Typography : Text Indent, Whitespace, Word Break
+
+### Changed
+
+
+### Fixed
+
+
+
 ## [0.0.1.031] - 2022-03-22
 
 ### Added

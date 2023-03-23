@@ -37,6 +37,9 @@
 	import TypographyUnderlineOffset from "./text/typography-underline-offset.svelte";
 	import TypographyTextTransform from "./text/typography-text-transform.svelte";
 	import TypographyTextOverflow from "./text/typography-text-overflow.svelte";
+	import TypographyTextIndent from "./text/typography-text-indent.svelte";
+	import TypographyWhitespace from "./text/typography-whitespace.svelte";
+	import TypographyWordbreak from "./text/typography-wordbreak.svelte";
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -132,6 +135,9 @@
         underlineOffset = "";
         textTransform = "";
         textOverflow = "";
+        textIndent = "";
+        whitespace = "";
+        wordbreak = "";
     }
 
 
@@ -355,6 +361,20 @@
      */
     let textOverflow;
 
+    /**
+     * @type string
+     */
+    let textIndent;
+
+    /**
+     * @type string
+     */
+    let whitespace;
+
+    /**
+     * @type string
+     */
+    let wordbreak;
 
     
     
@@ -628,6 +648,18 @@
         <div class="widgetPanelDivider"></div>
 
         <TypographyTextOverflow bind:textOverflow bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyTextIndent bind:textIndent bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyWhitespace bind:whitespace bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TypographyWordbreak bind:wordbreak bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
         <div class="widgetPanelDivider"></div>
 
