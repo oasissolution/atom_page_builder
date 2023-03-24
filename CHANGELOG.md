@@ -6,6 +6,21 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.033] - 2022-03-24
+
+### Added
+ - Div Options - Design : LAYOUT | SPACING | SIZING 
+ - Div Options - Content : Columns, 
+ - Div Options - Flexbox & Grid : Flex Basis, Flex Direction, Flex Wrap, Flex, Flex Grow, Flex Shrink 
+
+### Changed
+
+
+### Fixed
+
+
+
 ## [0.0.1.032] - 2022-03-23
 
 ### Added

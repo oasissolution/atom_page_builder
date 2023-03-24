@@ -1,9 +1,31 @@
 <script>
     import { onMount } from "svelte";
+    import { fade, fly, slide } from 'svelte/transition';
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
-
+    import Optionsbutton from "../../uicomponents/optionsbutton.svelte";
+	import Textarea from "../../uicomponents/textarea.svelte";
+	import Textinput from "../../uicomponents/textinput.svelte";
+	import Select from "../../uicomponents/select.svelte";
+	import LayoutDisplay from "./common/layout-display.svelte";
+	import LayoutPosition from "./common/layout-position.svelte";
+	import LayoutFloat from "./common/layout-float.svelte";
+	import LayoutOverflow from "./common/layout-overflow.svelte";
+	import LayoutVisibility from "./common/layout-visibility.svelte";
+	import LayoutZIndex from "./common/layout-z-index.svelte";
+	import SpacingPadding from "./common/spacing-padding.svelte";
+	import SpacingMargin from "./common/spacing-margin.svelte";
+	import SizingWidthHeight from "./common/sizing-width-height.svelte";
+	import SizingWidthHeightMax from "./common/sizing-width-height-max.svelte";
+	import SizingWidthHeightMin from "./common/sizing-width-height-min.svelte";
+	import ContentColumns from "./div/content-columns.svelte";
+	import FlexboxGridBasis from "./div/flexbox-grid-basis.svelte";
+	import FlexboxGridFlexDirection from "./div/flexbox-grid-flex-direction.svelte";
+	import FlexboxGridFlexWrap from "./div/flexbox-grid-flex-wrap.svelte";
+	import FlexboxGridFlex from "./div/flexbox-grid-flex.svelte";
+	import FlexboxGridFlexGrow from "./div/flexbox-grid-flex-grow.svelte";
+	import FlexboxGridFlexShrink from "./div/flexbox-grid-flex-shrink.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -42,14 +64,46 @@
     let activeElement;
 
     /**
+     * Used for sub elements to update themselves to current values.
+     * @type string
+    */
+    let elementDataLoaded="";
+
+    /**
      * Loads element data from JSON 
      */
     function loadElementData(){
         activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
 
-        classInput = activeElement?.data?.class;
+        classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
+
+        elementDataLoaded = classInput;
     }
 
+    /**
+     * Call this function when selection changes. This is to fix; when switching between two text elements if one has not set a variable then recent
+     * variable active is set to that element. If we clear variables and set to default, it will be upto loadElementData function.
+     *
+     * These are all default values of variables.
+     */
+     function clearOptionPanelVariables(){
+        classInput = "";
+        layoutDisplay = "";
+        layoutPosition = "";
+        layoutFloat = 0;
+        layoutOverflow = "";
+        layoutVisibility = "";
+        layoutZIndex = "";
+        spacingPadding = "";
+        spacingMargin = "";
+        contentColumns = "";
+        flexboxGridBasis = "";
+        flexboxGridFlexDirection = "";
+        flexboxGridFlexWrap = "";
+        flexboxGridFlex = "";
+        flexboxGridFlexGrow = "";
+        flexboxGridFlexShrink = "";
+    }
 
     /**
      * Update Editor Panel
@@ -73,24 +127,10 @@
     let selectedTabPageIndex = 0;
 
     /**
-     * Shows selected page.
-     * @param {number} index New page index to show.
-     */
-    function showPage(index){
-        selectedTabPageIndex = index;
-    }
-
-    /**
      * Class Value of Div
      * @type string
      */
     let classInput;
-
-    /**
-     * TextArea to edit class
-     * @type HTMLTextAreaElement
-     */
-    let classTextArea;
 
     /**
      * Holds state of page load.
@@ -102,6 +142,7 @@
      * Update ui whenever uuid changes (new element selected)
     */
     $: $globalSelectedElementUuidStore, (() => {
+        clearOptionPanelVariables();
         if(loaded == true){
             loadElementData();
         }
@@ -112,70 +153,270 @@
 
         loaded = true;
 
-        classTextArea.addEventListener("keypress", (e) => {
-            if(e.key === 'Enter' && !e.shiftKey){
-                e.preventDefault();
-                setClass();
-            }
-        });
-
     });
 
 
-
-
-    function setClass(){
-        console.log("From div options: " + classInput);
-
+    function updateClass(){
         if(activeElement){
             if(activeElement.data){
                 activeElement.data.class = classInput;
                 updateEditor();
             }
         }
-
-        
     }
 
-    import swal from 'sweetalert';
-    function testModal(){
-        swal({
-            title: "Delete ?",
-            text: "This is test",
-            icon: "warning",
-            buttons: ["No, keep it", "Yes, DELETE"],
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Element deleted", {
-                icon: "success",
-                });
-            } else {
-                swal("Kept element!");
-            }
-        });
+
+    /**
+     * Actual display class
+     * @type string
+     */
+    let layoutDisplay;
+
+    /**
+     * Actual position class
+     * @type string
+     */
+     let layoutPosition;
+
+    /**
+     * @type number
+     */
+    let layoutFloat;
+
+    /**
+     * @type string
+     */
+    let layoutOverflow;
+
+    /**
+     * @type string
+     */
+    let layoutVisibility;
+
+    /**
+     * @type string
+     */
+    let layoutZIndex;
+
+    /**
+     * @type string
+     */
+    let spacingPadding;
+
+    /**
+     * @type string
+     */
+    let spacingMargin;
+
+    /**
+     * @type string
+     */
+    let contentColumns;
+
+    /**
+     * @type string
+     */
+    let flexboxGridBasis;
+
+    /**
+     * @type string
+     */
+    let flexboxGridFlexDirection;
+
+    /**
+     * @type string
+     */
+    let flexboxGridFlexWrap;
+
+    /**
+     * @type string
+     */
+    let flexboxGridFlex;
+    
+    /**
+     * @type string
+     */
+    let flexboxGridFlexGrow;
+
+     /**
+     * @type string
+     */
+    let flexboxGridFlexShrink;
+    
+    
+    
+    let collapseDesignLayout = false;
+    function toggleDesignLayout(){
+        collapseDesignLayout = !collapseDesignLayout;
     }
+
+    let collapseDesignClass = false;
+    function toggleDesignClass(){
+        collapseDesignClass = !collapseDesignClass;
+    }
+
+    let collapseDesignSpacing = false;
+    function toggleDesignSpacing(){
+        collapseDesignSpacing = !collapseDesignSpacing;
+    }
+
+    let collapseDesignSizing = false;
+    function toggleDesignSizing(){
+        collapseDesignSizing = !collapseDesignSizing;
+    }
+
+    let collapseDesignFlexboxGrid = false;
+    function toggleDesignFlexboxGrid(){
+        collapseDesignFlexboxGrid = !collapseDesignFlexboxGrid;
+    }
+
 
 
 </script>
     <div class="widgetPanelSubTitle">Container Options</div>
+    <div class="h-4"></div>
 
+    <Optionsbutton items={["Content", "Design", "Animation"]} bind:value={selectedTabPageIndex}></Optionsbutton>
+
+    <div class="widgetPanelTabsDivider"></div>
     
-    <br/>
     {#if selectedTabPageIndex==0}
-    <!-- Tab Page 1 -->
-    <br/> Tailwind CSS
-    <br/>
-
-    <!-- <input type="text" on:change={test} bind:value={classInput}/> -->
-    <textarea bind:value={classInput} rows="6" bind:this={classTextArea}></textarea>
-    <br/>
-    <!-- <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white" on:click={testModal}>Update</button> -->
     
+    <ContentColumns bind:property={contentColumns} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
 
     {:else if selectedTabPageIndex==1}
-    Tab Page 2
+    
+    <button class="collapseButton" on:click={toggleDesignLayout}>
+        <span class="collapseHeader">LAYOUT</span>
+        {#if collapseDesignLayout}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignLayout}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <LayoutDisplay bind:layoutDisplay bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutPosition bind:layoutPosition bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutFloat bind:layoutFloat bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutOverflow bind:layoutOverflow bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutVisibility bind:layoutVisibility bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <LayoutZIndex bind:layoutZIndex bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    </div> <!-- collapseDesignLayout -->
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignSpacing}>
+        <span class="collapseHeader">SPACING</span>
+        {#if collapseDesignSpacing}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignSpacing}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <SpacingPadding bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <SpacingMargin bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <!-- <div class="widgetPanelDivider"></div> -->
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignSizing}>
+        <span class="collapseHeader">SIZING</span>
+        {#if collapseDesignSizing}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignSizing}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <SizingWidthHeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <SizingWidthHeightMax bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <SizingWidthHeightMin bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignFlexboxGrid}>
+        <span class="collapseHeader">FLEXBOX & GRID</span>
+        {#if collapseDesignFlexboxGrid}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignFlexboxGrid}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <FlexboxGridBasis bind:property={flexboxGridBasis} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridFlexDirection bind:property={flexboxGridFlexDirection} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridFlexWrap bind:property={flexboxGridFlexWrap} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridFlex bind:property={flexboxGridFlex} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridFlexGrow bind:property={flexboxGridFlexGrow} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridFlexShrink bind:property={flexboxGridFlexShrink} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+
     {/if}
 
 
