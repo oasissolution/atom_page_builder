@@ -127,6 +127,6 @@
 
 
 <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <span title="Utilities for controlling the number of columns within an element.">Columns</span>
+    <span title="Utilities for controlling the number of columns within an element. Use the columns utilities to set the number of columns that should be created for the content within an element. The column width will be automatically adjusted to accommodate that number.">Columns</span>
     <Select options={propertyOptions} bind:value={property}/>
 </div>

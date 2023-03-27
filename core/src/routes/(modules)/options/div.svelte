@@ -26,6 +26,13 @@
 	import FlexboxGridFlex from "./div/flexbox-grid-flex.svelte";
 	import FlexboxGridFlexGrow from "./div/flexbox-grid-flex-grow.svelte";
 	import FlexboxGridFlexShrink from "./div/flexbox-grid-flex-shrink.svelte";
+	import FlexboxGridOrder from "./div/flexbox-grid-order.svelte";
+	import FlexboxGridTemplateColumns from "./div/flexbox-grid-template-columns.svelte";
+	import FlexboxGridColumnsStartEnd from "./div/flexbox-grid-columns-start-end.svelte";
+	import FlexboxGridColumnsSpan from "./div/flexbox-grid-columns-span.svelte";
+    import FlexboxGridTemplateRows from "./div/flexbox-grid-template-rows.svelte";
+    import FlexboxGridRowsSpan from "./div/flexbox-grid-rows-span.svelte";
+    import FlexboxGridRowsStartEnd from "./div/flexbox-grid-rows-start-end.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -103,6 +110,13 @@
         flexboxGridFlex = "";
         flexboxGridFlexGrow = "";
         flexboxGridFlexShrink = "";
+        flexboxGridFlexOrder = "";
+        flexboxGridTemplateColumns = "";
+        flexboxGridColumnsStartEnd = "";
+        flexboxGridColumnsSpan = "";
+        flexboxGridTemplateRows = "";
+        flexboxGridRowsStartEnd = "";
+        flexboxGridRowsSpan = "";
     }
 
     /**
@@ -238,10 +252,45 @@
      */
     let flexboxGridFlexGrow;
 
-     /**
+    /**
      * @type string
      */
     let flexboxGridFlexShrink;
+    
+    /**
+     * @type string
+     */
+    let flexboxGridFlexOrder;
+
+    /**
+     * @type string
+     */
+    let flexboxGridTemplateColumns;
+
+    /**
+     * @type string
+     */
+    let flexboxGridColumnsStartEnd;
+
+    /**
+     * @type string
+     */
+    let flexboxGridColumnsSpan;
+
+    /**
+     * @type string
+     */
+     let flexboxGridTemplateRows;
+
+    /**
+     * @type string
+     */
+    let flexboxGridRowsStartEnd;
+
+    /**
+     * @type string
+     */
+    let flexboxGridRowsSpan;
     
     
     
@@ -410,13 +459,42 @@
 
         <FlexboxGridFlexShrink bind:property={flexboxGridFlexShrink} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridOrder bind:property={flexboxGridFlexOrder} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
         
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridTemplateColumns bind:property={flexboxGridTemplateColumns} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+        
+        <FlexboxGridColumnsSpan bind:property={flexboxGridColumnsSpan} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+        
+        <FlexboxGridColumnsStartEnd bind:property={flexboxGridColumnsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridTemplateRows bind:property={flexboxGridTemplateRows} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+        
+        <FlexboxGridRowsSpan bind:property={flexboxGridRowsSpan} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+        
+        <FlexboxGridRowsStartEnd bind:property={flexboxGridRowsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+
+
     </div>
     {/if}
 
     <div class="widgetPanelDivider"></div>
 
-
+    <div class="h-20"></div>
     {/if}
 
 
