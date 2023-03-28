@@ -6,6 +6,21 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.035] - 2022-03-28
+
+### Added
+ - Div Options - Flexbox & Grid : Grid Auto Flow, Grid Auto Columns, Grid Auto Rows, Gap, Gap X, Gap Y, Justify Content, Justify Items, Justify Self
+ - Div Options - Flexbox & Grid : Align Content, Align Items, Align Self, Place Content, Place Items, Place Self
+
+### Changed
+
+
+### Fixed
+
+
+
+
 ## [0.0.1.034] - 2022-03-27
 
 ### Added

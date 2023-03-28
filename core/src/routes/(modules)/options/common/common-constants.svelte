@@ -1124,6 +1124,143 @@
     ];
 
 
+    /**
+    * Tailwind Flexbox & Grid Gap classes
+    * @type Array<SelectOptions>
+    */
+    export let gapClassOptions = [
+
+        {name: "96",    value: "gap-96",    info: "gap: 24rem; /* 384px */"},
+        {name: "80",    value: "gap-80",    info: "gap: 20rem; /* 320px */"},
+        {name: "72",    value: "gap-72",    info: "gap: 18rem; /* 288px */"},
+        {name: "64",    value: "gap-64",    info: "gap: 16rem; /* 256px */"},
+        {name: "60",    value: "gap-60",    info: "gap: 15rem; /* 240px */"},
+        {name: "56",    value: "gap-56",    info: "gap: 14rem; /* 224px */"},
+        {name: "52",    value: "gap-52",    info: "gap: 13rem; /* 208px */"},
+        {name: "48",    value: "gap-48",    info: "gap: 12rem; /* 192px */"},
+        {name: "44",    value: "gap-44",    info: "gap: 11rem; /* 176px */"},
+        {name: "40",    value: "gap-40",    info: "gap: 10rem; /* 160px */"},
+        {name: "36",    value: "gap-36",    info: "gap: 9rem; /* 144px */"},
+        {name: "32",    value: "gap-32",    info: "gap: 8rem; /* 128px */"},
+        {name: "28",    value: "gap-28",    info: "gap: 7rem; /* 112px */"},
+        {name: "24",    value: "gap-24",    info: "gap: 6rem; /* 96px */"},
+        {name: "20",    value: "gap-20",    info: "gap: 5rem; /* 80px */"},
+        {name: "16",    value: "gap-16",    info: "gap: 4rem; /* 64px */"},
+        {name: "14",    value: "gap-14",    info: "gap: 3.5rem; /* 56px */"},
+        {name: "12",    value: "gap-12",    info: "gap: 3rem; /* 48px */"},
+        {name: "11",    value: "gap-11",    info: "gap: 2.75rem; /* 44px */"},
+        {name: "10",    value: "gap-10",    info: "gap: 2.5rem; /* 40px */"},
+        {name: "9",     value: "gap-9",     info: "gap: 2.25rem; /* 36px */"},
+        {name: "8",     value: "gap-8",     info: "gap: 2rem; /* 32px */"},
+        {name: "7",     value: "gap-7",     info: "gap: 1.75rem; /* 28px */"},
+        {name: "6",     value: "gap-6",     info: "gap: 1.5rem; /* 24px */"},
+        {name: "5",     value: "gap-5",     info: "gap: 1.25rem; /* 20px */"},
+        {name: "4",     value: "gap-4",     info: "gap: 1rem; /* 16px */"},
+        {name: "3.5",   value: "gap-3.5",   info: "gap: 0.875rem; /* 14px */"},
+        {name: "3",     value: "gap-3",     info: "gap: 0.75rem; /* 12px */"},
+        {name: "2.5",   value: "gap-2.5",   info: "gap: 0.625rem; /* 10px */"},
+        {name: "2",     value: "gap-2",     info: "gap: 0.5rem; /* 8px */"},
+        {name: "1.5",   value: "gap-1.5",   info: "gap: 0.375rem; /* 6px */"},
+        {name: "1",     value: "gap-1",     info: "gap: 0.25rem; /* 4px */"},
+        {name: "0.5",   value: "gap-0.5",   info: "gap: 0.125rem; /* 2px */"},
+        {name: "px",    value: "gap-px",    info: "gap: 1px;"},
+        {name: "0",     value: "gap-0",     info: "gap: 0px;"},
+
+        {name: "-",     value: "",          info: "Default - No value"},
+
+        
+    ];
+
+    /**
+    * Tailwind Flexbox & Grid Gap X (Column) classes
+    * @type Array<SelectOptions>
+    */
+    export let gapXClassOptions = [
+        {name: "X 96",    value: "gap-x-96",    info: "column-gap: 24rem; /* 384px */"},
+        {name: "X 80",    value: "gap-x-80",    info: "column-gap: 20rem; /* 320px */"},
+        {name: "X 72",    value: "gap-x-72",    info: "column-gap: 18rem; /* 288px */"},
+        {name: "X 64",    value: "gap-x-64",    info: "column-gap: 16rem; /* 256px */"},
+        {name: "X 60",    value: "gap-x-60",    info: "column-gap: 15rem; /* 240px */"},
+        {name: "X 56",    value: "gap-x-56",    info: "column-gap: 14rem; /* 224px */"},
+        {name: "X 52",    value: "gap-x-52",    info: "column-gap: 13rem; /* 208px */"},
+        {name: "X 48",    value: "gap-x-48",    info: "column-gap: 12rem; /* 192px */"},
+        {name: "X 44",    value: "gap-x-44",    info: "column-gap: 11rem; /* 176px */"},
+        {name: "X 40",    value: "gap-x-40",    info: "column-gap: 10rem; /* 160px */"},
+        {name: "X 36",    value: "gap-x-36",    info: "column-gap: 9rem; /* 144px */"},
+        {name: "X 32",    value: "gap-x-32",    info: "column-gap: 8rem; /* 128px */"},
+        {name: "X 28",    value: "gap-x-28",    info: "column-gap: 7rem; /* 112px */"},
+        {name: "X 24",    value: "gap-x-24",    info: "column-gap: 6rem; /* 96px */"},
+        {name: "X 20",    value: "gap-x-20",    info: "column-gap: 5rem; /* 80px */"},
+        {name: "X 16",    value: "gap-x-16",    info: "column-gap: 4rem; /* 64px */"},
+        {name: "X 14",    value: "gap-x-14",    info: "column-gap: 3.5rem; /* 56px */"},
+        {name: "X 12",    value: "gap-x-12",    info: "column-gap: 3rem; /* 48px */"},
+        {name: "X 11",    value: "gap-x-11",    info: "column-gap: 2.75rem; /* 44px */"},
+        {name: "X 10",    value: "gap-x-10",    info: "column-gap: 2.5rem; /* 40px */"},
+        {name: "X 9",     value: "gap-x-9",     info: "column-gap: 2.25rem; /* 36px */"},
+        {name: "X 8",     value: "gap-x-8",     info: "column-gap: 2rem; /* 32px */"},
+        {name: "X 7",     value: "gap-x-7",     info: "column-gap: 1.75rem; /* 28px */"},
+        {name: "X 6",     value: "gap-x-6",     info: "column-gap: 1.5rem; /* 24px */"},
+        {name: "X 5",     value: "gap-x-5",     info: "column-gap: 1.25rem; /* 20px */"},
+        {name: "X 4",     value: "gap-x-4",     info: "column-gap: 1rem; /* 16px */"},
+        {name: "X 3.5",   value: "gap-x-3.5",   info: "column-gap: 0.875rem; /* 14px */"},
+        {name: "X 3",     value: "gap-x-3",     info: "column-gap: 0.75rem; /* 12px */"},
+        {name: "X 2.5",   value: "gap-x-2.5",   info: "column-gap: 0.625rem; /* 10px */"},
+        {name: "X 2",     value: "gap-x-2",     info: "column-gap: 0.5rem; /* 8px */"},
+        {name: "X 1.5",   value: "gap-x-1.5",   info: "column-gap: 0.375rem; /* 6px */"},
+        {name: "X 1",     value: "gap-x-1",     info: "column-gap: 0.25rem; /* 4px */"},
+        {name: "X 0.5",   value: "gap-x-0.5",   info: "column-gap: 0.125rem; /* 2px */"},
+        {name: "X px",    value: "gap-x-px",    info: "column-gap: 1px;"},
+        {name: "X 0",     value: "gap-x-0",     info: "column-gap: 0px;"},
+        {name: "-",     value: "",          info: "Default - No value"},
+    ];
+
+    /**
+    * Tailwind Flexbox & Grid Gap Y (Row) classes
+    * @type Array<SelectOptions>
+    */
+    export let gapYClassOptions = [
+        {name: "Y 96",    value: "gap-y-96",    info: "row-gap: 24rem; /* 384px */"},
+        {name: "Y 80",    value: "gap-y-80",    info: "row-gap: 20rem; /* 320px */"},
+        {name: "Y 72",    value: "gap-y-72",    info: "row-gap: 18rem; /* 288px */"},
+        {name: "Y 64",    value: "gap-y-64",    info: "row-gap: 16rem; /* 256px */"},
+        {name: "Y 60",    value: "gap-y-60",    info: "row-gap: 15rem; /* 240px */"},
+        {name: "Y 56",    value: "gap-y-56",    info: "row-gap: 14rem; /* 224px */"},
+        {name: "Y 52",    value: "gap-y-52",    info: "row-gap: 13rem; /* 208px */"},
+        {name: "Y 48",    value: "gap-y-48",    info: "row-gap: 12rem; /* 192px */"},
+        {name: "Y 44",    value: "gap-y-44",    info: "row-gap: 11rem; /* 176px */"},
+        {name: "Y 40",    value: "gap-y-40",    info: "row-gap: 10rem; /* 160px */"},
+        {name: "Y 36",    value: "gap-y-36",    info: "row-gap: 9rem; /* 144px */"},
+        {name: "Y 32",    value: "gap-y-32",    info: "row-gap: 8rem; /* 128px */"},
+        {name: "Y 28",    value: "gap-y-28",    info: "row-gap: 7rem; /* 112px */"},
+        {name: "Y 24",    value: "gap-y-24",    info: "row-gap: 6rem; /* 96px */"},
+        {name: "Y 20",    value: "gap-y-20",    info: "row-gap: 5rem; /* 80px */"},
+        {name: "Y 16",    value: "gap-y-16",    info: "row-gap: 4rem; /* 64px */"},
+        {name: "Y 14",    value: "gap-y-14",    info: "row-gap: 3.5rem; /* 56px */"},
+        {name: "Y 12",    value: "gap-y-12",    info: "row-gap: 3rem; /* 48px */"},
+        {name: "Y 11",    value: "gap-y-11",    info: "row-gap: 2.75rem; /* 44px */"},
+        {name: "Y 10",    value: "gap-y-10",    info: "row-gap: 2.5rem; /* 40px */"},
+        {name: "Y 9",     value: "gap-y-9",     info: "row-gap: 2.25rem; /* 36px */"},
+        {name: "Y 8",     value: "gap-y-8",     info: "row-gap: 2rem; /* 32px */"},
+        {name: "Y 7",     value: "gap-y-7",     info: "row-gap: 1.75rem; /* 28px */"},
+        {name: "Y 6",     value: "gap-y-6",     info: "row-gap: 1.5rem; /* 24px */"},
+        {name: "Y 5",     value: "gap-y-5",     info: "row-gap: 1.25rem; /* 20px */"},
+        {name: "Y 4",     value: "gap-y-4",     info: "row-gap: 1rem; /* 16px */"},
+        {name: "Y 3.5",   value: "gap-y-3.5",   info: "row-gap: 0.875rem; /* 14px */"},
+        {name: "Y 3",     value: "gap-y-3",     info: "row-gap: 0.75rem; /* 12px */"},
+        {name: "Y 2.5",   value: "gap-y-2.5",   info: "row-gap: 0.625rem; /* 10px */"},
+        {name: "Y 2",     value: "gap-y-2",     info: "row-gap: 0.5rem; /* 8px */"},
+        {name: "Y 1.5",   value: "gap-y-1.5",   info: "row-gap: 0.375rem; /* 6px */"},
+        {name: "Y 1",     value: "gap-y-1",     info: "row-gap: 0.25rem; /* 4px */"},
+        {name: "Y 0.5",   value: "gap-y-0.5",   info: "row-gap: 0.125rem; /* 2px */"},
+        {name: "Y px",    value: "gap-y-px",    info: "row-gap: 1px;"},
+        {name: "Y 0",     value: "gap-y-0",     info: "row-gap: 0px;"},
+        {name: "-",       value: "",            info: "Default - No value"},
+    ];
+
+
+
+
+
 
     // {name: "",      value: "",      info: ""},
     // {name: "",      value: "",      info: ""},

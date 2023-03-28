@@ -33,6 +33,21 @@
     import FlexboxGridTemplateRows from "./div/flexbox-grid-template-rows.svelte";
     import FlexboxGridRowsSpan from "./div/flexbox-grid-rows-span.svelte";
     import FlexboxGridRowsStartEnd from "./div/flexbox-grid-rows-start-end.svelte";
+	import FlexboxGridAutoFlow from "./div/flexbox-grid-auto-flow.svelte";
+	import FlexboxGridAutoColumns from "./div/flexbox-grid-auto-columns.svelte";
+	import FlexboxGridAutoRows from "./div/flexbox-grid-auto-rows.svelte";
+	import FlexboxGridGap from "./div/flexbox-grid-gap.svelte";
+	import FlexboxGridGapX from "./div/flexbox-grid-gap-x.svelte";
+	import FlexboxGridGapY from "./div/flexbox-grid-gap-y.svelte";
+	import FlexboxGridJustifyContent from "./div/flexbox-grid-justify-content.svelte";
+	import FlexboxGridJustifyItems from "./div/flexbox-grid-justify-items.svelte";
+	import FlexboxGridJustifySelf from "./div/flexbox-grid-justify-self.svelte";
+	import FlexboxGridAlignContent from "./div/flexbox-grid-align-content.svelte";
+	import FlexboxGridAlignItems from "./div/flexbox-grid-align-items.svelte";
+	import FlexboxGridAlignSelf from "./div/flexbox-grid-align-self.svelte";
+	import FlexboxGridPlaceContent from "./div/flexbox-grid-place-content.svelte";
+	import FlexboxGridPlaceItems from "./div/flexbox-grid-place-items.svelte";
+	import FlexboxGridPlaceSelf from "./div/flexbox-grid-place-self.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -117,8 +132,23 @@
         flexboxGridTemplateRows = "";
         flexboxGridRowsStartEnd = "";
         flexboxGridRowsSpan = "";
+        flexboxGridAutoFlow = "";
+        flexboxGridAutoColumns = "";
+        flexboxGridAutoRows = "";
+        flexboxGridGap = "";
+        flexboxGridGapX = "";
+        flexboxGridGapY = "";
+        flexboxGridJustifyContent = "";
+        flexboxGridJustifyItems = "";
+        flexboxGridJustifySelf = "";
+        flexboxGridAlignContent = "";
+        flexboxGridAlignItems = "";
+        flexboxGridAlignSelf = "";
+        flexboxGridPlaceContent = "";
+        flexboxGridPlaceItems = "";
+        flexboxGridPlaceSelf = "";
     }
-
+    
     /**
      * Update Editor Panel
      */
@@ -291,6 +321,84 @@
      * @type string
      */
     let flexboxGridRowsSpan;
+    
+    /**
+     * @type string
+     */
+    let flexboxGridAutoFlow;
+
+    /**
+     * @type string
+     */
+    let flexboxGridAutoColumns;
+
+    /**
+     * @type string
+     */
+    let flexboxGridAutoRows;
+
+    /**
+     * @type string
+     */
+     let flexboxGridGap;
+
+    /**
+     * @type string
+     */
+    let flexboxGridGapX;
+
+    /**
+     * @type string
+     */
+    let flexboxGridGapY;
+
+    /**
+     * @type string
+     */
+    let flexboxGridJustifyContent;
+
+    /**
+     * @type string
+     */
+    let flexboxGridJustifyItems;
+
+    /**
+     * @type string
+     */
+    let flexboxGridJustifySelf;
+    
+    /**
+     * @type string
+     */
+    let flexboxGridAlignContent;
+
+    /**
+     * @type string
+     */
+    let flexboxGridAlignItems;
+
+    /**
+     * @type string
+     */
+    let flexboxGridAlignSelf;
+
+    /**
+     * @type string
+     */
+     let flexboxGridPlaceContent;
+
+    /**
+     * @type string
+     */
+    let flexboxGridPlaceItems;
+
+    /**
+     * @type string
+     */
+    let flexboxGridPlaceSelf;
+
+
+
     
     
     
@@ -487,6 +595,71 @@
         
         <FlexboxGridRowsStartEnd bind:property={flexboxGridRowsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
         
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridAutoFlow bind:property={flexboxGridAutoFlow} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridAutoColumns bind:property={flexboxGridAutoColumns} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridAutoRows bind:property={flexboxGridAutoRows} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridGap bind:property={flexboxGridGap} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridGapX bind:property={flexboxGridGapX} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridGapY bind:property={flexboxGridGapY} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridJustifyContent bind:property={flexboxGridJustifyContent} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridJustifyItems bind:property={flexboxGridJustifyItems} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridJustifySelf bind:property={flexboxGridJustifySelf} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridAlignContent bind:property={flexboxGridAlignContent} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridAlignItems bind:property={flexboxGridAlignItems} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridAlignSelf bind:property={flexboxGridAlignSelf} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridPlaceContent bind:property={flexboxGridPlaceContent} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridPlaceItems bind:property={flexboxGridPlaceItems} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridPlaceSelf bind:property={flexboxGridPlaceSelf} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+
+
+
+
+
 
 
     </div>
