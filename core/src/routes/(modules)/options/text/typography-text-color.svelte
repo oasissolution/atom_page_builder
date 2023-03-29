@@ -2,6 +2,7 @@
 
     import "../../../../app.css";
     import SelectColor from "../../../uicomponents/select-color.svelte";
+    import ColorBuilder, { ColorBuilderType } from "../../../uicomponents/color-builder.svelte";
 
     /**
      * @type boolean
@@ -23,6 +24,7 @@
 
     import { createEventDispatcher } from 'svelte';
 	
+	
 
     const dispatch = createEventDispatcher();
 
@@ -36,46 +38,46 @@
     */
     export let elementDataLoaded;
 
-    $: textColor, (()=>{
-        if(loaded == true) {
+    // $: textColor, (()=>{
+    //     if(loaded == true) {
 
-            var newClass = "";
+    //         var newClass = "";
 
-            classInput.split(" ").forEach( cls => {
+    //         classInput.split(" ").forEach( cls => {
 
-                /**
-                 * Current class in elementDataLoaded array without leading and trailing spaces.
-                 */
-                var currentClass = cls.trim();
+    //             /**
+    //              * Current class in elementDataLoaded array without leading and trailing spaces.
+    //              */
+    //             var currentClass = cls.trim();
 
-                /**
-                 * Variable to determine selected unit from class definition.
-                */
-                var ctl = "";
+    //             /**
+    //              * Variable to determine selected unit from class definition.
+    //             */
+    //             var ctl = "";
 
-                if(currentClass.startsWith("text-")){
-                    ctl=currentClass.replace("text-", "");
-                    if(!ctl.startsWith("[#")){
-                        newClass += " " + currentClass;
-                    }
-                }else{
-                    newClass += " " + currentClass;
-                }
+    //             if(currentClass.startsWith("text-")){
+    //                 ctl=currentClass.replace("text-", "");
+    //                 if(!ctl.startsWith("[#")){
+    //                     newClass += " " + currentClass;
+    //                 }
+    //             }else{
+    //                 newClass += " " + currentClass;
+    //             }
                
-            });
+    //         });
 
-            classInput = newClass.trim() + " " + textColor;
-            updateClass();
-        }
-    })();
+    //         classInput = newClass.trim() + " " + textColor;
+    //         updateClass();
+    //     }
+    // })();
 
 
 
 </script>
 
+<ColorBuilder title={"Text Color"} tooltip={"Utility for controlling the text color of an element."} on:updateClass bind:loaded bind:elementDataLoaded bind:classInput target={ColorBuilderType.TEXT} />
 
-<div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <span title="Utility for controlling the text color of an element.">Text Color</span>
-    <SelectColor header={"text"} bind:loaded bind:elementDataLoaded bind:value={textColor}/>
-
-</div>
+<!-- <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center"> -->
+    <!-- <span title="Utility for controlling the text color of an element.">Text Color</span>
+    <SelectColor header={"text"} bind:loaded bind:elementDataLoaded bind:value={textColor}/> -->
+<!-- </div> -->

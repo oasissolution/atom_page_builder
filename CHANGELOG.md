@@ -5,6 +5,16 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.036] - 2022-03-29
+
+### Added
+ - Atom Ui Element: Color Builder (Custom color picker instead of classic version. Fixed Color finished.)
+
+### Changed
+
+
+### Fixed
+
 
 
 ## [0.0.1.035] - 2022-03-28
