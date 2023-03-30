@@ -661,7 +661,7 @@
 
         <TypographyWordbreak bind:wordbreak bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
-        <div class="widgetPanelDivider"></div>
+        <!-- <div class="widgetPanelDivider"></div> -->
 
         
     </div>

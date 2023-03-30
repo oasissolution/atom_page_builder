@@ -26,7 +26,7 @@
     import { globalThemeStore } from "../globals/globalstores.js";
     import ColorPicker from 'svelte-awesome-color-picker';
     import { fade, fly, slide } from 'svelte/transition';
-
+    import SortableList from 'svelte-sortable-list';
     import { writable } from "svelte/store";
 
     /**
@@ -66,56 +66,71 @@
     */
     export let elementDataLoaded;
 
+    let fixedColor = writable("#000001");
 
-    // ColorBuilderType.TEXT variables
-
-    let typeText_value = "";
-    let typeText_value_hex = writable("#000001");
-
-    let collapseButtonFixedHexColor = writable("#000001");
+    /**
+     * @type Writable<Array<string>>
+     */
+    let gradientStops = writable([]);
 
     let loadedInside = false;
 
     $: loaded, (()=>{
         if(loaded == true && loadedInside == false) {
 
-            elementDataLoaded.split(" ").forEach( cls => {
+            switch(target){
+                case ColorBuilderType.TEXT:
 
-                /**
-                 * Current class in elementDataLoaded array without leading and trailing spaces.
-                 */
-                var currentClass = cls.trim();
+                    elementDataLoaded.split(" ").forEach( cls => {
+                    
+                        var currentClass = cls.trim();
+                        var ctl = "";
 
-                /**
-                 * Variable to determine selected unit from class definition.
-                */
-                var ctl = "";
-
-                switch(target){
-                    case ColorBuilderType.TEXT:
                         if(currentClass.startsWith("text-")){
                             ctl=currentClass.replace("text-", "");
                             if(ctl.startsWith("[#")){
                                 ctl = ctl.replace("[#","").replace("]","");
-                                typeText_value = "text-[#" + ctl + "]";
-                                typeText_value_hex.set("#" + ctl);
-                                collapseButtonFixedHexColor.set("#" + ctl);
+                                fixedColor.set("#" + ctl);
                                 isGradient = 0;
                             } else if(ctl.startsWith("transparent")){
                                 isGradient = 1;
-
                             }
                             
                         }
+                    });
 
-                        break;
-                    case ColorBuilderType.TEXTDECORATION:
-                        break;
-                    case ColorBuilderType.BACKGROUND:
-                        break;
-                }
+                    if(isGradient == 1){
+                        /**
+                         * @type Array<string>
+                         */
+                        var definedGradient = [];
+                        elementDataLoaded.split(" ").forEach( cls => {
+                            var currentClass = cls.trim();
+                            if(
+                                currentClass.startsWith("from-") || 
+                                currentClass.startsWith("via-") || 
+                                currentClass.startsWith("to-")
+                            ){
+                                definedGradient.push(currentClass);
+                            }else if(currentClass.startsWith("bg-gradient-")){
+                                gradientDirection = currentClass;
+                            }
+                        });
+                        gradientStops.set(definedGradient);
+                        // gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
+                        gradientStopPreview.set("text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass());
+                    }
 
-            });
+                    break;
+                case ColorBuilderType.TEXTDECORATION:
+                    break;
+                case ColorBuilderType.BACKGROUND:
+                    break;
+            }
+
+
+
+            
 
             loadedInside = true;
 
@@ -128,6 +143,8 @@
 
                 var newClass = "";
                 //Remove all text color related classes
+
+                // classInput = [...new Set(classInput.split(" "))].toString();
                 classInput.split(" ").forEach( cls => {
                     var currentClass = cls.trim();
                     var ctl = "";
@@ -135,23 +152,30 @@
                         ctl=currentClass.replace("text-", "");
                         if(!ctl.startsWith("[#") && !ctl.startsWith("transparent")){
                             newClass += " " + currentClass;
-                        }else if(ctl.startsWith("transparent")){
-
                         }
+                    
+                    }else if(
+                        currentClass.startsWith("bg-gradient-") || 
+                        currentClass.startsWith("bg-clip-") || 
+                        currentClass.startsWith("from-") || 
+                        currentClass.startsWith("via-") || 
+                        currentClass.startsWith("to-")
+                    ){
+                        //Do nothing. just removed classes.
+                    
                     }else{
                         newClass += " " + currentClass;
                     }
                 });
 
                 if(isGradient == 0){
-                    if(typeText_value != ""){
-                        classInput = newClass.trim() + " " + typeText_value;
-                        typeText_value_hex.set(typeText_value.replace("text-[", "").replace("]",""));
-                        collapseButtonFixedHexColor.set(typeText_value.replace("text-[", "").replace("]",""));
-                        updateClass();
-                    }
+                    classInput = newClass.trim() + " " + "text-[" + $fixedColor + "]";
+                    updateClass();
                 }else{
-
+                    classInput = newClass.trim() + " " + "text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass();
+                    updateClass();
+                    gradientStopPreview.set("text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass());
+                    // gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
                 }
                 
 
@@ -165,6 +189,9 @@
 
     import { createEventDispatcher, onMount } from 'svelte';
 	import Optionsbutton from "./optionsbutton.svelte";
+	import Select from "./select.svelte";
+	import Button from "./button.svelte";
+	import { contains } from "jquery";
 
     const dispatch = createEventDispatcher();
 
@@ -185,7 +212,7 @@
      function setColor(event){
         var {hsv, rgb, hex, color} = event.detail;
         if(loaded == true && hex != "#000001"){
-            typeText_value = "text-[" + hex + "]";
+            fixedColor.set(hex);
             updateClassInside();
         }
     }
@@ -194,6 +221,117 @@
 
     let isGradient = 0;
 
+    let gradientDirection = "";
+
+    /**
+     * @typedef {Object} SelectOptions
+     * @property {string} value
+     * @property {string} name
+     * @property {string} info
+    */
+
+    /**
+     * Value of element
+     * @type Array<SelectOptions>
+     */
+    let gradientDirectionOptions = [
+        {name: "Default",       value: "",                  info: "Default - No value"},
+        {name: "None",          value: "bg-none",           info: "background-image: none;"},
+        {name: "Top",           value: "bg-gradient-to-t",  info: "background-image: linear-gradient(to top, var(--tw-gradient-stops));"},
+        {name: "Top Right",     value: "bg-gradient-to-tr", info: "background-image: linear-gradient(to top right, var(--tw-gradient-stops));"},
+        {name: "Right",         value: "bg-gradient-to-r",  info: "background-image: linear-gradient(to right, var(--tw-gradient-stops));"},
+        {name: "Bottom Right",  value: "bg-gradient-to-br", info: "background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));"},
+        {name: "Bottom",        value: "bg-gradient-to-b",  info: "background-image: linear-gradient(to bottom, var(--tw-gradient-stops));"},
+        {name: "Bottom Left",   value: "bg-gradient-to-bl", info: "background-image: linear-gradient(to bottom left, var(--tw-gradient-stops));"},
+        {name: "Left",          value: "bg-gradient-to-l",  info: "background-image: linear-gradient(to left, var(--tw-gradient-stops));"},
+        {name: "Top Left",      value: "bg-gradient-to-tl", info: "background-image: linear-gradient(to top left, var(--tw-gradient-stops));"},
+    ];
+
+    function convertGradientArrayToClass(){
+        var newClass = "";
+        $gradientStops.forEach(cls => {
+            newClass += " " + cls;
+        });
+        return newClass;
+        // return "text-left text-transparent bg-clip-text bg-gradient-to-r  from-[#cc1] from-0%";
+    }
+
+    function convertGradientArrayToClassForButton(){
+        var newClass = "";
+        $gradientStops.forEach(cls => {
+            if(!cls.startsWith("text-") && !cls.startsWith("bg-clip-")) newClass += " " + cls;
+        });
+        return newClass;
+    }
+
+    // $: $gradientStops, (()=>{
+    //     updateClassInside();
+    // })();
+
+    /**
+     * @type Writable<string>
+     */
+    let gradientStopPreview = writable("");
+
+    /**
+     * @type Writable<Array<JSON>>
+     */
+    let gradientStopListStore = writable([]);
+    let gradientStopList = $gradientStopListStore;
+    $: gradientStopListStore.set(gradientStopList);
+
+    function addStop(){
+        gradientStopList.push({"color": "#fffff1", "stop": 0, "id": gradientStopList.length ?? 0});
+        gradientStopList.push({"color": "#cc1000", "stop": 70, "id": gradientStopList.length ?? 60});
+        console.log(JSON.stringify(gradientStopList));
+        updateStops();
+    }
+
+
+    function updateStops(){
+
+        /**
+         * @type Array<string>
+         */
+        var newList = [];
+        var counter = 0;
+        $gradientStopListStore.forEach(element => {
+            if(counter == 0){
+                newList.push("from-[" + element.color + "]");
+                newList.push("from-" + element.stop + "%");
+            
+            }else if(counter == $gradientStopListStore.length -1){
+                newList.push("to-[" + element.color + "]");
+                newList.push("to-" + element.stop + "%");
+            }else{
+                newList.push("via-[" + element.color + "]");
+                newList.push("via-" + element.stop + "%");
+            }
+            counter++;
+        });
+
+        // console.log(JSON.stringify("newList : " + newList));
+
+        gradientStops.set(newList);
+        updateClassInside();
+    }
+
+    const sortList = ev => {gradientStopList = ev.detail};
+
+
+    /**
+     * Updates selected color
+     * @param {CustomEvent} event This event fires from "ColorPicker"
+     */
+     function updateColorFromList(event, id){
+        var {hsv, rgb, hex, color} = event.detail;
+        gradientStopList.forEach(itm => {
+            if(itm.id == id){
+                itm[color]=hex;
+            }
+        });
+    }
+
 </script>
 
 <div class="block w-full">
@@ -201,7 +339,9 @@
         style="
             --color:{$globalThemeStore.input.selectColor.color};
             --backgroundColor:{$globalThemeStore.input.selectColor.backgroundColor};
-            --collapseButtonFixedHexColor:{$collapseButtonFixedHexColor};
+            --collapseButtonFixedHexColor:{$fixedColor};
+            --buttonBackgroundColor:{$globalThemeStore.button.passive.backgroundColor};
+            --buttonColor:{$globalThemeStore.button.passive.backgroundColor};
         "
     >
 
@@ -210,7 +350,7 @@
         {#if isGradient == 0}
         <button class="w-8 h-8 rounded-full collapseButtonColor border" on:click={() => showCollapsedPanel = !showCollapsedPanel}>&nbsp;</button>
         {:else}
-        <button class="w-8 h-8 rounded-full border-sky-500 border" on:click={() => showCollapsedPanel = !showCollapsedPanel}>&nbsp;</button>
+        <button class="w-8 h-8 rounded-full border {convertGradientArrayToClassForButton()}" on:click={() => showCollapsedPanel = !showCollapsedPanel}>&nbsp;</button>
         {/if}
 
     </div>
@@ -224,15 +364,56 @@
         <div class="flex flex-row min-w-[130px] h-8 mt-2 pr-2 place-content-start items-center">
             <div class="h-4 flex place-content-center items-center font-bold">
                 <ColorPicker 
-                    label={$typeText_value_hex}
-                    hex={$typeText_value_hex}
+                    label={$fixedColor}
+                    hex={$fixedColor}
                     on:input={(event) => setColor(event)}
                 />
             </div> 
         </div>
         {:else}
 
-        gradient
+        <div class="w-full h-8 rounded-lg my-2 flex place-content-center items-center">
+            {#if $gradientStopPreview.includes("transparent")}
+            <div class="{$gradientStopPreview}">Lorem Ipsum</div>
+            {:else}
+            <div class="w-full h-8 rounded-lg {$gradientStopPreview}"></div>
+            {/if}
+        </div>
+
+
+
+        <div class="w-full flex flex-row place-content-between h-10 items-center">
+            <span>Direction</span>
+            <Select options={gradientDirectionOptions} bind:value={gradientDirection} on:onChange={updateClassInside}/>
+        </div>
+
+        <div class="w-full flex flex-row place-content-between h-10 items-center">
+            <span>Stops</span>
+            <Button active={false} on:click={addStop} >
+                <span slot="iconLeft"><i class="bi bi-plus me-2"></i></span>
+                <span slot="text">Add</span>
+            </Button>
+        </div>
+
+        <div class="w-full">
+            <SortableList 
+                list={$gradientStopListStore}
+                key="id"
+                on:sort={sortList}
+                let:item 
+            >
+
+            <div class="w-full flex flex-row place-content-between h-10 items-center">
+                <ColorPicker 
+                    label={item.color}
+                    hex={item.color}
+                    on:input={(event) => updateColorFromList(event, item.id)}
+                />
+                <span>{item.color}</span>
+            </div>
+
+            </SortableList>
+        </div>
         
         {/if}
 
