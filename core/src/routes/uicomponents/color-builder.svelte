@@ -70,6 +70,8 @@
 
     /**
      * @type Writable<Array<string>>
+     * @example
+     * ["text-transparent", "bg-clip-text", "bg-gradient-to-t", "from-[#fffff1]", "from-0%", "to-[#6a5ecb]", "to-70%" ]
      */
     let gradientStops = writable([]);
 
@@ -117,6 +119,7 @@
                             }
                         });
                         gradientStops.set(definedGradient);
+                        convertGradientArrayToGradientStopList();
                         // gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
                         gradientStopPreview.set("text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass());
                     }
@@ -142,9 +145,8 @@
             case ColorBuilderType.TEXT:
 
                 var newClass = "";
-                //Remove all text color related classes
 
-                // classInput = [...new Set(classInput.split(" "))].toString();
+                //Remove all text color related classes
                 classInput.split(" ").forEach( cls => {
                     var currentClass = cls.trim();
                     var ctl = "";
@@ -187,11 +189,11 @@
         }
     }
 
+
     import { createEventDispatcher, onMount } from 'svelte';
 	import Optionsbutton from "./optionsbutton.svelte";
 	import Select from "./select.svelte";
 	import Button from "./button.svelte";
-	import { contains } from "jquery";
 
     const dispatch = createEventDispatcher();
 
@@ -264,6 +266,82 @@
         return newClass;
     }
 
+    function convertGradientArrayToGradientStopList(){
+        var newArrayOfJson = [];
+        var counter = 0;
+        var stops = $gradientStops; // Array of classes
+
+        for(var i=0; i<stops.length; i++){
+
+            if(stops[i].startsWith("from-")){
+                if(stops[i+1] != undefined){
+                    if(stops[i+1].startsWith("from-")){
+                        if(stops[i].startsWith("from-[#")){
+                            newArrayOfJson.push({"color": stops[i].replace("from-[","").replace("]",""), "stop": stops[i+1].replace("from-","").replace("%",""), "id": counter});
+                            counter++;
+                        }else{
+                            newArrayOfJson.push({"color": stops[i+1].replace("from-[","").replace("]",""), "stop": stops[i].replace("from-","").replace("%",""), "id": counter});
+                            counter++;
+                        }
+                    }else{
+                        if(stops[i].startsWith("from-[#")){
+                            newArrayOfJson.push({"color": stops[i].replace("from-[","").replace("]",""), "stop": 0, "id": counter});
+                            counter++;
+                        }
+                    } 
+                }else{
+                    if(stops[i].startsWith("from-[#")){
+                        newArrayOfJson.push({"color": stops[i].replace("from-[","").replace("]",""), "stop": 0, "id": counter});
+                        counter++;
+                    }
+                }
+            }
+
+            if(stops[i].startsWith("to-")){
+                if(stops[i+1] != undefined){
+                    if(stops[i+1].startsWith("to-")){
+                        if(stops[i].startsWith("to-[#")){
+                            newArrayOfJson.push({"color": stops[i].replace("to-[","").replace("]",""), "stop": stops[i+1].replace("to-","").replace("%",""), "id": counter});
+                            counter++;
+                        }else{
+                            newArrayOfJson.push({"color": stops[i+1].replace("to-[","").replace("]",""), "stop": stops[i].replace("to-","").replace("%",""), "id": counter});
+                            counter++;
+                        }
+                    }else{
+                        if(stops[i].startsWith("to-[#")){
+                            newArrayOfJson.push({"color": stops[i].replace("to-[","").replace("]",""), "stop": 100, "id": counter});
+                            counter++;
+                        }
+                    } 
+                }else{
+                    if(stops[i].startsWith("to-[#")){
+                        newArrayOfJson.push({"color": stops[i].replace("to-[","").replace("]",""), "stop": 100, "id": counter});
+                        counter++;
+                    }
+                }
+            }
+
+            if(stops[i].startsWith("via-")){
+                if(stops[i+1] != undefined){
+                    if(stops[i+1].startsWith("via-")){
+                        if(stops[i].startsWith("via-[#")){
+                            newArrayOfJson.push({"color": stops[i].replace("via-[","").replace("]",""), "stop": stops[i+1].replace("via-","").replace("%",""), "id": counter});
+                            counter++;
+                        }else{
+                            newArrayOfJson.push({"color": stops[i+1].replace("via-[","").replace("]",""), "stop": stops[i].replace("via-","").replace("%",""), "id": counter});
+                            counter++;
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        gradientStopList = newArrayOfJson;
+
+    }
+
     // $: $gradientStops, (()=>{
     //     updateClassInside();
     // })();
@@ -275,6 +353,11 @@
 
     /**
      * @type Writable<Array<JSON>>
+     * @example
+     * [
+     *      {"color": "#fffff1", "stop": 0, "id": 0},
+     *      {"color": "#cc1000", "stop": 70, "id": 0},
+     * ]
      */
     let gradientStopListStore = writable([]);
     let gradientStopList = $gradientStopListStore;
@@ -322,14 +405,16 @@
     /**
      * Updates selected color
      * @param {CustomEvent} event This event fires from "ColorPicker"
+     * @param {number} id
      */
      function updateColorFromList(event, id){
         var {hsv, rgb, hex, color} = event.detail;
-        gradientStopList.forEach(itm => {
-            if(itm.id == id){
-                itm[color]=hex;
+        for(var i=0; i<gradientStopList.length;i++){
+            if(gradientStopList[i].id == id){
+                gradientStopList[i]["color"] = hex;
             }
-        });
+        }
+        updateStops();
     }
 
 </script>
@@ -389,15 +474,27 @@
 
         <div class="w-full flex flex-row place-content-between h-10 items-center">
             <span>Stops</span>
-            <Button active={false} on:click={addStop} >
-                <span slot="iconLeft"><i class="bi bi-plus me-2"></i></span>
-                <span slot="text">Add</span>
+            <Button active={true} on:click={addStop} >
+                <span slot="iconRight"><i class="bi bi-plus me-2"></i></span>
+                <span slot="text">Add New</span>
             </Button>
         </div>
 
         <div class="w-full">
-            <SortableList 
-                list={$gradientStopListStore}
+
+            {#each gradientStopList as item}
+            <div class="w-full flex flex-row place-content-between h-10 items-center">
+                <ColorPicker 
+                    label={item.color}
+                    hex={item.color}
+                    on:input={(event) => updateColorFromList(event, item.id)}
+                />
+                <span>{item.stop}</span>
+            </div>
+            {/each}
+
+            <!-- <SortableList 
+                bind:list={$gradientStopListStore}
                 key="id"
                 on:sort={sortList}
                 let:item 
@@ -412,7 +509,7 @@
                 <span>{item.color}</span>
             </div>
 
-            </SortableList>
+            </SortableList> -->
         </div>
         
         {/if}
