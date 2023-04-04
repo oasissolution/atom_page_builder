@@ -6,6 +6,17 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.039] - 2022-04-04
+
+### Added
+
+### Changed
+ - Atom Ui Element: Color Builder (Gradient part is still in development.)
+
+
+### Fixed
+
+
 ## [0.0.1.038] - 2022-03-31
 
 ### Added

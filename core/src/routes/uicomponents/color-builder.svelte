@@ -67,6 +67,8 @@
     export let elementDataLoaded;
 
     let fixedColor = writable("#000001");
+    let gradientClassForButton = writable("");
+    let gradientClasses = writable("");
 
     /**
      * @type Writable<Array<string>>
@@ -74,6 +76,7 @@
      * ["text-transparent", "bg-clip-text", "bg-gradient-to-t", "from-[#fffff1]", "from-0%", "to-[#6a5ecb]", "to-70%" ]
      */
     let gradientStops = writable([]);
+
 
     let loadedInside = false;
 
@@ -114,7 +117,7 @@
                                 currentClass.startsWith("to-")
                             ){
                                 definedGradient.push(currentClass);
-                            }else if(currentClass.startsWith("bg-gradient-")){
+                            }else if(currentClass.startsWith("bg-gradient-") || currentClass == "bg-none"){
                                 gradientDirection = currentClass;
                             }
                         });
@@ -157,6 +160,7 @@
                         }
                     
                     }else if(
+                        currentClass.startsWith("bg-none") || 
                         currentClass.startsWith("bg-gradient-") || 
                         currentClass.startsWith("bg-clip-") || 
                         currentClass.startsWith("from-") || 
@@ -175,11 +179,12 @@
                     updateClass();
                 }else{
                     classInput = newClass.trim() + " " + "text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass();
-                    updateClass();
                     gradientStopPreview.set("text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass());
+                    updateClass();
                     // gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
                 }
                 
+                console.log("updateClassInside => classInput : " + classInput);
 
                 break;
             case ColorBuilderType.TEXTDECORATION:
@@ -194,6 +199,8 @@
 	import Optionsbutton from "./optionsbutton.svelte";
 	import Select from "./select.svelte";
 	import Button from "./button.svelte";
+	import Slider from "./slider.svelte";
+	import GradientBuilder from "./gradient-builder.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -252,7 +259,7 @@
     function convertGradientArrayToClass(){
         var newClass = "";
         $gradientStops.forEach(cls => {
-            newClass += " " + cls;
+            if(cls != "from-[0%]" && cls != "to-[100%]") newClass += " " + cls;
         });
         return newClass;
         // return "text-left text-transparent bg-clip-text bg-gradient-to-r  from-[#cc1] from-0%";
@@ -263,7 +270,8 @@
         $gradientStops.forEach(cls => {
             if(!cls.startsWith("text-") && !cls.startsWith("bg-clip-")) newClass += " " + cls;
         });
-        return newClass;
+        gradientClassForButton.set(newClass);
+        // return newClass;
     }
 
     function convertGradientArrayToGradientStopList(){
@@ -277,10 +285,10 @@
                 if(stops[i+1] != undefined){
                     if(stops[i+1].startsWith("from-")){
                         if(stops[i].startsWith("from-[#")){
-                            newArrayOfJson.push({"color": stops[i].replace("from-[","").replace("]",""), "stop": stops[i+1].replace("from-","").replace("%",""), "id": counter});
+                            newArrayOfJson.push({"color": stops[i].replace("from-[","").replace("]",""), "stop": stops[i+1].replace("from-[","").replace("%]",""), "id": counter});
                             counter++;
                         }else{
-                            newArrayOfJson.push({"color": stops[i+1].replace("from-[","").replace("]",""), "stop": stops[i].replace("from-","").replace("%",""), "id": counter});
+                            newArrayOfJson.push({"color": stops[i+1].replace("from-[","").replace("]",""), "stop": stops[i].replace("from-[","").replace("%]",""), "id": counter});
                             counter++;
                         }
                     }else{
@@ -301,10 +309,10 @@
                 if(stops[i+1] != undefined){
                     if(stops[i+1].startsWith("to-")){
                         if(stops[i].startsWith("to-[#")){
-                            newArrayOfJson.push({"color": stops[i].replace("to-[","").replace("]",""), "stop": stops[i+1].replace("to-","").replace("%",""), "id": counter});
+                            newArrayOfJson.push({"color": stops[i].replace("to-[","").replace("]",""), "stop": stops[i+1].replace("to-[","").replace("%]",""), "id": counter});
                             counter++;
                         }else{
-                            newArrayOfJson.push({"color": stops[i+1].replace("to-[","").replace("]",""), "stop": stops[i].replace("to-","").replace("%",""), "id": counter});
+                            newArrayOfJson.push({"color": stops[i+1].replace("to-[","").replace("]",""), "stop": stops[i].replace("to-[","").replace("%]",""), "id": counter});
                             counter++;
                         }
                     }else{
@@ -325,10 +333,10 @@
                 if(stops[i+1] != undefined){
                     if(stops[i+1].startsWith("via-")){
                         if(stops[i].startsWith("via-[#")){
-                            newArrayOfJson.push({"color": stops[i].replace("via-[","").replace("]",""), "stop": stops[i+1].replace("via-","").replace("%",""), "id": counter});
+                            newArrayOfJson.push({"color": stops[i].replace("via-[","").replace("]",""), "stop": stops[i+1].replace("via-[","").replace("%]",""), "id": counter});
                             counter++;
                         }else{
-                            newArrayOfJson.push({"color": stops[i+1].replace("via-[","").replace("]",""), "stop": stops[i].replace("via-","").replace("%",""), "id": counter});
+                            newArrayOfJson.push({"color": stops[i+1].replace("via-[","").replace("]",""), "stop": stops[i].replace("via-[","").replace("%]",""), "id": counter});
                             counter++;
                         }
                     }
@@ -364,9 +372,13 @@
     $: gradientStopListStore.set(gradientStopList);
 
     function addStop(){
-        gradientStopList.push({"color": "#fffff1", "stop": 0, "id": gradientStopList.length ?? 0});
-        gradientStopList.push({"color": "#cc1000", "stop": 70, "id": gradientStopList.length ?? 60});
-        console.log(JSON.stringify(gradientStopList));
+        if(gradientStopList.length >0){
+            gradientStopList.push({"color": "#cc1000", "stop": 100, "id": gradientStopList.length ?? 0});
+        }else{
+            gradientStopList.push({"color": "#000000", "stop": 0, "id": gradientStopList.length ?? 0});
+        }
+        // gradientStopList.push({"color": "#cc1000", "stop": 70, "id": gradientStopList.length ?? 60});
+        // console.log(JSON.stringify(gradientStopList));
         updateStops();
     }
 
@@ -377,29 +389,28 @@
          * @type Array<string>
          */
         var newList = [];
-        var counter = 0;
+        var counter = 0; // To detect first and last items
         $gradientStopListStore.forEach(element => {
             if(counter == 0){
                 newList.push("from-[" + element.color + "]");
-                newList.push("from-" + element.stop + "%");
+                newList.push("from-[" + element.stop + "%]");
             
             }else if(counter == $gradientStopListStore.length -1){
                 newList.push("to-[" + element.color + "]");
-                newList.push("to-" + element.stop + "%");
+                newList.push("to-[" + element.stop + "%]");
             }else{
                 newList.push("via-[" + element.color + "]");
-                newList.push("via-" + element.stop + "%");
+                newList.push("via-[" + element.stop + "%]");
             }
             counter++;
         });
 
-        // console.log(JSON.stringify("newList : " + newList));
+        console.log(JSON.stringify("updateStops => newList : " + newList));
 
         gradientStops.set(newList);
         updateClassInside();
+        convertGradientArrayToClassForButton();
     }
-
-    const sortList = ev => {gradientStopList = ev.detail};
 
 
     /**
@@ -416,6 +427,42 @@
         }
         updateStops();
     }
+
+    /**
+     * Updates selected stop value
+     * @param {number} id
+     * @param {number} value
+     */
+     function updateStopValueFromList(id, value){
+        for(var i=0; i<gradientStopList.length;i++){
+            if(gradientStopList[i].id == id){
+                gradientStopList[i]["stop"] = value;
+            }
+        }
+        updateStops();
+    }
+
+    /**
+     * Minimum value for Slider
+     * @param {number} index
+     */
+    function minLimit(index){
+        if($gradientStopListStore[index-1] != undefined){
+            return $gradientStopListStore[index-1]["stop"];
+        }
+        return 0;
+    }
+    /**
+     * Maximum value for Slider
+     * @param {number} index
+     */
+     function maxLimit(index){
+        if($gradientStopListStore[index+1] != undefined){
+            return $gradientStopListStore[index+1]["stop"];
+        }
+        return 100;
+    }
+
 
 </script>
 
@@ -435,7 +482,7 @@
         {#if isGradient == 0}
         <button class="w-8 h-8 rounded-full collapseButtonColor border" on:click={() => showCollapsedPanel = !showCollapsedPanel}>&nbsp;</button>
         {:else}
-        <button class="w-8 h-8 rounded-full border {convertGradientArrayToClassForButton()}" on:click={() => showCollapsedPanel = !showCollapsedPanel}>&nbsp;</button>
+        <button class="w-8 h-8 rounded-full border {$gradientStopPreview}" on:click={() => showCollapsedPanel = !showCollapsedPanel}>&nbsp;</button>
         {/if}
 
     </div>
@@ -481,36 +528,34 @@
         </div>
 
         <div class="w-full">
-
-            {#each gradientStopList as item}
+            
+            <!-- {#each $gradientStopListStore as item}
             <div class="w-full flex flex-row place-content-between h-10 items-center">
                 <ColorPicker 
                     label={item.color}
                     hex={item.color}
                     on:input={(event) => updateColorFromList(event, item.id)}
                 />
-                <span>{item.stop}</span>
+                <Slider value={item.stop} on:change={e => updateStopValueFromList(item.id, e.detail.value)}/>
+            </div>
+            {/each} -->
+
+
+            {#each $gradientStopListStore as item, index}
+            <div class="w-full flex flex-row place-content-between h-10 items-center">
+                <ColorPicker 
+                    label={item.color}
+                    hex={item.color}
+                    on:input={(event) => updateColorFromList(event, item.id)}
+                />
+                <Slider minLimit={minLimit(index)} maxLimit={maxLimit(index)} value={item.stop} on:change={e => updateStopValueFromList(item.id, e.detail.value)}/>
             </div>
             {/each}
-
-            <!-- <SortableList 
-                bind:list={$gradientStopListStore}
-                key="id"
-                on:sort={sortList}
-                let:item 
-            >
-
-            <div class="w-full flex flex-row place-content-between h-10 items-center">
-                <ColorPicker 
-                    label={item.color}
-                    hex={item.color}
-                    on:input={(event) => updateColorFromList(event, item.id)}
-                />
-                <span>{item.color}</span>
-            </div>
-
-            </SortableList> -->
+            
+            
         </div>
+
+        <GradientBuilder bind:gradientDirection bind:gradientClasses={gradientStops} />
         
         {/if}
 
