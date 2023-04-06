@@ -17,6 +17,14 @@
      * Specific results for Background
      */
     BACKGROUND: "background",
+    /**
+     * Specific results for Border
+     */
+    BORDER: "border",
+    /**
+     * Specific results for Border
+     */
+    SHADOW: "shadow",
 });
 
 </script>
@@ -132,6 +140,38 @@
                     break;
                 case ColorBuilderType.BACKGROUND:
                     break;
+                case ColorBuilderType.BORDER:
+                    elementDataLoaded.split(" ").forEach( cls => {
+                        
+                        var currentClass = cls.trim();
+                        var ctl = "";
+
+                        if(currentClass.startsWith("border-")){
+                            ctl=currentClass.replace("border-", "");
+                            if(ctl.startsWith("[#")){
+                                ctl = ctl.replace("[#","").replace("]","");
+                                fixedColor.set("#" + ctl);
+                                isGradient = 0;
+                            }
+                        }
+                    });
+                    break;
+                case ColorBuilderType.SHADOW:
+                    elementDataLoaded.split(" ").forEach( cls => {
+                        
+                        var currentClass = cls.trim();
+                        var ctl = "";
+
+                        if(currentClass.startsWith("shadow-")){
+                            ctl=currentClass.replace("shadow-", "");
+                            if(ctl.startsWith("[#")){
+                                ctl = ctl.replace("[#","").replace("]","");
+                                fixedColor.set("#" + ctl);
+                                isGradient = 0;
+                            }
+                        }
+                    });
+                    break;
             }
 
 
@@ -190,6 +230,50 @@
             case ColorBuilderType.TEXTDECORATION:
                 break;
             case ColorBuilderType.BACKGROUND:
+                break;
+            case ColorBuilderType.BORDER:
+                var newClass = "";
+
+                //Remove all color related classes
+                classInput.split(" ").forEach( cls => {
+                    var currentClass = cls.trim();
+                    var ctl = "";
+                    if(currentClass.startsWith("border-")){
+                        ctl=currentClass.replace("border-", "");
+                        if(!ctl.startsWith("[#")){
+                            newClass += " " + currentClass;
+                        }
+                    }else{
+                        newClass += " " + currentClass;
+                    }
+                });
+
+                if(isGradient == 0){
+                    classInput = newClass.trim() + " " + "border-[" + $fixedColor + "]";
+                    updateClass();
+                }
+                break;
+            case ColorBuilderType.SHADOW:
+                var newClass = "";
+
+                //Remove all color related classes
+                classInput.split(" ").forEach( cls => {
+                    var currentClass = cls.trim();
+                    var ctl = "";
+                    if(currentClass.startsWith("shadow-")){
+                        ctl=currentClass.replace("shadow-", "");
+                        if(!ctl.startsWith("[#")){
+                            newClass += " " + currentClass;
+                        }
+                    }else{
+                        newClass += " " + currentClass;
+                    }
+                });
+
+                if(isGradient == 0){
+                    classInput = newClass.trim() + " " + "shadow-[" + $fixedColor + "]";
+                    updateClass();
+                }
                 break;
         }
     }
@@ -502,6 +586,36 @@
                 />
             </div> 
         </div>
+
+        {:else if isGradient == 1 && target == ColorBuilderType.BORDER}
+
+        <div class="w-full text-[9px] my-2">
+            Gradient Border is not supported directly.<br/>
+            Here is a workaround.<br/><br/>
+            To apply a gradient border:
+            <ol class="list-inside list-decimal">
+                <li>Create a container with the gradient background color.</li>
+                <li>Add padding to this container equal to the width of the border.</li>
+                <li>Create a box inside the container with suitable background.</li>
+            </ol>
+        </div>
+
+        {:else if isGradient == 1 && target == ColorBuilderType.SHADOW}
+
+        <div class="w-full text-[9px] my-2">
+            Gradient Shadow is not supported directly.<br/>
+            Here is a workaround.<br/><br/>
+            To apply a gradient shadow:
+            <ol class="list-inside list-decimal">
+                <li>Create a container with position relative and set dimensions.</li>
+                <li>Create a new container inside of (1), with the gradient background color and position absolute.</li>
+                <li>Apply blur filter to the inner container (2).</li>
+                <li>Create a new container inside of (1), with the suitable background color and position absolute.</li>
+                <li>Set dimensions of this container (4), leaving space equal to the width of the shadow.</li>
+                <li>Insert your items in the container (4)</li>
+            </ol>
+        </div>
+
         {:else}
 
         <div class="w-full h-8 rounded-lg my-2 flex place-content-center items-center">

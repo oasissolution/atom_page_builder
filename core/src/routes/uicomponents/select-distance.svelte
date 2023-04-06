@@ -103,7 +103,7 @@
                 */
                 var ctl = "";
 
-                if(currentClass.startsWith(header+"-")){
+                if(currentClass.startsWith(header)){
                     ctl=currentClass.replace(header+"-", "");
                     if(ctl.startsWith("[")){
                         ctl = ctl.replace("[","").replace("]","");

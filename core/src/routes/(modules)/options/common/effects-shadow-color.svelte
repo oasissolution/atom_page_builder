@@ -15,16 +15,7 @@
      */
     export let classInput;
 
-    /**
-     * Actual line height class
-     * @type string
-     */
-    export let textColor;
-
-
     import { createEventDispatcher } from 'svelte';
-	
-	
 
     const dispatch = createEventDispatcher();
 
@@ -41,9 +32,5 @@
 
 </script>
 
-<ColorBuilder title={"Text Color"} tooltip={"Utility for controlling the text color of an element."} on:updateClass bind:loaded bind:elementDataLoaded bind:classInput target={ColorBuilderType.TEXT} />
+<ColorBuilder title={"Shadow Color"} tooltip={"Utilities for controlling the color of a box shadow."} on:updateClass bind:loaded bind:elementDataLoaded bind:classInput target={ColorBuilderType.SHADOW} />
 
-<!-- <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center"> -->
-    <!-- <span title="Utility for controlling the text color of an element.">Text Color</span>
-    <SelectColor header={"text"} bind:loaded bind:elementDataLoaded bind:value={textColor}/> -->
-<!-- </div> -->

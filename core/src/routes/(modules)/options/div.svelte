@@ -48,6 +48,12 @@
 	import FlexboxGridPlaceContent from "./div/flexbox-grid-place-content.svelte";
 	import FlexboxGridPlaceItems from "./div/flexbox-grid-place-items.svelte";
 	import FlexboxGridPlaceSelf from "./div/flexbox-grid-place-self.svelte";
+	import BorderWidth from "./common/border-width.svelte";
+	import BorderRadius from "./common/border-radius.svelte";
+	import BorderStyle from "./common/border-style.svelte";
+	import BorderColor from "./common/border-color.svelte";
+	import EffectsDropShadow from "./common/effects-drop-shadow.svelte";
+	import EffectsShadowColor from "./common/effects-shadow-color.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -147,6 +153,8 @@
         flexboxGridPlaceContent = "";
         flexboxGridPlaceItems = "";
         flexboxGridPlaceSelf = "";
+        borderStyle = "";
+        effectsDropShadow = "";
     }
     
     /**
@@ -397,10 +405,19 @@
      */
     let flexboxGridPlaceSelf;
 
+    /**
+     * @type string
+     */
+    let borderStyle;
 
+    /**
+     * @type string
+     */
+    let effectsDropShadow;
 
     
     
+ 
     
     let collapseDesignLayout = false;
     function toggleDesignLayout(){
@@ -427,7 +444,15 @@
         collapseDesignFlexboxGrid = !collapseDesignFlexboxGrid;
     }
 
+    let collapseDesignBorder = false;
+    function toggleDesignBorder(){
+        collapseDesignBorder = !collapseDesignBorder;
+    }
 
+    let collapseDesignEffects = false;
+    function toggleDesignEffects(){
+        collapseDesignEffects = !collapseDesignEffects;
+    }
 
 </script>
     <div class="widgetPanelSubTitle">Container Options</div>
@@ -666,6 +691,83 @@
     {/if}
 
     <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignBorder}>
+        <span class="collapseHeader">BORDER</span>
+        {#if collapseDesignBorder}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignBorder}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <BorderWidth bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BorderRadius bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BorderStyle bind:property={borderStyle} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BorderColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignEffects}>
+        <span class="collapseHeader">EFFECTS</span>
+        {#if collapseDesignEffects}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignEffects}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <EffectsDropShadow bind:property={effectsDropShadow} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <EffectsShadowColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignClass}>
+        <span class="collapseHeader">CLASS</span>
+        {#if collapseDesignClass}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignClass}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
+        <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
+
+        <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
+
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
 
     <div class="h-20"></div>
     {/if}

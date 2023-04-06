@@ -1257,7 +1257,126 @@
         {name: "-",       value: "",            info: "Default - No value"},
     ];
 
+    /**
+    * Tailwind Border Width LEFT classes
+    * @type Array<SelectOptions>
+    */
+    export let borderWidthLeftClassOptions = [
+        {name: "-",      value: "",             info: "Default - No value"},
+        {name: "0",      value: "border-l-0",   info: "border-left-width: 0px;"},
+        {name: "1",      value: "border-l",     info: "border-left-width: 1px;"},
+        {name: "2",      value: "border-l-2",   info: "border-left-width: 2px;"},
+        {name: "4",      value: "border-l-4",   info: "border-left-width: 4px;"},
+        {name: "8",      value: "border-l-8",   info: "border-left-width: 8px;"},
+    ];
 
+    /**
+    * Tailwind Border Width RIGHT classes
+    * @type Array<SelectOptions>
+    */
+    export let borderWidthRightClassOptions = [
+        {name: "-",      value: "",             info: "Default - No value"},
+        {name: "0",      value: "border-r-0",   info: "border-right-width: 0px;"},
+        {name: "1",      value: "border-r",     info: "border-right-width: 1px;"},
+        {name: "2",      value: "border-r-2",   info: "border-right-width: 2px;"},
+        {name: "4",      value: "border-r-4",   info: "border-right-width: 4px;"},
+        {name: "8",      value: "border-r-8",   info: "border-right-width: 8px;"},
+    ];
+
+    /**
+    * Tailwind Border Width TOP classes
+    * @type Array<SelectOptions>
+    */
+    export let borderWidthTopClassOptions = [
+        {name: "-",      value: "",             info: "Default - No value"},
+        {name: "0",      value: "border-t-0",   info: "border-top-width: 0px;"},
+        {name: "1",      value: "border-t",     info: "border-top-width: 1px;"},
+        {name: "2",      value: "border-t-2",   info: "border-top-width: 2px;"},
+        {name: "4",      value: "border-t-4",   info: "border-top-width: 4px;"},
+        {name: "8",      value: "border-t-8",   info: "border-top-width: 8px;"},
+    ];
+
+    /**
+    * Tailwind Border Width BOTTOM classes
+    * @type Array<SelectOptions>
+    */
+    export let borderWidthBottomClassOptions = [
+        {name: "-",      value: "",             info: "Default - No value"},
+        {name: "0",      value: "border-b-0",   info: "border-bottom-width: 0px;"},
+        {name: "1",      value: "border-b",     info: "border-bottom-width: 1px;"},
+        {name: "2",      value: "border-b-2",   info: "border-bottom-width: 2px;"},
+        {name: "4",      value: "border-b-4",   info: "border-bottom-width: 4px;"},
+        {name: "8",      value: "border-b-8",   info: "border-bottom-width: 8px;"},
+    ];
+
+    /**
+    * Tailwind Border Radius TOP-LEFT classes
+    * @type Array<SelectOptions>
+    */
+    export let borderRadiusTLClassOptions = [
+        {name: "-",     value: "",                  info: "Default - No value"},
+        {name: "0",     value: "rounded-tl-none",   info: "border-top-left-radius: 0px;"},
+        {name: "2",     value: "rounded-tl-sm",     info: "border-top-left-radius: 0.125rem; /* 2px */"},
+        {name: "4",     value: "rounded-tl",        info: "border-top-left-radius: 0.25rem; /* 4px */"},
+        {name: "6",     value: "rounded-tl-md",     info: "border-top-left-radius: 0.375rem; /* 6px */"},
+        {name: "8",     value: "rounded-tl-lg",     info: "border-top-left-radius: 0.5rem; /* 8px */"},
+        {name: "12",    value: "rounded-tl-xl",     info: "border-top-left-radius: 0.75rem; /* 12px */"},
+        {name: "16",    value: "rounded-tl-2xl",    info: "border-top-left-radius: 1rem; /* 16px */"},
+        {name: "24",    value: "rounded-tl-3xl",    info: "border-top-left-radius: 1.5rem; /* 24px */"},
+        {name: "Full",  value: "rounded-tl-full",   info: "border-top-left-radius: 9999px;"},
+    ];
+
+
+    /**
+    * Tailwind Border Radius TOP-RIGHT classes
+    * @type Array<SelectOptions>
+    */
+    export let borderRadiusTRClassOptions = [
+        {name: "-",     value: "",                  info: "Default - No value"},
+        {name: "0",     value: "rounded-tr-none",   info: "border-top-right-radius: 0px;"},
+        {name: "2",     value: "rounded-tr-sm",     info: "border-top-right-radius: 0.125rem; /* 2px */"},
+        {name: "4",     value: "rounded-tr",        info: "border-top-right-radius: 0.25rem; /* 4px */"},
+        {name: "6",     value: "rounded-tr-md",     info: "border-top-right-radius: 0.375rem; /* 6px */"},
+        {name: "8",     value: "rounded-tr-lg",     info: "border-top-right-radius: 0.5rem; /* 8px */"},
+        {name: "12",    value: "rounded-tr-xl",     info: "border-top-right-radius: 0.75rem; /* 12px */"},
+        {name: "16",    value: "rounded-tr-2xl",    info: "border-top-right-radius: 1rem; /* 16px */"},
+        {name: "24",    value: "rounded-tr-3xl",    info: "border-top-right-radius: 1.5rem; /* 24px */"},
+        {name: "Full",  value: "rounded-tr-full",   info: "border-top-right-radius: 9999px;"},
+    ];
+
+    /**
+    * Tailwind Border Radius BOTTOM-LEFT classes
+    * @type Array<SelectOptions>
+    */
+    export let borderRadiusBLClassOptions = [
+        {name: "-",     value: "",                  info: "Default - No value"},
+        {name: "0",     value: "rounded-bl-none",   info: "border-bottom-left-radius: 0px;"},
+        {name: "2",     value: "rounded-bl-sm",     info: "border-bottom-left-radius: 0.125rem; /* 2px */"},
+        {name: "4",     value: "rounded-bl",        info: "border-bottom-left-radius: 0.25rem; /* 4px */"},
+        {name: "6",     value: "rounded-bl-md",     info: "border-bottom-left-radius: 0.375rem; /* 6px */"},
+        {name: "8",     value: "rounded-bl-lg",     info: "border-bottom-left-radius: 0.5rem; /* 8px */"},
+        {name: "12",    value: "rounded-bl-xl",     info: "border-bottom-left-radius: 0.75rem; /* 12px */"},
+        {name: "16",    value: "rounded-bl-2xl",    info: "border-bottom-left-radius: 1rem; /* 16px */"},
+        {name: "24",    value: "rounded-bl-3xl",    info: "border-bottom-left-radius: 1.5rem; /* 24px */"},
+        {name: "Full",  value: "rounded-bl-full",   info: "border-bottom-left-radius: 9999px;"},
+    ];
+
+    /**
+    * Tailwind Border Radius BOTTOM-RIGHT classes
+    * @type Array<SelectOptions>
+    */
+    export let borderRadiusBRClassOptions = [
+        {name: "-",     value: "",                  info: "Default - No value"},
+        {name: "0",     value: "rounded-br-none",   info: "border-bottom-right-radius: 0px;"},
+        {name: "2",     value: "rounded-br-sm",     info: "border-bottom-right-radius: 0.125rem; /* 2px */"},
+        {name: "4",     value: "rounded-br",        info: "border-bottom-right-radius: 0.25rem; /* 4px */"},
+        {name: "6",     value: "rounded-br-md",     info: "border-bottom-right-radius: 0.375rem; /* 6px */"},
+        {name: "8",     value: "rounded-br-lg",     info: "border-bottom-right-radius: 0.5rem; /* 8px */"},
+        {name: "12",    value: "rounded-br-xl",     info: "border-bottom-right-radius: 0.75rem; /* 12px */"},
+        {name: "16",    value: "rounded-br-2xl",    info: "border-bottom-right-radius: 1rem; /* 16px */"},
+        {name: "24",    value: "rounded-br-3xl",    info: "border-bottom-right-radius: 1.5rem; /* 24px */"},
+        {name: "Full",  value: "rounded-br-full",   info: "border-bottom-right-radius: 9999px;"},
+    ];
 
 
 

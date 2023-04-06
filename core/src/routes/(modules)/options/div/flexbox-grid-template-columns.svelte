@@ -61,7 +61,7 @@
     let propertyList = [];
 
     propertyOptions.forEach(elm => {
-        propertyList.push(elm.value);
+        if(elm.value != "") propertyList.push(elm.value);
     });
 
     import { createEventDispatcher } from 'svelte';

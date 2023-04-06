@@ -28,21 +28,25 @@
      * @property {string} info
     */
 
-
+	
     /**
      * Value of element
      * @type Array<SelectOptions>
      */
     let propertyOptions = [
+        
+        {name: "Default",  value: "",               info: "Default"},
+       
+        {name: "Solid",     value: "border-solid",  info: "border-style: solid;"},
+        {name: "Dashed",    value: "border-dashed", info: "border-style: dashed;"},
+        {name: "Dotted",    value: "border-dotted", info: "border-style: dotted;"},
+        {name: "Double",    value: "border-double", info: "border-style: double;"},
+        {name: "Hidden",    value: "border-hidden", info: "border-style: hidden;"},
+        {name: "None",      value: "border-none",   info: "border-style: none;"},
 
-        {name: "Default",       value: "",                      info: "Default"},
-        {name: "Row",           value: "grid-flow-row",         info: "grid-auto-flow: row;"},
-        {name: "Column",        value: "grid-flow-col",         info: "grid-auto-flow: column;"},
-        {name: "Dense",         value: "grid-flow-dense",       info: "grid-auto-flow: dense;"},
-        {name: "Row Dense",     value: "grid-flow-row-dense",   info: "grid-auto-flow: row dense;"},
-        {name: "Column Dense",  value: "grid-flow-col-dense",   info: "grid-auto-flow: column dense;"},
 
         // {name: "",     value: "",     info: ""},
+       
     ];
 
     /**
@@ -109,6 +113,6 @@
 
 
 <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <span title="Utilities for controlling how elements in a grid are auto-placed.">Grid Auto Flow</span>
+    <span title="Utilities for controlling the style of an element's borders.">Border Style</span>
     <Select options={propertyOptions} bind:value={property}/>
 </div>

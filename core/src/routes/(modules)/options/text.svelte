@@ -40,7 +40,10 @@
 	import TypographyTextIndent from "./text/typography-text-indent.svelte";
 	import TypographyWhitespace from "./text/typography-whitespace.svelte";
 	import TypographyWordbreak from "./text/typography-wordbreak.svelte";
-
+    import BorderWidth from "./common/border-width.svelte";
+	import BorderRadius from "./common/border-radius.svelte";
+	import BorderStyle from "./common/border-style.svelte";
+	import BorderColor from "./common/border-color.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -138,6 +141,7 @@
         textIndent = "";
         whitespace = "";
         wordbreak = "";
+        borderStyle = "";
     }
 
 
@@ -376,7 +380,11 @@
      */
     let wordbreak;
 
-    
+    /**
+     * @type string
+     */
+    let borderStyle;
+
     
     /**
      * @typedef {Object} SelectOptions
@@ -447,6 +455,11 @@
     let collapseDesignSizing = false;
     function toggleDesignSizing(){
         collapseDesignSizing = !collapseDesignSizing;
+    }
+
+    let collapseDesignBorder = false;
+    function toggleDesignBorder(){
+        collapseDesignBorder = !collapseDesignBorder;
     }
 
 </script>
@@ -664,6 +677,37 @@
         <!-- <div class="widgetPanelDivider"></div> -->
 
         
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignBorder}>
+        <span class="collapseHeader">BORDER</span>
+        {#if collapseDesignBorder}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignBorder}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <BorderWidth bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BorderRadius bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BorderStyle bind:property={borderStyle} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BorderColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
     </div>
     {/if}
 

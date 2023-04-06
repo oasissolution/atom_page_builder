@@ -34,15 +34,20 @@
      * @type Array<SelectOptions>
      */
     let propertyOptions = [
-
-        {name: "Default",       value: "",                      info: "Default"},
-        {name: "Row",           value: "grid-flow-row",         info: "grid-auto-flow: row;"},
-        {name: "Column",        value: "grid-flow-col",         info: "grid-auto-flow: column;"},
-        {name: "Dense",         value: "grid-flow-dense",       info: "grid-auto-flow: dense;"},
-        {name: "Row Dense",     value: "grid-flow-row-dense",   info: "grid-auto-flow: row dense;"},
-        {name: "Column Dense",  value: "grid-flow-col-dense",   info: "grid-auto-flow: column dense;"},
+        
+        {name: "Default",  value: "",               info: "Default - No Shadow"},
+       
+        {name: "Small",     value: "shadow-sm",     info: "box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);"},
+        {name: "Standard",  value: "shadow",        info: "box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);"},
+        {name: "Medium",    value: "shadow-md",     info: "box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);"},
+        {name: "Large",     value: "shadow-lg",     info: "box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);"},
+        {name: "X-Large",   value: "shadow-xl",     info: "box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);"},
+        {name: "2X-Large",  value: "shadow-2xl",    info: "box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);"},
+        {name: "Inner",     value: "shadow-inner",  info: "box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);"},
+        {name: "None",      value: "shadow-none",   info: "box-shadow: 0 0 #0000;"},
 
         // {name: "",     value: "",     info: ""},
+       
     ];
 
     /**
@@ -109,6 +114,6 @@
 
 
 <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <span title="Utilities for controlling how elements in a grid are auto-placed.">Grid Auto Flow</span>
+    <span title="Utilities for controlling the box shadow of an element.">Box Shadow</span>
     <Select options={propertyOptions} bind:value={property}/>
 </div>

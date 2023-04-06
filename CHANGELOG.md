@@ -6,6 +6,20 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.040] - 2022-04-06
+
+### Added
+ - Div Options - Border : Border Width, Border Radius, Border Style, Border Color
+ - Text Options - Border : Border Width, Border Radius, Border Style, Border Color
+ - Div Options - Effects : Drop Shadow, Shadow Color
+
+### Changed
+ - Atom Ui Element: Color Builder (Gradient part is still in development. Works, but ui is subject to change)
+
+### Fixed
+
+
+
 ## [0.0.1.039] - 2022-04-04
 
 ### Added
