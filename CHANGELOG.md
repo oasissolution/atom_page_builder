@@ -6,6 +6,20 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.041] - 2022-04-07
+
+### Added
+ - Div Options - Effects : Opacity, Mix Blend Mode, Background Blend Mode
+ - Text Options - Effects : Drop Shadow, Shadow Color, Opacity, Mix Blend Mode, Background Blend Mode
+ - Div Options - Filters: Blur, Brightness
+
+### Changed
+ - Atom Ui Element: Color Builder (Works, but ui is subject to change.)
+
+### Fixed
+
+
+
 ## [0.0.1.040] - 2022-04-06
 
 ### Added

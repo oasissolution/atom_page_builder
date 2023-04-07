@@ -54,6 +54,11 @@
 	import BorderColor from "./common/border-color.svelte";
 	import EffectsDropShadow from "./common/effects-drop-shadow.svelte";
 	import EffectsShadowColor from "./common/effects-shadow-color.svelte";
+	import EffectsOpacity from "./common/effects-opacity.svelte";
+	import EffectsMixBlendMode from "./common/effects-mix-blend-mode.svelte";
+	import EffectsBackgroundBlendMode from "./common/effects-background-blend-mode.svelte";
+	import FiltersBlur from "./common/filters-blur.svelte";
+	import FiltersBrightness from "./common/filters-brightness.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -155,6 +160,11 @@
         flexboxGridPlaceSelf = "";
         borderStyle = "";
         effectsDropShadow = "";
+        effectsOpacity = "";
+        effectsMixBlendMode = "";
+        effectsBackgroundBlendMode = "";
+        filtersBlur = "";
+        filtersBrightness = "";
     }
     
     /**
@@ -415,9 +425,33 @@
      */
     let effectsDropShadow;
 
+    /**
+     * @type string
+     */
+    let effectsOpacity;
+
+    /**
+     * @type string
+     */
+    let effectsMixBlendMode;
+
+    /**
+     * @type string
+     */
+    let effectsBackgroundBlendMode;
+
+    /**
+     * @type string
+     */
+    let filtersBlur;
+
+    /**
+     * @type string
+     */
+    let filtersBrightness;
     
     
- 
+    
     
     let collapseDesignLayout = false;
     function toggleDesignLayout(){
@@ -452,6 +486,11 @@
     let collapseDesignEffects = false;
     function toggleDesignEffects(){
         collapseDesignEffects = !collapseDesignEffects;
+    }
+
+    let collapseDesignFilters = false;
+    function toggleDesignFilters(){
+        collapseDesignFilters = !collapseDesignFilters;
     }
 
 </script>
@@ -741,8 +780,52 @@
 
         <EffectsShadowColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
+        <div class="widgetPanelDivider"></div>
+
+        <EffectsOpacity bind:property={effectsOpacity} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <EffectsMixBlendMode bind:property={effectsMixBlendMode} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <EffectsBackgroundBlendMode bind:property={effectsBackgroundBlendMode} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
     </div>
     {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignFilters}>
+        <span class="collapseHeader">FILTERS</span>
+        {#if collapseDesignFilters}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignFilters}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <FiltersBlur bind:property={filtersBlur} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBrightness bind:property={filtersBrightness} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+
+    </div>
+    {/if}
+
+
+
+    
+
+
+
+
+
 
     <div class="widgetPanelDivider"></div>
 
