@@ -1378,6 +1378,116 @@
         {name: "Full",  value: "rounded-br-full",   info: "border-bottom-right-radius: 9999px;"},
     ];
 
+    /**
+    * Tailwind Transform X classes
+    * @type Array<SelectOptions>
+    */
+    export let transformXClassOptions = [
+
+        {name: "full",    value: "translate-x-full",    info: "transform: translateX(100%);"},
+        {name: "3/4",     value: "translate-x-3/4",     info: "transform: translateX(75%);"},
+        {name: "2/4",     value: "translate-x-2/4",     info: "transform: translateX(50%);"},
+        {name: "1/4",     value: "translate-x-1/4",     info: "transform: translateX(25%);"},
+        {name: "2/3",     value: "translate-x-2/3",     info: "transform: translateX(66.666667%);"},
+        {name: "1/3",     value: "translate-x-1/3",     info: "transform: translateX(33.333333%);"},
+        {name: "1/2",     value: "translate-x-1/2",     info: "transform: translateX(50%);"},
+
+        {name: "96",    value: "translate-x-96",    info: "transform: translateX(24rem); /* 384px */"},
+        {name: "80",    value: "translate-x-80",    info: "transform: translateX(20rem); /* 320px */"},
+        {name: "72",    value: "translate-x-72",    info: "transform: translateX(18rem); /* 288px */"},
+        {name: "64",    value: "translate-x-64",    info: "transform: translateX(16rem); /* 256px */"},
+        {name: "60",    value: "translate-x-60",    info: "transform: translateX(15rem); /* 240px */"},
+        {name: "56",    value: "translate-x-56",    info: "transform: translateX(14rem); /* 224px */"},
+        {name: "52",    value: "translate-x-52",    info: "transform: translateX(13rem); /* 208px */"},
+        {name: "48",    value: "translate-x-48",    info: "transform: translateX(12rem); /* 192px */"},
+        {name: "44",    value: "translate-x-44",    info: "transform: translateX(11rem); /* 176px */"},
+        {name: "40",    value: "translate-x-40",    info: "transform: translateX(10rem); /* 160px */"},
+        {name: "36",    value: "translate-x-36",    info: "transform: translateX(9rem); /* 144px */"},
+        {name: "32",    value: "translate-x-32",    info: "transform: translateX(8rem); /* 128px */"},
+        {name: "28",    value: "translate-x-28",    info: "transform: translateX(7rem); /* 112px */"},
+        {name: "24",    value: "translate-x-24",    info: "transform: translateX(6rem); /* 96px */"},
+        {name: "20",    value: "translate-x-20",    info: "transform: translateX(5rem); /* 80px */"},
+        {name: "16",    value: "translate-x-16",    info: "transform: translateX(4rem); /* 64px */"},
+        {name: "14",    value: "translate-x-14",    info: "transform: translateX(3.5rem); /* 56px */"},
+        {name: "12",    value: "translate-x-12",    info: "transform: translateX(3rem); /* 48px */"},
+        {name: "11",    value: "translate-x-11",    info: "transform: translateX(2.75rem); /* 44px */"},
+        {name: "10",    value: "translate-x-10",    info: "transform: translateX(2.5rem); /* 40px */"},
+        {name: "9",     value: "translate-x-9",     info: "transform: translateX(2.25rem); /* 36px */"},
+        {name: "8",     value: "translate-x-8",     info: "transform: translateX(2rem); /* 32px */"},
+        {name: "7",     value: "translate-x-7",     info: "transform: translateX(1.75rem); /* 28px */"},
+        {name: "6",     value: "translate-x-6",     info: "transform: translateX(1.5rem); /* 24px */"},
+        {name: "5",     value: "translate-x-5",     info: "transform: translateX(1.25rem); /* 20px */"},
+        {name: "4",     value: "translate-x-4",     info: "transform: translateX(1rem); /* 16px */"},
+        {name: "3.5",   value: "translate-x-3.5",   info: "transform: translateX(0.875rem); /* 14px */"},
+        {name: "3",     value: "translate-x-3",     info: "transform: translateX(0.75rem); /* 12px */"},
+        {name: "2.5",   value: "translate-x-2.5",   info: "transform: translateX(0.625rem); /* 10px */"},
+        {name: "2",     value: "translate-x-2",     info: "transform: translateX(0.5rem); /* 8px */"},
+        {name: "1.5",   value: "translate-x-1.5",   info: "transform: translateX(0.375rem); /* 6px */"},
+        {name: "1",     value: "translate-x-1",     info: "transform: translateX(0.25rem); /* 4px */"},
+        {name: "0.5",   value: "translate-x-0.5",   info: "transform: translateX(0.125rem); /* 2px */"},
+        {name: "px",    value: "translate-x-px",    info: "transform: translateX(1px);"},
+        {name: "0",     value: "translate-x-0",     info: "transform: translateX(0px);"},
+        {name: "-",     value: "",        info: "Default - No value"},
+
+    ];
+
+
+   /**
+    * Tailwind Transform Y classes
+    * @type Array<SelectOptions>
+    */
+    export let transformYClassOptions = [
+
+        {name: "full",    value: "translate-y-full",    info: "transform: translateY(100%);"},
+        {name: "3/4",     value: "translate-y-3/4",     info: "transform: translateY(75%);"},
+        {name: "2/4",     value: "translate-y-2/4",     info: "transform: translateY(50%);"},
+        {name: "1/4",     value: "translate-y-1/4",     info: "transform: translateY(25%);"},
+        {name: "2/3",     value: "translate-y-2/3",     info: "transform: translateY(66.666667%);"},
+        {name: "1/3",     value: "translate-y-1/3",     info: "transform: translateY(33.333333%);"},
+        {name: "1/2",     value: "translate-y-1/2",     info: "transform: translateY(50%);"},
+
+        {name: "96",    value: "translate-y-96",    info: "transform: translateY(24rem); /* 384px */"},
+        {name: "80",    value: "translate-y-80",    info: "transform: translateY(20rem); /* 320px */"},
+        {name: "72",    value: "translate-y-72",    info: "transform: translateY(18rem); /* 288px */"},
+        {name: "64",    value: "translate-y-64",    info: "transform: translateY(16rem); /* 256px */"},
+        {name: "60",    value: "translate-y-60",    info: "transform: translateY(15rem); /* 240px */"},
+        {name: "56",    value: "translate-y-56",    info: "transform: translateY(14rem); /* 224px */"},
+        {name: "52",    value: "translate-y-52",    info: "transform: translateY(13rem); /* 208px */"},
+        {name: "48",    value: "translate-y-48",    info: "transform: translateY(12rem); /* 192px */"},
+        {name: "44",    value: "translate-y-44",    info: "transform: translateY(11rem); /* 176px */"},
+        {name: "40",    value: "translate-y-40",    info: "transform: translateY(10rem); /* 160px */"},
+        {name: "36",    value: "translate-y-36",    info: "transform: translateY(9rem); /* 144px */"},
+        {name: "32",    value: "translate-y-32",    info: "transform: translateY(8rem); /* 128px */"},
+        {name: "28",    value: "translate-y-28",    info: "transform: translateY(7rem); /* 112px */"},
+        {name: "24",    value: "translate-y-24",    info: "transform: translateY(6rem); /* 96px */"},
+        {name: "20",    value: "translate-y-20",    info: "transform: translateY(5rem); /* 80px */"},
+        {name: "16",    value: "translate-y-16",    info: "transform: translateY(4rem); /* 64px */"},
+        {name: "14",    value: "translate-y-14",    info: "transform: translateY(3.5rem); /* 56px */"},
+        {name: "12",    value: "translate-y-12",    info: "transform: translateY(3rem); /* 48px */"},
+        {name: "11",    value: "translate-y-11",    info: "transform: translateY(2.75rem); /* 44px */"},
+        {name: "10",    value: "translate-y-10",    info: "transform: translateY(2.5rem); /* 40px */"},
+        {name: "9",     value: "translate-y-9",     info: "transform: translateY(2.25rem); /* 36px */"},
+        {name: "8",     value: "translate-y-8",     info: "transform: translateY(2rem); /* 32px */"},
+        {name: "7",     value: "translate-y-7",     info: "transform: translateY(1.75rem); /* 28px */"},
+        {name: "6",     value: "translate-y-6",     info: "transform: translateY(1.5rem); /* 24px */"},
+        {name: "5",     value: "translate-y-5",     info: "transform: translateY(1.25rem); /* 20px */"},
+        {name: "4",     value: "translate-y-4",     info: "transform: translateY(1rem); /* 16px */"},
+        {name: "3.5",   value: "translate-y-3.5",   info: "transform: translateY(0.875rem); /* 14px */"},
+        {name: "3",     value: "translate-y-3",     info: "transform: translateY(0.75rem); /* 12px */"},
+        {name: "2.5",   value: "translate-y-2.5",   info: "transform: translateY(0.625rem); /* 10px */"},
+        {name: "2",     value: "translate-y-2",     info: "transform: translateY(0.5rem); /* 8px */"},
+        {name: "1.5",   value: "translate-y-1.5",   info: "transform: translateY(0.375rem); /* 6px */"},
+        {name: "1",     value: "translate-y-1",     info: "transform: translateY(0.25rem); /* 4px */"},
+        {name: "0.5",   value: "translate-y-0.5",   info: "transform: translateY(0.125rem); /* 2px */"},
+        {name: "px",    value: "translate-y-px",    info: "transform: translateY(1px);"},
+        {name: "0",     value: "translate-y-0",     info: "transform: translateY(0px);"},
+        {name: "-",     value: "",        info: "Default - No value"},
+
+    ];
+
+
+
+
 
 
 

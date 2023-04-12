@@ -59,6 +59,35 @@
 	import EffectsBackgroundBlendMode from "./common/effects-background-blend-mode.svelte";
 	import FiltersBlur from "./common/filters-blur.svelte";
 	import FiltersBrightness from "./common/filters-brightness.svelte";
+	import FiltersContrast from "./common/filters-contrast.svelte";
+	import FiltersDropShadow from "./common/filters-drop-shadow.svelte";
+	import FiltersGrayscale from "./common/filters-grayscale.svelte";
+	import FiltersNoFilter from "./common/filters-no-filter.svelte";
+	import FiltersHueRotate from "./common/filters-hue-rotate.svelte";
+	import FiltersInvert from "./common/filters-invert.svelte";
+	import FiltersSaturate from "./common/filters-saturate.svelte";
+	import FiltersSepia from "./common/filters-sepia.svelte";
+	import FiltersBackdropBlur from "./common/filters-backdrop-blur.svelte";
+	import FiltersBackdropBrightness from "./common/filters-backdrop-brightness.svelte";
+	import FiltersBackdropContrast from "./common/filters-backdrop-contrast.svelte";
+	import FiltersBackdropGrayscale from "./common/filters-backdrop-grayscale.svelte";
+	import FiltersBackdropHueRotate from "./common/filters-backdrop-hue-rotate.svelte";
+	import FiltersBackdropInvert from "./common/filters-backdrop-invert.svelte";
+	import FiltersBackdropOpacity from "./common/filters-backdrop-opacity.svelte";
+	import FiltersBackdropSaturate from "./common/filters-backdrop-saturate.svelte";
+    import FiltersBackdropSepia from "./common/filters-backdrop-sepia.svelte";
+	import TransitionProperty from "./common/transition-property.svelte";
+	import TransitionDuration from "./common/transition-duration.svelte";
+    import TransitionTimingFunction from "./common/transition-timing-function.svelte";
+	import TransitionDelay from "./common/transition-delay.svelte";
+	import TransitionAnimation from "./common/transition-animation.svelte";
+	import TransformNoTransform from "./common/transform-no-transform.svelte";
+	import TransformScale from "./common/transform-scale.svelte";
+	import TransformRotate from "./common/transform-rotate.svelte";
+	import TransformTranslate from "./common/transform-translate.svelte";
+	import TransformSkewX from "./common/transform-skew-x.svelte";
+	import TransformSkewY from "./common/transform-skew-y.svelte";
+	import TransformOrigin from "./common/transform-origin.svelte";
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -165,6 +194,35 @@
         effectsBackgroundBlendMode = "";
         filtersBlur = "";
         filtersBrightness = "";
+        filtersContrast = "";
+        filtersDropShadow = "";
+        filtersGrayScale = "";
+        filtersNoFilter = "";
+        filtersHueRotate = "";
+        filtersInvert = "";
+        filtersSaturate = "";
+        filtersSepia = "";
+        filtersBackdropBlur = "";
+        filtersBackdropBrightness = "";
+        filtersBackdropContrast = "";
+        filtersBackdropGrayscale = "";
+        filtersBackdropHueRotate = "";
+        filtersBackdropInvert = "";
+        filtersBackdropOpacity = "";
+        filtersBackdropSaturate = "";
+        filtersBackdropSepia = "";
+        transitionProperty = "";
+        transitionDuration = "";
+        transitionTimingFunction = "";
+        transitionDelay = "";
+        transitionAnimation = "";
+        transformNoTransform = "";
+        transformScale = "";
+        transformRotate = "";
+        transformTranslate = "";
+        transformSkewX = "";
+        transformSkewY = "";
+        transformOrigin = "";
     }
     
     /**
@@ -449,8 +507,157 @@
      * @type string
      */
     let filtersBrightness;
+
+    /**
+     * @type string
+     */
+    let filtersContrast;
+
+    /**
+     * @type string
+     */
+    let filtersDropShadow;
+
+    /**
+     * @type string
+     */
+    let filtersGrayScale;
+    
+    /**
+     * @type string
+     */
+    let filtersNoFilter;
+    
+    /**
+     * @type string
+     */
+    let filtersHueRotate;
+    
+    /**
+     * @type string
+     */
+    let filtersInvert;
+
+    /**
+     * @type string
+     */
+    let filtersSaturate;
+
+    /**
+     * @type string
+     */
+    let filtersSepia;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropBlur;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropBrightness;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropContrast;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropGrayscale;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropHueRotate;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropInvert;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropOpacity;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropSaturate;
+
+    /**
+     * @type string
+     */
+    let filtersBackdropSepia;
+
+    /**
+     * @type string
+     */
+    let transitionProperty;
+    
+    /**
+     * @type string
+     */
+    let transitionDuration;
+
+    /**
+     * @type string
+     */
+    let transitionTimingFunction;
+
+    /**
+     * @type string
+     */
+    let transitionDelay;
+
+    /**
+     * @type string
+     */
+    let transitionAnimation;
+
+    /**
+     * @type string
+     */
+    let transformNoTransform;
+
+    /**
+     * @type string
+     */
+    let transformScale;
+
+    /**
+     * @type string
+     */
+    let transformRotate;
+
+    /**
+     * @type string
+     */
+    let transformTranslate;
+
+    /**
+     * @type string
+     */
+    let transformSkewX;
+
+    /**
+     * @type string
+     */
+    let transformSkewY;
+
+    /**
+     * @type string
+     */
+    let transformOrigin;
+
+
     
     
+
+
     
     
     let collapseDesignLayout = false;
@@ -491,6 +698,16 @@
     let collapseDesignFilters = false;
     function toggleDesignFilters(){
         collapseDesignFilters = !collapseDesignFilters;
+    }
+
+    let collapseAnimationTransition = false;
+    function toggleAnimationTransition(){
+        collapseAnimationTransition = !collapseAnimationTransition;
+    }
+
+    let collapseAnimationTransform = false;
+    function toggleAnimationTransform(){
+        collapseAnimationTransform = !collapseAnimationTransform;
     }
 
 </script>
@@ -808,20 +1025,88 @@
     {#if collapseDesignFilters}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
 
+        <FiltersNoFilter bind:property={filtersNoFilter} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
         <FiltersBlur bind:property={filtersBlur} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
         <div class="widgetPanelDivider"></div>
 
         <FiltersBrightness bind:property={filtersBrightness} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersContrast bind:property={filtersContrast} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersDropShadow bind:property={filtersDropShadow} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+    
+        <div class="widgetPanelDivider"></div>
+    
+        <FiltersGrayscale bind:property={filtersGrayScale} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+    
+        <div class="widgetPanelDivider"></div>
+        
+        <FiltersHueRotate bind:property={filtersHueRotate} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersInvert bind:property={filtersInvert} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersSaturate bind:property={filtersSaturate} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+    
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersSepia bind:property={filtersSepia} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropBlur bind:property={filtersBackdropBlur} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropBrightness bind:property={filtersBackdropBrightness} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropContrast bind:property={filtersBackdropContrast} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropGrayscale bind:property={filtersBackdropGrayscale} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropHueRotate bind:property={filtersBackdropHueRotate} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropInvert bind:property={filtersBackdropInvert} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropOpacity bind:property={filtersBackdropOpacity} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropSaturate bind:property={filtersBackdropSaturate} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <FiltersBackdropSepia bind:property={filtersBackdropSepia} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
 
     </div>
     {/if}
 
 
-
     
-
+    
+    
 
 
 
@@ -844,7 +1129,7 @@
         <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
         <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
 
-        <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre>
+        <!-- <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre> -->
 
     </div>
     {/if}
@@ -853,6 +1138,123 @@
 
 
     <div class="h-20"></div>
+
+
+
+    {:else if selectedTabPageIndex==2}
+
+    
+    <button class="collapseButton" on:click={toggleAnimationTransition}>
+        <span class="collapseHeader">TRANSITION</span>
+        {#if collapseAnimationTransition}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseAnimationTransition}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <TransitionProperty bind:property={transitionProperty} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransitionDuration bind:property={transitionDuration} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransitionTimingFunction bind:property={transitionTimingFunction} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransitionDelay bind:property={transitionDelay} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <TransitionAnimation bind:property={transitionAnimation} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleAnimationTransform}>
+        <span class="collapseHeader">TRANSFORM</span>
+        {#if collapseAnimationTransform}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseAnimationTransform}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <TransformNoTransform bind:property={transformNoTransform} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransformScale bind:property={transformScale} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransformRotate bind:property={transformRotate} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <TransformTranslate bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransformSkewX bind:property={transformSkewX} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransformSkewY bind:property={transformSkewY} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <TransformOrigin bind:property={transformOrigin} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    </div>
+    {/if}
+
+
+
+
+    
+
+    
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleDesignClass}>
+        <span class="collapseHeader">CLASS</span>
+        {#if collapseDesignClass}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseDesignClass}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
+        <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
+
+        <!-- <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre> -->
+
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+
+    <div class="h-20"></div>
+
+
     {/if}
 
 

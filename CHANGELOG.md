@@ -6,6 +6,25 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.042] - 2022-04-12
+
+### Added
+ - Div Options - Filters: Contrast, Drop Shadow, Grayscale, Hue Rotate, Invert, Saturate, Sepia
+ - Div Options - Filters: Backdrop Blur, Backdrop Brightness, Backdrop Contrast, Backdrop Grayscale, Backdrop Hue Rotate, Backdrop Invert, Backdrop Saturate, Backdrop Sepia
+ - Text Options - Filters: Blur, Brightness, Contrast, Drop Shadow, Grayscale, Hue Rotate, Invert, Saturate, Sepia
+ - Text Options - Filters: Backdrop Blur, Backdrop Brightness, Backdrop Contrast, Backdrop Grayscale, Backdrop Hue Rotate, Backdrop Invert, Backdrop Saturate, Backdrop Sepia
+ - Div Options - Transitions: Transition Property, Transition Duration, Transition Timing Function, Transition Delay, Transition Animation
+ - Text Options - Transitions: Transition Property, Transition Duration, Transition Timing Function, Transition Delay, Transition Animation
+ - Div Options - Transforms: Scale, Rotate, Translate, SkewX, SkewY, Origin
+ - Text Options - Transforms: Not supported by span tag. Use outer div to transform.
+
+### Changed
+ - Atom Ui Element: Textinput now supports only numbers option, leading and trailing letters.
+ - Atom Ui Element: Color Builder (Works, but ui is subject to change.)
+
+### Fixed
+
+
 ## [0.0.1.041] - 2022-04-07
 
 ### Added
