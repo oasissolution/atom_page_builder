@@ -5,6 +5,16 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.043] - 2022-04-13
+
+### Added
+
+### Changed
+ - Atom Ui Element: Color Builder (Gradient, select color finished with new design. Slide and percentage left to do.)
+
+### Fixed
+
+
 
 ## [0.0.1.042] - 2022-04-12
 

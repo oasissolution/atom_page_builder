@@ -224,7 +224,7 @@
                     // gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
                 }
                 
-                console.log("updateClassInside => classInput : " + classInput);
+                // console.log("updateClassInside => classInput : " + classInput);
 
                 break;
             case ColorBuilderType.TEXTDECORATION:
@@ -489,9 +489,14 @@
             counter++;
         });
 
-        console.log(JSON.stringify("updateStops => newList : " + newList));
+        // console.log(JSON.stringify("updateStops => newList : " + newList));
 
         gradientStops.set(newList);
+        updateClassInside();
+        convertGradientArrayToClassForButton();
+    }
+
+    function updateFromGradientBuilder(){
         updateClassInside();
         convertGradientArrayToClassForButton();
     }
@@ -574,7 +579,7 @@
     {#if showCollapsedPanel}
     <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
 
-        <Optionsbutton items={["Fixed Color", "Gradient"]} bind:value={isGradient} spaceBetween={false} />
+        <Optionsbutton items={["Solid Color", "Gradient"]} bind:value={isGradient} spaceBetween={false} />
 
         {#if isGradient == 0}
         <div class="flex flex-row min-w-[130px] h-8 mt-2 pr-2 place-content-start items-center">
@@ -618,13 +623,15 @@
 
         {:else}
 
-        <div class="w-full h-8 rounded-lg my-2 flex place-content-center items-center">
+        {#if $gradientStopListStore.length >0}
+        <div class="w-full h-8 rounded-lg my-2 flex place-content-center items-center" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
             {#if $gradientStopPreview.includes("transparent")}
             <div class="{$gradientStopPreview}">Lorem Ipsum</div>
             {:else}
             <div class="w-full h-8 rounded-lg {$gradientStopPreview}"></div>
             {/if}
         </div>
+        {/if}
 
 
 
@@ -655,7 +662,7 @@
             {/each} -->
 
 
-            {#each $gradientStopListStore as item, index}
+            <!-- {#each $gradientStopListStore as item, index}
             <div class="w-full flex flex-row place-content-between h-10 items-center">
                 <ColorPicker 
                     label={item.color}
@@ -664,12 +671,12 @@
                 />
                 <Slider minLimit={minLimit(index)} maxLimit={maxLimit(index)} value={item.stop} on:change={e => updateStopValueFromList(item.id, e.detail.value)}/>
             </div>
-            {/each}
+            {/each} -->
             
             
         </div>
 
-        <GradientBuilder bind:gradientDirection bind:gradientClasses={gradientStops} />
+        <GradientBuilder on:updateFromGradientBuilder={updateFromGradientBuilder} bind:gradientClasses={gradientStops} />
         
         {/if}
 
