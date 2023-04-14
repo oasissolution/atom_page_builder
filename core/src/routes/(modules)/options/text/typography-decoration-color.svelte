@@ -1,6 +1,7 @@
 <script>
 
     import "../../../../app.css";
+	import ColorBuilder, { ColorBuilderType } from "../../../uicomponents/color-builder.svelte";
     import SelectColor from "../../../uicomponents/select-color.svelte";
 
     /**
@@ -73,9 +74,10 @@
 
 </script>
 
+<ColorBuilder  title={"Decoration Color"} tooltip={"Utility for controlling the decoration color of an element."} on:updateClass bind:loaded bind:elementDataLoaded bind:classInput target={ColorBuilderType.TEXTDECORATION} />
 
-<div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
+<!-- <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
     <span title="Utility for controlling the decoration color of an element.">Decoration Color</span>
     <SelectColor header={"decoration"} bind:loaded bind:elementDataLoaded bind:value={decorationColor}/>
 
-</div>
+</div> -->

@@ -5,6 +5,17 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.044] - 2022-04-14
+
+### Added
+
+### Changed
+ - Atom Ui Element: Color Builder Gradient finished. Everything works. Supports up to 3 stops (for now, may be we can add more later)
+
+### Fixed
+
+
+
 ## [0.0.1.043] - 2022-04-13
 
 ### Added

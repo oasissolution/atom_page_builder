@@ -137,8 +137,68 @@
 
                     break;
                 case ColorBuilderType.TEXTDECORATION:
+                    elementDataLoaded.split(" ").forEach( cls => {
+                        
+                        var currentClass = cls.trim();
+                        var ctl = "";
+
+                        if(currentClass.startsWith("decoration-")){
+                            ctl=currentClass.replace("decoration-", "");
+                            if(ctl.startsWith("[#")){
+                                ctl = ctl.replace("[#","").replace("]","");
+                                fixedColor.set("#" + ctl);
+                                isGradient = 0;
+                            } else if(ctl.startsWith("transparent")){
+                                isGradient = 1;
+                            }
+                            
+                        }
+                    });
+
                     break;
                 case ColorBuilderType.BACKGROUND:
+
+                    elementDataLoaded.split(" ").forEach( cls => {
+                        
+                        var currentClass = cls.trim();
+                        var ctl = "";
+
+                        if(currentClass.startsWith("bg-")){
+                            ctl=currentClass.replace("bg-", "");
+                            if(ctl.startsWith("[#")){
+                                ctl = ctl.replace("[#","").replace("]","");
+                                fixedColor.set("#" + ctl);
+                                isGradient = 0;
+                            } else if(ctl.startsWith("gradient")){
+                                isGradient = 1;
+                            }
+                            
+                        }
+                    });
+
+                    if(isGradient == 1){
+                        /**
+                         * @type Array<string>
+                         */
+                        var definedGradient = [];
+                        elementDataLoaded.split(" ").forEach( cls => {
+                            var currentClass = cls.trim();
+                            if(
+                                currentClass.startsWith("from-") || 
+                                currentClass.startsWith("via-") || 
+                                currentClass.startsWith("to-")
+                            ){
+                                definedGradient.push(currentClass);
+                            }else if(currentClass.startsWith("bg-gradient-") || currentClass == "bg-none"){
+                                gradientDirection = currentClass;
+                            }
+                        });
+                        gradientStops.set(definedGradient);
+                        convertGradientArrayToGradientStopList();
+                        gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
+                        // gradientStopPreview.set("text-transparent bg-clip-text " + gradientDirection + " " + convertGradientArrayToClass());
+                    }
+
                     break;
                 case ColorBuilderType.BORDER:
                     elementDataLoaded.split(" ").forEach( cls => {
@@ -173,10 +233,6 @@
                     });
                     break;
             }
-
-
-
-            
 
             loadedInside = true;
 
@@ -228,8 +284,67 @@
 
                 break;
             case ColorBuilderType.TEXTDECORATION:
+                var newClass = "";
+
+                //Remove all text color related classes
+                classInput.split(" ").forEach( cls => {
+                    var currentClass = cls.trim();
+                    var ctl = "";
+                    if(currentClass.startsWith("decoration-")){
+                        ctl=currentClass.replace("decoration-", "");
+                        if(!ctl.startsWith("[#")){
+                            newClass += " " + currentClass;
+                        }
+                    }else{
+                        newClass += " " + currentClass;
+                    }
+                });
+
+                if(isGradient == 0){
+                    classInput = newClass.trim() + " " + "decoration-[" + $fixedColor + "]";
+                    updateClass();
+                }
+
                 break;
             case ColorBuilderType.BACKGROUND:
+
+                var newClass = "";
+
+                //Remove all text color related classes
+                classInput.split(" ").forEach( cls => {
+                    var currentClass = cls.trim();
+                    var ctl = "";
+                    if(currentClass.startsWith("bg-")){
+                        ctl=currentClass.replace("bg-", "");
+                        if(!ctl.startsWith("[#") && !ctl.startsWith("gradient")){
+                            newClass += " " + currentClass;
+                        }
+                    
+                    }else if(
+                        currentClass.startsWith("bg-none") || 
+                        currentClass.startsWith("bg-gradient-") || 
+                        currentClass.startsWith("bg-clip-") || 
+                        currentClass.startsWith("from-") || 
+                        currentClass.startsWith("via-") || 
+                        currentClass.startsWith("to-")
+                    ){
+                        //Do nothing. just removed classes.
+                    
+                    }else{
+                        newClass += " " + currentClass;
+                    }
+                });
+
+                if(isGradient == 0){
+                    classInput = newClass.trim() + " " + "bg-[" + $fixedColor + "]";
+                    updateClass();
+                }else{
+                    classInput = newClass.trim() + " " + "" + gradientDirection + " " + convertGradientArrayToClass();
+                    gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
+                    updateClass();
+                    // gradientStopPreview.set("" + gradientDirection + " " + convertGradientArrayToClass());
+                }
+
                 break;
             case ColorBuilderType.BORDER:
                 var newClass = "";
@@ -456,14 +571,28 @@
     $: gradientStopListStore.set(gradientStopList);
 
     function addStop(){
-        if(gradientStopList.length >0){
-            gradientStopList.push({"color": "#cc1000", "stop": 100, "id": gradientStopList.length ?? 0});
-        }else{
-            gradientStopList.push({"color": "#000000", "stop": 0, "id": gradientStopList.length ?? 0});
-        }
-        // gradientStopList.push({"color": "#cc1000", "stop": 70, "id": gradientStopList.length ?? 60});
-        // console.log(JSON.stringify(gradientStopList));
-        updateStops();
+        // if(gradientStopList.length >0){
+        //     gradientStopList.push({"color": "#cc1000", "stop": 100, "id": gradientStopList.length ?? 0});
+        // }else{
+        //     gradientStopList.push({"color": "#000000", "stop": 0, "id": gradientStopList.length ?? 0});
+        // }
+        // updateStops();
+
+        
+
+        var newList = [];
+        // newList = $gradientStopListStore;
+        // console.log("\naddStop Before => newList : " + JSON.stringify(newList));
+        // if(newList.length >0){
+        //     newList.push({"color": "#cc1000", "stop": 100, "id": newList.length ?? 0});
+        // }else{
+        //     newList.push({"color": "#000000", "stop": 0, "id": newList.length ?? 0});
+        // }
+        // gradientStopListStore.set(newList);
+
+        // console.log("addStop After => newList : " + JSON.stringify(newList));
+
+        // updateStops();
     }
 
 
@@ -473,23 +602,39 @@
          * @type Array<string>
          */
         var newList = [];
-        var counter = 0; // To detect first and last items
-        $gradientStopListStore.forEach(element => {
-            if(counter == 0){
-                newList.push("from-[" + element.color + "]");
-                newList.push("from-[" + element.stop + "%]");
+        // var counter = 0; // To detect first and last items
+        // $gradientStopListStore.forEach(element => {
+        //     if(counter == 0){
+        //         newList.push("from-[" + element.color + "]");
+        //         newList.push("from-[" + element.stop + "%]");
             
-            }else if(counter == $gradientStopListStore.length -1){
-                newList.push("to-[" + element.color + "]");
-                newList.push("to-[" + element.stop + "%]");
-            }else{
-                newList.push("via-[" + element.color + "]");
-                newList.push("via-[" + element.stop + "%]");
-            }
-            counter++;
-        });
+        //     }else if(counter == $gradientStopListStore.length -1){
+        //         newList.push("to-[" + element.color + "]");
+        //         newList.push("to-[" + element.stop + "%]");
+        //     }else{
+        //         newList.push("via-[" + element.color + "]");
+        //         newList.push("via-[" + element.stop + "%]");
+        //     }
+        //     counter++;
+        // });
 
-        // console.log(JSON.stringify("updateStops => newList : " + newList));
+        var tempList = $gradientStopListStore;
+        for(var i=0; i<tempList.length; i++){
+            var elm = tempList[i];
+            if(i == 0){
+                newList.push("from-[" + elm.color + "]");
+                newList.push("from-[" + elm.stop + "%]");
+            
+            }else if(i == tempList.length -1){
+                newList.push("to-[" + elm.color + "]");
+                newList.push("to-[" + elm.stop + "%]");
+            }else{
+                newList.push("via-[" + elm.color + "]");
+                newList.push("via-[" + elm.stop + "%]");
+            }
+        }
+
+        // console.log("updateStops => newList : " + JSON.stringify(newList));
 
         gradientStops.set(newList);
         updateClassInside();
@@ -497,8 +642,13 @@
     }
 
     function updateFromGradientBuilder(){
+        // console.log("\nupdateFromGradientBuilder => gradientStopListStore" + JSON.stringify($gradientStopListStore));
+        // console.log("updateFromGradientBuilder => gradientStops" + JSON.stringify($gradientStops));
         updateClassInside();
         convertGradientArrayToClassForButton();
+        convertGradientArrayToGradientStopList();
+        // console.log("\nupdateFromGradientBuilder After => gradientStopListStore" + JSON.stringify($gradientStopListStore));
+        // console.log("updateFromGradientBuilder After => gradientStops" + JSON.stringify($gradientStops));
     }
 
 
@@ -592,6 +742,19 @@
             </div> 
         </div>
 
+        {:else if isGradient == 1 && target == ColorBuilderType.TEXTDECORATION}
+
+        <div class="w-full text-[9px] my-2">
+            Text Decoration Gradient is not supported directly.<br/>
+            Here is a workaround.<br/><br/>
+            To apply a gradient to text decoration:
+            <ol class="list-inside list-decimal">
+                <li>Create a container with position relative and set dimensions.</li>
+                <li>Create a new container inside of (1), with the gradient background color and position absolute.</li>
+                <li>Set dimensions, left, top of this container (2)</li>
+            </ol>
+        </div>
+
         {:else if isGradient == 1 && target == ColorBuilderType.BORDER}
 
         <div class="w-full text-[9px] my-2">
@@ -640,41 +803,13 @@
             <Select options={gradientDirectionOptions} bind:value={gradientDirection} on:onChange={updateClassInside}/>
         </div>
 
-        <div class="w-full flex flex-row place-content-between h-10 items-center">
+        <!-- <div class="w-full flex flex-row place-content-between h-10 items-center">
             <span>Stops</span>
             <Button active={true} on:click={addStop} >
                 <span slot="iconRight"><i class="bi bi-plus me-2"></i></span>
                 <span slot="text">Add New</span>
             </Button>
-        </div>
-
-        <div class="w-full">
-            
-            <!-- {#each $gradientStopListStore as item}
-            <div class="w-full flex flex-row place-content-between h-10 items-center">
-                <ColorPicker 
-                    label={item.color}
-                    hex={item.color}
-                    on:input={(event) => updateColorFromList(event, item.id)}
-                />
-                <Slider value={item.stop} on:change={e => updateStopValueFromList(item.id, e.detail.value)}/>
-            </div>
-            {/each} -->
-
-
-            <!-- {#each $gradientStopListStore as item, index}
-            <div class="w-full flex flex-row place-content-between h-10 items-center">
-                <ColorPicker 
-                    label={item.color}
-                    hex={item.color}
-                    on:input={(event) => updateColorFromList(event, item.id)}
-                />
-                <Slider minLimit={minLimit(index)} maxLimit={maxLimit(index)} value={item.stop} on:change={e => updateStopValueFromList(item.id, e.detail.value)}/>
-            </div>
-            {/each} -->
-            
-            
-        </div>
+        </div> -->
 
         <GradientBuilder on:updateFromGradientBuilder={updateFromGradientBuilder} bind:gradientClasses={gradientStops} />
         
