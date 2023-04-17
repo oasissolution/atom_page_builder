@@ -80,6 +80,14 @@
 	import TransformSkewX from "./common/transform-skew-x.svelte";
 	import TransformSkewY from "./common/transform-skew-y.svelte";
 	import TransformOrigin from "./common/transform-origin.svelte";
+    import BackgroundAttachment from "./common/background-attachment.svelte";
+	import BackgroundClip from "./common/background-clip.svelte";
+	import BackgroundOrigin from "./common/background-origin.svelte";
+	import BackgroundPosition from "./common/background-position.svelte";
+	import BackgroundRepeat from "./common/background-repeat.svelte";
+	import BackgroundSize from "./common/background-size.svelte";
+	import BackgroundBackground from "./common/background-background.svelte";
+
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -213,6 +221,13 @@
         transformSkewX = "";
         transformSkewY = "";
         transformOrigin = "";
+        backgroundAttachment = "";
+        backgroundClip = "";
+        backgroundOrigin = "";
+        backgroundPosition = "";
+        backgroundRepeat = "";
+        backgroundSize = "";
+
     }
 
 
@@ -631,6 +646,36 @@
      */
     let transformOrigin;
 
+    /**
+     * @type string
+     */
+     let backgroundAttachment;
+
+    /**
+     * @type string
+     */
+    let backgroundClip;
+
+    /**
+     * @type string
+     */
+    let backgroundOrigin;
+
+    /**
+     * @type string
+     */
+    let backgroundPosition;
+
+    /**
+     * @type string
+     */
+    let backgroundRepeat;
+
+    /**
+     * @type string
+     */
+    let backgroundSize;
+
 
 
     
@@ -728,6 +773,11 @@
     let collapseAnimationTransform = false;
     function toggleAnimationTransform(){
         collapseAnimationTransform = !collapseAnimationTransform;
+    }
+
+    let collapseBackground = false;
+    function toggleBackground(){
+        collapseBackground = !collapseBackground;
     }
 
 </script>
@@ -975,6 +1025,50 @@
         <div class="widgetPanelDivider"></div>
 
         <BorderColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    </div>
+    {/if}
+
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleBackground}>
+        <span class="collapseHeader">BACKGROUND</span>
+        {#if collapseBackground}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if collapseBackground}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <BackgroundBackground bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BackgroundAttachment bind:property={backgroundAttachment} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BackgroundClip bind:property={backgroundClip} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+        <div class="widgetPanelDivider"></div>
+
+        <BackgroundOrigin bind:property={backgroundOrigin} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BackgroundPosition bind:property={backgroundPosition} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BackgroundRepeat bind:property={backgroundRepeat} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+        <div class="widgetPanelDivider"></div>
+
+        <BackgroundSize bind:property={backgroundSize} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     </div>
     {/if}

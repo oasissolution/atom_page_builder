@@ -1,6 +1,7 @@
 <script>
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore, globalThemeStore } from "../../../globals/globalstores.js";
     import { PanelDisplayStyles, PanelDefinitions } from "../../../globals/globalconstants.js";
+    import Iconbutton from "../../../uicomponents/iconbutton.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -68,94 +69,33 @@
         
     }
 
+
 </script>
 
 
+ {#each PanelDefinitions as panel}
 
-<div class="flex flex-col" style='
-    --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor}; 
-    --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
+<div class="w-full flex flex-row grow justify-between h-8 align-middle items-center" style='
+    --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+    --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+    --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+    --fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
+    --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+    --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+    --borderColor: {$globalThemeStore.widgetIcon.borderColor};
+    --iconColor: {$globalThemeStore.widgetIcon.iconColor};
+    --textColor: {$globalThemeStore.widgetIcon.textColor};
 ' >
+    <span title="Set Menu location on screen">{panel.name}</span>
+    <span class="mx-auto"></span>
+    <div class="w-[130px] flex flex-row gap-1">
+        <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDLEFT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><span slot="icon" title="Left"><i class="bi bi-arrow-left"></i></span></Iconbutton>
+        <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDRIGHT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><span slot="icon" title="Right"><i class="bi bi-arrow-right"></i></span></Iconbutton>
+        <!-- <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)}><span slot="icon" title="Float"><i class="bi bi-circle"></i></span></Iconbutton> -->
+    </div>
+</div>
+<div class="widgetPanelDivider"></div>
 
-    {#each PanelDefinitions as panel}
-        <div class="flex flex-row customizeRow my-2">
-            <span>{panel.name}</span>
-            <span class="mx-auto"></span>
-            <div class="flex flex-row">
-
-                {#if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDLEFT}
-                    <button class="iconButton selected rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
-                    <!-- <div class="vr"></div> -->
-                    <!-- <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button> -->
-                    
-                {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDRIGHT}
-                    <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton selected" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
-                    <!-- <div class="vr"></div> -->
-                    <!-- <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button> -->
-                    
-                {:else if $globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT}
-                    <button class="iconButton rotate-180deg" on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-                    <button class="iconButton " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-                    <button class="iconButton selected " on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)} ><i class="bi bi-hand-index-thumb-fill"></i></button>
-
-                {/if}
-
-            </div>
-        </div>
-    {/each}
-
-   
- </div>
+{/each}
 
 
-<style>
-
-    .iconButton{
-       width: 32px;
-       height: 32px;
-       background-color: var(--buttonPassiveBackgroundColor);
-       border-color: transparent;
-       color: var(--buttonPassiveForegroundColor);
-       font-size: larger;
-       margin-left: 4px;
-       margin-right: 4px;
-    }
-    .iconButton.selected{
-       background-color: var(--buttonActiveBackgroundColor) !important;
-       color: var(--buttonActiveForegroundColor);
-       border-radius: 6px;
-    }
-
-    .customizeRow{
-        height: 50px;
-    }
-
-    .rotate-180deg{
-        transform: rotate(180deg) !important;
-    }
-
-    .hr {
-        display: inline-block;
-        align-self: stretch;
-        height: 1px;
-        min-width: 1em;
-        background-color: var(--foregroundColor);
-        opacity: 0.25;
-    }
-
-    .vr {
-        display: inline-block;
-        align-self: stretch;
-        width: 1px;
-        min-height: 1em;
-        background-color: var(--foregroundColor);
-        opacity: 0.25;
-    }
-    
-</style>

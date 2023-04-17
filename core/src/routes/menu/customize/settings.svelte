@@ -53,11 +53,15 @@
    <div class="widgetPanelTabsDivider"></div>
 
    {#if selectedTabPageIndex==0}
+
    <svelte:component this={Menulocation}/>
    <div class="widgetPanelDivider"></div>
    <svelte:component this={Panellocation}/>
+
    {:else if selectedTabPageIndex==1}
+   
    <svelte:component this={Theme}/>
+
    {/if}
 
 </div>

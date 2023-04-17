@@ -10,26 +10,8 @@ export const editorDefaultPreferences = {
     "customizePanelDisplayStyle" : "panelDisplayStyleFixedLeft",
     "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",
-    "info":"Hover to see info!",
-    "build":"dev", //release - dev
+    "build":"release", //release - dev
     "theme": "dark",
-    "editorTheme": {
-        "backgroundFrameColor": "#474e6818",
-        "backgroundColor": "#404258",
-        "editorBackgroundColor": "#ffffff",
-        "foregroundColor": "#aaaebe",
-        "buttonActiveBackgroundColor": "#262733",
-        "buttonPassiveBackgroundColor": "transparent",
-        "buttonActiveForegroundColor": "#aaaebe",
-        "buttonPassiveForegroundColor": "#aaaebe",
-        "fixedPanelForegroundColor": "#aaaebe",
-        "fixedPanelBackgroundColor": "#262733",
-        "fixedPanelButtonActiveBackgroundColor": "#404258",
-        "fixedPanelButtonPassiveBackgroundColor": "transparent",
-        "fixedPanelButtonActiveForegroundColor": "#aaaebe",
-        "fixedPanelButtonPassiveForegroundColor": "#aaaebe",
-        "editorMouseOverColor":"#404258",
-    },
     "editorData": {
         "editorScreen": "screenDesktop",
         "editorWidth": "100%", //"1320px"
@@ -145,3 +127,38 @@ export let editorBlankData2 =  [{
 //     },
 //     "children": []
 // }];
+
+
+
+// export const editorDefaultPreferences = {
+//     "menuLocation": "menuLocationTop",
+//     "widgetPanelDisplayStyle" : "panelDisplayStyleFixedLeft",
+//     "customizePanelDisplayStyle" : "panelDisplayStyleFixedLeft",
+//     "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
+//     "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",
+//     "info":"Hover to see info!",
+//     "build":"dev", //release - dev
+//     "theme": "dark",
+//     "editorTheme": {
+//         "backgroundFrameColor": "#474e6818",
+//         "backgroundColor": "#404258",
+//         "editorBackgroundColor": "#ffffff",
+//         "foregroundColor": "#aaaebe",
+//         "buttonActiveBackgroundColor": "#262733",
+//         "buttonPassiveBackgroundColor": "transparent",
+//         "buttonActiveForegroundColor": "#aaaebe",
+//         "buttonPassiveForegroundColor": "#aaaebe",
+//         "fixedPanelForegroundColor": "#aaaebe",
+//         "fixedPanelBackgroundColor": "#262733",
+//         "fixedPanelButtonActiveBackgroundColor": "#404258",
+//         "fixedPanelButtonPassiveBackgroundColor": "transparent",
+//         "fixedPanelButtonActiveForegroundColor": "#aaaebe",
+//         "fixedPanelButtonPassiveForegroundColor": "#aaaebe",
+//         "editorMouseOverColor":"#404258",
+//     },
+//     "editorData": {
+//         "editorScreen": "screenDesktop",
+//         "editorWidth": "100%", //"1320px"
+//         "fullWidth": true, //false
+//     }
+// };

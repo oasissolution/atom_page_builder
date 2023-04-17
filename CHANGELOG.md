@@ -5,6 +5,22 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.045] - 2022-04-17
+
+### Added
+ - Div Options - Background: Attachment, Clip, Color, Origin, Position, Repeat, Size, (Image will be added with image widget)
+ - Text Options - Background: Attachment, Clip, Color, Origin, Position, Repeat, Size
+ - Light theme preset
+
+### Changed
+ - Customize panel updated to new ui and code revised with new atom ui elements.
+ - Customize theme; removed detailed and old version, added select with preset options. (Create your own will be added later.)
+
+### Fixed
+
+
+
+
 ## [0.0.1.044] - 2022-04-14
 
 ### Added

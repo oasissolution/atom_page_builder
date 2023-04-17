@@ -1,6 +1,6 @@
 <script>
-    import { globalEditorPreferencesStore } from "../../../globals/globalstores.js";
-    import ColorPicker from 'svelte-awesome-color-picker';
+    import { globalEditorPreferencesStore, globalThemeStore } from "../../../globals/globalstores.js";
+	import Select from "../../../uicomponents/select.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -9,51 +9,66 @@
     /// Updates "globalEditorPreferencesStore" whenever variable "globalEditorPreferences" changes.
     $: globalEditorPreferencesStore.set(globalEditorPreferences);
 
+    /**
+     * @typedef {Object} SelectOptions
+     * @property {string} value
+     * @property {string} name
+     * @property {string} info
+    */
 
     /**
-     * Array of colors used in app.
-     * @param {string} title Label of Color
-     * @param {string} key Key of color defined in globalEditorPreferencesStore.editorTheme
+     * Value of element
+     * @type Array<SelectOptions>
      */
-    const themeData = [
-        {"title": "Editor Background Color", "key": "backgroundFrameColor"},
-        {"title": "Editor Mouse Over Color", "key": "editorMouseOverColor"},
-        {"title": "hr", "key": ""},
-        {"title": "Menu Background Color", "key": "backgroundColor"},
-        {"title": "Menu Foreground Color", "key": "foregroundColor"},
-        {"title": "hr", "key": ""},
-        {"title": "Menu Button Active Foreground Color", "key": "buttonActiveForegroundColor"},
-        {"title": "Menu Button Active Background Color", "key": "buttonActiveBackgroundColor"},
-        {"title": "Menu Button Passive Foreground Color", "key": "buttonPassiveForegroundColor"},
-        {"title": "Menu Button Passive Background Color", "key": "buttonPassiveBackgroundColor"},
-        {"title": "hr", "key": ""},
-        {"title": "Fixed Panel Foreground Color", "key": "fixedPanelForegroundColor"},
-        {"title": "Fixed Panel Background Color", "key": "fixedPanelBackgroundColor"},
-        {"title": "hr", "key": ""},
-        {"title": "Fixed Panel Button Active Foreground Color", "key": "fixedPanelButtonActiveForegroundColor"},
-        {"title": "Fixed Panel Button Active Background Color", "key": "fixedPanelButtonActiveBackgroundColor"},
-        {"title": "Fixed Panel Button Passive Foreground Color", "key": "fixedPanelButtonPassiveForegroundColor"},
-        {"title": "Fixed Panel Button Passive Background Color", "key": "fixedPanelButtonPassiveBackgroundColor"},
+     let presetThemes = [
+        
+        {name: "Dark",     value: "dark",     info: "Dark Theme"},
+        {name: "Light",     value: "light",     info: "Light Theme"},
+
+        // {name: "",     value: "",     info: ""},
+       
     ];
-    
+
+    import { themeColors as DarkTheme } from "../../../themes/dark.js";
+    import { themeColors as LightTheme } from "../../../themes/light.js";
+
+
+
+
     /**
-     * Updates selected color from "globalEditorPreferencesStore.editorTheme"
-     * @param {string} key Key of color defined in globalEditorPreferencesStore.editorTheme
-     * @param {CustomEvent} event This event fires from "ColorPicker"
+     * @type string
      */
-    function setColor(key, event){
-        var {hsv, rgb, hex, color} = event.detail;
-        globalEditorPreferences.editorTheme[key] = hex;
-    }
+    let selectedTheme = globalEditorPreferences.theme;
+
+    $: selectedTheme, (()=>{
+
+        globalEditorPreferences.theme = selectedTheme;
+
+        switch(selectedTheme){
+            case "light":
+                globalThemeStore.set(LightTheme);
+                break;
+            default:
+                globalThemeStore.set(DarkTheme);
+                break;
+        }
+        
+
+    })();
+
+    
 
 </script>
 
 
-<div class="hstack">
-    Preset Themes
+<div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
+    <div>Preset Themes</div>
+    <div>
+        <Select bind:value={selectedTheme} options={presetThemes} filled/>
+    </div>
 </div>
 <br/>
-<div class="themePanel">
+<!-- <div class="themePanel">
     <div class="flex flex-col" style='
         --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
         --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
@@ -80,9 +95,11 @@
             
         {/each}
     </div>
-</div>
+</div> -->
+
+
 <style>
-    .themePanel{
+    /* .themePanel{
         max-height: 70vh;
         overflow-y: auto !important;
         overflow-x: hidden;
@@ -114,6 +131,6 @@
         opacity: 0.25;
         margin-top: 8px;
         margin-bottom: 8px;
-    }
+    } */
 
 </style>

@@ -76,6 +76,7 @@
 </script>
 
 
+
 {#if onlyButton}
 
     {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}

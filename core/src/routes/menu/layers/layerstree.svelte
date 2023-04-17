@@ -4,6 +4,34 @@
 
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
 
+    // TODO: import all modules dynamically
+
+    import Body from "../../(modules)/modules/body.svelte";
+    import Div from "../../(modules)/modules/div.svelte";
+    import Text from "../../(modules)/modules/text.svelte";
+
+    /**
+     * Definition and list of all modules in a JSON.
+     * @returns {JSON}
+     * 
+     */
+    const JsonOfModules = {
+        "body": Body,
+        "div": Div,
+        "text": Text,
+    };
+
+    /**
+     * Definition and list of all modules in a JSON.
+     * @returns {JSON}
+     * 
+     */
+    const JsonOfTypes = {
+        "body": {"title": "Body", "data": ""},
+        "div": {"title": "Container", "data": ""},
+        "text": {"title": "Text", "data": "text"},
+    };
+
 </script>
 
 <div style:margin-left="20px"> <!-- {level * 20} -->

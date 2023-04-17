@@ -106,7 +106,6 @@
       margin-top: 12px;
       margin-bottom: 12px;
       background-color: var(--fixedPanelTabsDivider) !important;
-      /* background-color: #323232 !important; */
    }
 
    :global(.widgetContainer){

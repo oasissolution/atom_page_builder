@@ -1,7 +1,7 @@
 <script>
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../../globals/globalstores.js";
-    import { PanelDisplayStyles, MenuLocations } from "../../../globals/globalconstants.js";
-    import Optionsbutton from "../../../uicomponents/optionsbutton.svelte";
+    import { globalEditorPreferencesStore, globalThemeStore } from "../../../globals/globalstores.js";
+    import { MenuLocations } from "../../../globals/globalconstants.js";
+	import Iconbutton from "../../../uicomponents/iconbutton.svelte";
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -18,122 +18,25 @@
         globalEditorPreferences.menuLocation = location;
     }
 
-    /**
-     * Holds selected location in number
-     * @type number
-     */
-    let selectedLocation = 0;
-
-    /**
-     * @typedef {Object} nestedItemsType
-     * @property {string} outerClass
-     * @property {string} innerClass
-     */
-
-    /**
-     * @type Array<nestedItemsType>
-     */
-    let locationList = [
-        {outerClass: "-rotate-90", innerClass: "bi bi-layout-sidebar-inset-reverse"},
-        {outerClass: "rotate-90", innerClass: "bi bi-layout-sidebar-inset-reverse"},
-        {outerClass: "rotate-180", innerClass: "bi bi-layout-sidebar-inset-reverse"},
-        {outerClass: "", innerClass: "bi bi-layout-sidebar-inset-reverse"},
-    ];
-
-    let locationPositions = [
-        MenuLocations.TOP,
-        MenuLocations.BOTTOM,
-        MenuLocations.LEFT,
-        MenuLocations.RIGHT
-    ];
-
-    $: selectedLocation, (()=>{
-        console.log("selectedLocation : " + selectedLocation + " |=> : "+locationPositions[selectedLocation]);
-        setMenuLocation(locationPositions[selectedLocation]);
-    })();
-
 </script>
 
-<!-- <div class="flex flex-row place-content-between h-8 items-center">
-    <span>Menu</span>
-    <div class="w-[150px]">
-        <Optionsbutton nestedItems={locationList} nested={true} bind:value={selectedLocation}></Optionsbutton>
-    </div>
-    
-</div> -->
 
-
-
-<div class="flex flex-row customizeRow" style='
-    --fixedPanelBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelBackgroundColor};
-    --fixedPanelForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelForegroundColor};
-    --buttonActiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveBackgroundColor};
-    --buttonPassiveBackgroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveBackgroundColor};
-    --buttonActiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonActiveForegroundColor};
-    --buttonPassiveForegroundColor:{$globalEditorPreferencesStore.editorTheme.fixedPanelButtonPassiveForegroundColor};
+<div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center" style='
+    --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+    --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+    --fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+    --fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
+    --backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+    --foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+    --borderColor: {$globalThemeStore.widgetIcon.borderColor};
+    --iconColor: {$globalThemeStore.widgetIcon.iconColor};
+    --textColor: {$globalThemeStore.widgetIcon.textColor};
 ' >
-    <span>Menu</span>
-    <span class="mx-auto"></span>
-    <div class="flex flex-row">
-
-        {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP}
-            <button class="iconButton selected rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
-        {:else if $globalEditorPreferencesStore.menuLocation == MenuLocations.LEFT}
-            <button class="iconButton rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton selected rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
-        {:else if $globalEditorPreferencesStore.menuLocation == MenuLocations.RIGHT}
-            <button class="iconButton rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton selected" on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
-        {:else }
-            <button class="iconButton rotate-270deg" on:click={() => setMenuLocation(MenuLocations.TOP)} ><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton selected rotate-90deg" on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button><div class="vr"></div>
-            <button class="iconButton rotate-180deg" on:click={() => setMenuLocation(MenuLocations.LEFT)}><i class="bi bi-layout-sidebar-inset-reverse "></i></button><div class="vr"></div>
-            <button class="iconButton " on:click={() => setMenuLocation(MenuLocations.RIGHT)}><i class="bi bi-layout-sidebar-inset-reverse"></i></button>
-        {/if}
-
+    <span title="Set Menu location on screen">Menu</span>
+    <div class="w-[130px] flex flex-row gap-1">
+        <Iconbutton active={$globalEditorPreferencesStore.menuLocation == MenuLocations.LEFT} on:click={() => setMenuLocation(MenuLocations.LEFT)}><span slot="icon" title="Left"><i class="bi bi-arrow-left"></i></span></Iconbutton>
+        <Iconbutton active={$globalEditorPreferencesStore.menuLocation == MenuLocations.RIGHT} on:click={() => setMenuLocation(MenuLocations.RIGHT)}><span slot="icon" title="Right"><i class="bi bi-arrow-right"></i></span></Iconbutton>
+        <Iconbutton active={$globalEditorPreferencesStore.menuLocation == MenuLocations.TOP} on:click={() => setMenuLocation(MenuLocations.TOP)}><span slot="icon" title="Top"><i class="bi bi-arrow-up"></i></span></Iconbutton>
+        <Iconbutton active={$globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM} on:click={() => setMenuLocation(MenuLocations.BOTTOM)}><span slot="icon" title="Bottom"><i class="bi bi-arrow-down"></i></span></Iconbutton>
     </div>
-</div> 
-
-
-<style>
-
-    .iconButton{
-        width: 32px;
-        height: 32px;
-        background-color: var(--buttonPassiveBackgroundColor);
-        border-color: transparent;
-        color: var(--buttonPassiveForegroundColor);
-        font-size: larger;
-        margin-left: 4px;
-        margin-right: 4px;
-    }
-    .iconButton.selected{
-        background-color: var(--buttonActiveBackgroundColor) !important;
-        color: var(--buttonActiveForegroundColor);
-        border-radius: 6px;
-    }
-
-    .customizeRow{
-        height: 50px;
-    }
-
-    :global(.rotate-90deg){
-        transform: rotate(90deg) !important;
-    }
-    :global(.rotate-180deg){
-        transform: rotate(180deg) !important;
-    }
-    :global(.rotate-270deg){
-        transform: rotate(270deg) !important;
-    }
-
-
-
-</style>
+</div>
