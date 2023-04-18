@@ -10,7 +10,7 @@ export const editorDefaultPreferences = {
     "customizePanelDisplayStyle" : "panelDisplayStyleFixedLeft",
     "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",
-    "build":"release", //release - dev
+    "build": "dev", //release - dev
     "theme": "dark",
     "editorData": {
         "editorScreen": "screenDesktop",

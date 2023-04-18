@@ -24,13 +24,6 @@ export let globalComponentCollectionStore = writable([]);
         "widgetPanelDisplayStyle" : "panelDisplayStyleHover",
         "customizePanelDisplayStyle" : "panelDisplayStyleFixedRight",
         "info":"Hover to see info!",
-        "editorTheme": {
-            "backgroundFrameColor": "#474e6818",
-            "backgroundColor": "#404258",
-            "editorBackgroundColor": "#ffffff",
-            "foregroundColor": "#aaaebe",
-            ...
-        },
         "editorData": {
             "editorScreen": "screenDesktop",
             "editorWidth": "1120px", 

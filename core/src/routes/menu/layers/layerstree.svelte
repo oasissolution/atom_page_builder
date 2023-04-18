@@ -2,39 +2,100 @@
     export let component;
     export let level = 0;
 
-    import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
+    import { globalSelectedElementUuidStore, globalLayersExpansionStatesStore } from "../../globals/selectorstores.js";
 
-    // TODO: import all modules dynamically
 
-    import Body from "../../(modules)/modules/body.svelte";
-    import Div from "../../(modules)/modules/div.svelte";
-    import Text from "../../(modules)/modules/text.svelte";
-
-    /**
-     * Definition and list of all modules in a JSON.
-     * @returns {JSON}
-     * 
-     */
-    const JsonOfModules = {
-        "body": Body,
-        "div": Div,
-        "text": Text,
-    };
+    import Body from "../../(modules)/layers/body.svelte";
+    import Div from "../../(modules)/layers/div.svelte";
+    import Text from "../../(modules)/layers/text.svelte";
+	import { onMount } from "svelte/internal";
 
     /**
-     * Definition and list of all modules in a JSON.
-     * @returns {JSON}
-     * 
+     * @typedef {Object} ExpansionState
+     * @property {string} [uuid] - Unique id of element.
+     * @property {boolean} [state] - Specifies whether the element is expanded.
      */
-    const JsonOfTypes = {
-        "body": {"title": "Body", "data": ""},
-        "div": {"title": "Container", "data": ""},
-        "text": {"title": "Text", "data": "text"},
-    };
+
+    let globalLayersExpansionStates = $globalLayersExpansionStatesStore;
+    $: globalLayersExpansionStatesStore.set(globalLayersExpansionStates);
+
+    /**
+     * 
+     * @param {string} uuid
+     */
+    function setSelected(uuid){
+        globalSelectedElementUuidStore.set(uuid);
+    }
+    
+    /**
+     * 
+     * @param {string} uuid
+     */
+	function toggleExpansion(uuid){
+        globalLayersExpansionStates[uuid] = !globalLayersExpansionStates[uuid];
+	}
+
+
+    onMount(()=>{
+
+    });
+
+    let listOfElementsThatCanHaveChildren = ['div']
 
 </script>
 
-<div style:margin-left="20px"> <!-- {level * 20} -->
+<div class:pl-4 = {component.type != "body"}> <!--  -->
+    <slot>
+        {component}
+    </slot>
+
+    {#if $globalLayersExpansionStatesStore[component.uuid] == true || component.type == "body"}
+    
+    {#each component?.children ?? [] as child}
+        
+            <svelte:self component={child} level={level + 1}>
+                <div class="w-full flex flex-row">
+                    <div class="h-8 w-8 flex justify-center items-center">
+                        {#if listOfElementsThatCanHaveChildren.includes(child.type)}
+                            <button on:click={()=>toggleExpansion(child.uuid)} >
+                                {#if $globalLayersExpansionStatesStore[child.uuid] == true}
+                                    <i class="bi bi-caret-down-fill"></i>
+                                {:else}
+                                    <i class="bi bi-caret-right-fill"></i>
+                                {/if}
+                            </button>
+                        {/if}
+                    </div>
+                    {#if child.type == "div"}
+                    <Div uuid={child.uuid} selected={$globalSelectedElementUuidStore === child.uuid} on:click={()=>setSelected(child.uuid)} />
+
+                    {:else if child.type == "text"}
+                    <Text uuid={child.uuid} selected={$globalSelectedElementUuidStore === child.uuid} on:click={()=>setSelected(child.uuid)} />
+
+                    {:else}
+                    <span class="flex flex-row gap-2 align-middle my-2" class:text-teal-600 = {$globalSelectedElementUuidStore === child.uuid} >
+                        <span class="">{child.type}</span>
+                        <span class="flex flex-col">
+                            <span class="text-[8px] align-middle">{child.uuid}</span><br/> 
+                            <span class="text-[8px] align-middle">{child.data.class}</span> 
+                        </span> 
+                    </span>
+                    {/if}
+                </div>
+            </svelte:self>
+            
+        
+    {/each}
+    {/if} 
+</div>
+
+
+
+
+
+
+
+<!-- <div style:margin-left="20px">
     <slot>
         {component}
     </slot>
@@ -52,9 +113,7 @@
             </svelte:self>
         
     {/each}
-</div>
-
-
+</div> -->
 
 <!-- <div style:margin-left="{level * 20}px">
     <slot {component} />

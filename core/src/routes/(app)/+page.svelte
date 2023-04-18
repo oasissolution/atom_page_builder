@@ -73,9 +73,13 @@
         updateEditorFunction();
     })();
 
+    $: $globalSelectedElementUuidStore, (()=>{
+        setSelectedElement($globalSelectedElementUuidStore);
+    })();
+
     let previousSelectedHtmlElementUuid = "";
 
-
+    
     /**
      * Sets selected element in JSON
      * @param {string} targetUuid uuid of selected element
@@ -281,6 +285,8 @@
         globalVisibilityStore.set(globalVisibility);
     }
 
+
+
     onMount(()=>{
 
         ///Listen editor in iframe
@@ -322,6 +328,9 @@
                         break;
                     case "createDroppedElementAfter":
                         createDroppedElementAfterSub(event.data.data.afterUuid, event.data.data.elementType);
+                        break;
+                    case "refreshEditorData":
+                        updateEditorFunction();
                         break;
                 }
 

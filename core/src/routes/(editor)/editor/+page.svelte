@@ -4,7 +4,7 @@
     import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
     import { getComponent } from "../../globals/globalfunctions.js";
-    import { sendDeletedElement } from "../../(shared)/shared/sharedfunctions.js";
+    import { sendDeletedElement, refreshEditorData } from "../../(shared)/shared/sharedfunctions.js";
     import Editortree from "./editortree.svelte";
     import Selector from "../../(shared)/shared/selector.svelte";
     import swal from 'sweetalert';
@@ -84,7 +84,9 @@
             const data = event.data.message;
 
             if(data === undefined){
-                console.log("Incoming data do not have message!");
+                // console.log("Incoming data do not have message!");
+                setTimeout(refreshEditorData,200);
+                // refreshEditorData();
             }else{
                 /// Set data as global writables
                 globalComponentCollection = data.componentCollection;
@@ -133,6 +135,8 @@
         });
 
         loaded = true;
+
+
 
     });
 

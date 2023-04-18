@@ -202,3 +202,16 @@ export function createDroppedElementAfter(afterUuid, elementType){
 
     window.parent.postMessage(data, '*');
 }
+
+/**
+ * Toggle widgets panel.
+ */
+export function refreshEditorData(){
+
+    let data = {
+        "action": "refreshEditorData",
+        "data": {}
+    }
+
+    window.parent.postMessage(data, '*');
+}

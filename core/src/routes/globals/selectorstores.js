@@ -17,3 +17,16 @@ export let globalSelectedElementUuidStore = writable("");
 export let globalSelectedElementStore = writable(null);
 
 
+/**
+ * @typedef {Object} ExpansionState
+ * @property {string} [uuid] - Unique id of element.
+ * @property {boolean} [state] - Specifies whether the element is expanded.
+ */
+
+/**
+* Global variable which holds states of expansions of layers.
+* @global
+*
+* @type {Writable<ExpansionState>}
+*/
+export let globalLayersExpansionStatesStore = writable({});

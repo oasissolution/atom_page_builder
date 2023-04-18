@@ -5,6 +5,21 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.046] - 2022-04-18
+
+### Added
+ - Layers Panel: Designed UI applied with tree view. Hide/Show button works. Reorder with drag&drop left to do.
+
+### Changed
+ - 
+
+### Fixed
+ - Sometimes, blank editor page does not show up on load.
+
+
+
+
 ## [0.0.1.045] - 2022-04-17
 
 ### Added

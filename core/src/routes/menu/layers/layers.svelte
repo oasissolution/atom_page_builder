@@ -46,7 +46,8 @@
 
 {#each $globalComponentCollectionStore as component}
    <Layerstree {component} let:component>
-      <span class="align-middle">{component.type}</span> <span class="text-[8px] align-middle">{component.uuid}</span>
+      <!-- <span class="align-middle">{component.type}</span> <span class="text-[8px] align-middle">{component.uuid}</span> -->
+      <span class="align-middle h-8">Root</span>
    </Layerstree>
 {/each}
 
