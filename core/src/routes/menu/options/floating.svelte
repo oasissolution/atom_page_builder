@@ -1,78 +1,103 @@
 
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import jQuery from "jquery";
-    import { globalVisibilityStore } from "../../globals/globalstores.js";
+    import { globalVisibilityStore, globalThemeStore } from "../../globals/globalstores.js";
 
 
-    /*
-        THIS PAGE IS SUBJECT TO CHANGE. SO NO JSDOC IS ATTACHED.
-    */
+    /**
+     * @type HTMLElement
+     */
+    let container;
 
+    /**
+     * @type HTMLElement
+     */
+    let titleBar;
 
+    let holdingState = false;
 
-    let globalVisibility = $globalVisibilityStore;
-    $: globalVisibilityStore.set(globalVisibility);
+    let mouseDownData = {};
 
+    let reSet = false;
 
-    function toggleOptionsPanel(){
-        globalVisibility.optionPanel = !globalVisibility.optionPanel;
+    function titleBarMouseDown(e){
+        if(reSet == false){
+            holdingState = true;
+            mouseDownData.pageX0 = e.pageX;
+            mouseDownData.pageY0 = e.pageY;
+            mouseDownData.containerLeft = jQuery(container).offset()?.left ?? 0;
+            mouseDownData.containerRight = jQuery(container).offset()?.top ?? 0;
+            reSet = true;
+        }
+    }
+    function titleBarMouseUp(e){
+        holdingState = false;
+        mouseDownData = {};
+        reSet = false;
+
+        // console.log("\nmouseUP Data: "+JSON.stringify(mouseDownData)
+        // +"\nholdingState: "+holdingState.toString()+" | isMouseInElement: "+isMouseInElement(e,titleBar).toString()
+        // +"\ne.pageX: " + e.pageX.toString() + " , e.pageY: " + e.pageY.toString());
+    }
+
+    function titleBarMouseMove(e){
+        if(isMouseInElement(e,titleBar) == false){
+            holdingState = false;
+            mouseDownData = {};
+            reSet = false;
+        }
+
+        if(holdingState == true){
+            var left = mouseDownData.containerLeft + (e.pageX - mouseDownData.pageX0);
+            var top = mouseDownData.containerRight + (e.pageY - mouseDownData.pageY0);
+            jQuery(container).offset({top: top, left: left});
+        }
+        // console.log("\nmouseDownData: "+JSON.stringify(mouseDownData)
+        // +"\nholdingState: "+holdingState.toString()+" | isMouseInElement: "+isMouseInElement(e,titleBar).toString()
+        // +"\ne.pageX: " + e.pageX.toString() + " , e.pageY: " + e.pageY.toString());
+    }
+
+    function isMouseInElement(event, element) {
+        let rect = element.getBoundingClientRect();
+        let { clientX: x, clientY: y } = event;
+        if (x < rect.left || x >= rect.right) return false;
+        if (y < rect.top || y >= rect.bottom) return false;
+        return true;
     }
 
 
     onMount(() => {
 
-        function handle_mousedown(e){
-            var target = e.target.parentNode;
-
-            if(jQuery(target).hasClass("floatingDialog") === true){
-
-                var oldData = {};
-
-                oldData.pageX0 = e.pageX;
-                oldData.pageY0 = e.pageY;
-                oldData.elem = target;
-                oldData.offset0left = jQuery(target).offset()?.left ?? 0;
-                oldData.offset0top = jQuery(target).offset()?.top ?? 0;
-
-                function handle_dragging(e){
-                    var left = oldData.offset0left + (e.pageX - oldData.pageX0);
-                    var top = oldData.offset0top + (e.pageY - oldData.pageY0);
-                    jQuery(oldData.elem)
-                    .offset({top: top, left: left});
-                }
-
-                function handle_mouseup(e){
-                    jQuery(target)
-                    .off('mousemove', handle_dragging)
-                    .off('mouseup', handle_mouseup);
-                }
-
-                jQuery(target)
-                .on('mouseup', handle_mouseup)
-                .on('mousemove', handle_dragging);
-
-            }
-        }
-
-        jQuery('.dialogTitle').on('mousedown', handle_mousedown);
+        titleBar.addEventListener("mousedown", titleBarMouseDown);
+        titleBar.addEventListener("mouseup", titleBarMouseUp);
+        titleBar.addEventListener("mousemove", titleBarMouseMove);
 
     });
 
-
+    onDestroy(()=>{
+        titleBar.removeEventListener("mousedown", titleBarMouseDown);
+        titleBar.removeEventListener("mouseup", titleBarMouseUp);
+        titleBar.removeEventListener("mousemove", titleBarMouseMove);
+    });
 
 
 </script>
 
 
-<div class="floatingDialog">
+<div class="floatingDialog" bind:this={container} style='
+--fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+--fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+--fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+--fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
+--backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+--foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+--borderColor: {$globalThemeStore.widgetIcon.borderColor};
+--iconColor: {$globalThemeStore.widgetIcon.iconColor};
+--textColor: {$globalThemeStore.widgetIcon.textColor};
+' >
 
-    <div class="dialogTitle">
-        <div class="d-inline">
-            <button class="btn btn-sm" on:click={toggleOptionsPanel}><i class="fa fa-xmark closeIcon"></i></button>
-            <slot name="title"></slot>
-        </div>
-    </div>
+    <div class="dialogTitle" bind:this={titleBar}></div>
 
     <slot class="dialogBody">
         <span class="emptyBody d-flex align-items-center justify-content-center">Empty for now!</span>
@@ -84,47 +109,52 @@
 <style>
 
 .floatingDialog {
-    position:fixed;
-    z-index: 999;
-    width: 350px;
-    height: 60vh;
-    background-color: #262733;
+    position:absolute;
+    z-index: 99999;
+    width: 320px;
+    /* height: 60vh; */
+    background-color: var(--fixedPanelBackgroundColor);
+
+    min-height: max-content;
+
+    left: 100px;
+    top: 50px;
 
     border-radius: 16px;
-    border: 2px solid #d8d8d8; 
-    box-shadow: 0px 0px 8px 0px #404258;
+
+    box-shadow: 0px 0px 8px 0px var(--fixedPanelBackgroundColor);
 
     margin: auto;
+    padding-bottom: 20px;
 
 }
 
 .dialogTitle {
     position: relative;
-    background-color: #474E68;
+    background-color: var(--fixedPanelTabsDivider);
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     padding-top: 5px;
     padding-left: 5px;
     padding-bottom: 5px;
-    color: #d8d8d8;
-    box-shadow: 0px 1px 1px 0px #313131;
+    height: 24px;
 }
 
 .dialogBody{
-    position: relative;
-    color: #6B728E;
-    padding: 14px;
+   position: relative;
+   color: var(--fixedPanelForegroundColor);
+   padding: 14px;
 }
 
 .emptyBody{
-    color: #6B728E;
-    width: 100%;
-    height: 100%;
+   color: var(--fixedPanelForegroundColor);
+   width: 100%;
+   height: 100%;
 }
 
 .closeIcon{
-    color: #6B728E;
-    font-size: large;
+   color: var(--fixedPanelForegroundColor);
+   font-size: large;
 }
 
 </style>

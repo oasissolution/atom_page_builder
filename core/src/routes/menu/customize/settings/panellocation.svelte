@@ -91,7 +91,10 @@
     <div class="w-[130px] flex flex-row gap-1">
         <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDLEFT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDLEFT)}><span slot="icon" title="Left"><i class="bi bi-arrow-left"></i></span></Iconbutton>
         <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FIXEDRIGHT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FIXEDRIGHT)}><span slot="icon" title="Right"><i class="bi bi-arrow-right"></i></span></Iconbutton>
-        <!-- <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)}><span slot="icon" title="Float"><i class="bi bi-circle"></i></span></Iconbutton> -->
+        {#if panel.style != "customizePanelDisplayStyle"}
+        <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.FLOAT} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.FLOAT)}><span slot="icon" title="Float"><i class="bi bi-circle"></i></span></Iconbutton>
+        <Iconbutton active={$globalEditorPreferencesStore[panel.style] == PanelDisplayStyles.HOVER} on:click={() => setPanelLocation(panel.style, PanelDisplayStyles.HOVER)}><span slot="icon" title="Hover"><i class="bi bi-hand-index-thumb"></i></span></Iconbutton>
+        {/if}
     </div>
 </div>
 <div class="widgetPanelDivider"></div>

@@ -9,17 +9,27 @@
     export let active;
 
     /**
-     * Variable that hold active state of element
+     * 
      * @type string
      */
     export let addClass = "";
 
     /**
-     * Variable that hold active state of element
+     * 
      * @type boolean
      */
     export let noBackground = false;
 
+    /**
+     * @type HTMLButtonElement?
+     */
+    export let bindElement=null;
+
+    /**
+     * Used in menu buttons, only button section.
+     * @type boolean
+     */
+    export let clickOnHover = false;
 
     import { createEventDispatcher } from 'svelte';
 
@@ -29,12 +39,15 @@
         dispatch('click');
     }
 
+    function clickOnHoverFunction(){
+        if(clickOnHover == true) clickButton();
+    }
 
 
 </script>
 <input type="hidden" class="atomButton atomButtonActive" />
 
-<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} on:click={clickButton}
+<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} bind:this={bindElement} on:click={clickButton} on:mouseenter={clickOnHoverFunction}
 style="
     --buttonActiveIconColor:{$globalThemeStore.button.active.iconColor};
     --buttonActiveBackgroundColor:{$globalThemeStore.button.active.backgroundColor};

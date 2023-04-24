@@ -5,7 +5,7 @@
     import Floating from "./floating.svelte";
     import Widgets from "./widgets.svelte";
 	import Fixed from "./fixed.svelte";
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore, globalHoverButton } from "../../globals/globalstores.js";
     import { MenuLocations } from "../../globals/globalconstants.js";
 	import Button from "../../uicomponents/button.svelte";
 
@@ -69,9 +69,23 @@
         ///Updates "globalVisibilityStore"
         globalVisibilityStore.set(globalVisibility);
         
+        if($globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM){
+            globalHoverButton.set(buttonHorizontal);
+        }else{
+            globalHoverButton.set(buttonVertical);
+        }
     }
 
-    let widgets = Widgets;
+
+    /**
+     * @type HTMLButtonElement
+     */
+    let buttonHorizontal;
+    /**
+     * @type HTMLButtonElement
+     */
+    let buttonVertical;
+
 
 </script>
 
@@ -81,7 +95,11 @@
 
     {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
 
-    <Button active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} on:click={toggleWidgetPanel} >
+    <Button bind:bindElement={buttonHorizontal}  
+    active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} 
+    on:click={toggleWidgetPanel} 
+    clickOnHover={$globalEditorPreferencesStore.widgetPanelDisplayStyle == PanelDisplayStyles.HOVER}
+    >
 
         <span slot="iconLeft"><i class="bi bi-puzzle"></i></span>
         <span slot="text">Add Widget</span>
@@ -90,7 +108,11 @@
 
     {:else}
 
-    <Button active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} on:click={toggleWidgetPanel} horizontal={false} >
+    <Button bind:bindElement={buttonVertical}  
+    active={$globalVisibilityStore.default.widgetPanel == true || $globalVisibilityStore.right.widgetPanel == true || $globalVisibilityStore.left.widgetPanel == true} 
+    on:click={toggleWidgetPanel} horizontal={false} 
+    clickOnHover={$globalEditorPreferencesStore.widgetPanelDisplayStyle == PanelDisplayStyles.HOVER}
+    >
 
         <span slot="iconTop"><i class="bi bi-puzzle"></i></span>
         <span slot="text">Widgets</span>
@@ -106,11 +128,15 @@
         {#if $globalVisibilityStore.hasOwnProperty("default")}
             {#if $globalVisibilityStore.default.hasOwnProperty("widgetPanel")}
                 {#if $globalVisibilityStore.default.widgetPanel == true}
-                    <div class="hoverPanel">
-                        <Hover>
+                    {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
+                        <Hover buttonOfContainer={$globalHoverButton} horizontal on:togglePanel={toggleWidgetPanel}>
                             <Widgets />
                         </Hover>
-                    </div>
+                    {:else}
+                        <Hover buttonOfContainer={$globalHoverButton} on:togglePanel={toggleWidgetPanel}>
+                            <Widgets />
+                        </Hover>
+                    {/if}
                 {/if}
             {/if}
         {/if}
@@ -122,7 +148,7 @@
             {#if $globalVisibilityStore.default.hasOwnProperty("widgetPanel")}
                 {#if $globalVisibilityStore.default.widgetPanel == true}
                     <Floating>
-                        <span slot="title" >Widgets</span>
+                        <!-- <span slot="title" >Widgets</span> -->
                         <Widgets />
                     </Floating>
                 {/if}

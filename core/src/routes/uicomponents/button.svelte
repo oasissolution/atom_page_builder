@@ -20,7 +20,18 @@
      * if false, it is vertical
      * @type boolean
      */
-     export let horizontal = true;
+    export let horizontal = true;
+
+    /**
+     * @type HTMLButtonElement?
+     */
+    export let bindElement=null;
+
+    /**
+     * Used in menu buttons, only button section.
+     * @type boolean
+     */
+    export let clickOnHover = false;
 
 
     import { createEventDispatcher } from 'svelte';
@@ -31,6 +42,9 @@
         dispatch('click');
     }
 
+    function clickOnHoverFunction(){
+        if(clickOnHover == true) clickButton();
+    }
 
 
 </script>
@@ -38,7 +52,7 @@
 
 {#if horizontal == true}
 
-<button class="atomButton rounded-lg h-8 w-max {addClass}" class:atomButtonActive={active} on:click={clickButton}
+<button class="atomButton rounded-lg h-8 w-max {addClass}" bind:this={bindElement} class:atomButtonActive={active} on:click={clickButton} on:mouseenter={clickOnHoverFunction}
 style="
     --buttonActiveIconColor:{$globalThemeStore.button.active.iconColor};
     --buttonActiveTextColor:{$globalThemeStore.button.active.textColor};

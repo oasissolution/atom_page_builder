@@ -59,6 +59,14 @@ export let globalRightPanelContentStore = writable([]);
 */
 export let globalLeftPanelContentStore = writable([]);
 
+/**
+* Global variable which holds content of "Left Panel".
+* @global
+*
+* @type {Writable<[]>}
+*/
+export let globalFloatingPanelContentStore = writable([]);
+
 
 /**
 * Global variable which holds Editor view.
@@ -76,3 +84,12 @@ export let globalEditorViewStore = writable(EditorViews.PAGE);
 * @type {Writable<JSON>}
 */
 export let globalThemeStore = writable();
+
+
+/**
+* Global variable which holds active hover button
+* @global
+*
+* @type {Writable<HTMLElement>}
+*/
+export let globalHoverButton = writable();

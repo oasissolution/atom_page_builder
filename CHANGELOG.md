@@ -6,6 +6,23 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.047] - 2022-04-24
+
+### Added
+ - Layers Panel: Reorder with drag&drop. Create new item with drag&drop. Works cooperatively with widgets and editor panels in drag&drop
+ - Floating Panels
+ - Hover Panels (Works if menu is horizontal, working on vertical version.)
+
+### Changed
+ - Customize panel has new options for panel locations.
+
+### Fixed
+ - 
+
+
+
+
 ## [0.0.1.046] - 2022-04-18
 
 ### Added

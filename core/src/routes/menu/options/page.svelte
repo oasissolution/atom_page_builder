@@ -4,7 +4,7 @@
     import Floating from "./floating.svelte";
     import Options from "./options.svelte";
 	import Fixed from "./fixed.svelte";
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore, globalHoverButton } from "../../globals/globalstores.js";
 	import Iconbutton from "../../uicomponents/iconbutton.svelte";
     import { MenuLocations } from "../../globals/globalconstants.js";
 	import Button from "../../uicomponents/button.svelte";
@@ -120,10 +120,23 @@
 
         ///Updates "globalVisibilityStore"
         globalVisibilityStore.set(globalVisibility);
+
+        if($globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM){
+            globalHoverButton.set(buttonHorizontal);
+        }else{
+            globalHoverButton.set(buttonVertical);
+        }
         
     }
 
-
+    /**
+     * @type HTMLButtonElement
+     */
+    let buttonHorizontal;
+    /**
+     * @type HTMLButtonElement
+     */
+    let buttonVertical;
 
    
     // This was added to have hover property. If we return to add this idea this may be needed.
@@ -142,13 +155,17 @@
 
     {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
 
-    <Iconbutton active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} on:click={toggleOptionPanel} noBackground={true}>
+    <Iconbutton  bind:bindElement={buttonHorizontal}  active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} 
+    on:click={toggleOptionPanel} noBackground={true}
+    clickOnHover={$globalEditorPreferencesStore.optionPanelDisplayStyle == PanelDisplayStyles.HOVER}>
         <span slot="icon"><i class="bi bi-sliders"></i></span>
     </Iconbutton>
 
     {:else}
 
-    <Button active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} on:click={toggleOptionPanel} horizontal={false} >
+    <Button  bind:bindElement={buttonVertical}  active={$globalVisibilityStore.default.optionPanel == true || $globalVisibilityStore.right.optionPanel == true || $globalVisibilityStore.left.optionPanel == true} 
+    on:click={toggleOptionPanel} horizontal={false} 
+    clickOnHover={$globalEditorPreferencesStore.optionPanelDisplayStyle == PanelDisplayStyles.HOVER} >
 
         <span slot="iconTop"><i class="bi bi-sliders"></i></span>
         <span slot="text">Options</span>
@@ -164,11 +181,15 @@
         {#if $globalVisibilityStore.hasOwnProperty("default")}
             {#if $globalVisibilityStore.default.hasOwnProperty("optionPanel")}
                 {#if $globalVisibilityStore.default.optionPanel == true}
-                    <div class="hoverPanel">
-                        <Hover>
+                    {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
+                        <Hover buttonOfContainer={$globalHoverButton} horizontal on:togglePanel={toggleOptionPanel}>
                             <Options />
                         </Hover>
-                    </div>
+                    {:else}
+                        <Hover buttonOfContainer={$globalHoverButton} on:togglePanel={toggleOptionPanel}>
+                            <Options />
+                        </Hover>
+                    {/if}
                 {/if}
             {/if}
         {/if}
@@ -180,7 +201,7 @@
             {#if $globalVisibilityStore.default.hasOwnProperty("optionPanel")}
                 {#if $globalVisibilityStore.default.optionPanel == true}
                     <Floating>
-                        <span slot="title" >Widget Options</span>
+                        <!-- <span slot="title" >Widget Options</span> -->
                         <Options />
                     </Floating>
                 {/if}

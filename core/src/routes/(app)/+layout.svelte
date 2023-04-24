@@ -7,6 +7,7 @@
         globalEditorPreferencesStore,
         globalRightPanelContentStore,
         globalLeftPanelContentStore,
+        globalFloatingPanelContentStore,
         globalVisibilityStore,
         globalEditorViewStore,
         globalThemeStore
@@ -56,6 +57,16 @@
     /// Updates "globalLeftPanelContentStore" whenever variable "leftPanelContentStore" changes.
     $: globalLeftPanelContentStore.set(leftPanelContentStore);
 
+    /**
+     * Variable which holds "Floating Panel Contents".
+     *
+     * @type [{}]
+     */
+     let floatingPanelContentStore = [{}];
+    /// Updates "globalLeftPanelContentStore" whenever variable "leftPanelContentStore" changes.
+    $: globalFloatingPanelContentStore.set(floatingPanelContentStore);
+
+    
 
     /// Manually add all components to panels.
 
@@ -63,15 +74,19 @@
     /// "name" and "ds" (short for display style) parameters are used in background to help development and debugging
     rightPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle" }];
     leftPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  }];
+    floatingPanelContentStore = [{"component":Customize, "name":"Customize", "ds": "customizePanelDisplayStyle"  }];
 
     rightPanelContentStore.push({"component":Widgets, "name":"Widgets", "ds": "widgetPanelDisplayStyle" });
     leftPanelContentStore.push({"component":Widgets, "name":"Widgets", "ds": "widgetPanelDisplayStyle"  });
+    floatingPanelContentStore.push({"component":Widgets, "name":"Widgets", "ds": "widgetPanelDisplayStyle"  });
 
     rightPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle" });
     leftPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle"  });
+    floatingPanelContentStore.push({"component":Options, "name":"Options", "ds": "optionPanelDisplayStyle"  });
 
     rightPanelContentStore.push({"component":Layers, "name":"Layers", "ds": "layerPanelDisplayStyle" });
     leftPanelContentStore.push({"component":Layers, "name":"Layers", "ds": "layerPanelDisplayStyle"  });
+    floatingPanelContentStore.push({"component":Layers, "name":"Layers", "ds": "layerPanelDisplayStyle"  });
 
 
 
@@ -161,8 +176,21 @@
 
 </div>
 
+{#if $globalRightPanelContentStore.length > 0}
+    {#each $globalRightPanelContentStore as item}
+        {#if $globalEditorPreferencesStore[item.ds] == PanelDisplayStyles.FLOAT}
+            <svelte:component this={item.component}/>
+        {/if}
+    {/each}
+{/if}
 
-
+{#if $globalRightPanelContentStore.length > 0}
+    {#each $globalRightPanelContentStore as item}
+        {#if $globalEditorPreferencesStore[item.ds] == PanelDisplayStyles.HOVER}
+            <svelte:component this={item.component}/>
+        {/if}
+    {/each}
+{/if}
 
 <style>
     #backgroundFrame{

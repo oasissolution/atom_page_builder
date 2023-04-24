@@ -4,10 +4,10 @@
     import Floating from "./floating.svelte";
     import Layers from "./layers.svelte";
 	import Fixed from "./fixed.svelte";
-    import { globalEditorPreferencesStore, globalVisibilityStore } from "../../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalVisibilityStore, globalHoverButton } from "../../globals/globalstores.js";
 	import Iconbutton from "../../uicomponents/iconbutton.svelte";
-    import { MenuLocations } from "../../globals/globalconstants.js";
 	import Button from "../../uicomponents/button.svelte";
+    import { MenuLocations } from "../../globals/globalconstants.js";
 
     /**
      * Added for later use
@@ -70,6 +70,12 @@
 
         ///Updates "globalVisibilityStore"
         globalVisibilityStore.set(globalVisibility);
+
+        if($globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM){
+            globalHoverButton.set(buttonHorizontal);
+        }else{
+            globalHoverButton.set(buttonVertical);
+        }
         
     }
 
@@ -85,6 +91,14 @@
     //     };
     // }
 
+    /**
+     * @type HTMLButtonElement
+     */
+    let buttonHorizontal;
+    /**
+     * @type HTMLButtonElement
+     */
+    let buttonVertical;
 
 </script>
 
@@ -92,13 +106,30 @@
 
     {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
 
-    <Iconbutton active={$globalVisibilityStore.default.layerPanel == true || $globalVisibilityStore.right.layerPanel == true || $globalVisibilityStore.left.layerPanel == true} noBackground={true} on:click={toggleLayerPanel} >
+    <Iconbutton bind:bindElement={buttonHorizontal} 
+    active={
+    $globalVisibilityStore.default.layerPanel == true || 
+    $globalVisibilityStore.right.layerPanel == true || 
+    $globalVisibilityStore.left.layerPanel == true
+    } 
+    noBackground={true} 
+    on:click={toggleLayerPanel} 
+    clickOnHover={$globalEditorPreferencesStore.layerPanelDisplayStyle == PanelDisplayStyles.HOVER}
+    >
         <span slot="icon"><i class="bi bi-stack"></i></span>
     </Iconbutton>
 
     {:else}
 
-    <Button active={$globalVisibilityStore.default.layerPanel == true || $globalVisibilityStore.right.layerPanel == true || $globalVisibilityStore.left.layerPanel == true} on:click={toggleLayerPanel} horizontal={false} >
+    <Button bind:bindElement={buttonHorizontal} 
+    active={
+    $globalVisibilityStore.default.layerPanel == true || 
+    $globalVisibilityStore.right.layerPanel == true || 
+    $globalVisibilityStore.left.layerPanel == true
+    } 
+    on:click={toggleLayerPanel} horizontal={false} 
+    clickOnHover={$globalEditorPreferencesStore.layerPanelDisplayStyle == PanelDisplayStyles.HOVER}
+    >
 
         <span slot="iconTop"><i class="bi bi-stack"></i></span>
         <span slot="text">Layers</span>
@@ -109,16 +140,19 @@
 
 {:else}
 
-
     {#if $globalEditorPreferencesStore.layerPanelDisplayStyle == PanelDisplayStyles.HOVER}
         {#if $globalVisibilityStore.hasOwnProperty("default")}
             {#if $globalVisibilityStore.default.hasOwnProperty("layerPanel")}
                 {#if $globalVisibilityStore.default.layerPanel == true}
-                    <div class="hoverPanel">
-                        <Hover>
+                    {#if $globalEditorPreferencesStore.menuLocation == MenuLocations.TOP || $globalEditorPreferencesStore.menuLocation == MenuLocations.BOTTOM}
+                        <Hover buttonOfContainer={$globalHoverButton} horizontal on:togglePanel={toggleLayerPanel}>
                             <Layers />
                         </Hover>
-                    </div>
+                    {:else}
+                        <Hover buttonOfContainer={$globalHoverButton} on:togglePanel={toggleLayerPanel}>
+                            <Layers />
+                        </Hover>
+                    {/if}
                 {/if}
             {/if}
         {/if}
@@ -130,7 +164,7 @@
             {#if $globalVisibilityStore.default.hasOwnProperty("layerPanel")}
                 {#if $globalVisibilityStore.default.layerPanel == true}
                     <Floating>
-                        <span slot="title" >Layers</span>
+                        <!-- <span slot="title" >Layers</span> -->
                         <Layers />
                     </Floating>
                 {/if}
