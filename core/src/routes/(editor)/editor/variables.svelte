@@ -7,7 +7,7 @@
 
 <div class="w-full">
     <h1 class="text-2xl">Hello this is variables page</h1>
-    <button class="btn btn-info">Test Button</button>
+    <br/>   
 </div>
 
 

@@ -1,5 +1,8 @@
 <script>
     import "../../../app.css";
+    import { globalThemeStore } from "../../globals/globalstores.js";
+    import Iconbutton from "../../uicomponents/iconbutton.svelte";
+    import { openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
 
     /**
      * This is a default variable, which holds position of "Actions" panel according to top-right corner on X axis.
@@ -25,10 +28,30 @@
 
 </script>
 
-<div class="flex flex-row w-16 gap-1 divide-x divide-black/40 place-content-center items-center content-center">
-    <div><button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-pen w-5 h-5 text-black"></i></button></div>
-    <div><button class="bg-transparent border-none w-6 h-6 p-0 m-0 text-black" on:click='{editButtonPress}'><i class="bi bi-three-dots-vertical w-5 h-5 text-black"></i></button></div>
-    
+<div class="flex flex-row w-32 rounded-md gap-1 divide-x divide-black/40 place-content-center items-center content-center inlinePanel" style='
+--fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+--fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor};
+--fixedPanelTitleColor:{$globalThemeStore.panel.titleColor};
+--fixedPanelTabsDivider: {$globalThemeStore.panel.tabsDivider};
+--backgroundColor: {$globalThemeStore.widgetIcon.backgroundColor};
+--foregroundColor: {$globalThemeStore.widgetIcon.foregroundColor};
+--borderColor: {$globalThemeStore.widgetIcon.borderColor};
+--iconColor: {$globalThemeStore.widgetIcon.iconColor};
+--textColor: {$globalThemeStore.widgetIcon.textColor};
+' >
+
+    <div>
+        <Iconbutton active={false} on:click={openOptionsPanel} noBackground><span slot="icon"><i class="bi bi-sliders"></i></span></Iconbutton>
+    </div>
+
+    <div class="flex flex-row gap-1">
+        <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-pen"></i></span></Iconbutton>
+        <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-files"></i></span></Iconbutton>
+    </div>
+
+    <div>
+        <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-x-circle"></i></span></Iconbutton>
+    </div>
     
 </div>
 

@@ -149,9 +149,9 @@
                             <Layers />
                         </Hover>
                     {:else}
-                        <Hover buttonOfContainer={$globalHoverButton} on:togglePanel={toggleLayerPanel}>
+                        <Floating>
                             <Layers />
-                        </Hover>
+                        </Floating>
                     {/if}
                 {/if}
             {/if}
@@ -164,7 +164,6 @@
             {#if $globalVisibilityStore.default.hasOwnProperty("layerPanel")}
                 {#if $globalVisibilityStore.default.layerPanel == true}
                     <Floating>
-                        <!-- <span slot="title" >Layers</span> -->
                         <Layers />
                     </Floating>
                 {/if}

@@ -186,9 +186,9 @@
                             <Options />
                         </Hover>
                     {:else}
-                        <Hover buttonOfContainer={$globalHoverButton} on:togglePanel={toggleOptionPanel}>
+                        <Floating>
                             <Options />
-                        </Hover>
+                        </Floating>
                     {/if}
                 {/if}
             {/if}
@@ -201,7 +201,6 @@
             {#if $globalVisibilityStore.default.hasOwnProperty("optionPanel")}
                 {#if $globalVisibilityStore.default.optionPanel == true}
                     <Floating>
-                        <!-- <span slot="title" >Widget Options</span> -->
                         <Options />
                     </Floating>
                 {/if}

@@ -7,6 +7,21 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.048] - 2022-04-25
+
+### Added
+ - 
+
+### Changed
+ - Hover panels displays as floating panel if menu is on sides, i.e. vertical.
+ - Enabled Actions panel on click of item.
+
+### Fixed
+ - 
+
+
+
+
 ## [0.0.1.047] - 2022-04-24
 
 ### Added

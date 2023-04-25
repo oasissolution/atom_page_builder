@@ -181,7 +181,6 @@
             {#if $globalVisibilityStore.default.hasOwnProperty("customizePanel")}
                 {#if $globalVisibilityStore.default.customizePanel == true}
                     <Floating>
-                        <span slot="title" >Customize Editor</span>
                         <Settings />
                     </Floating>
                 {/if}

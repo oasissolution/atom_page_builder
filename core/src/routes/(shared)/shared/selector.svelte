@@ -61,7 +61,8 @@
 
     function updateSelector(){
 
-        if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined && actionsComponent !== undefined){
+        // if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined && actionsComponent !== undefined){
+        if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined){
 
             /**
              * Position and dimension data of selected element.
@@ -76,8 +77,39 @@
 
             atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
 
+            
+            /**
+             * @type string
+             */
             var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
             console.log("type : " + type);
+
+            // if(type == "text"){
+            //     if(rect.top < 40){
+            //         selectorPositionDataTop = (rect.top + rect.height + 40).toString()+"px";
+            //     }
+            // }
+            if(type != undefined)
+            if(type == "text"){
+                //If item is aligned top left.
+                if(rect.left < 120){
+                    if(rect.top < 40){
+                        selectorPositionDataLeft = (rect.left + 20).toString()+"px";
+                        selectorPositionDataTop = (rect.top + rect.height + 40).toString()+"px";
+                    }else{
+                        selectorPositionDataLeft = (rect.left + 20).toString()+"px";
+                    }
+                }else{
+                    if(rect.top < 40){
+                        selectorPositionDataTop = (rect.top + rect.height + 40).toString()+"px";
+                    }
+                } 
+            }
+
+
+
+
+
             selectedType.set(type);
 
         }
@@ -106,8 +138,10 @@
 
 
 </script>
+        <!-- --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
+        --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor}; -->
 
-        <div id="atomSelectorActions" bind:this={atomSelectorActions} class="bg-white rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center"
+        <div id="atomSelectorActions" bind:this={atomSelectorActions} class="rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center shadow-md"
         style='
         --selectorPositionDataWidth:{selectorPositionDataWidth};
         --selectorPositionDataHeight:{selectorPositionDataHeight};
@@ -144,18 +178,20 @@
 
     #atomSelectorActions{
         position: absolute;
+        /* background-color: var(--fixedPanelBackgroundColor);
+        color: var(--fixedPanelForegroundColor); */
         top: calc(var(--selectorPositionDataTop) + var(--marginY));
         left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) + var(--marginX));
     }
 
 
 
-    :global(.hr) {
+    /* :global(.hr) {
         display: inline-block;
         align-self: stretch;
         height: 1px;
         min-width: 1em;
-        background-color: black; /* var(--foregroundColor) */
+        background-color: black;
         opacity: 0.25;
     }
 
@@ -168,7 +204,7 @@
         opacity: 0.25;
         margin-right: 4px;
         margin-left: 4px;
-    }
+    } */
 
 
 
