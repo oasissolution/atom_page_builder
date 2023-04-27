@@ -1,9 +1,9 @@
 <script>
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
-    import { globalComponentCollectionStore } from "../../globals/globalstores.js";
+    import { globalComponentCollectionStore, globalThemeStore, globalEditorPreferencesStore } from "../../globals/globalstores.js";
     import { getTypeOfComponent } from "../../globals/globalfunctions.js";
     import { writable } from "svelte/store";
-
+    
     /**
     * Main selector div and actions binding.
     * @type HTMLElement
@@ -42,24 +42,59 @@
      * Position of "Actions" panel according to top-right corner on Y axis.
      */
     let marginY = "6px";
+    /**
+     * Width of "Actions" panel.
+     */
+     let ActionsWidth = "66px";
 
     $: selectedType, (() => {
         if(actionsComponent !== undefined){
             marginX = actionsComponent.marginX;
             marginY = actionsComponent.marginY;
+            ActionsWidth = actionsComponent.ActionsWidth;
             // console.log("marginX: "+ marginX + "| marginY: " + marginY);
         }else{
             marginX = "-40px";
             marginY = "0px";
+            ActionsWidth = "64px"
         }
     })();
 
+    /**
+     * @type HTMLElement
+     */
+    let previousSelectedElement;
 
-    $: $globalComponentCollectionStore, (updateSelector)();
+    // $: $globalComponentCollectionStore, (updateSelector)("globalComponentCollectionStore");
 
-    $: $globalSelectedElementStore, (updateSelector)();
+    $: $globalSelectedElementStore, (()=>{
+        if(previousSelectedElement){
+            if(previousSelectedElement != $globalSelectedElementStore){
+                updateSelector("globalSelectedElementStore");
+                previousSelectedElement = $globalSelectedElementStore;
+            }
+        }else{
+            updateSelector("globalSelectedElementStore");
+            previousSelectedElement = $globalSelectedElementStore;
+        }
 
-    function updateSelector(){
+        if($globalSelectedElementStore == null){
+            selectorPositionDataWidth = "100px";
+            selectorPositionDataHeight = "100px";
+            selectorPositionDataLeft = "-100px";
+            selectorPositionDataTop = "-100px";
+
+        }
+    })();
+
+    
+    /**
+     * 
+     * @param {string} source Where this function is called from. Added for debug purposes.
+     */
+    function updateSelector(source){
+
+        // console.log("updateSelector called from " + source);
 
         // if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined && actionsComponent !== undefined){
         if($globalSelectedElementStore != null && $globalSelectedElementStore != undefined){
@@ -75,40 +110,42 @@
             selectorPositionDataLeft = rect.left.toString()+"px";
             selectorPositionDataTop = rect.top.toString()+"px";
 
-            atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
+            // atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
+            atomSelectorActionsWidth = parseInt(ActionsWidth.replaceAll("px","")) > 60 ? ActionsWidth : "60px";
 
-            
+            // console.log("rect : " + JSON.stringify(rect));
+
             /**
              * @type string
              */
             var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
-            console.log("type : " + type);
+            // console.log("type : " + type);
 
-            // if(type == "text"){
-            //     if(rect.top < 40){
-            //         selectorPositionDataTop = (rect.top + rect.height + 40).toString()+"px";
-            //     }
-            // }
-            if(type != undefined)
-            if(type == "text"){
+            var tempWidth = parseInt(ActionsWidth.replaceAll("px",""));
+
+            if(type != undefined){
                 //If item is aligned top left.
-                if(rect.left < 120){
-                    if(rect.top < 40){
-                        selectorPositionDataLeft = (rect.left + 20).toString()+"px";
-                        selectorPositionDataTop = (rect.top + rect.height + 40).toString()+"px";
-                    }else{
-                        selectorPositionDataLeft = (rect.left + 20).toString()+"px";
-                    }
+                if(rect.left < 10 && rect.width < tempWidth){
+                    selectorPositionDataLeft = (tempWidth/2).toString()+"px";
+                // }else if(rect.width < parseInt(ActionsWidth.replaceAll("px",""))){
+                    // selectorPositionDataLeft = (parseInt(ActionsWidth.replaceAll("px","")) / 2 + 10).toString()+"px";
                 }else{
-                    if(rect.top < 40){
-                        selectorPositionDataTop = (rect.top + rect.height + 40).toString()+"px";
-                    }
-                } 
+                    selectorPositionDataLeft = rect.left.toString()+"px";
+                }
+
+                if(rect.top < 40){
+                    selectorPositionDataTop = (rect.bottom + 4).toString()+"px";
+                }else{
+                    selectorPositionDataTop = (rect.top - 38).toString()+"px";
+                }
             }
 
-
-
-
+            // console.log(
+            //     "selectorPositionDataLeft: "+selectorPositionDataLeft.toString()+
+            //     "\nselectorPositionDataTop: "+selectorPositionDataTop.toString()+
+            //     "\natomSelectorActions.offsetWidth: "+atomSelectorActions.offsetWidth.toString()+ 
+            //     "\nActionsWidth: "+ActionsWidth
+            //     );
 
             selectedType.set(type);
 
@@ -138,8 +175,6 @@
 
 
 </script>
-        <!-- --fixedPanelBackgroundColor:{$globalThemeStore.panel.backgroundColor};
-        --fixedPanelForegroundColor:{$globalThemeStore.panel.foregroundColor}; -->
 
         <div id="atomSelectorActions" bind:this={atomSelectorActions} class="rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center shadow-md"
         style='
@@ -154,13 +189,11 @@
 
         {#if $selectedType != ""}
 
-        <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent}/>
+        <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent} />
 
         {/if}
 
         </div>
-
-
 
 <style>
 

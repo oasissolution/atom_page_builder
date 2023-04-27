@@ -1,7 +1,12 @@
 <script>
+	import { onMount } from "svelte";
+
+    // This button is used in module actions
+
     import "../../app.css";
     import { globalThemeStore } from "../globals/globalstores.js";
     import { themeColors as DarkTheme } from "../themes/dark.js";
+    import { slide } from 'svelte/transition';
 
     /**
      * Variable that hold active state of element
@@ -26,29 +31,11 @@
      */
     export let bindElement=null;
 
-    /**
-     * Used in menu buttons, only button section.
-     * @type boolean
-     */
-    export let clickOnHover = false;
-
-    import { createEventDispatcher } from 'svelte';
-
-    const dispatch = createEventDispatcher();
-
-    function clickButton() {
-        dispatch('click');
-    }
-
-    function clickOnHoverFunction(){
-        if(clickOnHover == true) clickButton();
-    }
-
 
     /**
      * @type string
      */
-    let buttonActiveIconColor;
+     let buttonActiveIconColor;
     /**
      * @type string
      */
@@ -86,22 +73,98 @@
 
     }
 
+    /**
+     * @type HTMLElement?
+     */
+    let selectorHoverPanel;
+
+    /**
+     * @type HTMLDivElement
+     */
+    let hoverPanel;
+
+    /**
+     * @type number
+     */
+    export let hoverPanelWidth = 96;
+
+    /**
+     * @type number
+     */
+    let windowInnerWidth;
+
+    /**
+     * @type string
+     */
+    let hoverPanelTop;
+    /**
+     * @type string
+     */
+    let hoverPanelLeft;
+
+    let isPanelVisible = false;
+
+    function showPanel(){
+        if(bindElement != null){
+            /**
+             * Position and dimension data of selected element.
+             * @type DOMRect
+             */
+            const rect = bindElement.getBoundingClientRect();
+
+            var top = rect.bottom + 4;
+            var left = rect.left + rect.width / 2 - hoverPanelWidth / 2;
+            if(left < 10) left = 10;
+            if((left + hoverPanelWidth) > windowInnerWidth) left = windowInnerWidth - hoverPanelWidth - 6;
+
+            hoverPanelTop = top.toFixed(0).toString() + "px";
+            hoverPanelLeft = left.toFixed(0).toString() + "px";
+
+            // console.log("rect: " + JSON.stringify(rect) + "\nhoverPanelTop: "+hoverPanelTop + "\nhoverPanelLeft: "+hoverPanelLeft);
+
+        }
+
+        isPanelVisible = true;
+    }
+
+    function hidePanel(){
+        isPanelVisible = false;
+    }
+
+    onMount(()=>{
+
+    });
 
 
 </script>
 <input type="hidden" class="atomButton atomButtonActive" />
+<svelte:window bind:innerWidth={windowInnerWidth} />
 
-<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} bind:this={bindElement} on:click={clickButton} on:mouseenter={clickOnHoverFunction}
+<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} bind:this={bindElement} on:mouseenter={showPanel}
 style="
     --buttonActiveIconColor:{buttonActiveIconColor};
     --buttonActiveBackgroundColor:{buttonActiveBackgroundColor};
     --buttonPassiveIconColor:{buttonPassiveIconColor};
     --buttonPassiveBackgroundColor:{noBackground == false ? buttonPassiveBackgroundColor : "transparent"};
+    --hoverPanelLeft:{hoverPanelLeft};
+    --hoverPanelTop:{hoverPanelTop};
+    --hoverPanelWidth:{hoverPanelWidth};
 "  >
 
     <span class="atomButtonIcon"><slot name="icon"></slot></span>
 
 </button>
+
+{#if isPanelVisible}
+<!-- class:translate-y-[{hoverPanelTop}]={isPanelVisible} -->
+    <!-- class:translate-x-[{hoverPanelLeft}]={isPanelVisible} -->
+
+<div class="hoverPanel rounded-lg h-8 translate-y-9" 
+    
+    bind:this={hoverPanel} on:mouseleave={hidePanel} in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
+    <slot name="panel"></slot>
+</div>
+{/if}
 
 
 <style>
@@ -123,5 +186,12 @@ style="
         color: var(--buttonActiveIconColor);
     }
 
+    .hoverPanel{
+        position: absolute;
+        z-index: 100;
+        left: var(--hoverPanelLeft);
+        top: var(--hoverPanelTop);
+        width: var(--hoverPanelWidth);
+    }
 
 </style>

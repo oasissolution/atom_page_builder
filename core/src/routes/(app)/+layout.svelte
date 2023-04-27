@@ -129,7 +129,7 @@
 <svelte:head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <title>Atom Page Builder</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind3.3.1.js"></script>
 </svelte:head>
 
 

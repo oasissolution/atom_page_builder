@@ -1,6 +1,7 @@
 <script>
     import "../../app.css";
     import { globalThemeStore } from "../globals/globalstores.js";
+    import { themeColors as DarkTheme } from "../themes/dark.js";
 
     /**
      * Variable that adds class to element
@@ -85,7 +86,46 @@
      * 
      * @type boolean
      */
-     export let nested = false;
+    export let nested = false;
+
+    /**
+     * @type string
+     */
+    let buttonActiveColor;
+    /**
+     * @type string
+     */
+    let buttonActiveBackgroundColor;
+    /**
+     * @type string
+     */
+    let buttonPassiveColor;
+    /**
+     * @type string
+     */
+    let buttonPassiveBackgroundColor;
+
+    if(globalThemeStore != undefined && $globalThemeStore != undefined){
+        buttonActiveColor = $globalThemeStore.options.button.active.color;
+        buttonActiveBackgroundColor = $globalThemeStore.options.button.active.backgroundColor;
+        buttonPassiveColor = $globalThemeStore.options.button.passive.color;
+        buttonPassiveBackgroundColor = $globalThemeStore.options.button.passive.backgroundColor;
+    }else{
+        try {
+            globalThemeStore.set(DarkTheme);
+            buttonActiveColor = $globalThemeStore.options.button.active.color;
+            buttonActiveBackgroundColor = $globalThemeStore.options.button.active.backgroundColor;
+            buttonPassiveColor = $globalThemeStore.options.button.passive.color;
+            buttonPassiveBackgroundColor = $globalThemeStore.options.button.passive.backgroundColor;
+        } catch (error) {
+            buttonActiveColor = "#0092ED";
+            buttonActiveBackgroundColor = "#0092ED26";
+            buttonPassiveColor = "#9F9F9F";
+            buttonPassiveBackgroundColor = "#FFFFFF0A";
+        }
+
+    }
+    
 
 
 </script>
@@ -94,10 +134,10 @@
 <div class="w-full flex items-center place-content-between {gap} {addClassToContainer}" class:flex-row={horizontal} class:flex-col={!horizontal}
 class:place-content-between={spaceBetween}
 style="
-    --buttonActiveColor:{$globalThemeStore.options.button.active.color};
-    --buttonActiveBackgroundColor:{$globalThemeStore.options.button.active.backgroundColor};
-    --buttonPassiveColor:{$globalThemeStore.options.button.passive.color};
-    --buttonPassiveBackgroundColor:{$globalThemeStore.options.button.passive.backgroundColor};
+    --buttonActiveColor:{buttonActiveColor};
+    --buttonActiveBackgroundColor:{buttonActiveBackgroundColor};
+    --buttonPassiveColor:{buttonPassiveColor};
+    --buttonPassiveBackgroundColor:{buttonPassiveBackgroundColor};
 "  
 >
     {#if nested == false}

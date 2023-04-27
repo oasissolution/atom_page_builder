@@ -39,6 +39,7 @@
 		"immer": "^9.0.19",
 		"jquery": "^3.6.3",
 		"jsdom": "^21.1.0",
+		"sanitize-html": "^2.10.0",
 		"svelte-awesome-color-picker": "^2.4.1",
 		"svelte-sortable-list": "^1.1.0",
 		"sweetalert": "^2.1.2",

@@ -204,13 +204,29 @@ export function createDroppedElementAfter(afterUuid, elementType){
 }
 
 /**
- * Toggle widgets panel.
+ * Refreshes editor data from main panel.
  */
 export function refreshEditorData(){
 
     let data = {
         "action": "refreshEditorData",
         "data": {}
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
+/**
+ * Updates main panel from editor.
+ */
+export function updateMainPanelFromEditor(globalComponentCollectionStore, globalEditorPreferencesStore){
+
+    let data = {
+        "action": "updateMainPanelFromEditor",
+        "data": {
+            "componentCollection": globalComponentCollectionStore,
+            "editorPreferences": globalEditorPreferencesStore,
+        }
     }
 
     window.parent.postMessage(data, '*');

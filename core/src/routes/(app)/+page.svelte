@@ -48,8 +48,24 @@
 
     })();
 
+    
 
-    function updateEditorFunction(){
+    function updateMainPanelFromEditor(globalComponentCollectionStoreVariable, globalEditorPreferencesStoreVariable){
+        try{
+            // console.log("RECEIVED updateMainPanelFromEditor() globalComponentCollectionStoreVariable: \n" + JSON.stringify(globalComponentCollectionStoreVariable));
+            // console.log("RECEIVED updateMainPanelFromEditor() globalEditorPreferencesStoreVariable: \n" + JSON.stringify(globalEditorPreferencesStoreVariable));
+            globalComponentCollectionStore.set(globalComponentCollectionStoreVariable);
+            globalEditorPreferencesStore.set(globalEditorPreferencesStoreVariable);
+        }catch(error){
+            console.error("updateMainPanelFromEditor(): " + error);
+        }
+    }
+
+    /**
+     * 
+     * @param {string?} source
+     */
+    function updateEditorFunction(source=null){
         if(loaded == true && editorFrame !== null && editorFrame !== undefined ){
 
             // console.log("Send data on updateEditorFunction !");
@@ -61,16 +77,21 @@
                 }
             };
             if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
-            // console.log("updateEditorFunction executed!");
+            console.log("updateEditorFunction executed! Source : " + source?.toString());
         }
     }
+    
+    let previousglobalComponentCollectionStore;
 
     $: $globalComponentCollectionStore, (()=>{
-        updateEditorFunction();
+        if(previousglobalComponentCollectionStore != $globalComponentCollectionStore){
+            previousglobalComponentCollectionStore = $globalComponentCollectionStore;
+            updateEditorFunction("refresh of $globalComponentCollectionStore");
+        }
     })();
 
     $: $globalThemeStore, (()=>{
-        updateEditorFunction();
+        updateEditorFunction("refresh of $globalThemeStore");
     })();
 
     $: $globalSelectedElementUuidStore, (()=>{
@@ -99,7 +120,7 @@
             "" //replace value
             ))
         {
-            updateEditorFunction();
+            updateEditorFunction("setSelectedElement => if there is a selected element before");
         }
 
         /// targetUuid is uuid of selected element. So set globally, that way we can use everywhere in our app 
@@ -116,7 +137,7 @@
             "" //replace value
             ))
         {
-            updateEditorFunction();
+            updateEditorFunction("setSelectedElement => set element as selected");
         }
 
         /// Set selected element as previous, so it will be easy to revert selection effects.
@@ -165,7 +186,7 @@
         let defaultData = getDefaultValue(elementType);
 
         addChildComponent($globalComponentCollectionStore, targetUuid, defaultData);
-        updateEditorFunction();
+        updateEditorFunction("createDroppedElementInside");
     }
 
     /**
@@ -178,7 +199,7 @@
         let defaultData = getDefaultValue(elementType);
 
         createDroppedElementBefore($globalComponentCollectionStore, defaultData, targetUuid);
-        updateEditorFunction();
+        updateEditorFunction("createDroppedElementBeforeSub");
     }
 
     /**
@@ -191,7 +212,7 @@
         let defaultData = getDefaultValue(elementType);
 
         createDroppedElementAfter($globalComponentCollectionStore, defaultData, targetUuid);
-        updateEditorFunction();
+        updateEditorFunction("createDroppedElementAfterSub");
     }
 
 
@@ -303,7 +324,7 @@
                         break;
                     case "deleteElement":
                         deleteComponent($globalComponentCollectionStore, event.data.data.uuid);
-                        updateEditorFunction();
+                        updateEditorFunction("message => deleteElement");
                         break;
                     case "toggleWidgetsPanel":
                         toggleWidgetPanel();
@@ -313,15 +334,15 @@
                         break;
                     case "replaceDroppedElementInside":
                         replaceDroppedElementInside($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.insideUuid);
-                        updateEditorFunction();
+                        updateEditorFunction("message => replaceDroppedElementInside");
                         break;
                     case "replaceDroppedElementBefore":
                         replaceDroppedElementBefore($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.beforeUuid);
-                        updateEditorFunction();
+                        updateEditorFunction("message => replaceDroppedElementBefore");
                         break;
                     case "replaceDroppedElementAfter":
                         replaceDroppedElementAfter($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.afterUuid);
-                        updateEditorFunction();
+                        updateEditorFunction("message => replaceDroppedElementAfter");
                         break;
                     case "createDroppedElementBefore":
                         createDroppedElementBeforeSub(event.data.data.beforeUuid, event.data.data.elementType);
@@ -330,7 +351,10 @@
                         createDroppedElementAfterSub(event.data.data.afterUuid, event.data.data.elementType);
                         break;
                     case "refreshEditorData":
-                        updateEditorFunction();
+                        updateEditorFunction("message => refreshEditorData");
+                        break;
+                    case "updateMainPanelFromEditor":
+                        updateMainPanelFromEditor(event.data.data.componentCollection, event.data.data.editorPreferences);
                         break;
                 }
 

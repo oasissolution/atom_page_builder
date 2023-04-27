@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 export const editorDefaultPreferences = {
     "menuLocation": "menuLocationTop",
-    "widgetPanelDisplayStyle" : "panelDisplayStyleFixedLeft",
+    "widgetPanelDisplayStyle" : "panelDisplayStyleHover",
     "customizePanelDisplayStyle" : "panelDisplayStyleFixedLeft",
     "optionPanelDisplayStyle" : "panelDisplayStyleFixedRight",
     "layerPanelDisplayStyle" : "panelDisplayStyleFixedRight",

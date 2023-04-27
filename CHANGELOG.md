@@ -5,6 +5,33 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.050] - 2022-04-27
+
+### Added
+ - Atom Ui Element: Action Hover Button (Especially used in Action panel buttons.)
+ - Text Actions : Delete Element, Text Alignment (UI completed only)
+
+### Changed
+ - 
+
+### Fixed
+ - 
+
+
+
+
+## [0.0.1.049] - 2022-04-26
+
+### Added
+ - 
+
+### Changed
+ - Embedded cdn of tailwind css to prevent conflicts in future releases of cdn with our setup.
+ - Updated Actions panel location logic.
+
+### Fixed
+ - Freezing editor panel when both Actions panel and Options panels are opened.
+
 
 
 ## [0.0.1.048] - 2022-04-25
@@ -18,7 +45,6 @@ All notes are for developers, since this repository will not be public.
 
 ### Fixed
  - 
-
 
 
 

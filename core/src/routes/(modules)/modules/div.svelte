@@ -1,7 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onDestroy, onMount } from "svelte";
-    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
+    import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import {
         sendSelectedElement,  openOptionsPanel,
         createDroppedElementInside, replaceDroppedElementInside,
@@ -364,6 +364,7 @@
     function selectElement(){
         /// Send selected uuid to main frame.
         sendSelectedElement(uuid);
+        globalSelectedElementUuidStore.set(uuid);
 
         // update global variable, so selector activates.
         selectedElement = bindElement;
