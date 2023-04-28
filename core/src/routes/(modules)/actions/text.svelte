@@ -5,20 +5,19 @@
     import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { getComponent } from "../../globals/globalfunctions.js";
     import Iconbutton from "../../uicomponents/iconbutton.svelte";
-    import { openOptionsPanel, sendDeletedElement, refreshEditorData, updateMainPanelFromEditor  } from "../../(shared)/shared/sharedfunctions.js";
+    import { updateMainPanelFromEditor  } from "../../(shared)/shared/sharedfunctions.js";
     import { themeColors as DarkTheme } from "../../themes/dark.js";
-    import swal from 'sweetalert';
     import { deleteComponent } from "../../(shared)/shared/sharedfunctions.svelte";
 	import ActionHoverButton from "../../uicomponents/action-hover-button.svelte";
 	import TextAlignment from "./textactions/text-alignment.svelte";
-	import { writable } from "svelte/store";
+	import FontWeight from "./textactions/font-weight.svelte";
 
     /**
      * This is a default variable, which holds position of "Actions" panel according to top-right corner on X axis.
      * 
      * Do not change variable name, since this is a standart definition for all modules.
      */
-    export const marginX = "-6px";
+    export const marginX = "0px";
 
     /**
      * This is a default variable, which holds position of "Actions" panel according to top-right corner on Y axis.
@@ -30,7 +29,7 @@
     /**
      * Width of "Actions" panel.
      */
-    export const ActionsWidth = "160px";
+    export const ActionsWidth = "192px";
 
 
 
@@ -116,6 +115,8 @@
     */
     let elementDataLoaded="";
 
+    
+
     /**
      * Loads element data from JSON 
      */
@@ -129,24 +130,34 @@
 
         if(activeElement == undefined){
             console.error("loadElementData() : activeElement is undefined!");
-            // console.info("globalComponentCollection : \n"+JSON.stringify(globalComponentCollection));
-            // console.info("globalSelectedElementUuidStore : "+JSON.stringify($globalSelectedElementUuidStore));
         }else if(activeElement == null){
             console.error("loadElementData() : activeElement is null!");
         }
-        // console.log("loadElementData() : classInput: " + classInput);
     }
+
+
+    /////// IF WE UNCOMMENT THIS, IT GOES TO INFINITE LOOP. THAT'S WHY WE CAN NOT UPDATE THIS SIDE DYNAMICALLY.
+
+    // let previousglobalComponentCollectionStore;
+    // /**
+    //  * Update ui whenever component collection changes (when there is a update in editor by actions panel)
+    // */
+    // $: $globalComponentCollectionStore, (() => {
+    //     if(previousglobalComponentCollectionStore != $globalComponentCollectionStore){
+    //         previousglobalComponentCollectionStore = $globalComponentCollectionStore;
+    //         if(loaded == true){
+    //             loadElementData();
+    //         }
+    //     }
+        
+    // })();
 
     /**
      * Update Editor Panel
      */
      function updateEditor(){
-        // console.info("updateEditor(): globalComponentCollection : \n"+JSON.stringify(globalComponentCollection));
-        // console.info("updateEditor(): globalEditorPreferencesStore : \n"+JSON.stringify($globalEditorPreferencesStore));
-        // console.info("updateEditor(): globalSelectedElementUuidStore : "+JSON.stringify($globalSelectedElementUuidStore));
-
         updateMainPanelFromEditor(globalComponentCollection, $globalEditorPreferencesStore);
-
+        loadElementData();
     }
 
     function updateClass(){
@@ -183,6 +194,11 @@
      */
     let textAlignment;
 
+    /**
+     * @type number
+     */
+    let fontWeight=3;
+
     onMount(() => {
 
         loadElementData();
@@ -193,18 +209,19 @@
 
 </script>
 
-<div class="flex flex-row w-40 rounded-md gap-1 divide-x divide-black/40 place-content-center items-center content-center inlinePanel" style='
+<div class="flex flex-row w-48 rounded-md gap-1 divide-x divide-black/40 place-content-center items-center content-center inlinePanel" style='
 --fixedPanelBackgroundColor:{fixedPanelBackgroundColor};
 --fixedPanelForegroundColor:{fixedPanelForegroundColor};
 ' >
 
     <div class="flex flex-row gap-1">
         <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-pen"></i></span></Iconbutton>
-        <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-files"></i></span></Iconbutton>
+        <!-- <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-files"></i></span></Iconbutton> -->
     </div>
 
     <div class="flex flex-row gap-1 relative">
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={160}>
+
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={144}>
             <span slot="icon"><i class="bi bi-justify"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -212,6 +229,25 @@
                 </div>
             </span>
         </ActionHoverButton>
+
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1}>
+            <span slot="icon"><i class="bi bi-type-bold"></i></span>
+            <span slot="panel">
+                <div class="inlinePanel rounded-md">
+                    <FontWeight bind:fontWeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+                </div>
+            </span>
+        </ActionHoverButton>
+
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={2}>
+            <span slot="icon"><i class="bi bi-type-bold"></i></span>
+            <span slot="panel">
+                <div class="inlinePanel rounded-md">
+                    <FontWeight bind:fontWeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+                </div>
+            </span>
+        </ActionHoverButton>
+
     </div>
 
     <div>

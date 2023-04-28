@@ -138,7 +138,7 @@
      * Loads element data from JSON 
      */
     function loadElementData(){
-        activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
+        activeElement = getComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore);
 
         textInput = activeElement?.data?.text != undefined ? activeElement?.data?.text : "Lorem ipsum...";
         classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
@@ -278,6 +278,20 @@
         if(loaded == true){
             loadElementData();
         }
+    })();
+
+    // let previousglobalComponentCollectionStore;
+    /**
+     * Update ui whenever component collection changes (when there is a update in editor by actions panel)
+    */
+    $: $globalComponentCollectionStore, (() => {
+        // if(previousglobalComponentCollectionStore != $globalComponentCollectionStore){
+        //     previousglobalComponentCollectionStore = $globalComponentCollectionStore;}
+            clearOptionPanelVariables();
+            if(loaded == true){
+                loadElementData();
+            }
+        
     })();
 
     /**

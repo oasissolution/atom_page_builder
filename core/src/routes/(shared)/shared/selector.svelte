@@ -1,5 +1,5 @@
 <script>
-    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
+    import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalComponentCollectionStore, globalThemeStore, globalEditorPreferencesStore } from "../../globals/globalstores.js";
     import { getTypeOfComponent } from "../../globals/globalfunctions.js";
     import { writable } from "svelte/store";
@@ -33,6 +33,7 @@
     let selectorPositionDataLeft = "-100px";
     let selectorPositionDataTop = "-100px";
     let atomSelectorActionsWidth = "68px";
+    let selectorPositionDataRight = "0px;"
 
     /**
      * Position of "Actions" panel according to top-right corner on X axis.
@@ -83,6 +84,7 @@
             selectorPositionDataHeight = "100px";
             selectorPositionDataLeft = "-100px";
             selectorPositionDataTop = "-100px";
+            selectorPositionDataRight = "px";
 
         }
     })();
@@ -105,47 +107,73 @@
              */
             const rect = $globalSelectedElementStore.getBoundingClientRect();
 
-            selectorPositionDataWidth = rect.width.toString()+"px";
-            selectorPositionDataHeight = rect.height.toString()+"px";
-            selectorPositionDataLeft = rect.left.toString()+"px";
+            // selectorPositionDataWidth = rect.width ? rect.width.toString()+"px" : "60px" ;
+            // selectorPositionDataHeight = rect.height.toString()+"px";
+            // selectorPositionDataLeft = rect.left.toString()+"px";
+            selectorPositionDataRight = rect.right.toString()+"px";
             selectorPositionDataTop = rect.top.toString()+"px";
 
             // atomSelectorActionsWidth = atomSelectorActions.offsetWidth > 60 ? atomSelectorActions.offsetWidth.toString()+"px" : "60px";
-            atomSelectorActionsWidth = parseInt(ActionsWidth.replaceAll("px","")) > 60 ? ActionsWidth : "60px";
+            // atomSelectorActionsWidth = parseInt(ActionsWidth.replaceAll("px","")) > 60 ? ActionsWidth : "60px";
 
             // console.log("rect : " + JSON.stringify(rect));
 
             /**
              * @type string
              */
-            var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementStore.id);
+            var type = getTypeOfComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore); // $globalSelectedElementStore.id
             // console.log("type : " + type);
 
             var tempWidth = parseInt(ActionsWidth.replaceAll("px",""));
 
             if(type != undefined){
-                //If item is aligned top left.
-                if(rect.left < 10 && rect.width < tempWidth){
-                    selectorPositionDataLeft = (tempWidth/2).toString()+"px";
-                // }else if(rect.width < parseInt(ActionsWidth.replaceAll("px",""))){
-                    // selectorPositionDataLeft = (parseInt(ActionsWidth.replaceAll("px","")) / 2 + 10).toString()+"px";
-                }else{
-                    selectorPositionDataLeft = rect.left.toString()+"px";
-                }
 
                 if(rect.top < 40){
                     selectorPositionDataTop = (rect.bottom + 4).toString()+"px";
                 }else{
                     selectorPositionDataTop = (rect.top - 38).toString()+"px";
                 }
+
+                var left = rect.right - tempWidth;
+
+                if(left<10){
+                    selectorPositionDataLeft = "10px";
+                }else{
+                    selectorPositionDataLeft = (left - 6).toFixed(0) + "px";
+                }
+
             }
 
-            // console.log(
-            //     "selectorPositionDataLeft: "+selectorPositionDataLeft.toString()+
-            //     "\nselectorPositionDataTop: "+selectorPositionDataTop.toString()+
-            //     "\natomSelectorActions.offsetWidth: "+atomSelectorActions.offsetWidth.toString()+ 
-            //     "\nActionsWidth: "+ActionsWidth
-            //     );
+            // if(type != undefined){
+            //     //If item is aligned top left.
+            //     if(rect.left < 10 || rect.left < tempWidth){
+            //         selectorPositionDataLeft = "10px";
+            //         // selectorPositionDataLeft = (tempWidth/2).toString()+"px";
+            //     // }else if(rect.width < parseInt(ActionsWidth.replaceAll("px",""))){
+            //         // selectorPositionDataLeft = (parseInt(ActionsWidth.replaceAll("px","")) / 2 + 10).toString()+"px";
+            //     }else{
+            //         if((rect.left + tempWidth) > windowInnerWidth){
+            //             selectorPositionDataLeft = (windowInnerWidth - tempWidth - 6).toFixed(0).toString()+"px";
+            //         // }else if(rect.left < (tempWidth/2)){
+
+            //         }else{
+            //             selectorPositionDataLeft = rect.left.toString()+"px";
+            //         }
+            //     }
+
+            //     if(rect.top < 40){
+            //         selectorPositionDataTop = (rect.bottom + 4).toString()+"px";
+            //     }else{
+            //         selectorPositionDataTop = (rect.top - 38).toString()+"px";
+            //     }
+            // }
+
+            console.log(
+                "selectorPositionDataLeft: "+selectorPositionDataLeft.toString()+
+                "\nselectorPositionDataTop: "+selectorPositionDataTop.toString()+
+                // "\natomSelectorActions.offsetWidth: "+atomSelectorActions.offsetWidth.toString()+ 
+                "\nActionsWidth: "+ActionsWidth
+                );
 
             selectedType.set(type);
 
@@ -174,47 +202,48 @@
     };
 
 
+
 </script>
 
-        <div id="atomSelectorActions" bind:this={atomSelectorActions} class="rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center shadow-md"
-        style='
-        --selectorPositionDataWidth:{selectorPositionDataWidth};
-        --selectorPositionDataHeight:{selectorPositionDataHeight};
-        --selectorPositionDataLeft:{selectorPositionDataLeft};
-        --selectorPositionDataTop:{selectorPositionDataTop};
-        --atomSelectorActionsWidth:{atomSelectorActionsWidth};
-        --marginX:{marginX};
-        --marginY:{marginY};
-        '>
+    <div id="atomSelectorActions" bind:this={atomSelectorActions} class="rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center shadow-md"
+    style='
+    --selectorPositionDataWidth:{selectorPositionDataWidth};
+    --selectorPositionDataHeight:{selectorPositionDataHeight};
+    --selectorPositionDataLeft:{selectorPositionDataLeft};
+    --selectorPositionDataTop:{selectorPositionDataTop};
+    --atomSelectorActionsWidth:{atomSelectorActionsWidth};
+    --marginX:{marginX};
+    --marginY:{marginY};
+    '>
 
-        {#if $selectedType != ""}
+    {#if $selectedType != ""}
 
-        <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent} />
+    <svelte:component this={JsonOfModules[$selectedType]} bind:this={actionsComponent} />
 
-        {/if}
+    {/if}
 
-        </div>
+    </div>
 
 <style>
 
-    #atomSelector{
+    /* #atomSelector{
         position: absolute;
         z-index: 0;
         border: 2px dotted aqua;
-        /* background-color:cadetblue; */
         background-color: transparent;
         top: var(--selectorPositionDataTop);
         left: var(--selectorPositionDataLeft);
         width: var(--selectorPositionDataWidth);
         height: var(--selectorPositionDataHeight);
-    }
+    } */
 
     #atomSelectorActions{
         position: absolute;
         /* background-color: var(--fixedPanelBackgroundColor);
         color: var(--fixedPanelForegroundColor); */
         top: calc(var(--selectorPositionDataTop) + var(--marginY));
-        left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) + var(--marginX));
+        left: calc(var(--selectorPositionDataLeft) + var(--marginX));
+        /* left: calc(var(--selectorPositionDataLeft) + var(--selectorPositionDataWidth) - var(--atomSelectorActionsWidth) + var(--marginX)); */
     }
 
 

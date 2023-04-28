@@ -142,7 +142,7 @@
      * Loads element data from JSON 
      */
     function loadElementData(){
-        activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
+        activeElement = getComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore);
 
         classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
 
@@ -281,6 +281,19 @@
         }
     })();
 
+    // let previousglobalComponentCollectionStore;
+    /**
+     * Update ui whenever component collection changes (when there is a update in editor by actions panel)
+    */
+    $: $globalComponentCollectionStore, (() => {
+        // if(previousglobalComponentCollectionStore != $globalComponentCollectionStore){
+        //     previousglobalComponentCollectionStore = $globalComponentCollectionStore;}
+        clearOptionPanelVariables();
+        if(loaded == true){
+            loadElementData();
+        }
+        
+    })();
 
     onMount(() => {
 

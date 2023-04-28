@@ -60,6 +60,7 @@
      * @typedef {Object} nestedItemsType
      * @property {string} outerClass
      * @property {string} innerClass
+     * @property {string?} innerText
      */
 
     /**
@@ -87,6 +88,13 @@
      * @type boolean
      */
     export let nested = false;
+
+    /**
+     * Variable that holds if items of elements are nested text elements
+     * 
+     * @type boolean
+     */
+    export let nestedText = false;
 
     /**
      * @type string
@@ -154,7 +162,11 @@ style="
         {#each nestedItems as item, index}
             <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=index} class:optionButtonActive={value == index}>
                 <span class="{item.outerClass}">
+                    {#if nestedText == true}
+                    <span class="{item.innerClass}">{item.innerText}</span>
+                    {:else}
                     <i class="{item.innerClass}"></i>
+                    {/if}
                 </span>
             </button>
         {/each}

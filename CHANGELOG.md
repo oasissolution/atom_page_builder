@@ -5,6 +5,20 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.051] - 2022-04-28
+
+### Added
+ - Text Actions : Text Alignment, Font Weight
+
+### Changed
+ - 
+
+### Fixed
+ - Any update in Action Panel also updates Options Panel.
+
+
+
 ## [0.0.1.050] - 2022-04-27
 
 ### Added

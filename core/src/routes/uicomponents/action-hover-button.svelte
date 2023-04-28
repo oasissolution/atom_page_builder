@@ -74,11 +74,6 @@
     }
 
     /**
-     * @type HTMLElement?
-     */
-    let selectorHoverPanel;
-
-    /**
      * @type HTMLDivElement
      */
     let hoverPanel;
@@ -89,6 +84,14 @@
     export let hoverPanelWidth = 96;
 
     /**
+     * Index of Hover Button in panel
+     * 
+     * Starts from 0
+     * @type number
+     */
+    export let buttonIndex = 0;
+
+    /**
      * @type number
      */
     let windowInnerWidth;
@@ -96,31 +99,49 @@
     /**
      * @type string
      */
-    let hoverPanelTop;
+     let translateX;
     /**
      * @type string
      */
-    let hoverPanelLeft;
+    let translateY;
 
     let isPanelVisible = false;
 
     function showPanel(){
         if(bindElement != null){
             /**
-             * Position and dimension data of selected element.
+             * Position and dimension data of button.
              * @type DOMRect
              */
             const rect = bindElement.getBoundingClientRect();
 
-            var top = rect.bottom + 4;
             var left = rect.left + rect.width / 2 - hoverPanelWidth / 2;
-            if(left < 10) left = 10;
-            if((left + hoverPanelWidth) > windowInnerWidth) left = windowInnerWidth - hoverPanelWidth - 6;
 
-            hoverPanelTop = top.toFixed(0).toString() + "px";
-            hoverPanelLeft = left.toFixed(0).toString() + "px";
+            var buttonWidthSpace = 32; // Is used in button index, this is width of previous buttons each approximately
+            var centerOfButton = buttonIndex * (buttonWidthSpace + 8);
+            if(buttonIndex > 0) centerOfButton += parseInt((buttonWidthSpace / 2).toFixed(0));
 
-            // console.log("rect: " + JSON.stringify(rect) + "\nhoverPanelTop: "+hoverPanelTop + "\nhoverPanelLeft: "+hoverPanelLeft);
+            var containerLeft = rect.left - buttonIndex * (buttonWidthSpace + 4); // Hover panel default left px, translateX = "0px"
+
+            translateY = "33px"; // h-8 = 32 + 1 offset
+            translateX = (rect.width / 2 - hoverPanelWidth / 2 + centerOfButton).toFixed(0).toString()+"px";
+            if(left < 10) translateX = (buttonIndex * buttonWidthSpace).toFixed(0).toString()+"px";
+            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = ((-1)*(hoverPanelWidth - (windowInnerWidth - rect.left) + 6)).toFixed(0).toString()+"px";
+            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = ((windowInnerWidth-hoverPanelWidth-rect.left-6) - (buttonIndex * buttonWidthSpace)).toFixed(0).toString()+"px";
+            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = ((-1)*(hoverPanelWidth - (windowInnerWidth - rect.left)) + centerOfButton).toFixed(0).toString()+"px";
+            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = (left + hoverPanelWidth/2 - windowInnerWidth).toFixed(0).toString()+"px";
+            if((left + hoverPanelWidth) > windowInnerWidth) translateX = (windowInnerWidth - containerLeft - hoverPanelWidth).toFixed(0).toString()+"px";
+            
+            
+
+            console.log(
+                "translateX: "+translateX+
+                "\ntranslateY: "+translateY+
+                "\nhoverPanelWidth: "+hoverPanelWidth+
+                "\nwindowInnerWidth: "+windowInnerWidth+
+                "\nrect.left: "+rect.left+
+                "\nleft: "+left
+                );
 
         }
 
@@ -140,14 +161,12 @@
 <input type="hidden" class="atomButton atomButtonActive" />
 <svelte:window bind:innerWidth={windowInnerWidth} />
 
-<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} bind:this={bindElement} on:mouseenter={showPanel}
+<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={isPanelVisible} bind:this={bindElement} on:mouseenter={showPanel}
 style="
     --buttonActiveIconColor:{buttonActiveIconColor};
     --buttonActiveBackgroundColor:{buttonActiveBackgroundColor};
     --buttonPassiveIconColor:{buttonPassiveIconColor};
     --buttonPassiveBackgroundColor:{noBackground == false ? buttonPassiveBackgroundColor : "transparent"};
-    --hoverPanelLeft:{hoverPanelLeft};
-    --hoverPanelTop:{hoverPanelTop};
     --hoverPanelWidth:{hoverPanelWidth};
 "  >
 
@@ -156,10 +175,12 @@ style="
 </button>
 
 {#if isPanelVisible}
-<!-- class:translate-y-[{hoverPanelTop}]={isPanelVisible} -->
-    <!-- class:translate-x-[{hoverPanelLeft}]={isPanelVisible} -->
 
-<div class="hoverPanel rounded-lg h-8 translate-y-9" 
+<div class="hoverPanel rounded-lg h-8 flex justify-center" style="
+    --translateX:{translateX};
+    --translateY:{translateY};
+    --hoverPanelWidth:{hoverPanelWidth};
+" 
     
     bind:this={hoverPanel} on:mouseleave={hidePanel} in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
     <slot name="panel"></slot>
@@ -189,9 +210,9 @@ style="
     .hoverPanel{
         position: absolute;
         z-index: 100;
-        left: var(--hoverPanelLeft);
-        top: var(--hoverPanelTop);
         width: var(--hoverPanelWidth);
+        transform: translate3d(var(--translateX), var(--translateY), 0);
+
     }
 
 </style>
