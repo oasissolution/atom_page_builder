@@ -134,14 +134,14 @@
             
             
 
-            console.log(
-                "translateX: "+translateX+
-                "\ntranslateY: "+translateY+
-                "\nhoverPanelWidth: "+hoverPanelWidth+
-                "\nwindowInnerWidth: "+windowInnerWidth+
-                "\nrect.left: "+rect.left+
-                "\nleft: "+left
-                );
+            // console.log(
+            //     "translateX: "+translateX+
+            //     "\ntranslateY: "+translateY+
+            //     "\nhoverPanelWidth: "+hoverPanelWidth+
+            //     "\nwindowInnerWidth: "+windowInnerWidth+
+            //     "\nrect.left: "+rect.left+
+            //     "\nleft: "+left
+            //     );
 
         }
 

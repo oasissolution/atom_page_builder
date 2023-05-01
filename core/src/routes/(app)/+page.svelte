@@ -111,7 +111,7 @@
 
         /// if there is a selected element before, set as selected = false
         if(previousSelectedHtmlElementUuid != "") if(updateGlobalComponentCollectionStore(
-            $globalComponentCollectionStore, //jsonData
+            $globalComponentCollectionStore, //jsonData 
             previousSelectedHtmlElementUuid, //uuid
             false, //newValue
             null, //dataTarget

@@ -32,10 +32,12 @@
     export const ActionsWidth = "192px";
 
 
-
-
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
+
+    // $: $globalComponentCollectionStore, (()=>{
+    //     globalComponentCollection = $globalComponentCollectionStore;
+    // })();
 
     /**
      * @type string
@@ -157,6 +159,7 @@
      */
      function updateEditor(){
         updateMainPanelFromEditor(globalComponentCollection, $globalEditorPreferencesStore);
+        // updateMainPanelFromEditor($globalComponentCollectionStore, $globalEditorPreferencesStore);
         loadElementData();
     }
 
@@ -239,14 +242,6 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={2}>
-            <span slot="icon"><i class="bi bi-type-bold"></i></span>
-            <span slot="panel">
-                <div class="inlinePanel rounded-md">
-                    <FontWeight bind:fontWeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
-                </div>
-            </span>
-        </ActionHoverButton>
 
     </div>
 
