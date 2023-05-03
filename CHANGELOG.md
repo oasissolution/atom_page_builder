@@ -5,6 +5,19 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.053] - 2022-05-03
+
+### Added
+ - 
+
+### Changed
+ - Action panel buttons show actual/most recent data when hovered.
+ - Two way update (Options Panel <-> Action Panel) works now. 
+
+### Fixed
+ - Action panel infinite loop / do not update bug.
+
+
 
 ## [0.0.1.052] - 2022-05-01
 

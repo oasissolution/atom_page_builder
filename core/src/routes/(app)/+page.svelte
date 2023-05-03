@@ -77,7 +77,7 @@
                 }
             };
             if(editorFrame.contentWindow != null) editorFrame.contentWindow.postMessage(data, '*');
-            console.log("updateEditorFunction executed! Source : " + source?.toString());
+            // console.log(Date().toString() + "\nupdateEditorFunction executed! Source : " + source?.toString() + "\n\n");
         }
     }
     
@@ -87,6 +87,7 @@
         if(previousglobalComponentCollectionStore != $globalComponentCollectionStore){
             previousglobalComponentCollectionStore = $globalComponentCollectionStore;
             updateEditorFunction("refresh of $globalComponentCollectionStore");
+            // console.info(Date().toString() + "\n$globalComponentCollectionStore : \n"+JSON.stringify($globalComponentCollectionStore));
         }
     })();
 

@@ -1,12 +1,13 @@
 <script>
-	import { onMount } from "svelte";
-
+    
     // This button is used in module actions
-
+    
     import "../../app.css";
+	import { onDestroy, onMount } from "svelte";
     import { globalThemeStore } from "../globals/globalstores.js";
     import { themeColors as DarkTheme } from "../themes/dark.js";
     import { slide } from 'svelte/transition';
+    // import { clickOutside } from "../(shared)/shared/clickoutside";
 
     /**
      * Variable that hold active state of element
@@ -110,6 +111,12 @@
     function showPanel(){
         if(bindElement != null){
             /**
+             * Also execute actions "loadElementData" function when button is hovered to show actual/most recent data in hover panel.
+             * This action is CRUCIAL.
+            */
+            hoverButton();
+
+            /**
              * Position and dimension data of button.
              * @type DOMRect
              */
@@ -123,25 +130,10 @@
 
             var containerLeft = rect.left - buttonIndex * (buttonWidthSpace + 4); // Hover panel default left px, translateX = "0px"
 
-            translateY = "33px"; // h-8 = 32 + 1 offset
+            translateY = "33px"; // h-8 = 32px + 1px offset
             translateX = (rect.width / 2 - hoverPanelWidth / 2 + centerOfButton).toFixed(0).toString()+"px";
             if(left < 10) translateX = (buttonIndex * buttonWidthSpace).toFixed(0).toString()+"px";
-            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = ((-1)*(hoverPanelWidth - (windowInnerWidth - rect.left) + 6)).toFixed(0).toString()+"px";
-            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = ((windowInnerWidth-hoverPanelWidth-rect.left-6) - (buttonIndex * buttonWidthSpace)).toFixed(0).toString()+"px";
-            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = ((-1)*(hoverPanelWidth - (windowInnerWidth - rect.left)) + centerOfButton).toFixed(0).toString()+"px";
-            // if((left + hoverPanelWidth) > windowInnerWidth) translateX = (left + hoverPanelWidth/2 - windowInnerWidth).toFixed(0).toString()+"px";
             if((left + hoverPanelWidth) > windowInnerWidth) translateX = (windowInnerWidth - containerLeft - hoverPanelWidth).toFixed(0).toString()+"px";
-            
-            
-
-            // console.log(
-            //     "translateX: "+translateX+
-            //     "\ntranslateY: "+translateY+
-            //     "\nhoverPanelWidth: "+hoverPanelWidth+
-            //     "\nwindowInnerWidth: "+windowInnerWidth+
-            //     "\nrect.left: "+rect.left+
-            //     "\nleft: "+left
-            //     );
 
         }
 
@@ -152,9 +144,48 @@
         isPanelVisible = false;
     }
 
+    function checkMouseIsAway(e){
+
+        if(isPanelVisible == true){
+            /**
+             * Position and dimension data of hover panel.
+             * @type DOMRect
+             */
+            const rect = hoverPanel.getBoundingClientRect();
+
+            if(
+                e.clientX < (rect.left - 100) ||
+                e.clientX > (rect.right + 100) ||
+                e.clientY < (rect.top - 100) ||
+                e.clientY > (rect.bottom + 100)
+            ){
+                hidePanel();
+            }
+
+        }
+        
+    }
+
     onMount(()=>{
 
+        console.log("onMount of action hover");
+
+        document.addEventListener('mousemove', checkMouseIsAway, true);
+
     });
+
+    onDestroy(()=>{
+        document.removeEventListener('mousemove', checkMouseIsAway, true);
+    });
+
+
+    import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+
+    function hoverButton() {
+        dispatch('hoverButton');
+    }
 
 
 </script>
@@ -187,6 +218,7 @@ style="
 </div>
 {/if}
 
+<!--   use:clickOutside on:click_outside={hidePanel}  -->
 
 <style>
 

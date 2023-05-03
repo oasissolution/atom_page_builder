@@ -1,6 +1,6 @@
 <script>
     import "../../../app.css";
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { globalThemeStore, globalComponentCollectionStore, globalEditorPreferencesStore } from "../../globals/globalstores.js";
     import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { getComponent } from "../../globals/globalfunctions.js";
@@ -11,6 +11,7 @@
 	import ActionHoverButton from "../../uicomponents/action-hover-button.svelte";
 	import TextAlignment from "./textactions/text-alignment.svelte";
 	import FontWeight from "./textactions/font-weight.svelte";
+    import { writable } from "svelte/store";
 
     /**
      * This is a default variable, which holds position of "Actions" panel according to top-right corner on X axis.
@@ -115,15 +116,21 @@
      * Used for sub elements to update themselves to current values.
      * @type string
     */
-    let elementDataLoaded="";
+    let elementDataLoaded;
 
     
 
     /**
      * Loads element data from JSON 
      */
-    function loadElementData(){
-        activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
+    function loadElementData(source=""){
+
+        // console.info("loadElementData Source : " + source);
+
+        activeElement = getComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore);
+        // activeElement = getComponent(globalComponentCollection, $globalSelectedElementUuidStore);
+
+        // globalComponentCollection = $globalComponentCollectionStore;
 
         textInput = activeElement?.data?.text != undefined ? activeElement?.data?.text : "Lorem ipsum...";
         classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
@@ -135,10 +142,13 @@
         }else if(activeElement == null){
             console.error("loadElementData() : activeElement is null!");
         }
+
+        // console.log("text actions => loadElementData() => elementDataLoaded :\n" + elementDataLoaded);
+        // console.log("loadElementData Source : " + source + " => elementDataLoaded : " + elementDataLoaded);
     }
 
 
-    /////// IF WE UNCOMMENT THIS, IT GOES TO INFINITE LOOP. THAT'S WHY WE CAN NOT UPDATE THIS SIDE DYNAMICALLY.
+    /////// IF WE UNCOMMENT THIS, IT GOES TO INFINITE LOOP. THAT'S WHY WE CAN NOT UPDATE THIS SIDE THIS WAY. INSTEAD (updateEditor() / ActionButton onHover )/loadElementData() DOES THIS FOR US.
 
     // let previousglobalComponentCollectionStore;
     // /**
@@ -157,20 +167,23 @@
     /**
      * Update Editor Panel
      */
-     function updateEditor(){
-        updateMainPanelFromEditor(globalComponentCollection, $globalEditorPreferencesStore);
-        // updateMainPanelFromEditor($globalComponentCollectionStore, $globalEditorPreferencesStore);
-        loadElementData();
+    function updateEditor(source=""){
+
+        // console.log("updateEditor() : $globalComponentCollectionStore: \n" + JSON.stringify($globalComponentCollectionStore) + "\n\nglobalComponentCollection: \n" + JSON.stringify(globalComponentCollection));
+
+        updateMainPanelFromEditor($globalComponentCollectionStore, $globalEditorPreferencesStore);
+        // updateMainPanelFromEditor(globalComponentCollection, $globalEditorPreferencesStore);
+        loadElementData("updateEditor() => " + source);
     }
 
     function updateClass(){
 
-        // console.log("updateClass() : classInput: " + classInput);
+        // console.log("updateClass() : classInput: " + classInput + "\n\n");
 
         if(activeElement){
             if(activeElement.data){
                 activeElement.data.class = classInput.replaceAll("undefined", "").trim();
-                updateEditor();
+                updateEditor("updateClass()");
             }else{
                 console.error("updateClass(): activeElement.data is undefined or null!");
             }
@@ -195,7 +208,7 @@
     /**
      * @type number
      */
-    let textAlignment;
+    let textAlignment=0;
 
     /**
      * @type number
@@ -204,7 +217,7 @@
 
     onMount(() => {
 
-        loadElementData();
+        loadElementData("onMount");
 
         loaded = true;
 
@@ -224,7 +237,7 @@
 
     <div class="flex flex-row gap-1 relative">
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={144}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={144} on:hoverButton={()=>loadElementData("Text Alignment")}>
             <span slot="icon"><i class="bi bi-justify"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -233,7 +246,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1} on:hoverButton={()=>loadElementData("Font Weight")}>
             <span slot="icon"><i class="bi bi-type-bold"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">

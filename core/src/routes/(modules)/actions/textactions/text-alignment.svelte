@@ -43,6 +43,9 @@
             });
 
             classInput = newClass.trim() + " " + textAlignmentList[textAlignment];
+
+            // console.log("text-alignment => $: textAlignment ("+textAlignment+") => classInput :\n" + classInput);
+
             updateClass();
         }
     })();
@@ -62,7 +65,10 @@
     export let elementDataLoaded;
 
     $: loaded, (()=>{
-        if(loaded == true) {
+        if(loaded == true && localLoad == false) {
+
+            // console.log("text-alignment => $: loaded => textAlignment ("+textAlignment+") | elementDataLoaded :\n" + elementDataLoaded);
+
             elementDataLoaded.split(" ").forEach( cls => {
 
                 var currentClass = cls.trim();
@@ -72,10 +78,12 @@
                 });
 
             });
+
+            localLoad = true;
         }
     })();
 
-
+    let localLoad=false;
 
 </script>
 

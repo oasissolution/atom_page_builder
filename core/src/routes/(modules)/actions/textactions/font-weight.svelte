@@ -42,6 +42,9 @@
 
     $: loaded, (()=>{
         if(loaded == true) {
+
+            // console.log("font-weight => $: loaded => elementDataLoaded :\n" + elementDataLoaded);
+
             elementDataLoaded.split(" ").forEach( cls => {
 
                 var currentClass = cls.trim();
@@ -88,15 +91,15 @@
 
 
     let nestedItems = [
-        {outerClass: "w-8",       innerClass: "font-thin", innerText: "B"},
-        {outerClass: "w-8", innerClass: "font-extralight", innerText: "B"},
-        {outerClass: "w-8",      innerClass: "font-light", innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-normal", innerText: "N"},
-        {outerClass: "w-8",     innerClass: "font-medium", innerText: "B"},
-        {outerClass: "w-8",   innerClass: "font-semibold", innerText: "B"},
-        {outerClass: "w-8",       innerClass: "font-bold", innerText: "B"},
-        {outerClass: "w-8",  innerClass: "font-extrabold", innerText: "B"},
-        {outerClass: "w-8",      innerClass: "font-black", innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-thin",        innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-extralight",  innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-light",       innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-normal",      innerText: "N"},
+        {outerClass: "w-8",     innerClass: "font-medium",      innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-semibold",    innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-bold",        innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-extrabold",   innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-black",       innerText: "B"},
     ];
 
 

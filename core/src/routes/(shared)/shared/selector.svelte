@@ -168,12 +168,12 @@
             //     }
             // }
 
-            console.log(
-                "selectorPositionDataLeft: "+selectorPositionDataLeft.toString()+
-                "\nselectorPositionDataTop: "+selectorPositionDataTop.toString()+
-                // "\natomSelectorActions.offsetWidth: "+atomSelectorActions.offsetWidth.toString()+ 
-                "\nActionsWidth: "+ActionsWidth
-                );
+            // console.log(
+            //     "selectorPositionDataLeft: "+selectorPositionDataLeft.toString()+
+            //     "\nselectorPositionDataTop: "+selectorPositionDataTop.toString()+
+            //     // "\natomSelectorActions.offsetWidth: "+atomSelectorActions.offsetWidth.toString()+ 
+            //     "\nActionsWidth: "+ActionsWidth
+            //     );
 
             selectedType.set(type);
 
