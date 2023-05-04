@@ -15,26 +15,29 @@
     export let classInput;
 
     /**
+     * Vertical Alignment of element
      * @type number
      */
-    export let textAlignment;
+    export let verticalAlignment;
 
     /**
      * List of all font size classes
      * @type Array<string>
      */
-    const textAlignmentList = ["text-left", "text-center", "text-right", "text-justify"];
+    const verticalAlignmentList = [" ", "align-top", "align-middle", "align-bottom", "align-sub", "align-super"];
 
-    $: textAlignment, (()=>{
+
+    $: verticalAlignment, (()=>{
         if(loaded == true) {
 
             var newClass = "";
             classInput.split(" ").forEach( cls => {
                 switch(cls.trim()){
-                    case "text-left":
-                    case "text-center":
-                    case "text-right":
-                    case "text-justify":
+                    case "align-top":
+                    case "align-middle":
+                    case "align-bottom":
+                    case "align-sub":
+                    case "align-super":
                         break;
                     default:
                         newClass += " " + cls.trim();
@@ -42,11 +45,13 @@
                 }
             });
 
-            classInput = newClass.trim() + " " + textAlignmentList[textAlignment];
-
-            // console.log("text-alignment => $: textAlignment ("+textAlignment+") => classInput :\n" + classInput);
-
-            updateClass();
+            if(verticalAlignment != 0){
+                classInput = newClass.trim() + " " + verticalAlignmentList[verticalAlignment];
+                updateClass();
+            }else{
+                classInput = newClass.trim();
+                updateClass();
+            }
         }
     })();
 
@@ -68,26 +73,27 @@
 
     $: loaded, (()=>{
         if(loaded == true && localLoad == false) {
-
-            // console.log("text-alignment => $: loaded => textAlignment ("+textAlignment+") | elementDataLoaded :\n" + elementDataLoaded);
-
             elementDataLoaded.split(" ").forEach( cls => {
 
                 var currentClass = cls.trim();
 
-                textAlignmentList.forEach ( ta => {
-                    if(ta === currentClass) textAlignment = textAlignmentList.indexOf(ta) ?? 0;
+                verticalAlignmentList.forEach ( elm => {
+                    if(elm === currentClass) verticalAlignment = verticalAlignmentList.indexOf(elm) ?? 0; // if can't find class then its 0 -> ""
                 });
 
+
             });
+
+            if(!verticalAlignment) verticalAlignment = 0;
 
             localLoad = true;
         }
     })();
 
+
 </script>
 
 
-<div class="w-36 flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <Optionsbutton items={['bi bi-text-left', 'bi bi-text-center', 'bi bi-text-right', 'bi bi-justify']} icons={true} bind:value={textAlignment}></Optionsbutton>
+<div class="w-56 flex flex-row flex-grow justify-between h-8 align-middle items-center">
+    <Optionsbutton items={['bi bi-x-lg','bi bi-align-top', 'bi bi-align-middle', 'bi bi-align-bottom', 'bi bi-subscript', 'bi bi-superscript']} icons={true} bind:value={verticalAlignment}></Optionsbutton>
 </div>

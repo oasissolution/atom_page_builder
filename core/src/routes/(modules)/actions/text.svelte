@@ -12,6 +12,9 @@
 	import TextAlignment from "./textactions/text-alignment.svelte";
 	import FontWeight from "./textactions/font-weight.svelte";
     import { writable } from "svelte/store";
+	import FontSize from "./textactions/font-size.svelte";
+	import TextDecoration from "./textactions/text-decoration.svelte";
+	import VerticalAlignment from "./textactions/vertical-alignment.svelte";
 
     /**
      * This is a default variable, which holds position of "Actions" panel according to top-right corner on X axis.
@@ -30,7 +33,7 @@
     /**
      * Width of "Actions" panel.
      */
-    export const ActionsWidth = "192px";
+    export const ActionsWidth = "256px";
 
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -215,6 +218,23 @@
      */
     let fontWeight=3;
 
+    /**
+     * @type number
+     */
+    let fontSize=2;
+    
+    /**
+     * @type number
+     */
+    let textDecoration=0;
+
+    /**
+     * @type number
+     */
+    let verticalAlignment=0;
+
+     
+
     onMount(() => {
 
         loadElementData("onMount");
@@ -225,7 +245,9 @@
 
 </script>
 
-<div class="flex flex-row w-48 rounded-md gap-1 divide-x divide-black/40 place-content-center items-center content-center inlinePanel" style='
+
+
+<div class="flex flex-row w-64 rounded-md gap-1 divide-x divide-black/40 place-content-center items-center content-center inlinePanel" style='
 --fixedPanelBackgroundColor:{fixedPanelBackgroundColor};
 --fixedPanelForegroundColor:{fixedPanelForegroundColor};
 ' >
@@ -255,6 +277,32 @@
             </span>
         </ActionHoverButton>
 
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={468} buttonIndex={2} on:hoverButton={()=>loadElementData("Font Size")}>
+            <span slot="icon"><i class="bi bi-fonts"></i></span>
+            <span slot="panel">
+                <div class="inlinePanel rounded-md">
+                    <FontSize bind:fontSize bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+                </div>
+            </span>
+        </ActionHoverButton>
+
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={180} buttonIndex={3} on:hoverButton={()=>loadElementData("Text Decoration")}>
+            <span slot="icon"><i class="bi bi-type-underline"></i></span>
+            <span slot="panel">
+                <div class="inlinePanel rounded-md">
+                    <TextDecoration bind:textDecoration bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+                </div>
+            </span>
+        </ActionHoverButton>
+
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={216} buttonIndex={4} on:hoverButton={()=>loadElementData("Vertical Alignment")}>
+            <span slot="icon"><i class="bi bi-subscript"></i></span>
+            <span slot="panel">
+                <div class="inlinePanel rounded-md">
+                    <VerticalAlignment bind:verticalAlignment bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
+                </div>
+            </span>
+        </ActionHoverButton>
 
     </div>
 

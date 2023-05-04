@@ -144,30 +144,6 @@
 
             }
 
-            // if(type != undefined){
-            //     //If item is aligned top left.
-            //     if(rect.left < 10 || rect.left < tempWidth){
-            //         selectorPositionDataLeft = "10px";
-            //         // selectorPositionDataLeft = (tempWidth/2).toString()+"px";
-            //     // }else if(rect.width < parseInt(ActionsWidth.replaceAll("px",""))){
-            //         // selectorPositionDataLeft = (parseInt(ActionsWidth.replaceAll("px","")) / 2 + 10).toString()+"px";
-            //     }else{
-            //         if((rect.left + tempWidth) > windowInnerWidth){
-            //             selectorPositionDataLeft = (windowInnerWidth - tempWidth - 6).toFixed(0).toString()+"px";
-            //         // }else if(rect.left < (tempWidth/2)){
-
-            //         }else{
-            //             selectorPositionDataLeft = rect.left.toString()+"px";
-            //         }
-            //     }
-
-            //     if(rect.top < 40){
-            //         selectorPositionDataTop = (rect.bottom + 4).toString()+"px";
-            //     }else{
-            //         selectorPositionDataTop = (rect.top - 38).toString()+"px";
-            //     }
-            // }
-
             // console.log(
             //     "selectorPositionDataLeft: "+selectorPositionDataLeft.toString()+
             //     "\nselectorPositionDataTop: "+selectorPositionDataTop.toString()+

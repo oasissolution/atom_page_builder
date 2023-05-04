@@ -40,8 +40,10 @@
     */
     export let elementDataLoaded;
 
+    let localLoad=false;
+
     $: loaded, (()=>{
-        if(loaded == true) {
+        if(loaded == true && localLoad == false) {
 
             // console.log("font-weight => $: loaded => elementDataLoaded :\n" + elementDataLoaded);
 
@@ -54,6 +56,8 @@
                 });
 
             });
+
+            localLoad = true;
         }
     })();
 

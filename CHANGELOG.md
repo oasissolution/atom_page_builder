@@ -5,6 +5,19 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.054] - 2022-05-04
+
+### Added
+ - Text Actions: Font Size, Text Decoration, Vertical Alignment
+
+### Changed
+ - 
+
+### Fixed
+ - 
+
+
 ## [0.0.1.053] - 2022-05-03
 
 ### Added

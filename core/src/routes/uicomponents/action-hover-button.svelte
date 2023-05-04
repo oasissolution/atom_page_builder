@@ -168,8 +168,6 @@
 
     onMount(()=>{
 
-        console.log("onMount of action hover");
-
         document.addEventListener('mousemove', checkMouseIsAway, true);
 
     });
