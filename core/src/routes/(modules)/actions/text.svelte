@@ -243,6 +243,12 @@
 
     });
 
+    /**
+     * Index of Active ActionHoverButton
+     * @type number
+     */
+    export let activeButtonIndex;
+
 </script>
 
 
@@ -259,7 +265,7 @@
 
     <div class="flex flex-row gap-1 relative">
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={144} on:hoverButton={()=>loadElementData("Text Alignment")}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={144} on:hoverButton={()=>loadElementData("Text Alignment")} bind:activeButtonIndex>
             <span slot="icon"><i class="bi bi-justify"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -268,7 +274,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1} on:hoverButton={()=>loadElementData("Font Weight")}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1} on:hoverButton={()=>loadElementData("Font Weight")} bind:activeButtonIndex>
             <span slot="icon"><i class="bi bi-type-bold"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -277,7 +283,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={468} buttonIndex={2} on:hoverButton={()=>loadElementData("Font Size")}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={468} buttonIndex={2} on:hoverButton={()=>loadElementData("Font Size")} bind:activeButtonIndex>
             <span slot="icon"><i class="bi bi-fonts"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -286,7 +292,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={180} buttonIndex={3} on:hoverButton={()=>loadElementData("Text Decoration")}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={180} buttonIndex={3} on:hoverButton={()=>loadElementData("Text Decoration")} bind:activeButtonIndex>
             <span slot="icon"><i class="bi bi-type-underline"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -295,7 +301,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={216} buttonIndex={4} on:hoverButton={()=>loadElementData("Vertical Alignment")}>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={216} buttonIndex={4} on:hoverButton={()=>loadElementData("Vertical Alignment")} bind:activeButtonIndex>
             <span slot="icon"><i class="bi bi-subscript"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">

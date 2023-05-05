@@ -93,6 +93,18 @@
     export let buttonIndex = 0;
 
     /**
+     * Index of Active ActionHoverButton
+     * @type number
+     */
+    export let activeButtonIndex;
+
+    $: activeButtonIndex, (()=>{
+        if(activeButtonIndex != buttonIndex){
+            hidePanel();
+        }
+    })();
+
+    /**
      * @type number
      */
     let windowInnerWidth;
@@ -115,6 +127,9 @@
              * This action is CRUCIAL.
             */
             hoverButton();
+
+            // To hide hover panels except this one.
+            activeButtonIndex = buttonIndex;
 
             /**
              * Position and dimension data of button.
