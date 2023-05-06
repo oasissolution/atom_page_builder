@@ -32,6 +32,11 @@
      */
     export let bindElement=null;
 
+    /**
+     * @type string
+     */
+    export let buttonTitle;
+
 
     /**
      * @type string
@@ -205,7 +210,7 @@
 <input type="hidden" class="atomButton atomButtonActive" />
 <svelte:window bind:innerWidth={windowInnerWidth} />
 
-<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={isPanelVisible} bind:this={bindElement} on:mouseenter={showPanel}
+<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={isPanelVisible} bind:this={bindElement} on:mouseenter={showPanel} title="{buttonTitle}"
 style="
     --buttonActiveIconColor:{buttonActiveIconColor};
     --buttonActiveBackgroundColor:{buttonActiveBackgroundColor};

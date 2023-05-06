@@ -97,15 +97,15 @@
     })();
 
     let nestedItems = [
-        {outerClass: "w-8",     innerClass: "",             innerText: "X"},
-        {outerClass: "w-8",     innerClass: "underline",    innerText: "U"},
-        {outerClass: "w-8",     innerClass: "overline",     innerText: "O"},
-        {outerClass: "w-8",     innerClass: "line-through", innerText: "T"},
-        {outerClass: "w-8",     innerClass: "no-underline", innerText: "A"},
+        {outerClass: "w-8",     innerClass: "",             innerText: "X", title:"Default"},
+        {outerClass: "w-8",     innerClass: "underline",    innerText: "U", title:"Underline"},
+        {outerClass: "w-8",     innerClass: "overline",     innerText: "O", title:"Overline"},
+        {outerClass: "w-8",     innerClass: "line-through", innerText: "S", title:"Line Through"},
+        {outerClass: "w-8",     innerClass: "no-underline", innerText: "A", title:"No Underline"},
     ];
 
 </script>
 
 <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={true} bind:value={textDecoration}></Optionsbutton>
+    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={false} bind:value={textDecoration}></Optionsbutton>
 </div>

@@ -6,6 +6,20 @@ All notes are for developers, since this repository will not be public.
 
 
 
+
+## [0.0.1.055] - 2022-05-05
+
+### Added
+ - Text Actions: Action Hover Buttons have tooltips at all levels.
+
+### Changed
+ - 
+
+### Fixed
+ - 
+
+
+
 ## [0.0.1.055] - 2022-05-05
 
 ### Added

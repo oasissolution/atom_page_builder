@@ -116,24 +116,24 @@
     // ];
 
     let nestedItems = [
-        {outerClass: "w-8",     innerClass: "",     innerText: "XS"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "SM"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "N"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "L"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "2XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "3XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "4XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "5XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "6XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "7XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "8XL"},
-        {outerClass: "w-8",     innerClass: "",     innerText: "9XL"},
+        {outerClass: "w-8",     innerClass: "",     innerText: "XS",  title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "SM",  title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "N",   title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "L",   title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "XL",  title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "2XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "3XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "4XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "5XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "6XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "7XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "8XL", title:""},
+        {outerClass: "w-8",     innerClass: "",     innerText: "9XL", title:""},
     ];
 
 </script>
 
 
 <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={true} bind:value={fontSize}></Optionsbutton>
+    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={false} bind:value={fontSize}></Optionsbutton>
 </div>

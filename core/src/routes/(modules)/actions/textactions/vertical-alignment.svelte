@@ -90,10 +90,18 @@
         }
     })();
 
+    let nestedItems = [
+        {outerClass: "w-8", innerClass: "", innerText: "bi bi-x-lg",            title:"Default"},
+        {outerClass: "w-8", innerClass: "", innerText: "bi bi-align-top",       title:"Align Top"},
+        {outerClass: "w-8", innerClass: "", innerText: "bi bi-align-middle",    title:"Align Middle"},
+        {outerClass: "w-8", innerClass: "", innerText: "bi bi-align-bottom",    title:"Align Bottom"},
+        {outerClass: "w-8", innerClass: "", innerText: "bi bi-subscript",       title:"Subscript"},
+        {outerClass: "w-8", innerClass: "", innerText: "bi bi-superscript",     title:"Superscript"},
+    ];
 
 </script>
 
 
 <div class="w-56 flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <Optionsbutton items={['bi bi-x-lg','bi bi-align-top', 'bi bi-align-middle', 'bi bi-align-bottom', 'bi bi-subscript', 'bi bi-superscript']} icons={true} bind:value={verticalAlignment}></Optionsbutton>
+    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={true} bind:value={verticalAlignment}></Optionsbutton>
 </div>

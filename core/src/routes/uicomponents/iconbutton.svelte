@@ -44,6 +44,10 @@
         if(clickOnHover == true) clickButton();
     }
 
+    /**
+     * @type string
+     */
+    export let buttonTitle = "";
 
     /**
      * @type string
@@ -91,7 +95,7 @@
 </script>
 <input type="hidden" class="atomButton atomButtonActive" />
 
-<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} bind:this={bindElement} on:click={clickButton} on:mouseenter={clickOnHoverFunction}
+<button class="atomButton rounded-lg h-8 w-8 {addClass}" class:atomButtonActive={active} bind:this={bindElement} on:click={clickButton} on:mouseenter={clickOnHoverFunction} title="{buttonTitle}"
 style="
     --buttonActiveIconColor:{buttonActiveIconColor};
     --buttonActiveBackgroundColor:{buttonActiveBackgroundColor};

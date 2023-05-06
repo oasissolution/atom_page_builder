@@ -95,15 +95,15 @@
 
 
     let nestedItems = [
-        {outerClass: "w-8",     innerClass: "font-thin",        innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-extralight",  innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-light",       innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-normal",      innerText: "N"},
-        {outerClass: "w-8",     innerClass: "font-medium",      innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-semibold",    innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-bold",        innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-extrabold",   innerText: "B"},
-        {outerClass: "w-8",     innerClass: "font-black",       innerText: "B"},
+        {outerClass: "w-8",     innerClass: "font-thin",        innerText: "B", title:"Thin"},
+        {outerClass: "w-8",     innerClass: "font-extralight",  innerText: "B", title:"Extra Light"},
+        {outerClass: "w-8",     innerClass: "font-light",       innerText: "B", title:"Light"},
+        {outerClass: "w-8",     innerClass: "font-normal",      innerText: "N", title:"Normal"},
+        {outerClass: "w-8",     innerClass: "font-medium",      innerText: "B", title:"Medium"},
+        {outerClass: "w-8",     innerClass: "font-semibold",    innerText: "B", title:"Semi Bold"},
+        {outerClass: "w-8",     innerClass: "font-bold",        innerText: "B", title:"Bold"},
+        {outerClass: "w-8",     innerClass: "font-extrabold",   innerText: "B", title:"Extra Bold"},
+        {outerClass: "w-8",     innerClass: "font-black",       innerText: "B", title:"Black"},
     ];
 
 
@@ -111,5 +111,5 @@
 
 
 <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={true} bind:value={fontWeight}></Optionsbutton>
+    <Optionsbutton nestedItems={nestedItems} nested nestedText icons={false} bind:value={fontWeight}></Optionsbutton>
 </div>

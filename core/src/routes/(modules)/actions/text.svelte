@@ -198,6 +198,9 @@
 
     function editButtonPress(){
         alert("Button clicked!");
+
+
+
     }
 
 
@@ -259,13 +262,12 @@
 ' >
 
     <div class="flex flex-row gap-1">
-        <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-pen"></i></span></Iconbutton>
-        <!-- <Iconbutton active={false} on:click={editButtonPress} noBackground><span slot="icon"><i class="bi bi-files"></i></span></Iconbutton> -->
+        <Iconbutton active={false} on:click={editButtonPress} noBackground buttonTitle="Edit Text"><span slot="icon"><i class="bi bi-pen"></i></span></Iconbutton>
     </div>
 
     <div class="flex flex-row gap-1 relative">
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={144} on:hoverButton={()=>loadElementData("Text Alignment")} bind:activeButtonIndex>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={144} on:hoverButton={()=>loadElementData("Text Alignment")} bind:activeButtonIndex buttonTitle="Text Alignment">
             <span slot="icon"><i class="bi bi-justify"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -274,7 +276,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1} on:hoverButton={()=>loadElementData("Font Weight")} bind:activeButtonIndex>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={288} buttonIndex={1} on:hoverButton={()=>loadElementData("Font Weight")} bind:activeButtonIndex buttonTitle="Font Weight">
             <span slot="icon"><i class="bi bi-type-bold"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -283,7 +285,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={468} buttonIndex={2} on:hoverButton={()=>loadElementData("Font Size")} bind:activeButtonIndex>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={468} buttonIndex={2} on:hoverButton={()=>loadElementData("Font Size")} bind:activeButtonIndex buttonTitle="Font Size">
             <span slot="icon"><i class="bi bi-fonts"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -292,7 +294,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={180} buttonIndex={3} on:hoverButton={()=>loadElementData("Text Decoration")} bind:activeButtonIndex>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={180} buttonIndex={3} on:hoverButton={()=>loadElementData("Text Decoration")} bind:activeButtonIndex buttonTitle="Text Decoration">
             <span slot="icon"><i class="bi bi-type-underline"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -301,7 +303,7 @@
             </span>
         </ActionHoverButton>
 
-        <ActionHoverButton active={false} noBackground hoverPanelWidth={216} buttonIndex={4} on:hoverButton={()=>loadElementData("Vertical Alignment")} bind:activeButtonIndex>
+        <ActionHoverButton active={false} noBackground hoverPanelWidth={216} buttonIndex={4} on:hoverButton={()=>loadElementData("Vertical Alignment")} bind:activeButtonIndex buttonTitle="Vertical Alignment">
             <span slot="icon"><i class="bi bi-subscript"></i></span>
             <span slot="panel">
                 <div class="inlinePanel rounded-md">
@@ -313,7 +315,7 @@
     </div>
 
     <div>
-        <Iconbutton active={false} on:click={deleteButtonPressed} noBackground><span slot="icon"><i class="bi bi-x-circle"></i></span></Iconbutton>
+        <Iconbutton active={false} on:click={deleteButtonPressed} noBackground buttonTitle="Delete Element"><span slot="icon"><i class="bi bi-x-circle"></i></span></Iconbutton>
     </div>
     
 </div>

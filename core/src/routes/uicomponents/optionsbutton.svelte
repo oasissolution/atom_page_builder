@@ -61,6 +61,7 @@
      * @property {string} outerClass
      * @property {string} innerClass
      * @property {string?} innerText
+     * @property {string?} title
      */
 
     /**
@@ -163,7 +164,12 @@ style="
             <button type="button" class="optionButton rounded-lg h-8 w-max px-2 py-1 {addClassToItem}" on:click={() => value=index} class:optionButtonActive={value == index}>
                 <span class="{item.outerClass}">
                     {#if nestedText == true}
-                    <span class="{item.innerClass}">{item.innerText}</span>
+                    <!-- <span class="{item.innerClass}" title="{item.title}">{item.innerText}</span> -->
+                        {#if icons==true}
+                        <span class="{item.innerClass}" title="{item.title}"><i class="{item.innerText}"></i></span>
+                        {:else}
+                        <span class="{item.innerClass}" title="{item.title}">{item.innerText}</span>
+                        {/if}
                     {:else}
                     <i class="{item.innerClass}"></i>
                     {/if}
