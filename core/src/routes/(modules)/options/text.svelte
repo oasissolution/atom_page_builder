@@ -310,11 +310,17 @@
 
     });
 
+    function checkText(){
+
+        textInput = textInput.replace("<script", "").replace("<\/script>", "").replace("<link", "").replace("<a", "").replace("</a>", "");
+        
+    }
 
     function updateText(){
         if(activeElement){
             if(activeElement.data){
                 if(textInput != ""){
+                    checkText();
                     activeElement.data.text = textInput;
                 }else{
                     textInput = "Lorem ipsum...";

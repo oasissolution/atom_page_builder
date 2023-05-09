@@ -6,11 +6,10 @@ All notes are for developers, since this repository will not be public.
 
 
 
-
-## [0.0.1.055] - 2022-05-05
+## [0.0.1.056] - 2022-05-09
 
 ### Added
- - Text Actions: Action Hover Buttons have tooltips at all levels.
+ - Text Actions: Inline text editing works now. (Only text editing for now.)
 
 ### Changed
  - 

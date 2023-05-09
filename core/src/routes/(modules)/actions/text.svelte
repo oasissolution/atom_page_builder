@@ -1,6 +1,7 @@
 <script>
     import "../../../app.css";
     import { onMount, onDestroy } from "svelte";
+    import { fade, fly, slide } from 'svelte/transition';
     import { globalThemeStore, globalComponentCollectionStore, globalEditorPreferencesStore } from "../../globals/globalstores.js";
     import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { getComponent } from "../../globals/globalfunctions.js";
@@ -196,12 +197,35 @@
     }
 
 
-    function editButtonPress(){
-        alert("Button clicked!");
+    let contentEditableActive = false;
 
+    
+    function editButtonPress(){
+        // alert("Button clicked!");
+        
+        var item = $globalSelectedElementStore;
+
+        if(contentEditableActive == false){
+            item.setAttribute("contenteditable", true);
+            contentEditableActive = true;
+        }else{
+            item.setAttribute("contenteditable", false);
+            contentEditableActive = false;
+        }
 
 
     }
+
+    // $: $globalSelectedElementStore, (()=>{
+    //     item.setAttribute("contenteditable", false);
+    //     contentEditableActive = false;
+    // })();
+
+    $: $globalSelectedElementStore, (()=>{
+        if($globalSelectedElementStore != previousSelectedElement){
+            updateTextOnLostFocus(previousSelectedElement);
+        }
+    })();
 
 
     function deleteButtonPressed(){
@@ -236,7 +260,40 @@
      */
     let verticalAlignment=0;
 
-     
+    /**
+     * @type HTMLElement
+     */
+    let previousSelectedElement;
+
+
+    /**
+     * @param {HTMLElement} item
+     */
+    function updateTextOnLostFocus(item){    
+        if(item != undefined){
+            var newText = item.innerHTML.replaceAll("<!--<Editortree>-->  ", "");
+            console.log(newText);
+            if(contentEditableActive == true){
+                item.setAttribute("contenteditable", "false");
+                contentEditableActive = false;
+                // alert(newText);
+
+                var lastActiveElement = getComponent($globalComponentCollectionStore, item.id);
+
+                if(lastActiveElement){
+                    if(lastActiveElement.data){
+                        lastActiveElement.data.text = newText;
+                        updateEditor("updateTextOnLostFocus()");
+                    }else{
+                        console.error("updateTextOnLostFocus(): activeElement.data is undefined or null!");
+                    }
+                }else{
+                    console.error("updateTextOnLostFocus(): activeElement is undefined!");
+                }
+            }
+        }    
+        
+    }
 
     onMount(() => {
 
@@ -244,28 +301,50 @@
 
         loaded = true;
 
+        if($globalSelectedElementStore){
+            previousSelectedElement = $globalSelectedElementStore;
+            var item = $globalSelectedElementStore;
+            contentEditableActive = item.contenteditable ?? false;
+            // item.addEventListener("unfocus", updateTextOnLostFocus);
+        }
+
     });
+
+    onDestroy(()=>{
+        // $globalSelectedElementStore.removeEventListener(updateTextOnLostFocus)
+    });
+    
 
     /**
      * Index of Active ActionHoverButton
      * @type number
      */
-    export let activeButtonIndex;
+    export let activeButtonIndex=100; // 100 is set to prevent warning in console. There will be never 100 buttons in actions.
 
 </script>
 
 
 
-<div class="flex flex-row w-64 rounded-md gap-1 divide-x divide-black/40 place-content-center items-center content-center inlinePanel" style='
+<div class="flex flex-row w-64 rounded-md gap-1 divide-x divide-black/40 place-content-start items-center content-start inlinePanel" 
+
+style='
 --fixedPanelBackgroundColor:{fixedPanelBackgroundColor};
 --fixedPanelForegroundColor:{fixedPanelForegroundColor};
 ' >
 
     <div class="flex flex-row gap-1">
-        <Iconbutton active={false} on:click={editButtonPress} noBackground buttonTitle="Edit Text"><span slot="icon"><i class="bi bi-pen"></i></span></Iconbutton>
+        <Iconbutton active={contentEditableActive} on:click={editButtonPress} noBackground buttonTitle="Edit Text"><span slot="icon"><i class="bi bi-pen"></i></span></Iconbutton>
     </div>
 
-    <div class="flex flex-row gap-1 relative">
+    {#if contentEditableActive == true}
+        <div class="flex flex-row gap-1 relative" class:invisible={!contentEditableActive} in:fly="{{ y: -40, duration: 700 }}" out:fly="{{ y: -40, duration: 300 }}" >
+            Edit
+        </div>
+    {/if}
+
+    {#if contentEditableActive == false}
+
+    <div class="flex flex-row gap-1 relative" in:fly="{{ x: 200, duration: 800 }}" out:fly="{{ x: 200, duration: 100 }}" >
 
         <ActionHoverButton active={false} noBackground hoverPanelWidth={144} on:hoverButton={()=>loadElementData("Text Alignment")} bind:activeButtonIndex buttonTitle="Text Alignment">
             <span slot="icon"><i class="bi bi-justify"></i></span>
@@ -314,10 +393,12 @@
 
     </div>
 
-    <div>
+    <div in:fly="{{ x: 200, duration: 800 }}" out:fly="{{ x: 200, duration: 100 }}" >
         <Iconbutton active={false} on:click={deleteButtonPressed} noBackground buttonTitle="Delete Element"><span slot="icon"><i class="bi bi-x-circle"></i></span></Iconbutton>
     </div>
-    
+
+    {/if}
+
 </div>
 
 
