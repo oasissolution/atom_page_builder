@@ -66,7 +66,7 @@
      */
     let buttonPassiveBackgroundColor;
 
-    if(globalThemeStore){
+    if(globalThemeStore != undefined && $globalThemeStore != undefined){
         buttonActiveIconColor = $globalThemeStore.button.active.iconColor;
         buttonActiveBackgroundColor = $globalThemeStore.button.active.backgroundColor;
         buttonPassiveIconColor = $globalThemeStore.button.passive.iconColor;

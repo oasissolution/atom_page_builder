@@ -1,7 +1,9 @@
 <script>
 	import { onMount } from "svelte";
 
-    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, globalThemeStore, globalVisibilityStore } from "../globals/globalstores.js";
+    import { globalEditorPreferencesStore, globalEditorViewStore, globalComponentCollectionStore, 
+        globalThemeStore, globalVisibilityStore, globalEditorInnerHTML 
+    } from "../globals/globalstores.js";
     import { globalSelectedElementUuidStore } from "../globals/selectorstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getComponent, addChildComponent, deleteComponent,
@@ -307,7 +309,13 @@
         globalVisibilityStore.set(globalVisibility);
     }
 
-
+    /**
+     * Updates globalEditorInnerHTML global store to current editor innerHTML.
+     * @param {string} data
+     */
+    function updateEditorInnerHTML(data){
+        globalEditorInnerHTML.set(data);
+    }
 
     onMount(()=>{
 
@@ -356,6 +364,9 @@
                         break;
                     case "updateMainPanelFromEditor":
                         updateMainPanelFromEditor(event.data.data.componentCollection, event.data.data.editorPreferences);
+                        break;
+                    case "sendEditorInnerHTML":
+                        updateEditorInnerHTML(event.data.data.innerHTML);
                         break;
                 }
 

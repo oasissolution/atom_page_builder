@@ -1,6 +1,6 @@
 <script>
     import { onMount, onDestroy } from "svelte";
-    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore, globalThemeStore } from "../globals/globalstores.js";
+    import { globalComponentCollectionStore, globalEditorPreferencesStore, globalEditorViewStore, globalThemeStore, globalEditorInnerHTML } from "../globals/globalstores.js";
     import { PanelDisplayStyles, MenuLocations, ScreenSize, ScreenSizePx, EditorViews } from "../globals/globalconstants.js";
     import Customize from "./customize/page.svelte";
     import Widgets from "./widgets/page.svelte";
@@ -8,7 +8,7 @@
     import Layers from "./layers/page.svelte";
 	import Button from "../uicomponents/button.svelte";
 	import Iconbutton from "../uicomponents/iconbutton.svelte";
-
+    import swal from 'sweetalert';
 
     /**
      * Holds "globalEditorPreferencesStore" store as variable
@@ -90,6 +90,36 @@
         }
     }
 
+    function showEditorPanelInnerHTML(){
+
+        // var doc = document.getElementById("editor");
+
+        // if(doc != undefined){
+        //     swal({
+        //         title: "innerHTML of Editor Panel",
+        //         text: doc?.innerHTML,
+        //         icon: "info",
+        //     });
+        // }else{
+        //     swal({
+        //         title: "Couldn't get innerHTML data!",
+        //         icon: "error",
+        //     });
+        // }
+        
+        var text = $globalEditorInnerHTML
+        .replaceAll("<!--<Body>-->", "")
+        .replaceAll("<!--<Editortree>-->", "")
+        .replaceAll("<!--<Text>-->", "")
+        .replaceAll("<!--<Div>-->", "")
+        .replaceAll("", "");
+        
+        swal({
+            title: "innerHTML of Editor Panel",
+            text: text,
+            icon: "info",
+        });
+    }
 
 
 </script>
@@ -138,7 +168,7 @@
 
             <div class="vr"></div>
 
-            <Button active={true} addClass={"ml-3"}>
+            <Button active={true} addClass={"ml-3"} on:click={showEditorPanelInnerHTML}>
                 <span slot="text">Publish</span>
                 <span slot="iconRight"><i class="bi bi-globe"></i></span>
             </Button>

@@ -231,3 +231,21 @@ export function updateMainPanelFromEditor(globalComponentCollectionStore, global
 
     window.parent.postMessage(data, '*');
 }
+
+/**
+ * Sends current innerHTML of editor inner panel.
+ */
+export function sendEditorInnerHTML(){
+
+    var doc = document.getElementById("editorInnerPanel");
+
+    let data = {
+        "action": "sendEditorInnerHTML",
+        "data": {
+            "innerHTML": doc?.innerHTML.toString(),
+        }
+    }
+
+    window.parent.postMessage(data, '*');
+
+}

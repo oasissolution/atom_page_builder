@@ -211,26 +211,35 @@
         }else{
             item.setAttribute("contenteditable", false);
             contentEditableActive = false;
+            updateTextOnLostFocus(item, true, "editButtonPress()");
+            updatedWithOutClick = true;
         }
 
 
     }
 
-    // $: $globalSelectedElementStore, (()=>{
-    //     item.setAttribute("contenteditable", false);
-    //     contentEditableActive = false;
-    // })();
+    let updatedWithOutClick = false;
 
-    $: $globalSelectedElementStore, (()=>{
-        if($globalSelectedElementStore != previousSelectedElement){
-            updateTextOnLostFocus(previousSelectedElement);
-        }
-    })();
+    // $: $globalSelectedElementStore, (()=>{
+
+    //     if($globalSelectedElementStore != previousSelectedElement){
+    //         if(updatedWithOutClick == false){
+    //             updateTextOnLostFocus(previousSelectedElement, false, "$: $globalSelectedElementStore");
+    //             updatedWithOutClick = true;
+    //             updateEditor("updateTextOnLostFocus()");
+    //         }
+    //     }else{
+    //         updatedWithOutClick = false;
+    //     }
+
+    // })();
 
 
     function deleteButtonPressed(){
-        deleteComponent($globalSelectedElementStore, $globalComponentCollectionStore);
-        globalSelectedElementStore.set(null);
+        if(contentEditableActive == false){
+            deleteComponent($globalSelectedElementStore, $globalComponentCollectionStore);
+            globalSelectedElementStore.set(null);
+        }
     }
 
     let loaded = false;
@@ -269,26 +278,45 @@
     /**
      * @param {HTMLElement} item
      */
-    function updateTextOnLostFocus(item){    
+    function updateTextOnLostFocus(item, updateManually=false, source=""){    
         if(item != undefined){
-            var newText = item.innerHTML.replaceAll("<!--<Editortree>-->  ", "");
-            console.log(newText);
-            if(contentEditableActive == true){
+            // console.info("updateTextOnLostFocus source : " + source);
+            var newText = item.innerHTML.replaceAll("<!--<Editortree>-->", "").trimStart(); //.replaceAll("  ", " ")
+            // console.log(item.id + " | " + newText);
+            if(contentEditableActive == true || updateManually == true){
                 item.setAttribute("contenteditable", "false");
                 contentEditableActive = false;
-                // alert(newText);
 
                 var lastActiveElement = getComponent($globalComponentCollectionStore, item.id);
-
+                // var lastActiveElement = getComponent(globalComponentCollection, item.id);
+                
                 if(lastActiveElement){
-                    if(lastActiveElement.data){
-                        lastActiveElement.data.text = newText;
-                        updateEditor("updateTextOnLostFocus()");
-                    }else{
-                        console.error("updateTextOnLostFocus(): activeElement.data is undefined or null!");
+                    if(lastActiveElement.type){
+                        if(lastActiveElement.data){
+
+                            console.log(
+                                "source : " + source + "\n" + 
+                                "newText : " + newText + "\n" + 
+                                "lastActiveElement.data.text : " + lastActiveElement.data.text + "\n" + 
+                                "lastActiveElement.type : " + lastActiveElement.type
+                            );
+
+                            if(lastActiveElement.type == "text"){
+                                lastActiveElement.data.text = newText;
+                                // updateMainPanelFromEditor($globalComponentCollectionStore, $globalEditorPreferencesStore);
+                                // updateEditor("updateTextOnLostFocus()");
+                                // updatedWithOutClick = true;
+                            }else{
+                                console.warn("lastActiveElement.type != text");
+                            }
+                            
+                        }else{
+                            console.error("updateTextOnLostFocus(): activeElement.data is undefined or null!");
+                        }
                     }
+                    
                 }else{
-                    console.error("updateTextOnLostFocus(): activeElement is undefined!");
+                    console.error("updateTextOnLostFocus(): activeElement is undefined! (" + item.id + ")");
                 }
             }
         }    
@@ -306,20 +334,118 @@
             var item = $globalSelectedElementStore;
             contentEditableActive = item.contenteditable ?? false;
             // item.addEventListener("unfocus", updateTextOnLostFocus);
+            
         }
 
     });
 
     onDestroy(()=>{
         // $globalSelectedElementStore.removeEventListener(updateTextOnLostFocus)
+
     });
-    
+
 
     /**
      * Index of Active ActionHoverButton
      * @type number
      */
     export let activeButtonIndex=100; // 100 is set to prevent warning in console. There will be never 100 buttons in actions.
+
+
+    function setTextBold(){
+        editText("strong");
+    }
+
+    function setTextItalic(){
+        editText("em");
+    }
+
+    function setTextUnderline(){
+        editText("u");
+    }
+
+    /**
+     * Use to apply tags to selected text in contenteditable active element
+     * @param {string} tag
+     */
+    function editText(tag){
+
+        var item = $globalSelectedElementStore;
+        var lastActiveElement = getComponent($globalComponentCollectionStore, item.id);
+
+        if(lastActiveElement != undefined){
+
+            if(window.getSelection() != undefined && lastActiveElement.type == "text"){
+                const selection = window.getSelection();
+                const range = selection.getRangeAt(0);
+
+                var txt = item.innerHTML.replaceAll("<!--<Editortree>-->", "").trimStart(); //.replaceAll("  ", " ").trimStart()
+
+                const before = txt.substr(0, range.startOffset);
+                const after = txt.substr(range.endOffset);
+                const selectedPart = txt.substr(range.startOffset,range.endOffset - range.startOffset );
+
+                console.log(
+                    "selection : " + selection?.toString() + "\n" + 
+                    "txt : " + txt.length + " | " + txt + "\n" + 
+                    "before : " + before.length + " | '" + before + "'\n" + 
+                    "selectedPart : " + selectedPart.length + " | '" + selectedPart + "'\n" + 
+                    "after : " + after.length + " | '" + after + "'\n" + 
+                    "range : " + range.toString().length + " | " + range.toString() + "\n" + 
+                    "range.startOffset : " + range.startOffset.toString() + "\n" + 
+                    "range.endOffset : " + range.endOffset.toString() 
+                );
+
+                var leadingTag = "";
+                var trailingTag = "";
+
+                switch(tag){
+                    case "strong":
+                        leadingTag = "<strong>";
+                        trailingTag = "</strong>";
+                        break;
+                    case "em":
+                        leadingTag = "<em>";
+                        trailingTag = "</em>";
+                        break;
+                    case "u":
+                        leadingTag = "<u>";
+                        trailingTag = "</u>";
+                        break;
+                }
+
+                if(txt.includes(leadingTag) && txt.includes(trailingTag)){
+
+                    var cond_before = "before.substr(" + before.length + " - " + leadingTag.length + " ) == \"" + leadingTag + "\" || \"" + before.substr(before.length - leadingTag.length) + "\"";
+                    cond_before += before.substr(before.length - leadingTag.length) == leadingTag ? " => true" : " => false";
+
+                    var cond_after = "after.substr(0, " + trailingTag.length + " ) == \"" + trailingTag + "\" || \"" + after.substr(0, trailingTag.length) + "\"";
+                    cond_after += after.substr(0, trailingTag.length) == trailingTag ? " => true" : " => false";
+
+                    console.log(cond_before);
+                    console.log(cond_after);
+
+                    if(
+                        before.substr(before.length - leadingTag.length) == leadingTag &&
+                        after.substr(0, trailingTag.length) == trailingTag
+                    ){
+
+                        item.innerHTML = (before + leadingTag + selectedPart + trailingTag + after);
+
+                    }else{
+                        item.innerHTML = (before + leadingTag + selectedPart + trailingTag + after);
+                    }
+                }else{
+                    item.innerHTML = (before + leadingTag + selectedPart + trailingTag + after);
+                }
+                
+
+
+            }
+
+        }
+
+    }
 
 </script>
 
@@ -337,8 +463,11 @@ style='
     </div>
 
     {#if contentEditableActive == true}
-        <div class="flex flex-row gap-1 relative" class:invisible={!contentEditableActive} in:fly="{{ y: -40, duration: 700 }}" out:fly="{{ y: -40, duration: 300 }}" >
-            Edit
+        <div class="flex flex-row gap-1 relative align-middle items-center" class:invisible={!contentEditableActive} in:fly="{{ y: -40, duration: 700 }}" out:fly="{{ y: -40, duration: 300 }}" >
+            <!-- <span class="align-middle items-center" title="Select text you want to edit">Edit :</span> -->
+            <Iconbutton active={false} on:click={setTextBold} noBackground buttonTitle="Bold"><span slot="icon"><i class="bi bi-type-bold"></i></span></Iconbutton>
+            <Iconbutton active={false} on:click={setTextItalic} noBackground buttonTitle="Italic"><span slot="icon"><i class="bi bi-type-italic"></i></span></Iconbutton>
+            <Iconbutton active={false} on:click={setTextUnderline} noBackground buttonTitle="Underline"><span slot="icon"><i class="bi bi-type-underline"></i></span></Iconbutton>
         </div>
     {/if}
 

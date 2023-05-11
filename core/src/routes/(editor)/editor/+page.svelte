@@ -4,7 +4,7 @@
     import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
     import { getComponent } from "../../globals/globalfunctions.js";
-    import { sendDeletedElement, refreshEditorData } from "../../(shared)/shared/sharedfunctions.js";
+    import { sendDeletedElement, refreshEditorData, sendEditorInnerHTML } from "../../(shared)/shared/sharedfunctions.js";
     import Editortree from "./editortree.svelte";
     import Selector from "../../(shared)/shared/selector.svelte";
     import swal from 'sweetalert';
@@ -92,6 +92,7 @@
                 globalComponentCollection = data.componentCollection;
                 globalEditorPreferences = data.editorPreferences;
                 globalTheme = data.globalTheme;
+                sendEditorInnerHTML();
             }
         });
 

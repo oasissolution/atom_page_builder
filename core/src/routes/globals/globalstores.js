@@ -93,3 +93,13 @@ export let globalThemeStore = writable();
 * @type {Writable<HTMLElement>}
 */
 export let globalHoverButton = writable();
+
+
+
+/**
+* Global variable which holds editor panel source as string
+* @global
+*
+* @type {Writable<string>}
+*/
+export let globalEditorInnerHTML = writable();

@@ -6,6 +6,30 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.058] - 2022-05-11
+
+### Added
+ - When you click Publish you get innerHTML of editor panel. This is for debug purposes for now, but also a required basic step for save/load.
+
+### Changed
+ - 
+
+### Fixed
+ - 
+
+
+## [0.0.1.057] - 2022-05-10
+
+### Added
+ - Text Actions: Inline text editing Bold, Italic, Underline works. But there is a bug that duplicates whole text in editor.
+
+### Changed
+ - 
+
+### Fixed
+ - 
+
+
 ## [0.0.1.056] - 2022-05-09
 
 ### Added
