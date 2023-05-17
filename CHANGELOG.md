@@ -6,6 +6,19 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.059] - 2022-05-17
+
+### Added
+ - Grid Container Widget.
+
+### Changed
+ - Working on a bug in Text Inline edit.
+
+### Fixed
+ - 
+
+
+
 ## [0.0.1.058] - 2022-05-11
 
 ### Added

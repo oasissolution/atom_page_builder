@@ -49,6 +49,7 @@
     import Body from "../../(modules)/modules/body.svelte";
     import Div from "../../(modules)/modules/div.svelte";
     import Text from "../../(modules)/modules/text.svelte";
+    import GridContainer from "../../(modules)/modules/grid-container.svelte";
 
     /**
      * Definition and list of all modules in a JSON.
@@ -59,6 +60,7 @@
         "body": Body,
         "div": Div,
         "text": Text,
+        "gridcontainer": GridContainer,
     };
 
     /**
@@ -70,6 +72,7 @@
         "body": {"title": "Body", "data": ""},
         "div": {"title": "Container", "data": ""},
         "text": {"title": "Text", "data": "text"},
+        "gridcontainer": {"title": "Grid Container", "data": ""},
     };
 
     onMount(() => {

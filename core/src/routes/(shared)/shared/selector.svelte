@@ -182,6 +182,7 @@
 </script>
 
     <div id="atomSelectorActions" bind:this={atomSelectorActions} class="rounded-md absolute h-8 p-0 m-0 z-50 flex min-w-max items-center content-center shadow-md"
+    class:invisible={!($globalSelectedElementUuidStore != null && $globalSelectedElementUuidStore != "")}
     style='
     --selectorPositionDataWidth:{selectorPositionDataWidth};
     --selectorPositionDataHeight:{selectorPositionDataHeight};

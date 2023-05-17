@@ -211,8 +211,8 @@
         }else{
             item.setAttribute("contenteditable", false);
             contentEditableActive = false;
-            updateTextOnLostFocus(item, true, "editButtonPress()");
             updatedWithOutClick = true;
+            updateTextOnLostFocus(item, true, "editButtonPress()");
         }
 
 
@@ -220,25 +220,26 @@
 
     let updatedWithOutClick = false;
 
-    // $: $globalSelectedElementStore, (()=>{
+    $: $globalSelectedElementStore, (()=>{
 
-    //     if($globalSelectedElementStore != previousSelectedElement){
-    //         if(updatedWithOutClick == false){
-    //             updateTextOnLostFocus(previousSelectedElement, false, "$: $globalSelectedElementStore");
-    //             updatedWithOutClick = true;
-    //             updateEditor("updateTextOnLostFocus()");
-    //         }
-    //     }else{
-    //         updatedWithOutClick = false;
-    //     }
+        if($globalSelectedElementStore != previousSelectedElement){
+            if(updatedWithOutClick == false){
+                updatedWithOutClick = true;
+                updateTextOnLostFocus(previousSelectedElement, false, "$: $globalSelectedElementStore");
+                updateEditor("updateTextOnLostFocus()");
+            }
+        }else{
+            updatedWithOutClick = false;
+        }
 
-    // })();
+    })();
 
 
     function deleteButtonPressed(){
         if(contentEditableActive == false){
             deleteComponent($globalSelectedElementStore, $globalComponentCollectionStore);
             globalSelectedElementStore.set(null);
+            globalSelectedElementUuidStore.set(null);
         }
     }
 
@@ -282,6 +283,7 @@
         if(item != undefined){
             // console.info("updateTextOnLostFocus source : " + source);
             var newText = item.innerHTML.replaceAll("<!--<Editortree>-->", "").trimStart(); //.replaceAll("  ", " ")
+            var newString = item.innerText.trimStart(); //.replaceAll("  ", " ")
             // console.log(item.id + " | " + newText);
             if(contentEditableActive == true || updateManually == true){
                 item.setAttribute("contenteditable", "false");
@@ -296,16 +298,17 @@
 
                             console.log(
                                 "source : " + source + "\n" + 
+                                "newString : " + newString + "\n" + 
                                 "newText : " + newText + "\n" + 
                                 "lastActiveElement.data.text : " + lastActiveElement.data.text + "\n" + 
                                 "lastActiveElement.type : " + lastActiveElement.type
                             );
 
                             if(lastActiveElement.type == "text"){
+                                updatedWithOutClick = true;
                                 lastActiveElement.data.text = newText;
                                 // updateMainPanelFromEditor($globalComponentCollectionStore, $globalEditorPreferencesStore);
-                                // updateEditor("updateTextOnLostFocus()");
-                                // updatedWithOutClick = true;
+                                updateEditor("updateTextOnLostFocus()");
                             }else{
                                 console.warn("lastActiveElement.type != text");
                             }

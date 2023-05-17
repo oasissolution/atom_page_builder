@@ -38,6 +38,7 @@
       import Body from "../../(modules)/options/body.svelte";
       import Div from "../../(modules)/options/div.svelte";
       import Text from "../../(modules)/options/text.svelte";
+      import GridContainer from "../../(modules)/options/grid-container.svelte";
 
 
       /**
@@ -49,6 +50,7 @@
          "body": Body,
          "div": Div,
          "text": Text,
+         "gridcontainer": GridContainer,
       };
 
 

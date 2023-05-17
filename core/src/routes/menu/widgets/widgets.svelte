@@ -19,6 +19,7 @@
 
    import Div from "../../(modules)/widgets/div.svelte";
    import Text from "../../(modules)/widgets/text.svelte";
+   import GridContainer from "../../(modules)/widgets/grid-container.svelte";
 
    /**
     * Definition and list of all modules in a JSON.
@@ -28,6 +29,7 @@
    const JsonOfModules = {
       "div": Div,
       "text": Text,
+      "gridcontainer": GridContainer,
    };
 
 
@@ -52,6 +54,7 @@
       <div class="w-full grid grid-cols-3 justify-items-center">
          <svelte:component this="{Div}" />
          <svelte:component this="{Text}" />
+         <svelte:component this="{GridContainer}" />
       </div>
 
    </div>
