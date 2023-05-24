@@ -772,6 +772,11 @@
         collapseBackground = !collapseBackground;
     }
 
+    let gridContainerShortOptions = false;
+    function toggleGridContainerShortOptions(){
+        gridContainerShortOptions = !gridContainerShortOptions;
+    }
+
 </script>
     <div class="widgetPanelSubTitle">Container Options</div>
     <div class="h-4"></div>
@@ -783,6 +788,46 @@
     {#if selectedTabPageIndex==0}
     
     <ContentColumns bind:property={contentColumns} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+    <div class="widgetPanelDivider"></div>
+
+    <button class="collapseButton" on:click={toggleGridContainerShortOptions}>
+        <span class="collapseHeader">GRID</span>
+        {#if gridContainerShortOptions}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
+
+    {#if gridContainerShortOptions}
+    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <FlexboxGridColumnsSpan bind:property={flexboxGridColumnsSpan} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+            
+        <div class="widgetPanelDivider"></div>
+            
+        <FlexboxGridColumnsStartEnd bind:property={flexboxGridColumnsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+            
+        <div class="widgetPanelDivider"></div>
+
+        <FlexboxGridRowsSpan bind:property={flexboxGridRowsSpan} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+            
+        <div class="widgetPanelDivider"></div>
+            
+        <FlexboxGridRowsStartEnd bind:property={flexboxGridRowsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+            
+        <div class="widgetPanelDivider"></div>
+
+    </div> <!-- collapseDesignLayout -->
+    {/if}
+
+
+
+
+
+ 
+
 
 
     {:else if selectedTabPageIndex==1}

@@ -279,13 +279,18 @@
     });
 
     function selectElement(){
-        // window.parent.postMessage(uuid, '*');
-        // elementSelected = true;
-        sendSelectedElement(uuid);
-        globalSelectedElementUuidStore.set(uuid);
+        if($globalSelectedElementUuidStore != uuid 
+        || $globalSelectedElementUuidStore == null
+        || $globalSelectedElementUuidStore == undefined
+        ){
+            /// Send selected uuid to main frame.
+            sendSelectedElement(uuid);
+            globalSelectedElementUuidStore.set(uuid);
 
-        // update global variable, so selector activates
-        selectedElement = bindElement;
+            // update global variable, so selector activates.
+            selectedElement = bindElement;
+            // console.info("(Text Module) Made a selection : " + uuid);
+        }
 
     }
 

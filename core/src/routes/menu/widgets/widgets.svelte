@@ -20,6 +20,7 @@
    import Div from "../../(modules)/widgets/div.svelte";
    import Text from "../../(modules)/widgets/text.svelte";
    import GridContainer from "../../(modules)/widgets/grid-container.svelte";
+   import EasySection from "../../(modules)/widgets/easy-section.svelte";
 
    /**
     * Definition and list of all modules in a JSON.
@@ -30,6 +31,7 @@
       "div": Div,
       "text": Text,
       "gridcontainer": GridContainer,
+      "easysection": EasySection,
    };
 
 
@@ -52,6 +54,7 @@
    <div class="w-full h-full flex items-start justify-center pt-3">
 
       <div class="w-full grid grid-cols-3 justify-items-center">
+         <svelte:component this="{EasySection}"/>
          <svelte:component this="{Div}" />
          <svelte:component this="{Text}" />
          <svelte:component this="{GridContainer}" />

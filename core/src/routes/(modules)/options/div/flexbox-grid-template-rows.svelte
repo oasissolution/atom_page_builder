@@ -42,12 +42,23 @@
         {name: "4",        value: "grid-rows-4",    info: "grid-template-rows: repeat(4, minmax(0, 1fr));"},
         {name: "5",        value: "grid-rows-5",    info: "grid-template-rows: repeat(5, minmax(0, 1fr));"},
         {name: "6",        value: "grid-rows-6",    info: "grid-template-rows: repeat(6, minmax(0, 1fr));"},
+
         {name: "7",        value: "grid-rows-7",    info: "grid-template-rows: repeat(7, minmax(0, 1fr));"},
         {name: "8",        value: "grid-rows-8",    info: "grid-template-rows: repeat(8, minmax(0, 1fr));"},
         {name: "9",        value: "grid-rows-9",    info: "grid-template-rows: repeat(9, minmax(0, 1fr));"},
         {name: "10",       value: "grid-rows-10",   info: "grid-template-rows: repeat(10, minmax(0, 1fr));"},
         {name: "11",       value: "grid-rows-11",   info: "grid-template-rows: repeat(11, minmax(0, 1fr));"},
         {name: "12",       value: "grid-rows-12",   info: "grid-template-rows: repeat(12, minmax(0, 1fr));"},
+        
+        {name: "14",       value: "grid-rows-14",   info: "grid-template-rows: repeat(14, minmax(0, 1fr));"},
+        {name: "16",       value: "grid-rows-16",   info: "grid-template-rows: repeat(16, minmax(0, 1fr));"},
+        {name: "18",       value: "grid-rows-18",   info: "grid-template-rows: repeat(18, minmax(0, 1fr));"},
+        {name: "20",       value: "grid-rows-20",   info: "grid-template-rows: repeat(20, minmax(0, 1fr));"},
+        {name: "22",       value: "grid-rows-22",   info: "grid-template-rows: repeat(22, minmax(0, 1fr));"},
+        {name: "24",       value: "grid-rows-24",   info: "grid-template-rows: repeat(24, minmax(0, 1fr));"},
+        {name: "26",       value: "grid-rows-26",   info: "grid-template-rows: repeat(26, minmax(0, 1fr));"},
+        {name: "28",       value: "grid-rows-28",   info: "grid-template-rows: repeat(28, minmax(0, 1fr));"},
+
         {name: "None",     value: "grid-rows-none", info: "grid-template-rows: none"},
         
         // {name: "",     value: "",     info: ""},

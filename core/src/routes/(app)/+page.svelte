@@ -172,6 +172,23 @@
                 break;
             case "div":
                 break;
+
+            case "gridcontainer":
+                defaultData["data"] = {
+                    "class": "w-full h-96 grid grid-cols-12 grid-rows-6 gap-1 ",
+                };
+                break;
+
+            case "easysection":
+                defaultData["data"] = {
+                    "class": "w-full h-96 relative",
+                    "row": "6",
+                    "col": "12",
+                    "gapX": "1",
+                    "gapY": "1",
+                };
+                break;
+
             default:
                 break;
         }
@@ -309,6 +326,46 @@
         globalVisibilityStore.set(globalVisibility);
     }
 
+    function closeOptionsPanel(){
+        let globalVisibility = $globalVisibilityStore;
+
+        /// $globalEditorPreferencesStore is used directly to get latest condition
+        switch($globalEditorPreferencesStore.optionPanelDisplayStyle){
+            case PanelDisplayStyles.FIXEDLEFT:
+                var visible = globalVisibility.left.optionPanel ?? false;
+                for(var key in globalVisibility.left) {
+                    if(key == "optionPanel"){
+                        globalVisibility.left[key] = false; // Always close - X !visible
+                    }else{
+                        globalVisibility.left[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.right.optionPanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = false; /// Hide in other locations
+                break;
+            case PanelDisplayStyles.FIXEDRIGHT:
+                var visible = globalVisibility.right.optionPanel ?? false;
+                for(var key in globalVisibility.right) {
+                    if(key == "optionPanel"){
+                        globalVisibility.right[key] = false;
+                    }else{
+                        globalVisibility.right[key] = false; /// Hide any other panel in this location
+                    }
+                }
+                globalVisibility.left.optionPanel = false; /// Hide in other locations
+                globalVisibility.default.optionPanel = false; /// Hide in other locations
+                break;
+            default:
+                globalVisibility.default.optionPanel = false;
+                globalVisibility.right.optionPanel = false; /// Hide in other locations
+                globalVisibility.left.optionPanel = false; /// Hide in other locations
+                break;
+        }
+
+        ///Updates "globalVisibilityStore"
+        globalVisibilityStore.set(globalVisibility);
+    }
+
     /**
      * Updates globalEditorInnerHTML global store to current editor innerHTML.
      * @param {string} data
@@ -340,6 +397,9 @@
                         break;
                     case "openOptionsPanel":
                         openOptionsPanel();
+                        break;
+                    case "closeOptionsPanel":
+                        closeOptionsPanel();
                         break;
                     case "replaceDroppedElementInside":
                         replaceDroppedElementInside($globalComponentCollectionStore, event.data.data.thisUuid, event.data.data.insideUuid);

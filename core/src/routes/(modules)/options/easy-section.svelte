@@ -4,14 +4,11 @@
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
-	import Optionsbutton from "../../uicomponents/optionsbutton.svelte";
+    import Optionsbutton from "../../uicomponents/optionsbutton.svelte";
 	import Textarea from "../../uicomponents/textarea.svelte";
 	import Textinput from "../../uicomponents/textinput.svelte";
 	import Select from "../../uicomponents/select.svelte";
 	import LayoutDisplay from "./common/layout-display.svelte";
-	import ContentFontSize from "./text/content-font-size.svelte";
-	import ContentTextAlignment from "./text/content-text-alignment.svelte";
-	import ContentVerticalAlignment from "./common/content-vertical-alignment.svelte";
 	import LayoutPosition from "./common/layout-position.svelte";
 	import LayoutFloat from "./common/layout-float.svelte";
 	import LayoutOverflow from "./common/layout-overflow.svelte";
@@ -22,34 +19,45 @@
 	import SizingWidthHeight from "./common/sizing-width-height.svelte";
 	import SizingWidthHeightMax from "./common/sizing-width-height-max.svelte";
 	import SizingWidthHeightMin from "./common/sizing-width-height-min.svelte";
-	import TypographyFontSmoothing from "./text/typography-font-smoothing.svelte";
-	import TypographyFontStyle from "./text/typography-font-style.svelte";
-	import TypographyFontWeight from "./text/typography-font-weight.svelte";
-	import TypographyFontVariantNumeric from "./text/typography-font-variant-numeric.svelte";
-	import TypographyLetterSpacing from "./text/typography-letter-spacing.svelte";
-	import TypographyLineHeight from "./text/typography-line-height.svelte";
-	import SelectColor from "../../uicomponents/select-color.svelte";
-	import TypographyTextColor from "./text/typography-text-color.svelte";
-	import TypographyTextDecoration from "./text/typography-text-decoration.svelte";
-	import TypographyDecorationColor from "./text/typography-decoration-color.svelte";
-	import TypographyDecorationStyle from "./text/typography-decoration-style.svelte";
-	import TypographyDecorationThickness from "./text/typography-decoration-thickness.svelte";
-	import TypographyUnderlineOffset from "./text/typography-underline-offset.svelte";
-	import TypographyTextTransform from "./text/typography-text-transform.svelte";
-	import TypographyTextOverflow from "./text/typography-text-overflow.svelte";
-	import TypographyTextIndent from "./text/typography-text-indent.svelte";
-	import TypographyWhitespace from "./text/typography-whitespace.svelte";
-	import TypographyWordbreak from "./text/typography-wordbreak.svelte";
-    import BorderWidth from "./common/border-width.svelte";
+	import ContentColumns from "./div/content-columns.svelte";
+	import FlexboxGridBasis from "./div/flexbox-grid-basis.svelte";
+	import FlexboxGridFlexDirection from "./div/flexbox-grid-flex-direction.svelte";
+	import FlexboxGridFlexWrap from "./div/flexbox-grid-flex-wrap.svelte";
+	import FlexboxGridFlex from "./div/flexbox-grid-flex.svelte";
+	import FlexboxGridFlexGrow from "./div/flexbox-grid-flex-grow.svelte";
+	import FlexboxGridFlexShrink from "./div/flexbox-grid-flex-shrink.svelte";
+	import FlexboxGridOrder from "./div/flexbox-grid-order.svelte";
+	import FlexboxGridTemplateColumns from "./div/flexbox-grid-template-columns.svelte";
+	import FlexboxGridColumnsStartEnd from "./div/flexbox-grid-columns-start-end.svelte";
+	import FlexboxGridColumnsSpan from "./div/flexbox-grid-columns-span.svelte";
+    import FlexboxGridTemplateRows from "./div/flexbox-grid-template-rows.svelte";
+    import FlexboxGridRowsSpan from "./div/flexbox-grid-rows-span.svelte";
+    import FlexboxGridRowsStartEnd from "./div/flexbox-grid-rows-start-end.svelte";
+	import FlexboxGridAutoFlow from "./div/flexbox-grid-auto-flow.svelte";
+	import FlexboxGridAutoColumns from "./div/flexbox-grid-auto-columns.svelte";
+	import FlexboxGridAutoRows from "./div/flexbox-grid-auto-rows.svelte";
+	import FlexboxGridGap from "./div/flexbox-grid-gap.svelte";
+	import FlexboxGridGapX from "./div/flexbox-grid-gap-x.svelte";
+	import FlexboxGridGapY from "./div/flexbox-grid-gap-y.svelte";
+	import FlexboxGridJustifyContent from "./div/flexbox-grid-justify-content.svelte";
+	import FlexboxGridJustifyItems from "./div/flexbox-grid-justify-items.svelte";
+	import FlexboxGridJustifySelf from "./div/flexbox-grid-justify-self.svelte";
+	import FlexboxGridAlignContent from "./div/flexbox-grid-align-content.svelte";
+	import FlexboxGridAlignItems from "./div/flexbox-grid-align-items.svelte";
+	import FlexboxGridAlignSelf from "./div/flexbox-grid-align-self.svelte";
+	import FlexboxGridPlaceContent from "./div/flexbox-grid-place-content.svelte";
+	import FlexboxGridPlaceItems from "./div/flexbox-grid-place-items.svelte";
+	import FlexboxGridPlaceSelf from "./div/flexbox-grid-place-self.svelte";
+	import BorderWidth from "./common/border-width.svelte";
 	import BorderRadius from "./common/border-radius.svelte";
 	import BorderStyle from "./common/border-style.svelte";
 	import BorderColor from "./common/border-color.svelte";
-    import EffectsDropShadow from "./common/effects-drop-shadow.svelte";
+	import EffectsDropShadow from "./common/effects-drop-shadow.svelte";
 	import EffectsShadowColor from "./common/effects-shadow-color.svelte";
 	import EffectsOpacity from "./common/effects-opacity.svelte";
 	import EffectsMixBlendMode from "./common/effects-mix-blend-mode.svelte";
 	import EffectsBackgroundBlendMode from "./common/effects-background-blend-mode.svelte";
-    import FiltersBlur from "./common/filters-blur.svelte";
+	import FiltersBlur from "./common/filters-blur.svelte";
 	import FiltersBrightness from "./common/filters-brightness.svelte";
 	import FiltersContrast from "./common/filters-contrast.svelte";
 	import FiltersDropShadow from "./common/filters-drop-shadow.svelte";
@@ -68,31 +76,25 @@
 	import FiltersBackdropOpacity from "./common/filters-backdrop-opacity.svelte";
 	import FiltersBackdropSaturate from "./common/filters-backdrop-saturate.svelte";
     import FiltersBackdropSepia from "./common/filters-backdrop-sepia.svelte";
-    import TransitionProperty from "./common/transition-property.svelte";
+	import TransitionProperty from "./common/transition-property.svelte";
 	import TransitionDuration from "./common/transition-duration.svelte";
     import TransitionTimingFunction from "./common/transition-timing-function.svelte";
 	import TransitionDelay from "./common/transition-delay.svelte";
 	import TransitionAnimation from "./common/transition-animation.svelte";
-    import TransformNoTransform from "./common/transform-no-transform.svelte";
+	import TransformNoTransform from "./common/transform-no-transform.svelte";
 	import TransformScale from "./common/transform-scale.svelte";
 	import TransformRotate from "./common/transform-rotate.svelte";
 	import TransformTranslate from "./common/transform-translate.svelte";
 	import TransformSkewX from "./common/transform-skew-x.svelte";
 	import TransformSkewY from "./common/transform-skew-y.svelte";
 	import TransformOrigin from "./common/transform-origin.svelte";
-    import BackgroundAttachment from "./common/background-attachment.svelte";
+	import BackgroundAttachment from "./common/background-attachment.svelte";
 	import BackgroundClip from "./common/background-clip.svelte";
 	import BackgroundOrigin from "./common/background-origin.svelte";
 	import BackgroundPosition from "./common/background-position.svelte";
 	import BackgroundRepeat from "./common/background-repeat.svelte";
 	import BackgroundSize from "./common/background-size.svelte";
 	import BackgroundBackground from "./common/background-background.svelte";
-
-    import FlexboxGridColumnsStartEnd from "./div/flexbox-grid-columns-start-end.svelte";
-	import FlexboxGridColumnsSpan from "./div/flexbox-grid-columns-span.svelte";
-    import FlexboxGridRowsSpan from "./div/flexbox-grid-rows-span.svelte";
-    import FlexboxGridRowsStartEnd from "./div/flexbox-grid-rows-start-end.svelte";
-
 
     let globalComponentCollection = $globalComponentCollectionStore;
     $: globalComponentCollectionStore.set(globalComponentCollection);
@@ -112,8 +114,6 @@
      * @property {string} [style] - Specifies inline CSS for the element
      * @property {number} [tabindex] - Specifies the tab order of the element
      * @property {string} [title] - Specifies extra information about the element (displayed as a tooltip)
-     * @property {string} [text] - Value of Text Element
-     * @property {string} [htmltag] - HTML Tag of Text Element
      */
 
     /**
@@ -132,7 +132,6 @@
      */
     let activeElement;
 
-
     /**
      * Used for sub elements to update themselves to current values.
      * @type string
@@ -145,12 +144,9 @@
     function loadElementData(){
         activeElement = getComponent($globalComponentCollectionStore, $globalSelectedElementUuidStore);
 
-        textInput = activeElement?.data?.text != undefined ? activeElement?.data?.text : "Lorem ipsum...";
         classInput = activeElement?.data?.class != undefined ? activeElement?.data?.class : "";
-        htmlTag = activeElement?.data?.htmltag != undefined ? activeElement?.data?.htmltag : "span";
 
         elementDataLoaded = classInput;
-
     }
 
     /**
@@ -159,13 +155,9 @@
      *
      * These are all default values of variables.
      */
-    function clearOptionPanelVariables(){
-        fontSize = "";
-        textAlignment = 0;
-        verticalAlignment = "";
-        textInput = "Lorem ipsum...";
+     function clearOptionPanelVariables(){
         classInput = "";
-        layoutDisplay = "";
+        layoutDisplay = "grid";/////////////////////////
         layoutPosition = "";
         layoutFloat = 0;
         layoutOverflow = "";
@@ -173,23 +165,35 @@
         layoutZIndex = "";
         spacingPadding = "";
         spacingMargin = "";
-        fontSmoothing = "";
-        fontStyle = "";
-        fontWeight = "";
-        fontVariantNumeric = "";
-        letterSpacing = "";
-        lineHeight = "";
-        textColor = "";
-        textDecoration = "";
-        decorationColor = "";
-        decorationStyle = "";
-        decorationThickness = "";
-        underlineOffset = "";
-        textTransform = "";
-        textOverflow = "";
-        textIndent = "";
-        whitespace = "";
-        wordbreak = "";
+        contentColumns = "";
+        flexboxGridBasis = "";
+        flexboxGridFlexDirection = "";
+        flexboxGridFlexWrap = "";
+        flexboxGridFlex = "";
+        flexboxGridFlexGrow = "";
+        flexboxGridFlexShrink = "";
+        flexboxGridFlexOrder = "";
+        flexboxGridTemplateColumns = "grid-cols-12";/////////////////////////
+        flexboxGridColumnsStartEnd = "";
+        flexboxGridColumnsSpan = "";
+        flexboxGridTemplateRows = "grid-rows-6"; /////////////////////////
+        flexboxGridRowsStartEnd = "";
+        flexboxGridRowsSpan = "";
+        flexboxGridAutoFlow = "";
+        flexboxGridAutoColumns = "";
+        flexboxGridAutoRows = "";
+        flexboxGridGap = "gap-1";/////////////////////////
+        flexboxGridGapX = "";
+        flexboxGridGapY = "";
+        flexboxGridJustifyContent = "";
+        flexboxGridJustifyItems = "";
+        flexboxGridJustifySelf = "";
+        flexboxGridAlignContent = "";
+        flexboxGridAlignItems = "";
+        flexboxGridAlignSelf = "";
+        flexboxGridPlaceContent = "";
+        flexboxGridPlaceItems = "";
+        flexboxGridPlaceSelf = "";
         borderStyle = "";
         effectsDropShadow = "";
         effectsOpacity = "";
@@ -232,14 +236,8 @@
         backgroundPosition = "";
         backgroundRepeat = "";
         backgroundSize = "";
-
-        flexboxGridColumnsStartEnd = "";
-        flexboxGridColumnsSpan = "";
-        flexboxGridRowsStartEnd = "";
-        flexboxGridRowsSpan = "";
     }
-
-
+    
     /**
      * Update Editor Panel
      */
@@ -262,13 +260,7 @@
     let selectedTabPageIndex = 0;
 
     /**
-     * Text Input Value
-     * @type string
-     */
-    let textInput;
-
-    /**
-     * Class Value of Text
+     * Class Value of Div
      * @type string
      */
     let classInput;
@@ -296,21 +288,11 @@
     $: $globalComponentCollectionStore, (() => {
         // if(previousglobalComponentCollectionStore != $globalComponentCollectionStore){
         //     previousglobalComponentCollectionStore = $globalComponentCollectionStore;}
-            clearOptionPanelVariables();
-            if(loaded == true){
-                loadElementData();
-            }
-        
-    })();
-
-    /**
-     * Update ui whenever tap page changes
-    */
-    $: selectedTabPageIndex, (() => {
         clearOptionPanelVariables();
         if(loaded == true){
             loadElementData();
         }
+        
     })();
 
     onMount(() => {
@@ -319,32 +301,11 @@
 
     });
 
-    function checkText(){
-
-        textInput = textInput.replace("<script", "").replace("<\/script>", "").replace("<link", "").replace("<a", "").replace("</a>", "");
-        
-    }
-
-    function updateText(){
-        if(activeElement){
-            if(activeElement.data){
-                if(textInput != ""){
-                    checkText();
-                    activeElement.data.text = textInput;
-                }else{
-                    textInput = "Lorem ipsum...";
-                    activeElement.data.text = textInput;
-                }
-                updateEditor();
-            }
-        }
-    }
 
     function updateClass(){
         if(activeElement){
             if(activeElement.data){
                 activeElement.data.class = classInput;
-                // classGlobal = classInput;
                 updateEditor();
             }
         }
@@ -358,27 +319,10 @@
     let layoutDisplay;
 
     /**
-     * Actual font size class
-     * @type string
-     */
-    let fontSize;
-
-    /**
-     * @type number
-     */
-    let textAlignment;
-
-    /**
-     * Vertical Alignment of element
-     * @type string
-     */
-    let verticalAlignment;
-
-    /**
      * Actual position class
      * @type string
      */
-    let layoutPosition;
+     let layoutPosition;
 
     /**
      * @type number
@@ -413,87 +357,147 @@
     /**
      * @type string
      */
-    let fontSmoothing;
+    let contentColumns;
 
     /**
      * @type string
      */
-    let fontStyle;
+    let flexboxGridBasis;
 
     /**
      * @type string
      */
-    let fontWeight;
+    let flexboxGridFlexDirection;
 
     /**
      * @type string
      */
-    let fontVariantNumeric;
+    let flexboxGridFlexWrap;
 
     /**
      * @type string
      */
-    let letterSpacing;
-
-    /**
-     * @type string
-     */
-    let lineHeight;
-
-    /**
-     * @type string
-     */
-    let textColor;
+    let flexboxGridFlex;
     
     /**
      * @type string
      */
-    let textDecoration;
+    let flexboxGridFlexGrow;
+
+    /**
+     * @type string
+     */
+    let flexboxGridFlexShrink;
     
     /**
      * @type string
      */
-    let decorationColor;
+    let flexboxGridFlexOrder;
 
     /**
      * @type string
      */
-    let decorationStyle;
+    let flexboxGridTemplateColumns;
 
     /**
      * @type string
      */
-    let decorationThickness;
+    let flexboxGridColumnsStartEnd;
 
     /**
      * @type string
      */
-    let underlineOffset;
+    let flexboxGridColumnsSpan;
 
     /**
      * @type string
      */
-    let textTransform;
+     let flexboxGridTemplateRows;
 
     /**
      * @type string
      */
-    let textOverflow;
+    let flexboxGridRowsStartEnd;
 
     /**
      * @type string
      */
-    let textIndent;
+    let flexboxGridRowsSpan;
+    
+    /**
+     * @type string
+     */
+    let flexboxGridAutoFlow;
 
     /**
      * @type string
      */
-    let whitespace;
+    let flexboxGridAutoColumns;
 
     /**
      * @type string
      */
-    let wordbreak;
+    let flexboxGridAutoRows;
+
+    /**
+     * @type string
+     */
+     let flexboxGridGap;
+
+    /**
+     * @type string
+     */
+    let flexboxGridGapX;
+
+    /**
+     * @type string
+     */
+    let flexboxGridGapY;
+
+    /**
+     * @type string
+     */
+    let flexboxGridJustifyContent;
+
+    /**
+     * @type string
+     */
+    let flexboxGridJustifyItems;
+
+    /**
+     * @type string
+     */
+    let flexboxGridJustifySelf;
+    
+    /**
+     * @type string
+     */
+    let flexboxGridAlignContent;
+
+    /**
+     * @type string
+     */
+    let flexboxGridAlignItems;
+
+    /**
+     * @type string
+     */
+    let flexboxGridAlignSelf;
+
+    /**
+     * @type string
+     */
+     let flexboxGridPlaceContent;
+
+    /**
+     * @type string
+     */
+    let flexboxGridPlaceItems;
+
+    /**
+     * @type string
+     */
+    let flexboxGridPlaceSelf;
 
     /**
      * @type string
@@ -503,7 +507,7 @@
     /**
      * @type string
      */
-     let effectsDropShadow;
+    let effectsDropShadow;
 
     /**
      * @type string
@@ -544,17 +548,17 @@
      * @type string
      */
     let filtersGrayScale;
-
+    
     /**
      * @type string
      */
     let filtersNoFilter;
-
+    
     /**
      * @type string
      */
     let filtersHueRotate;
-
+    
     /**
      * @type string
      */
@@ -618,7 +622,7 @@
     /**
      * @type string
      */
-     let transitionProperty;
+    let transitionProperty;
     
     /**
      * @type string
@@ -678,7 +682,7 @@
     /**
      * @type string
      */
-     let backgroundAttachment;
+    let backgroundAttachment;
 
     /**
      * @type string
@@ -694,7 +698,7 @@
      * @type string
      */
     let backgroundPosition;
-
+    
     /**
      * @type string
      */
@@ -704,75 +708,15 @@
      * @type string
      */
     let backgroundSize;
+    
+    
 
-    /**
-     * @type string
-     */
-     let flexboxGridColumnsStartEnd;
+    
 
-    /**
-     * @type string
-     */
-    let flexboxGridColumnsSpan;
-
-    /**
-     * @type string
-     */
-    let flexboxGridRowsStartEnd;
-
-    /**
-     * @type string
-     */
-    let flexboxGridRowsSpan;
 
 
     
-    /**
-     * @typedef {Object} SelectOptions
-     * @property {string} value
-     * @property {string} name
-     * @property {string} info
-    */
-
-
-    /**
-     * Standard HTML tags that are applied to text element.
-     * @type Array<SelectOptions>
-     */
-    const htmlTags = [
-        {name: "h1 (Heading 1)",   value: "h1",          info: "Heading 1"},
-        {name: "h2 (Heading 2)",   value: "h2",          info: "Heading 2"},
-        {name: "h3 (Heading 3)",   value: "h3",          info: "Heading 3"},
-        {name: "h4 (Heading 4)",   value: "h4",          info: "Heading 4"},
-        {name: "h5 (Heading 5)",   value: "h5",          info: "Heading 5"},
-        {name: "h6 (Heading 6)",   value: "h6",          info: "Heading 6"},
-        {name: "div",              value: "div",         info: "div"},
-        {name: "span",             value: "span",        info: "span"},
-        {name: "p (Paragraph)",    value: "p",           info: "Paragraph"},
-        {name: "strong (Bold)",    value: "strong",      info: "Bold"},
-    ];
-
-    /**
-     * Text of element
-     * @type string
-     */
-    let htmlTag;
-
-    $: htmlTag, (()=>{
-        if(loaded == true) {
-
-            if(activeElement){
-                if(activeElement.data){
-                    activeElement.data.htmltag = htmlTag;
-                    updateEditor();
-                }
-            }
-
-        }
-    })();
-
-
-
+    
     let collapseDesignLayout = false;
     function toggleDesignLayout(){
         collapseDesignLayout = !collapseDesignLayout;
@@ -783,11 +727,6 @@
         collapseDesignClass = !collapseDesignClass;
     }
 
-    let collapseDesignTypography = false;
-    function toggleDesignTypography(){
-        collapseDesignTypography = !collapseDesignTypography;
-    }
-
     let collapseDesignSpacing = false;
     function toggleDesignSpacing(){
         collapseDesignSpacing = !collapseDesignSpacing;
@@ -796,6 +735,11 @@
     let collapseDesignSizing = false;
     function toggleDesignSizing(){
         collapseDesignSizing = !collapseDesignSizing;
+    }
+
+    let collapseDesignFlexboxGrid = false;
+    function toggleDesignFlexboxGrid(){
+        collapseDesignFlexboxGrid = !collapseDesignFlexboxGrid;
     }
 
     let collapseDesignBorder = false;
@@ -828,86 +772,47 @@
         collapseBackground = !collapseBackground;
     }
 
-    let gridContainerShortOptions = false;
-    function toggleGridContainerShortOptions(){
-        gridContainerShortOptions = !gridContainerShortOptions;
-    }
-
 </script>
-
-    <div class="widgetPanelSubTitle">Text Options</div>
+    <div class="widgetPanelSubTitle">Easy Section Options</div>
     <div class="h-4"></div>
 
     <Optionsbutton items={["Content", "Design", "Animation"]} bind:value={selectedTabPageIndex}></Optionsbutton>
 
     <div class="widgetPanelTabsDivider"></div>
-
+    
     {#if selectedTabPageIndex==0}
 
-    <span class="mb-1">Text</span>
-    <Textarea bind:text={textInput} on:onSubmit={updateText} ></Textarea>
+    <SizingWidthHeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     <div class="widgetPanelDivider"></div>
 
-    <ContentFontSize bind:fontSize bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+    <LayoutDisplay bind:layoutDisplay bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
 
     <div class="widgetPanelDivider"></div>
 
-    <ContentTextAlignment bind:textAlignment bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}  />
+    <FlexboxGridTemplateColumns bind:property={flexboxGridTemplateColumns} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+    <div class="widgetPanelDivider"></div>
+
+    <FlexboxGridTemplateRows bind:property={flexboxGridTemplateRows} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+        
+    <div class="widgetPanelDivider"></div>
+
+    <FlexboxGridGap bind:property={flexboxGridGap} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     <div class="widgetPanelDivider"></div>
 
-    <ContentVerticalAlignment  bind:verticalAlignment bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+    <FlexboxGridGapX bind:property={flexboxGridGapX} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     <div class="widgetPanelDivider"></div>
 
-    <div class="w-full flex flex-row flex-grow justify-between h-8 align-middle items-center">
-        <span title="Html container of text.">Html Tag</span>
-        <Select options={htmlTags} bind:value={htmlTag}/>
-    </div>
+    <FlexboxGridGapY bind:property={flexboxGridGapY} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     <div class="widgetPanelDivider"></div>
 
-
-    <button class="collapseButton" on:click={toggleGridContainerShortOptions}>
-        <span class="collapseHeader">GRID</span>
-        {#if gridContainerShortOptions}
-        <i class="bi bi-dash"></i>
-        {:else}
-        <i class="bi bi-plus"></i>
-        {/if}
-    </button>
-
-    {#if gridContainerShortOptions}
-    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
-
-        <FlexboxGridColumnsSpan bind:property={flexboxGridColumnsSpan} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-            
-        <div class="widgetPanelDivider"></div>
-            
-        <FlexboxGridColumnsStartEnd bind:property={flexboxGridColumnsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-            
-        <div class="widgetPanelDivider"></div>
-
-        <FlexboxGridRowsSpan bind:property={flexboxGridRowsSpan} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-            
-        <div class="widgetPanelDivider"></div>
-            
-        <FlexboxGridRowsStartEnd bind:property={flexboxGridRowsStartEnd} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-            
-        <div class="widgetPanelDivider"></div>
-
-    </div> <!-- collapseDesignLayout -->
-    {/if}
-
-
-
-
-
- 
 
     {:else if selectedTabPageIndex==1}
-
+    
     <button class="collapseButton" on:click={toggleDesignLayout}>
         <span class="collapseHeader">LAYOUT</span>
         {#if collapseDesignLayout}
@@ -997,96 +902,6 @@
 
     <div class="widgetPanelDivider"></div>
 
-    <button class="collapseButton" on:click={toggleDesignTypography}>
-        <span class="collapseHeader">TYPOGRAPHY</span>
-        {#if collapseDesignTypography}
-        <i class="bi bi-dash"></i>
-        {:else}
-        <i class="bi bi-plus"></i>
-        {/if}
-    </button>
-
-    {#if collapseDesignTypography}
-    <div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
-
-        <ContentFontSize bind:fontSize bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyFontSmoothing bind:fontSmoothing bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyFontStyle bind:fontStyle bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyFontWeight bind:fontWeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyFontVariantNumeric bind:fontVariantNumeric bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyLetterSpacing bind:letterSpacing bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyLineHeight bind:lineHeight bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyTextColor bind:textColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass}/>
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyTextDecoration bind:textDecoration bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyDecorationColor bind:decorationColor bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyDecorationStyle bind:decorationStyle bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyDecorationThickness bind:decorationThickness bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyUnderlineOffset bind:underlineOffset bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyTextTransform bind:textTransform bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyTextOverflow bind:textOverflow bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyTextIndent bind:textIndent bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyWhitespace bind:whitespace bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <div class="widgetPanelDivider"></div>
-
-        <TypographyWordbreak bind:wordbreak bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
-
-        <!-- <div class="widgetPanelDivider"></div> -->
-
-        
-    </div>
-    {/if}
-
-    <div class="widgetPanelDivider"></div>
-
     <button class="collapseButton" on:click={toggleDesignBorder}>
         <span class="collapseHeader">BORDER</span>
         {#if collapseDesignBorder}
@@ -1156,6 +971,15 @@
         <div class="widgetPanelDivider"></div>
 
         <BackgroundSize bind:property={backgroundSize} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
+
+
+
+
+
+
+
+
+
 
     </div>
     {/if}
@@ -1287,6 +1111,11 @@
     {/if}
 
 
+    
+    
+    
+
+
 
 
 
@@ -1320,8 +1149,22 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     {:else if selectedTabPageIndex==2}
 
+    
     <button class="collapseButton" on:click={toggleAnimationTransition}>
         <span class="collapseHeader">TRANSITION</span>
         {#if collapseAnimationTransition}
@@ -1354,7 +1197,6 @@
 
     </div>
     {/if}
-
 
     <div class="widgetPanelDivider"></div>
 
@@ -1397,20 +1239,41 @@
         <TransformOrigin bind:property={transformOrigin} bind:loaded bind:classInput elementDataLoaded={elementDataLoaded} on:updateClass={updateClass} />
 
     </div>
-    {/if} 
+    {/if}
+
+
+
+
+    
 
     <div class="widgetPanelDivider"></div>
 
-    <div class="h-20"></div>
+    <button class="collapseButton" on:click={toggleDesignClass}>
+        <span class="collapseHeader">CLASS</span>
+        {#if collapseDesignClass}
+        <i class="bi bi-dash"></i>
+        {:else}
+        <i class="bi bi-plus"></i>
+        {/if}
+    </button>
 
+    {#if collapseDesignClass}
+    <div class="w-full " in:slide={{ duration: 400 }} out:slide={{ duration: 100 }} >
+
+        <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
+        <Textarea bind:text={classInput} on:onSubmit={updateClass} readonly={true} ></Textarea>
+
+        <!-- <pre class="text-[8px]">{JSON.stringify(activeElement, null, 2)}</pre> -->
+
+    </div>
+    {/if}
+
+    <div class="widgetPanelDivider"></div>
+
+
+    <div class="h-20"></div>
 
 
     {/if}
 
 
-<style>
-
-
-
-
-</style>

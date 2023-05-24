@@ -6,6 +6,59 @@ All notes are for developers, since this repository will not be public.
 
 
 
+## [0.0.1.063] - 2022-05-24
+
+### Added
+ - Easy Section Widget.
+
+### Changed
+ - Working on grid container. Left as standart grid container.
+
+### Fixed
+ - Multiple recalls of select action in modules.
+
+
+
+
+## [0.0.1.062] - 2022-05-23
+
+### Added
+ - 
+
+### Changed
+ - Working on grid container.
+
+### Fixed
+ - 
+
+
+
+## [0.0.1.061] - 2022-05-22
+
+### Added
+ - Text Widget Options : Grid container options.
+
+### Changed
+ - 
+
+### Fixed
+ - 
+
+
+
+## [0.0.1.060] - 2022-05-19
+
+### Added
+ - 
+
+### Changed
+ - Grid Container Widget default values, content options, 
+
+### Fixed
+ - Option panel stays opened when element is deleted.
+
+
+
 ## [0.0.1.059] - 2022-05-17
 
 ### Added

@@ -157,7 +157,7 @@
      */
      function clearOptionPanelVariables(){
         classInput = "";
-        layoutDisplay = "";
+        layoutDisplay = "grid";/////////////////////////
         layoutPosition = "";
         layoutFloat = 0;
         layoutOverflow = "";
@@ -173,16 +173,16 @@
         flexboxGridFlexGrow = "";
         flexboxGridFlexShrink = "";
         flexboxGridFlexOrder = "";
-        flexboxGridTemplateColumns = "";
+        flexboxGridTemplateColumns = "grid-cols-12";/////////////////////////
         flexboxGridColumnsStartEnd = "";
         flexboxGridColumnsSpan = "";
-        flexboxGridTemplateRows = "";
+        flexboxGridTemplateRows = "grid-rows-6"; /////////////////////////
         flexboxGridRowsStartEnd = "";
         flexboxGridRowsSpan = "";
         flexboxGridAutoFlow = "";
         flexboxGridAutoColumns = "";
         flexboxGridAutoRows = "";
-        flexboxGridGap = "";
+        flexboxGridGap = "gap-1";/////////////////////////
         flexboxGridGapX = "";
         flexboxGridGapY = "";
         flexboxGridJustifyContent = "";

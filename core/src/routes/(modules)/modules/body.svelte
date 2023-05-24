@@ -1,7 +1,7 @@
 <script>
     import "../../../app.css";
 	import { onDestroy, onMount } from "svelte";
-    import { globalSelectedElementStore } from "../../globals/selectorstores.js";
+    import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { sendSelectedElement, createDroppedElementInside, replaceDroppedElementInside, toggleWidgetsPanel, openOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
     import { globalThemeStore } from "../../globals/globalstores.js";
     import Widgets from "../../menu/widgets/page.svelte";
@@ -204,11 +204,20 @@
     });
 
     function selectElement(){
-        /// Send selected uuid to main frame.
-        sendSelectedElement(uuid);
 
-        // update global variable, so selector activates.
-        selectedElement = bindElement;
+        if($globalSelectedElementUuidStore != uuid 
+        || $globalSelectedElementUuidStore == null
+        || $globalSelectedElementUuidStore == undefined
+        ){
+            /// Send selected uuid to main frame.
+            sendSelectedElement(uuid);
+            globalSelectedElementUuidStore.set(uuid);
+
+            // update global variable, so selector activates.
+            selectedElement = bindElement;
+            // console.info("(Body Module) Made a selection : " + uuid);
+        }
+
     }
 
     // function testModal(){

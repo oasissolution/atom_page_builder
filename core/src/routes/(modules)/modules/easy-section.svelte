@@ -340,16 +340,27 @@
 </script>
 
 
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel} class:blockUserSelect={childs.length == 0} draggable="true" class="bgSquare">
+<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel} class:blockUserSelect={childs.length == 0} draggable="true" class="relative">
 
-    <slot>
-        <em class="text-slate-500 m-2">No content was provided</em>
-    </slot>
-    {#if childs.length == 0}
+    <div class="absolute w-full h-96 left-0 top-0 z-10 bgSquare" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel}>
 
-    <em class="text-slate-500 m-2">No content was provided</em>
+    </div>
 
-    {/if}
+    <div class="absolute w-full h-96 left-0 top-0 z-20 bg-transparent" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel}>
+
+        <slot>
+            <em class="text-slate-500 m-2">No content was provided</em>
+        </slot>
+        {#if childs.length == 0}
+
+        <em class="text-slate-500 m-2"> Easy Section - No content was provided</em>
+
+        {/if}
+
+    </div>
+
+
+    
 
 </div>
 

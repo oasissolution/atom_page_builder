@@ -10,6 +10,7 @@
     import Text from "../../(modules)/layers/text.svelte";
     import GridContainer from "../../(modules)/layers/grid-container.svelte";
 	import { onMount } from "svelte/internal";
+	import EasySection from "../../(modules)/layers/easy-section.svelte";
 
     /**
      * @typedef {Object} ExpansionState
@@ -41,7 +42,7 @@
 
     });
 
-    let listOfElementsThatCanHaveChildren = ['div']
+    let listOfElementsThatCanHaveChildren = ['div', 'gridcontainer', 'easysection']
 
 </script>
 
@@ -75,6 +76,10 @@
 
                     {:else if child.type == "gridcontainer"}
                     <GridContainer uuid={child.uuid} selected={$globalSelectedElementUuidStore === child.uuid} on:click={()=>setSelected(child.uuid)} />
+
+                    {:else if child.type == "easysection"}
+                    <EasySection uuid={child.uuid} selected={$globalSelectedElementUuidStore === child.uuid} on:click={()=>setSelected(child.uuid)} />
+    
 
                     {:else}
                     <span class="flex flex-row gap-2 align-middle my-2" class:text-teal-600 = {$globalSelectedElementUuidStore === child.uuid} >

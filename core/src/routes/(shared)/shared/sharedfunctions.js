@@ -87,6 +87,19 @@ export function openOptionsPanel(){
     window.parent.postMessage(data, '*');
 }
 
+/**
+ * Closes options panel.
+ */
+export function closeOptionsPanel(){
+
+    let data = {
+        "action": "closeOptionsPanel",
+        "data": {}
+    }
+
+    window.parent.postMessage(data, '*');
+}
+
 
 /**
  * Send dropped element data to main frame.

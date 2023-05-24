@@ -3,6 +3,7 @@
     import { globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
     import { globalEditorPreferencesStore, globalComponentCollectionStore } from "../../globals/globalstores.js";
     import { updateGlobalComponentCollectionStore, UpdateActionTypes, getDataFromComponent, getComponent } from "../../globals/globalfunctions.js";
+	import Textarea from "../../uicomponents/textarea.svelte";
  
 
     let globalComponentCollection = $globalComponentCollectionStore;
@@ -108,11 +109,7 @@
 
     });
 
-
-
-
-    function test(){
-        console.log("From body: " + classInput);
+    function updateClass(){
 
         if(activeElement){
             if(activeElement.data){
@@ -121,7 +118,6 @@
             }
         }
 
-        
     }
 
 
@@ -131,17 +127,15 @@
     <div class="widgetPanelSubTitle">Body Options</div>
     <br/>
     {#if selectedTabPageIndex==0}
-    <!-- Tab Page 1 -->
-    <br/> Tailwind CSS
-    <br/>
 
-    <!-- <input type="text" on:change={test} bind:value={classInput}/> -->
-    <textarea bind:value={classInput} rows="10"></textarea>
-    <br/>
-    <button class="h-10 px-6 font-semibold rounded-md bg-sky-400 text-white"  on:click={test}>Update</button>
+
+    <div class="mb-1 w-full flex items-end align-bottom place-content-between"><span class="">Class</span><span class="text-[10px]">Tailwind CSS</span></div>
+    <Textarea bind:text={classInput} on:onSubmit={updateClass} ></Textarea>
+
+
 
     {:else if selectedTabPageIndex==1}
-    Tab Page 2
+    Under Development!
     {/if}
 
 

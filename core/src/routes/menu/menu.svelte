@@ -112,6 +112,7 @@
         .replaceAll("<!--<Editortree>-->", "")
         .replaceAll("<!--<Text>-->", "")
         .replaceAll("<!--<Div>-->", "")
+        .replaceAll("<!--<Grid-container>-->", "")
         .replaceAll("", "");
         
         swal({

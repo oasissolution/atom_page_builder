@@ -48,6 +48,16 @@
         {name: "10",       value: "grid-cols-10",   info: "grid-template-columns: repeat(10, minmax(0, 1fr));"},
         {name: "11",       value: "grid-cols-11",   info: "grid-template-columns: repeat(11, minmax(0, 1fr));"},
         {name: "12",       value: "grid-cols-12",   info: "grid-template-columns: repeat(12, minmax(0, 1fr));"},
+
+        {name: "14",       value: "grid-cols-14",   info: "grid-template-columns: repeat(14, minmax(0, 1fr));"},
+        {name: "16",       value: "grid-cols-16",   info: "grid-template-columns: repeat(16, minmax(0, 1fr));"},
+        {name: "18",       value: "grid-cols-18",   info: "grid-template-columns: repeat(18, minmax(0, 1fr));"},
+        {name: "20",       value: "grid-cols-20",   info: "grid-template-columns: repeat(20, minmax(0, 1fr));"},
+        {name: "22",       value: "grid-cols-22",   info: "grid-template-columns: repeat(22, minmax(0, 1fr));"},
+        {name: "24",       value: "grid-cols-24",   info: "grid-template-columns: repeat(24, minmax(0, 1fr));"},
+        {name: "26",       value: "grid-cols-26",   info: "grid-template-columns: repeat(26, minmax(0, 1fr));"},
+        {name: "28",       value: "grid-cols-28",   info: "grid-template-columns: repeat(28, minmax(0, 1fr));"},
+
         {name: "None",     value: "grid-cols-none", info: "grid-template-columns: none"},
         
         // {name: "",     value: "",     info: ""},

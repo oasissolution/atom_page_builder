@@ -4,7 +4,7 @@
     import { globalEditorPreferencesStore, globalComponentCollectionStore, globalThemeStore } from "../../globals/globalstores.js";
     import { globalSelectedElementStore } from "../../globals/selectorstores.js";
     import { getComponent } from "../../globals/globalfunctions.js";
-    import { sendDeletedElement, refreshEditorData, sendEditorInnerHTML } from "../../(shared)/shared/sharedfunctions.js";
+    import { sendDeletedElement, refreshEditorData, sendEditorInnerHTML, closeOptionsPanel } from "../../(shared)/shared/sharedfunctions.js";
     import Editortree from "./editortree.svelte";
     import Selector from "../../(shared)/shared/selector.svelte";
     import swal from 'sweetalert';
@@ -50,6 +50,7 @@
     import Div from "../../(modules)/modules/div.svelte";
     import Text from "../../(modules)/modules/text.svelte";
     import GridContainer from "../../(modules)/modules/grid-container.svelte";
+    import EasySection from "../../(modules)/modules/easy-section.svelte";
 
     /**
      * Definition and list of all modules in a JSON.
@@ -61,6 +62,7 @@
         "div": Div,
         "text": Text,
         "gridcontainer": GridContainer,
+        "easysection": EasySection,
     };
 
     /**
@@ -73,6 +75,7 @@
         "div": {"title": "Container", "data": ""},
         "text": {"title": "Text", "data": "text"},
         "gridcontainer": {"title": "Grid Container", "data": ""},
+        "easysection": {"title": "Easy Section", "data": ""},
     };
 
     onMount(() => {
@@ -116,6 +119,7 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             sendDeletedElement(comp.uuid);
+                            closeOptionsPanel();
                             swal("Element deleted", {
                                 icon: "success",
                             });
