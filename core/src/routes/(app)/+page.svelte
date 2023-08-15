@@ -189,6 +189,13 @@
                 };
                 break;
 
+            case "img":
+                defaultData["data"] = {
+                    "class": "w-full h-full relative",
+                    "src": "/images/blank-image.png"
+                }
+                break;
+
             default:
                 break;
         }

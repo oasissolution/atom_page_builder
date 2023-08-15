@@ -40,6 +40,7 @@
       import Text from "../../(modules)/options/text.svelte";
       import GridContainer from "../../(modules)/options/grid-container.svelte";
       import EasySection from "../../(modules)/options/easy-section.svelte";
+      import Image from "../../(modules)/options/img.svelte";
 
 
       /**
@@ -53,6 +54,7 @@
          "text": Text,
          "gridcontainer": GridContainer,
          "easysection": EasySection,
+         "img": Image
       };
 
 

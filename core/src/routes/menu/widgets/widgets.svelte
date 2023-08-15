@@ -21,6 +21,8 @@
    import Text from "../../(modules)/widgets/text.svelte";
    import GridContainer from "../../(modules)/widgets/grid-container.svelte";
    import EasySection from "../../(modules)/widgets/easy-section.svelte";
+   import Image from "../../(modules)/widgets/img.svelte";
+
 
    /**
     * Definition and list of all modules in a JSON.
@@ -32,6 +34,7 @@
       "text": Text,
       "gridcontainer": GridContainer,
       "easysection": EasySection,
+      "img": Image
    };
 
 
@@ -58,6 +61,7 @@
          <svelte:component this="{Div}" />
          <svelte:component this="{Text}" />
          <svelte:component this="{GridContainer}" />
+         <svelte:component this="{Image}" />
       </div>
 
    </div>

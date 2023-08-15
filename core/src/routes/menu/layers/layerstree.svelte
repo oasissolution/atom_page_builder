@@ -11,6 +11,7 @@
     import GridContainer from "../../(modules)/layers/grid-container.svelte";
 	import { onMount } from "svelte/internal";
 	import EasySection from "../../(modules)/layers/easy-section.svelte";
+    import Image from "../../(modules)/layers/img.svelte"
 
     /**
      * @typedef {Object} ExpansionState
@@ -79,9 +80,13 @@
 
                     {:else if child.type == "easysection"}
                     <EasySection uuid={child.uuid} selected={$globalSelectedElementUuidStore === child.uuid} on:click={()=>setSelected(child.uuid)} />
-    
 
-                    {:else}
+                    {:else if child.type == "img"}
+                    <Image uuid={child.uuid} selected={$globalSelectedElementUuidStore === child.uuid} on:click={()=>setSelected(child.uuid)} />
+
+
+
+                               {:else}
                     <span class="flex flex-row gap-2 align-middle my-2" class:text-teal-600 = {$globalSelectedElementUuidStore === child.uuid} >
                         <span class="">{child.type}</span>
                         <span class="flex flex-col">

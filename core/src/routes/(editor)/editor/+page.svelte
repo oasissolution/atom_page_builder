@@ -51,6 +51,7 @@
     import Text from "../../(modules)/modules/text.svelte";
     import GridContainer from "../../(modules)/modules/grid-container.svelte";
     import EasySection from "../../(modules)/modules/easy-section.svelte";
+    import Image from "../../(modules)/modules/img.svelte";
 
     /**
      * Definition and list of all modules in a JSON.
@@ -63,6 +64,7 @@
         "text": Text,
         "gridcontainer": GridContainer,
         "easysection": EasySection,
+        "img": Image
     };
 
     /**
@@ -76,6 +78,7 @@
         "text": {"title": "Text", "data": "text"},
         "gridcontainer": {"title": "Grid Container", "data": ""},
         "easysection": {"title": "Easy Section", "data": ""},
+        "img": {"title": "Image", "data": ""}
     };
 
     onMount(() => {
