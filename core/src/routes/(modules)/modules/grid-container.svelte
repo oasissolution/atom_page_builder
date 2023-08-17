@@ -1,373 +1,405 @@
 <script>
-    import "../../../app.css";
-	import { onDestroy, onMount } from "svelte";
-    import { globalSelectedElementStore, globalSelectedElementUuidStore } from "../../globals/selectorstores.js";
-    import {
-        sendSelectedElement,  openOptionsPanel,
-        createDroppedElementInside, replaceDroppedElementInside,
-        createDroppedElementBefore, replaceDroppedElementBefore,
-        createDroppedElementAfter, replaceDroppedElementAfter,
+	import '../../../app.css';
+	import { onDestroy, onMount } from 'svelte';
+	import {
+		globalSelectedElementStore,
+		globalSelectedElementUuidStore
+	} from '../../globals/selectorstores.js';
+	import {
+		sendSelectedElement,
+		openOptionsPanel,
+		createDroppedElementInside,
+		replaceDroppedElementInside,
+		createDroppedElementBefore,
+		replaceDroppedElementBefore,
+		createDroppedElementAfter,
+		replaceDroppedElementAfter
+	} from '../../(shared)/shared/sharedfunctions.js';
+	import { writable } from 'svelte/store';
 
-    } from "../../(shared)/shared/sharedfunctions.js";
-    import { writable } from "svelte/store";
+	/**
+	 * uuid of element
+	 * @type string
+	 */
+	export let uuid;
 
-    /**
-     * uuid of element
-     * @type string
-     */
-    export let uuid;
+	/**
+	 * Control behaviour of element if element is selected.
+	 * @type boolean
+	 */
+	export let selected;
 
+	/**
+	 * Used to control behaviour of element if element has childs.
+	 * @type Array<JSON>
+	 */
+	export let childs;
 
-    /**
-     * Control behaviour of element if element is selected.
-     * @type boolean
-     */
-    export let selected;
+	/**
+	 * Required data to fill attributes of HTML elements
+	 * @typedef {Object} AttrData
+	 * @property {string} [accesskey] - Specifies a shortcut key to activate the element
+	 * @property {string} [class] - Specifies one or more class names for the element (used to reference the element in CSS)
+	 * @property {string} [contenteditable] - Specifies whether the content of the element can be edited by the user
+	 * @property {string} [dir] - Specifies the direction of the element's text (left-to-right or right-to-left)
+	 * @property {string} [draggable] - Specifies whether the element is draggable
+	 * @property {boolean} [hidden] - Specifies that the element should be hidden
+	 * @property {string} [id] - Specifies a unique id for the element (used to reference the element in JavaScript)
+	 * @property {string} [lang] - Specifies the language of the element's content
+	 * @property {boolean} [spellcheck] - Specifies whether the element should have its spelling and grammar checked
+	 * @property {string} [style] - Specifies inline CSS for the element
+	 * @property {number} [tabindex] - Specifies the tab order of the element
+	 * @property {string} [title] - Specifies extra information about the element (displayed as a tooltip)
+	 */
 
-    /**
-     * Used to control behaviour of element if element has childs.
-     * @type Array<JSON>
-     */
-    export let childs;
+	/**
+	 * @type {AttrData}
+	 */
+	export let data;
 
+	/**
+	 * List of attributes
+	 * @type [
+	 *  "accesskey", "class", "contenteditable", "dir", "draggable", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"
+	 * ]
+	 */
+	export const elAttr = [
+		'accesskey',
+		'class',
+		'contenteditable',
+		'dir',
+		'draggable',
+		'hidden',
+		'id',
+		'lang',
+		'spellcheck',
+		'style',
+		'tabindex',
+		'title'
+	];
 
-    /**
-     * Required data to fill attributes of HTML elements
-     * @typedef {Object} AttrData
-     * @property {string} [accesskey] - Specifies a shortcut key to activate the element
-     * @property {string} [class] - Specifies one or more class names for the element (used to reference the element in CSS)
-     * @property {string} [contenteditable] - Specifies whether the content of the element can be edited by the user
-     * @property {string} [dir] - Specifies the direction of the element's text (left-to-right or right-to-left)
-     * @property {string} [draggable] - Specifies whether the element is draggable
-     * @property {boolean} [hidden] - Specifies that the element should be hidden
-     * @property {string} [id] - Specifies a unique id for the element (used to reference the element in JavaScript)
-     * @property {string} [lang] - Specifies the language of the element's content
-     * @property {boolean} [spellcheck] - Specifies whether the element should have its spelling and grammar checked
-     * @property {string} [style] - Specifies inline CSS for the element
-     * @property {number} [tabindex] - Specifies the tab order of the element
-     * @property {string} [title] - Specifies extra information about the element (displayed as a tooltip)
-     */
+	/**
+	 * @type HTMLElement
+	 */
+	let bindElement;
 
-    /**
-     * @type {AttrData}
-     */
-    export let data;
+	/**
+	 * @type HTMLElement
+	 */
+	let bindElementActions;
 
+	/**
+	 * @type HTMLElement
+	 */
+	let selectedElement = $globalSelectedElementStore;
+	//Update global data whenever selectedElement changes.
+	$: globalSelectedElementStore.set(selectedElement);
 
-    /**
-     * List of attributes
-     * @type [
-     *  "accesskey", "class", "contenteditable", "dir", "draggable", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"
-     * ]
-     */
-    export const elAttr = ["accesskey", "class", "contenteditable", "dir", "draggable", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"];
+	/// updates ui when data changes
+	$: data,
+		(() => {
+			if (data !== undefined && bindElement !== undefined) {
+				if (data.accesskey !== undefined) bindElement.setAttribute('accesskey', data.accesskey);
+				if (data.contenteditable !== undefined)
+					bindElement.setAttribute('contenteditable', data.contenteditable);
+				if (data.draggable !== undefined) bindElement.setAttribute('draggable', data.draggable);
+				if (data.spellcheck !== undefined)
+					bindElement.setAttribute('spellcheck', data.spellcheck.toString());
+				if (data.tabindex !== undefined)
+					bindElement.setAttribute('tabindex', data.tabindex.toString());
 
-    /**
-     * @type HTMLElement
-     */
-    let bindElement;
+				var _class_addons = '';
+				if (selected == true) {
+					_class_addons += ' outline-dashed outline-2 outline-offset-2 outline-sky-500';
+					// console.log("Element selected : Div : "+uuid);
+				}
 
-    /**
-     * @type HTMLElement
-     */
-    let bindElementActions;
+				bindElement.setAttribute(
+					'class',
+					data.class !== undefined ? data.class + _class_addons : _class_addons
+				);
+				// if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+				if (data.dir !== undefined) bindElement.setAttribute('dir', data.dir);
+				if (data.hidden !== undefined) bindElement.setAttribute('hidden', data.hidden.toString());
+				if (data.id !== undefined) bindElement.setAttribute('id', data.id);
+				if (data.lang !== undefined) bindElement.setAttribute('lang', data.lang);
+				if (data.style !== undefined) bindElement.setAttribute('style', data.style);
+				if (data.title !== undefined) bindElement.setAttribute('title', data.title);
 
-    /**
-     * @type HTMLElement
-     */
-    let selectedElement = $globalSelectedElementStore;
-    //Update global data whenever selectedElement changes.
-    $: globalSelectedElementStore.set(selectedElement);
+				// TODO: Update action buttons location
+			}
+		})();
 
-    /// updates ui when data changes
-    $: data, (() => {
-        if(data !== undefined && bindElement !== undefined){
-            if(data.accesskey           !== undefined) bindElement.setAttribute("accesskey",        data.accesskey);
-            if(data.contenteditable     !== undefined) bindElement.setAttribute("contenteditable",  data.contenteditable);
-            if(data.draggable           !== undefined) bindElement.setAttribute("draggable",        data.draggable);
-            if(data.spellcheck          !== undefined) bindElement.setAttribute("spellcheck",       data.spellcheck.toString());
-            if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex.toString());
+	/// updates ui when selected changes
+	$: selected,
+		(() => {
+			if (selected !== undefined && bindElement !== undefined) {
+				var _class_addons = '';
+				if (selected == true) {
+					_class_addons += ' outline-dashed outline-2 outline-offset-2 outline-sky-500';
+				}
+				bindElement.setAttribute(
+					'class',
+					data.class !== undefined ? data.class + _class_addons : _class_addons
+				);
+				// if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
+			}
+		})();
 
-            var _class_addons = "";
-            if(selected == true){
-                _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-                // console.log("Element selected : Div : "+uuid);
-            }
+	/**
+	 * if mouse is in center then drop element inside.
+	 *
+	 * This variable holds what to do!
+	 * @type Writable<boolean>
+	 */
+	let droppedInside = writable(true);
 
-            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
-            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
-            if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
-            if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
-            if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
-            if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
-            if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
-            if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
+	/**
+	 * if mouse is in a area of "dropAreaLimit" px from left then drop before else drop after
+	 *
+	 * This variable holds what to do!
+	 * @type Writable<boolean>
+	 */
+	let droppedBefore = writable(true);
 
-            // TODO: Update action buttons location
-        }
+	/**
+	 * This width is from left side of element. If mouse is in this limit then this means new dropped item will be before this element.
+	 * Otherwise element will be dropped inside.
+	 */
+	const dropAreaLimit = 30;
 
-    })();
+	function dropped(e) {
+		const types = e.dataTransfer.types;
+		// execute function only when target container is different from source container
+		if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
+			cancelDefault(e);
 
-    /// updates ui when selected changes
-    $: selected, (() => {
-        if(selected !== undefined && bindElement !== undefined){
-            var _class_addons = "";
-            if(selected == true){
-                _class_addons += " outline-dashed outline-2 outline-offset-2 outline-sky-500";
-            }
-            bindElement.setAttribute("class", data.class !== undefined ? data.class + _class_addons : _class_addons);
-            // if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons);
-        }
-    })();
+			bindElement.classList.remove('outline-dashed');
+			bindElement.classList.remove('outline-2');
+			bindElement.classList.remove('outline-offset-2');
+			bindElement.classList.remove('outline-teal-500');
+			bindElement.classList.remove('border-l-4');
+			bindElement.classList.remove('border-r-4');
+			bindElement.classList.remove('border-teal-500');
 
-    /**
-     * if mouse is in center then drop element inside.
-     *
-     * This variable holds what to do!
-     * @type Writable<boolean>
-     */
-    let droppedInside = writable(true);
+			var typeOfTransfer = e.dataTransfer.getData('text/plain');
+			if (!typeOfTransfer.toString().includes('element-')) {
+				/// Comes from inside of editor
 
-    /**
-     * if mouse is in a area of "dropAreaLimit" px from left then drop before else drop after
-     *
-     * This variable holds what to do!
-     * @type Writable<boolean>
-     */
-    let droppedBefore = writable(true);
+				/// if mouse is in center then drop element inside.
+				/// if mouse is in a area of 30 px from left then drop before.
+				/// if mouse is in a area of 30 px from right then drop after.
+				if (typeOfTransfer.toString() !== bindElement.id) {
+					if ($droppedInside == true) {
+						// console.log("put " + typeOfTransfer.toString() + " inside " + bindElement.id);
+						/// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+						replaceDroppedElementInside(typeOfTransfer.toString(), bindElement.id);
+					} else {
+						// console.log("replace " + typeOfTransfer.toString() + " before/after " + bindElement.id);
+						if ($droppedBefore === true) {
+							/// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+							replaceDroppedElementBefore(typeOfTransfer.toString(), bindElement.id);
+						} else {
+							/// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
+							replaceDroppedElementAfter(typeOfTransfer.toString(), bindElement.id);
+						}
+					}
+				}
+			} else {
+				///Comes from widgets panel
+				if ($droppedInside == true) {
+					/// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+					createDroppedElementInside(uuid, typeOfTransfer);
+				} else {
+					if ($droppedBefore === true) {
+						/// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+						createDroppedElementBefore(uuid, typeOfTransfer);
+					} else {
+						/// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
+						createDroppedElementAfter(uuid, typeOfTransfer);
+					}
+				}
+			}
+		}
+	}
 
-    /**
-     * This width is from left side of element. If mouse is in this limit then this means new dropped item will be before this element.
-     * Otherwise element will be dropped inside.
-     */
-    const dropAreaLimit = 30;
+	function dragOver(e) {
+		cancelDefault(e);
 
-    function dropped(e) {
-        const types = e.dataTransfer.types;
-        // execute function only when target container is different from source container
-        if (bindElement.id !== e.target.id || types.includes('text/plain') === true) {
-            cancelDefault(e);
+		const types = e.dataTransfer.types;
+		if (types.includes('text/plain')) {
+			// && e.dataTransfer.getData('text/plain') === 'div'
 
-            bindElement.classList.remove("outline-dashed");
-            bindElement.classList.remove("outline-2");
-            bindElement.classList.remove("outline-offset-2");
-            bindElement.classList.remove("outline-teal-500");
-            bindElement.classList.remove("border-l-4");
-            bindElement.classList.remove("border-r-4");
-            bindElement.classList.remove("border-teal-500");
+			const rect = bindElement.getBoundingClientRect();
 
-            var typeOfTransfer = e.dataTransfer.getData('text/plain');
-            if(!typeOfTransfer.toString().includes("element-")){
-                /// Comes from inside of editor
+			// if(rect.width <= (2*dropAreaLimit)){
+			//     /// if div has no childs, instead of calculating left/right, drop element inside directly.
+			//     droppedInside.set(true);
+			// }else{}
+			if (
+				rect.left + dropAreaLimit < e.pageX &&
+				e.pageX < rect.left + rect.width - dropAreaLimit &&
+				rect.top <= e.pageY &&
+				e.pageY <= rect.top + rect.height
+			) {
+				/// if mouse is in center then drop element inside.
+				droppedInside.set(true);
+			} else if (
+				rect.left <= e.pageX &&
+				e.pageX <= rect.left + dropAreaLimit &&
+				rect.top <= e.pageY &&
+				e.pageY <= rect.top + rect.height
+			) {
+				droppedInside.set(false);
+				droppedBefore.set(true);
+			} else if (
+				rect.right >= e.pageX &&
+				e.pageX >= rect.right - dropAreaLimit &&
+				rect.top <= e.pageY &&
+				e.pageY <= rect.top + rect.height
+			) {
+				droppedInside.set(false);
+				droppedBefore.set(false);
+			}
 
-                /// if mouse is in center then drop element inside.
-                /// if mouse is in a area of 30 px from left then drop before.
-                /// if mouse is in a area of 30 px from right then drop after.
-                if(typeOfTransfer.toString() !== bindElement.id){
-                    if($droppedInside == true){
-                        // console.log("put " + typeOfTransfer.toString() + " inside " + bindElement.id);
-                        /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
-                        replaceDroppedElementInside(typeOfTransfer.toString(), bindElement.id);
-                    }else{
-                        // console.log("replace " + typeOfTransfer.toString() + " before/after " + bindElement.id);
-                        if($droppedBefore === true){
-                            /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
-                            replaceDroppedElementBefore(typeOfTransfer.toString(), bindElement.id);
-                        }else{
-                            /// in this function typeOfTransfer is uuid of dragStart element. function works as this => to
-                            replaceDroppedElementAfter(typeOfTransfer.toString(), bindElement.id);
-                        }
-                    }
-                }
+			/// if mouse is in center then drop element inside.
+			/// if mouse is in a area of 30 px from left then drop before.
+			/// if mouse is in a area of 30 px from right then drop after.
 
-            }else{
-                ///Comes from widgets panel
-                if($droppedInside == true){
-                    /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
-                    createDroppedElementInside(uuid, typeOfTransfer);
-                }else{
-                    if($droppedBefore === true){
-                        /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
-                        createDroppedElementBefore(uuid, typeOfTransfer);
-                    }else{
-                        /// in this function typeOfTransfer is element type to create e.g. element-div, element-text, ...
-                        createDroppedElementAfter(uuid, typeOfTransfer);
-                    }
-                }
-            }
-        }
-    }
+			if ($droppedInside == true) {
+				bindElement.classList.add('outline-dashed');
+				bindElement.classList.add('outline-2');
+				bindElement.classList.add('outline-offset-2');
+				bindElement.classList.add('outline-violet-500');
+				bindElement.classList.remove('border-l-4');
+				bindElement.classList.remove('border-r-4');
+				bindElement.classList.remove('border-violet-500');
+			} else {
+				if ($droppedBefore == true) {
+					bindElement.classList.add('border-l-4');
+					bindElement.classList.remove('border-r-4');
+				} else {
+					bindElement.classList.add('border-r-4');
+					bindElement.classList.remove('border-l-4');
+				}
+				bindElement.classList.add('border-violet-500');
+				bindElement.classList.remove('outline-dashed');
+				bindElement.classList.remove('outline-2');
+				bindElement.classList.remove('outline-offset-2');
+				bindElement.classList.remove('outline-violet-500');
+			}
+		}
+	}
 
-    function dragOver(e) {
-        cancelDefault(e);
+	function dragLeave(e) {
+		bindElement.classList.remove('outline-dashed');
+		bindElement.classList.remove('outline-2');
+		bindElement.classList.remove('outline-offset-2');
+		bindElement.classList.remove('outline-violet-500');
 
-        const types = e.dataTransfer.types;
-        if (types.includes('text/plain')) { // && e.dataTransfer.getData('text/plain') === 'div'
+		bindElement.classList.remove('border-l-4');
+		bindElement.classList.remove('border-r-4');
+		bindElement.classList.remove('border-violet-500');
+	}
 
-            const rect = bindElement.getBoundingClientRect();
+	function dragEnd(e) {
+		e.dataTransfer.clearData();
+	}
 
-            // if(rect.width <= (2*dropAreaLimit)){
-            //     /// if div has no childs, instead of calculating left/right, drop element inside directly.
-            //     droppedInside.set(true);
-            // }else{}
-                if(((rect.left + dropAreaLimit ) < e.pageX && e.pageX < (rect.left + rect.width - dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
-                    /// if mouse is in center then drop element inside.
-                    droppedInside.set(true);
-                }else if((rect.left <= e.pageX && e.pageX <= (rect.left + dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
-                    droppedInside.set(false);
-                    droppedBefore.set(true);
-                }else if((rect.right >= e.pageX && e.pageX >= (rect.right - dropAreaLimit)) && (rect.top <= e.pageY && e.pageY <= (rect.top + rect.height))){
-                    droppedInside.set(false);
-                    droppedBefore.set(false);
-                }
-            
+	function cancelDefault(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	}
 
-            /// if mouse is in center then drop element inside.
-            /// if mouse is in a area of 30 px from left then drop before.
-            /// if mouse is in a area of 30 px from right then drop after.
+	onMount(() => {
+		if (data.accesskey !== undefined) bindElement.setAttribute('accesskey', data.accesskey);
+		if (data.contenteditable !== undefined)
+			bindElement.setAttribute('contenteditable', data.contenteditable);
+		if (data.draggable !== undefined) bindElement.setAttribute('draggable', data.draggable);
+		if (data.spellcheck !== undefined)
+			bindElement.setAttribute('spellcheck', data.spellcheck.toString());
+		if (data.tabindex !== undefined) bindElement.setAttribute('tabindex', data.tabindex.toString());
 
-            if($droppedInside == true){
-                bindElement.classList.add("outline-dashed");
-                bindElement.classList.add("outline-2");
-                bindElement.classList.add("outline-offset-2");
-                bindElement.classList.add("outline-violet-500");
-                bindElement.classList.remove("border-l-4");
-                bindElement.classList.remove("border-r-4");
-                bindElement.classList.remove("border-violet-500");
-            }else{
-                if($droppedBefore == true){
-                    bindElement.classList.add("border-l-4");
-                    bindElement.classList.remove("border-r-4");
-                }else{
-                    bindElement.classList.add("border-r-4");
-                    bindElement.classList.remove("border-l-4");
-                }
-                bindElement.classList.add("border-violet-500");
-                bindElement.classList.remove("outline-dashed");
-                bindElement.classList.remove("outline-2");
-                bindElement.classList.remove("outline-offset-2");
-                bindElement.classList.remove("outline-violet-500");
-            }
+		var _class_addons = '';
 
-        }
+		if (data.class !== undefined) bindElement.setAttribute('class', data.class + _class_addons); // selectedBorder
+		if (data.dir !== undefined) bindElement.setAttribute('dir', data.dir);
+		if (data.hidden !== undefined) bindElement.setAttribute('hidden', data.hidden.toString());
+		if (data.id !== undefined) bindElement.setAttribute('id', data.id);
+		if (data.lang !== undefined) bindElement.setAttribute('lang', data.lang);
+		if (data.style !== undefined) bindElement.setAttribute('style', data.style);
+		if (data.title !== undefined) bindElement.setAttribute('title', data.title);
 
-    }
+		bindElement.addEventListener('drop', dropped);
+		bindElement.addEventListener('dragenter', cancelDefault);
+		bindElement.addEventListener('dragover', dragOver);
+		bindElement.addEventListener('dragleave', dragLeave);
+		// bindElement.addEventListener('dragend', dragEnd);
 
-    function dragLeave(e) {
+		bindElement.addEventListener('dragstart', (event) => {
+			/// if div itself is dragging
+			if ($globalSelectedElementStore.id == bindElement.id) {
+				event.dataTransfer.clearData();
+				event.dataTransfer.setData('text/plain', bindElement.id);
+			}
+		});
+	});
 
-        bindElement.classList.remove("outline-dashed");
-        bindElement.classList.remove("outline-2");
-        bindElement.classList.remove("outline-offset-2");
-        bindElement.classList.remove("outline-violet-500");
+	onDestroy(() => {
+		bindElement.removeEventListener('drop', dropped);
+		bindElement.removeEventListener('dragenter', cancelDefault);
+		bindElement.removeEventListener('dragover', dragOver);
+		bindElement.removeEventListener('dragleave', dragLeave);
+		// bindElement.removeEventListener('dragend', dragEnd);
+	});
 
-        bindElement.classList.remove("border-l-4");
-        bindElement.classList.remove("border-r-4");
-        bindElement.classList.remove("border-violet-500");
+	function selectElement() {
+		if (
+			$globalSelectedElementUuidStore != uuid ||
+			$globalSelectedElementUuidStore == null ||
+			$globalSelectedElementUuidStore == undefined
+		) {
+			/// Send selected uuid to main frame.
+			sendSelectedElement(uuid);
+			globalSelectedElementUuidStore.set(uuid);
 
-    }
-
-    function dragEnd(e){
-        e.dataTransfer.clearData();
-    }
-
-    function cancelDefault(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }
-
-
-
-    onMount(() => {
-
-        if(data.accesskey           !== undefined) bindElement.setAttribute("accesskey",        data.accesskey);
-        if(data.contenteditable     !== undefined) bindElement.setAttribute("contenteditable",  data.contenteditable);
-        if(data.draggable           !== undefined) bindElement.setAttribute("draggable",        data.draggable);
-        if(data.spellcheck          !== undefined) bindElement.setAttribute("spellcheck",       data.spellcheck.toString());
-        if(data.tabindex            !== undefined) bindElement.setAttribute("tabindex",         data.tabindex.toString());
-
-        var _class_addons = "";
-
-        if(data.class   !== undefined) bindElement.setAttribute("class",    data.class + _class_addons); // selectedBorder
-        if(data.dir     !== undefined) bindElement.setAttribute("dir",      data.dir);
-        if(data.hidden  !== undefined) bindElement.setAttribute("hidden",   data.hidden.toString());
-        if(data.id      !== undefined) bindElement.setAttribute("id",       data.id);
-        if(data.lang    !== undefined) bindElement.setAttribute("lang",     data.lang);
-        if(data.style   !== undefined) bindElement.setAttribute("style",    data.style);
-        if(data.title   !== undefined) bindElement.setAttribute("title",    data.title);
-
-
-        bindElement.addEventListener("drop", dropped);
-        bindElement.addEventListener("dragenter", cancelDefault);
-        bindElement.addEventListener("dragover", dragOver);
-        bindElement.addEventListener("dragleave", dragLeave);
-        // bindElement.addEventListener('dragend', dragEnd);
-
-        bindElement.addEventListener('dragstart', (event) => {
-            /// if div itself is dragging
-            if($globalSelectedElementStore.id == bindElement.id){
-                event.dataTransfer.clearData();
-                event.dataTransfer.setData('text/plain', bindElement.id);
-            }
-        });
-
-    });
-
-    onDestroy(() => {
-        bindElement.removeEventListener("drop", dropped);
-        bindElement.removeEventListener("dragenter", cancelDefault);
-        bindElement.removeEventListener("dragover", dragOver);
-        bindElement.removeEventListener("dragleave", dragLeave);
-        // bindElement.removeEventListener('dragend', dragEnd);
-    });
-
-    function selectElement(){
-        if($globalSelectedElementUuidStore != uuid 
-        || $globalSelectedElementUuidStore == null
-        || $globalSelectedElementUuidStore == undefined
-        ){
-            /// Send selected uuid to main frame.
-            sendSelectedElement(uuid);
-            globalSelectedElementUuidStore.set(uuid);
-
-            // update global variable, so selector activates.
-            selectedElement = bindElement;
-            // console.info("(GridContainer) Made a selection : " + uuid);
-        }
-    }
-
-
+			// update global variable, so selector activates.
+			selectedElement = bindElement;
+			// console.info("(GridContainer) Made a selection : " + uuid);
+		}
+	}
 </script>
 
-
-<div bind:this={bindElement} id="{uuid}" on:mousedown|self={selectElement} on:dblclick={openOptionsPanel} class:blockUserSelect={childs.length == 0} draggable="true" class="bgSquare">
-
-    <slot>
-        <em class="text-slate-500 m-2">No content was provided</em>
-    </slot>
-    {#if childs.length == 0}
-
-    <em class="text-slate-500 m-2">No content was provided</em>
-
-    {/if}
-
+<div
+	bind:this={bindElement}
+	id={uuid}
+	on:mousedown|self={selectElement}
+	on:dblclick={openOptionsPanel}
+	class:blockUserSelect={childs.length == 0}
+	draggable="true"
+	class="bgSquare"
+>
+	<slot>
+		<em class="text-slate-500 m-2">No content was provided</em>
+	</slot>
+	{#if childs.length == 0}
+		<em class="text-slate-500 m-2">No content was provided</em>
+	{/if}
 </div>
 
-
 <style>
-
-    .blockUserSelect{
-        /*
+	.blockUserSelect {
+		/*
         To prevent user selecting inside the drag source
         */
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
 
-    .bgSquare{
-        background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16"><path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/></svg>') !important;
-    }
-
+	.bgSquare {
+		background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app" viewBox="0 0 16 16"><path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/></svg>') !important;
+	}
 </style>

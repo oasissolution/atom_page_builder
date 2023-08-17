@@ -164,6 +164,7 @@
 
 	function toggleVisibility() {
 		if (loaded == true) {
+			console.log('works');
 			var newClass = '';
 			var found = false;
 
@@ -366,9 +367,9 @@
 >
 	<div class="flex flex-row gap-2 pl-2">
 		<div class="w-4 h-4">
-			<i class="bi bi-grid-3x3-gap" />
+			<i class="bi bi-bounding-box-circles" />
 		</div>
-		<div class="">Grid Container</div>
+		<div class="">Section</div>
 	</div>
 	{#if selected == true}
 		<div class="flex flex-row justify-end gap-2">

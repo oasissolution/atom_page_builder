@@ -1,105 +1,98 @@
-
-
 /**
  * Send selected elements uuid to main frame.
  * @param {string} targetUuid uuid of selected element.
  */
-export function sendSelectedElement(targetUuid){
+export function sendSelectedElement(targetUuid) {
+	let data = {
+		action: 'selectElement',
+		data: {
+			uuid: targetUuid
+		}
+	};
 
-    let data = {
-        "action": "selectElement",
-        "data": {
-            "uuid": targetUuid
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
-
-
 
 /**
  * Send dropped element data to main frame.
- * 
+ *
  * Main frame updates JSON according to this data.
- * 
+ *
  * Adds default values of element.
  * @param {string} targetUuid uuid of selected element.
  * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
  */
-export function createDroppedElementInside(targetUuid, elementType){
+export function createDroppedElementInside(targetUuid, elementType) {
+	let data = {
+		action: 'createDroppedElementInside',
+		data: {
+			uuid: targetUuid,
+			elementType: elementType
+		}
+	};
 
-    let data = {
-        "action": "createDroppedElementInside",
-        "data": {
-            "uuid": targetUuid,
-            "elementType": elementType
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
-
 
 /**
  * Send deleted elements uuid to main frame.
  * @param {string} targetUuid uuid of selected element.
  */
-export function sendDeletedElement(targetUuid){
+export function sendDeletedElement(targetUuid) {
+	let data = {
+		action: 'deleteElement',
+		data: {
+			uuid: targetUuid
+		}
+	};
 
-    let data = {
-        "action": "deleteElement",
-        "data": {
-            "uuid": targetUuid
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
 
 /**
  * Toggle widgets panel.
  */
-export function toggleWidgetsPanel(){
+export function toggleWidgetsPanel() {
+	let data = {
+		action: 'toggleWidgetsPanel',
+		data: {}
+	};
 
-    let data = {
-        "action": "toggleWidgetsPanel",
-        "data": {}
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
 
 /**
  * Opens options panel.
  */
-export function openOptionsPanel(){
+export function openOptionsPanel() {
+	let data = {
+		action: 'openOptionsPanel',
+		data: {}
+	};
 
-    let data = {
-        "action": "openOptionsPanel",
-        "data": {}
-    }
+	window.parent.postMessage(data, '*');
+}
 
-    window.parent.postMessage(data, '*');
+export function openSectionModal() {
+	let data = {
+		action: 'openSectionModal',
+		data: {}
+	};
+
+	window.parent.postMessage(data, '*');
 }
 
 /**
  * Closes options panel.
  */
-export function closeOptionsPanel(){
+export function closeOptionsPanel() {
+	let data = {
+		action: 'closeOptionsPanel',
+		data: {}
+	};
 
-    let data = {
-        "action": "closeOptionsPanel",
-        "data": {}
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
 
 /**
  * Send dropped element data to main frame.
@@ -110,19 +103,17 @@ export function closeOptionsPanel(){
  * @param {string} thisUuid uuid of selected element.
  * @param {string} insideUuid uuid of container element
  */
-export function replaceDroppedElementInside(thisUuid, insideUuid){
+export function replaceDroppedElementInside(thisUuid, insideUuid) {
+	let data = {
+		action: 'replaceDroppedElementInside',
+		data: {
+			thisUuid: thisUuid,
+			insideUuid: insideUuid
+		}
+	};
 
-    let data = {
-        "action": "replaceDroppedElementInside",
-        "data": {
-            "thisUuid": thisUuid,
-            "insideUuid": insideUuid
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
 
 /**
  * Send dropped element data to main frame.
@@ -133,19 +124,17 @@ export function replaceDroppedElementInside(thisUuid, insideUuid){
  * @param {string} thisUuid uuid of selected element.
  * @param {string} beforeUuid uuid of container element
  */
-export function replaceDroppedElementBefore(thisUuid, beforeUuid){
+export function replaceDroppedElementBefore(thisUuid, beforeUuid) {
+	let data = {
+		action: 'replaceDroppedElementBefore',
+		data: {
+			thisUuid: thisUuid,
+			beforeUuid: beforeUuid
+		}
+	};
 
-    let data = {
-        "action": "replaceDroppedElementBefore",
-        "data": {
-            "thisUuid": thisUuid,
-            "beforeUuid": beforeUuid
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
 
 /**
  * Send dropped element data to main frame.
@@ -156,19 +145,17 @@ export function replaceDroppedElementBefore(thisUuid, beforeUuid){
  * @param {string} thisUuid uuid of selected element.
  * @param {string} afterUuid uuid of container element
  */
-export function replaceDroppedElementAfter(thisUuid, afterUuid){
+export function replaceDroppedElementAfter(thisUuid, afterUuid) {
+	let data = {
+		action: 'replaceDroppedElementAfter',
+		data: {
+			thisUuid: thisUuid,
+			afterUuid: afterUuid
+		}
+	};
 
-    let data = {
-        "action": "replaceDroppedElementAfter",
-        "data": {
-            "thisUuid": thisUuid,
-            "afterUuid": afterUuid
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
 
 /**
  * Send dropped element data to main frame.
@@ -179,20 +166,17 @@ export function replaceDroppedElementAfter(thisUuid, afterUuid){
  * @param {string} beforeUuid uuid of container element
  * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
  */
-export function createDroppedElementBefore(beforeUuid, elementType){
+export function createDroppedElementBefore(beforeUuid, elementType) {
+	let data = {
+		action: 'createDroppedElementBefore',
+		data: {
+			beforeUuid: beforeUuid,
+			elementType: elementType
+		}
+	};
 
-    let data = {
-        "action": "createDroppedElementBefore",
-        "data": {
-            "beforeUuid": beforeUuid,
-            "elementType": elementType,
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
-
-
 
 /**
  * Send dropped element data to main frame.
@@ -203,62 +187,60 @@ export function createDroppedElementBefore(beforeUuid, elementType){
  * @param {string} afterUuid uuid of container element
  * @param {string} elementType Type of element from e.dataTransfer.getData('text/plain')
  */
-export function createDroppedElementAfter(afterUuid, elementType){
+export function createDroppedElementAfter(afterUuid, elementType) {
+	let data = {
+		action: 'createDroppedElementAfter',
+		data: {
+			afterUuid: afterUuid,
+			elementType: elementType
+		}
+	};
 
-    let data = {
-        "action": "createDroppedElementAfter",
-        "data": {
-            "afterUuid": afterUuid,
-            "elementType": elementType,
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
 
 /**
  * Refreshes editor data from main panel.
  */
-export function refreshEditorData(){
+export function refreshEditorData() {
+	let data = {
+		action: 'refreshEditorData',
+		data: {}
+	};
 
-    let data = {
-        "action": "refreshEditorData",
-        "data": {}
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
 
 /**
  * Updates main panel from editor.
  */
-export function updateMainPanelFromEditor(globalComponentCollectionStore, globalEditorPreferencesStore){
+export function updateMainPanelFromEditor(
+	globalComponentCollectionStore,
+	globalEditorPreferencesStore
+) {
+	let data = {
+		action: 'updateMainPanelFromEditor',
+		data: {
+			componentCollection: globalComponentCollectionStore,
+			editorPreferences: globalEditorPreferencesStore
+		}
+	};
 
-    let data = {
-        "action": "updateMainPanelFromEditor",
-        "data": {
-            "componentCollection": globalComponentCollectionStore,
-            "editorPreferences": globalEditorPreferencesStore,
-        }
-    }
-
-    window.parent.postMessage(data, '*');
+	window.parent.postMessage(data, '*');
 }
 
 /**
  * Sends current innerHTML of editor inner panel.
  */
-export function sendEditorInnerHTML(){
+export function sendEditorInnerHTML() {
+	var doc = document.getElementById('editorInnerPanel');
 
-    var doc = document.getElementById("editorInnerPanel");
+	let data = {
+		action: 'sendEditorInnerHTML',
+		data: {
+			innerHTML: doc?.innerHTML.toString()
+		}
+	};
 
-    let data = {
-        "action": "sendEditorInnerHTML",
-        "data": {
-            "innerHTML": doc?.innerHTML.toString(),
-        }
-    }
-
-    window.parent.postMessage(data, '*');
-
+	window.parent.postMessage(data, '*');
 }

@@ -166,7 +166,7 @@
 	 */
 	function clearOptionPanelVariables() {
 		classInput = '';
-		layoutDisplay = 'grid'; /////////////////////////
+		layoutDisplay = ''; /////////////////////////
 		layoutPosition = '';
 		layoutFloat = 0;
 		layoutOverflow = '';
@@ -182,16 +182,16 @@
 		flexboxGridFlexGrow = '';
 		flexboxGridFlexShrink = '';
 		flexboxGridFlexOrder = '';
-		flexboxGridTemplateColumns = 'grid-cols-12'; /////////////////////////
+		flexboxGridTemplateColumns = ''; /////////////////////////
 		flexboxGridColumnsStartEnd = '';
-		flexboxGridColumnsSpan = '';
-		flexboxGridTemplateRows = 'grid-rows-6'; /////////////////////////
+		flexboxGridColumnsSpan = 'col-span-4';
+		flexboxGridTemplateRows = ''; /////////////////////////
 		flexboxGridRowsStartEnd = '';
 		flexboxGridRowsSpan = '';
 		flexboxGridAutoFlow = '';
 		flexboxGridAutoColumns = '';
 		flexboxGridAutoRows = '';
-		flexboxGridGap = 'gap-1'; /////////////////////////
+		flexboxGridGap = ''; /////////////////////////
 		flexboxGridGapX = '';
 		flexboxGridGapY = '';
 		flexboxGridJustifyContent = '';
@@ -245,6 +245,7 @@
 		backgroundPosition = '';
 		backgroundRepeat = '';
 		backgroundSize = '';
+		backgroundColor = '1414ff';
 	}
 
 	/**
@@ -714,6 +715,8 @@
 	 */
 	let backgroundSize;
 
+	let backgroundColor;
+
 	let collapseDesignLayout = false;
 	function toggleDesignLayout() {
 		collapseDesignLayout = !collapseDesignLayout;
@@ -768,9 +771,14 @@
 	function toggleBackground() {
 		collapseBackground = !collapseBackground;
 	}
+
+	let gridContainerShortOptions = false;
+	function toggleGridContainerShortOptions() {
+		gridContainerShortOptions = !gridContainerShortOptions;
+	}
 </script>
 
-<div class="widgetPanelSubTitle">Grid Container Options</div>
+<div class="widgetPanelSubTitle">Block Options</div>
 <div class="h-4" />
 
 <Optionsbutton items={['Content', 'Design', 'Animation']} bind:value={selectedTabPageIndex} />
@@ -778,12 +786,8 @@
 <div class="widgetPanelTabsDivider" />
 
 {#if selectedTabPageIndex == 0}
-	<SizingWidthHeight bind:loaded bind:classInput {elementDataLoaded} on:updateClass={updateClass} />
-
-	<div class="widgetPanelDivider" />
-
-	<LayoutDisplay
-		bind:layoutDisplay
+	<ContentColumns
+		bind:property={contentColumns}
 		bind:loaded
 		bind:classInput
 		{elementDataLoaded}
@@ -792,55 +796,59 @@
 
 	<div class="widgetPanelDivider" />
 
-	<FlexboxGridTemplateColumns
-		bind:property={flexboxGridTemplateColumns}
-		bind:loaded
-		bind:classInput
-		{elementDataLoaded}
-		on:updateClass={updateClass}
-	/>
+	<button class="collapseButton" on:click={toggleGridContainerShortOptions}>
+		<span class="collapseHeader">GRID</span>
+		{#if gridContainerShortOptions}
+			<i class="bi bi-dash" />
+		{:else}
+			<i class="bi bi-plus" />
+		{/if}
+	</button>
 
-	<div class="widgetPanelDivider" />
+	{#if gridContainerShortOptions}
+		<div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
+			<FlexboxGridColumnsSpan
+				bind:property={flexboxGridColumnsSpan}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
 
-	<FlexboxGridTemplateRows
-		bind:property={flexboxGridTemplateRows}
-		bind:loaded
-		bind:classInput
-		{elementDataLoaded}
-		on:updateClass={updateClass}
-	/>
+			<div class="widgetPanelDivider" />
 
-	<div class="widgetPanelDivider" />
+			<FlexboxGridColumnsStartEnd
+				bind:property={flexboxGridColumnsStartEnd}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
 
-	<FlexboxGridGap
-		bind:property={flexboxGridGap}
-		bind:loaded
-		bind:classInput
-		{elementDataLoaded}
-		on:updateClass={updateClass}
-	/>
+			<div class="widgetPanelDivider" />
 
-	<div class="widgetPanelDivider" />
+			<FlexboxGridRowsSpan
+				bind:property={flexboxGridRowsSpan}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
 
-	<FlexboxGridGapX
-		bind:property={flexboxGridGapX}
-		bind:loaded
-		bind:classInput
-		{elementDataLoaded}
-		on:updateClass={updateClass}
-	/>
+			<div class="widgetPanelDivider" />
 
-	<div class="widgetPanelDivider" />
+			<FlexboxGridRowsStartEnd
+				bind:property={flexboxGridRowsStartEnd}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
 
-	<FlexboxGridGapY
-		bind:property={flexboxGridGapY}
-		bind:loaded
-		bind:classInput
-		{elementDataLoaded}
-		on:updateClass={updateClass}
-	/>
-
-	<div class="widgetPanelDivider" />
+			<div class="widgetPanelDivider" />
+		</div>
+		<!-- collapseDesignLayout -->
+	{/if}
 {:else if selectedTabPageIndex == 1}
 	<button class="collapseButton" on:click={toggleDesignLayout}>
 		<span class="collapseHeader">LAYOUT</span>
@@ -974,6 +982,299 @@
 			<div class="widgetPanelDivider" />
 
 			<SizingWidthHeightMin
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+		</div>
+	{/if}
+
+	<div class="widgetPanelDivider" />
+
+	<button class="collapseButton" on:click={toggleDesignFlexboxGrid}>
+		<span class="collapseHeader">FLEXBOX & GRID</span>
+		{#if collapseDesignFlexboxGrid}
+			<i class="bi bi-dash" />
+		{:else}
+			<i class="bi bi-plus" />
+		{/if}
+	</button>
+
+	{#if collapseDesignFlexboxGrid}
+		<div class="w-full" in:slide={{ duration: 400 }} out:slide={{ duration: 100 }}>
+			<FlexboxGridBasis
+				bind:property={flexboxGridBasis}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridFlexDirection
+				bind:property={flexboxGridFlexDirection}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridFlexWrap
+				bind:property={flexboxGridFlexWrap}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridFlex
+				bind:property={flexboxGridFlex}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridFlexGrow
+				bind:property={flexboxGridFlexGrow}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridFlexShrink
+				bind:property={flexboxGridFlexShrink}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridOrder
+				bind:property={flexboxGridFlexOrder}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridTemplateColumns
+				bind:property={flexboxGridTemplateColumns}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridColumnsSpan
+				bind:property={flexboxGridColumnsSpan}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridColumnsStartEnd
+				bind:property={flexboxGridColumnsStartEnd}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridTemplateRows
+				bind:property={flexboxGridTemplateRows}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridRowsSpan
+				bind:property={flexboxGridRowsSpan}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridRowsStartEnd
+				bind:property={flexboxGridRowsStartEnd}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridAutoFlow
+				bind:property={flexboxGridAutoFlow}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridAutoColumns
+				bind:property={flexboxGridAutoColumns}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridAutoRows
+				bind:property={flexboxGridAutoRows}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridGap
+				bind:property={flexboxGridGap}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridGapX
+				bind:property={flexboxGridGapX}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridGapY
+				bind:property={flexboxGridGapY}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridJustifyContent
+				bind:property={flexboxGridJustifyContent}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridJustifyItems
+				bind:property={flexboxGridJustifyItems}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridJustifySelf
+				bind:property={flexboxGridJustifySelf}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridAlignContent
+				bind:property={flexboxGridAlignContent}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridAlignItems
+				bind:property={flexboxGridAlignItems}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridAlignSelf
+				bind:property={flexboxGridAlignSelf}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridPlaceContent
+				bind:property={flexboxGridPlaceContent}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridPlaceItems
+				bind:property={flexboxGridPlaceItems}
+				bind:loaded
+				bind:classInput
+				{elementDataLoaded}
+				on:updateClass={updateClass}
+			/>
+
+			<div class="widgetPanelDivider" />
+
+			<FlexboxGridPlaceSelf
+				bind:property={flexboxGridPlaceSelf}
 				bind:loaded
 				bind:classInput
 				{elementDataLoaded}
